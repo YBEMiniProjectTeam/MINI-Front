@@ -1,6 +1,17 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
+    #root {
+    width: 768px;
+    height: 100vh;
+    margin: 0 auto;
+    padding-left: 24px;
+    padding-right: 24px;
+    box-sizing: border-box;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    }
     a{
         text-decoration: none;
         color: inherit;
@@ -13,7 +24,7 @@ const GlobalStyles = createGlobalStyle`
         margin: 0;
         padding: 0;
         border: 0;
-        font-size: 10px;
+        font-size: 16px;
         vertical-align: baseline;
     }
     body{
