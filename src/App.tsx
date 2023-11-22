@@ -10,11 +10,11 @@ import { CompletePayment } from "./pages/completePayment/C/CompletePayment";
 import { ShoppingCart } from "./pages/shoppingCart/ShoppingCart";
 import { ReservationDetails } from "./pages/reservationDetails/ReservationDetails";
 import { WishList } from "./pages/wishList/WishList";
-import { FooterForm } from "./components/FooterForm";
+import Layout from "@components/Layout/Layout.tsx";
 
 const App = (): JSX.Element => {
   return (
-    <>
+    <Layout>
       <Routes>
         <Route path="/" element={<Main></Main>}></Route>
         <Route path="/register" element={<Register></Register>}></Route>
@@ -46,8 +46,7 @@ const App = (): JSX.Element => {
         ></Route>
         <Route path="/wishList" element={<WishList></WishList>}></Route>
       </Routes>
-      <FooterForm></FooterForm>
-    </>
+    </Layout>
   );
 };
 export default App;

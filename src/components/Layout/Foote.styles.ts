@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const FooterContainer = styled.div`
-  width: 768px;
+  //width: 768px;
 
   padding: 16px 20px;
 
