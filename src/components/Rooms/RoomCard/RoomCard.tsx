@@ -3,7 +3,7 @@ import { RoomCardTypes } from "./RoomCard.types.ts";
 import * as styles from "./RoomCard.styles.ts";
 import { FaRegClock, FaRegUser } from "react-icons/fa6";
 import { LiaInfoCircleSolid } from "react-icons/lia";
-import { formatPrice } from "../../../utils/priceFormatter.ts";
+import { formatPrice } from "@utils/priceFormatter.ts";
 
 const RoomCard: React.FC<RoomCardTypes> = ({
   price,

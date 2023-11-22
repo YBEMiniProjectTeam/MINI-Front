@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, useDisclosure } from "@chakra-ui/react";
 import { RoomInfoSectionTypes } from "./RoomInfoSection.types.ts";
-import CustomModal from "../../CustomModal/CustomModal.tsx";
+import CustomModal from "@components/CustomModal/CustomModal.tsx";
 import * as styles from "./RoomInfoSection.styles.ts";
 
 const RoomInfoSection: React.FC<RoomInfoSectionTypes> = ({

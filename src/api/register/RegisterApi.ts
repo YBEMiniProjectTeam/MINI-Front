@@ -1,6 +1,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
-import { User } from "../../components/Register/Register.types";
+import { User } from "@components/Register/Register.types";
 
 export const RegisterApi = (user: User): void => {
   const API_URL =
