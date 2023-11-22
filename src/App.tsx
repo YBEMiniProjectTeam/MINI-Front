@@ -27,10 +27,13 @@ const App = (): JSX.Element => {
           path="/products/:productDetail"
           element={<ProductDetail></ProductDetail>}
         ></Route>
-        <Route path="/room/:roomId" element={<RoomDetail></RoomDetail>}></Route>
-        <Route path="/order/:orderId" element={<Payment></Payment>}></Route>
         <Route
-          path="/completePayment/:productDetail/:RoomDetail"
+          path="/rooms/:roomId"
+          element={<RoomDetail></RoomDetail>}
+        ></Route>
+        <Route path="/orders/:orderId" element={<Payment></Payment>}></Route>
+        <Route
+          path="/orders/:orderId/complete"
           element={<CompletePayment></CompletePayment>}
         ></Route>
         <Route

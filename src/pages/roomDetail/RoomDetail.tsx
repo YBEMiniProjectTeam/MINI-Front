@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import * as styles from "./RoomDetail.styles";
-import RoomCarousel from "../../components/RoomCarousel/RoomCarousel.tsx";
-import { useRoomDetail } from "../../hooks/useRoomDetailQuery";
-import RoomHeader from "../../components/RoomHeader/RoomHeader.tsx";
+import RoomCarousel from "@components/Rooms/RoomCarousel/RoomCarousel.tsx";
+import { useRoomDetail } from "@hooks/useRoomDetailQuery";
+import RoomHeader from "@components/Rooms/RoomHeader/RoomHeader.tsx";
 import { Button } from "@chakra-ui/react";
-import RoomCard from "../../components/RoomCard/RoomCard";
-import RoomInfoSection from "../../components/RoomInfoSection/RoomInfoSection.tsx";
+import RoomCard from "@components/Rooms/RoomCard/RoomCard";
+import RoomInfoSection from "@components/Rooms/RoomInfoSection/RoomInfoSection.tsx";
 import { dummyData, dummyData1, dummyData2 } from "./RoomDetail.data.ts";
 
 export const RoomDetail: React.FC = () => {
