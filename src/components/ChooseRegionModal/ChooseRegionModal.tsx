@@ -8,9 +8,7 @@ import {
   ModalBody,
   ModalCloseButton
 } from "@chakra-ui/react";
-
 import { Tabs, TabList, Tab } from "@chakra-ui/react";
-
 import { DisclosureProps } from "./ChooseRegionModal.types";
 
 const ChooseRegionModal = ({

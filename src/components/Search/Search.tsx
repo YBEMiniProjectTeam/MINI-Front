@@ -18,11 +18,23 @@ import {
 import { IoLocationOutline } from "react-icons/io5";
 import { CiCalendar } from "react-icons/ci";
 import { SearchIcon } from "@chakra-ui/icons";
-import ChooseRegionModal from "../ChooseRegionModal/ChooseRegionModal";
 import { truncateText } from "../../utils/truncateText";
+import ChooseRegionModal from "../ChooseRegionModal/ChooseRegionModal";
+import ChooseDateModal from "../ChooseDateModal/ChooseDateModal";
 
 const Search = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenChooseRegionModal,
+    onOpen: onOpenChooseRegionModal,
+    onClose: onCloseChooseRegionModal
+  } = useDisclosure();
+
+  const {
+    isOpen: isOpenChooseDateModal,
+    onOpen: onOpenChooseDateModal,
+    onClose: onCloseChooseDateModal
+  } = useDisclosure();
+
   const [selectedDistrict, setSelectedDistrict] = useState("");
   // 나중에 쿼리스트링으로 숙소명 초깃값 설정
   const [accommodationName, setAccommodationName] = useState("");
@@ -39,10 +51,14 @@ const Search = () => {
   return (
     <>
       <ChooseRegionModal
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isOpenChooseRegionModal}
+        onClose={onCloseChooseRegionModal}
         selectedDistrict={selectedDistrict}
         setSelectedDistrict={setSelectedDistrict}
+      />
+      <ChooseDateModal
+        isOpen={isOpenChooseDateModal}
+        onClose={onCloseChooseDateModal}
       />
       <Stack spacing={4}>
         <InputGroup borderColor="gray.200">
@@ -64,7 +80,7 @@ const Search = () => {
             borderColor="gray.200"
             borderRadius="5px"
             width="33%"
-            onClick={onOpen}
+            onClick={onOpenChooseRegionModal}
           >
             <AccordionItem>
               <h2>
@@ -85,6 +101,7 @@ const Search = () => {
             borderColor="gray.200"
             borderRadius="5px"
             width="33%"
+            onClick={onOpenChooseDateModal}
           >
             <AccordionItem>
               <h2>
