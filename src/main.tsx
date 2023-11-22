@@ -1,9 +1,7 @@
 import React from "react";
-
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import GlobalStyles from "./styles/GlobalStyles.ts";
-import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "./theme/index";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
@@ -16,9 +14,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <ReactQueryDevtools initialIsOpen={true} />
     <ChakraProvider theme={theme}>
       <GlobalStyles />
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <App />
     </ChakraProvider>
   </QueryClientProvider>
 );
