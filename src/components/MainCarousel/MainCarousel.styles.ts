@@ -43,7 +43,7 @@ export const SwiperPagination = styled.div`
   padding: 0px;
   border-radius: 12px;
   background-color: rgba(0, 0, 0, 0.6);
-  font-size: 11px;
+  font-size: 0.8rem;
   color: white;
   line-height: 21px;
   text-align: center;

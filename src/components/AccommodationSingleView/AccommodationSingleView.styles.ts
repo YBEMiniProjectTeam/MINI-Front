@@ -16,14 +16,13 @@ export const MainViewTitle = styled.div`
 `;
 
 export const Title = styled.div`
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   font-weight: 700;
   line-height: 24px;
   color: #4D4D4D;
 `;
 
 export const Description = styled.div`
-  font-size: 0.85rem;
   line-height: 18px;
   color: #4D4D4D;
 `;
@@ -37,7 +36,7 @@ export const MoreButtonWrapper = styled.div`
 
 export const MoreButtonTxt = styled.div`
   display: inline-block;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: #666666;
   margin-right: 4px;
 `;
@@ -110,15 +109,16 @@ export const InformationInner = styled.div`
 
 export const InformationRegion = styled.p`
   margin: 12px 0px 3px;
-  font-size: 0.85rem;
   line-height: 1;
   color: #323232;
+  font-size: 0.8rem;
 `;
 
 export const InformationName = styled.p`
   margin: 0px 0px 4px;
   line-height: 22px;
   font-weight: 500;
+  font-size: 1.1rem;
   color: #4D4D4D;
   overflow: hidden;
   white-space: nowrap;
@@ -135,7 +135,6 @@ export const InformationPriceTxt = styled.span`
   display: inline-block;
   margin: 0px 0px 0px 1px;
   vertical-align: text-bottom;
-  font-size: 0.85rem;
   line-height: 16px;
   font-weight: 500;
   color: #4D4D4D;
