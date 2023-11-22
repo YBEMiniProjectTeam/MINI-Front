@@ -16,7 +16,7 @@ const SearchList = () => {
         const data = await getSearchList();
         console.log("searchList data: ", data);
         setSearchListData(data);
-        setIsWish(data.map((item) => item.isWish));
+        setIsWish(data.map((item: Product) => item.isWish));
       } catch (error) {
         console.error("Error fetching data:", error);
       }
