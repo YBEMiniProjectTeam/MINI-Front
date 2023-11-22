@@ -4,7 +4,7 @@ import { Register } from "./pages/register/Register";
 import { Login } from "./pages/login/Login";
 import { SearchResult } from "./pages/searchResult/SearchResult";
 import { ProductDetail } from "./pages/productDetail/ProductDetail";
-import { ChooseOption } from "./pages/chooseOption/ChooseOption";
+import { RoomDetail } from "./pages/roomDetail/RoomDetail.tsx";
 import { Payment } from "./pages/payment/Payment";
 import { CompletePayment } from "./pages/completePayment/C/CompletePayment";
 import { ShoppingCart } from "./pages/shoppingCart/ShoppingCart";
@@ -26,17 +26,10 @@ const App = () => {
         element={<ProductDetail></ProductDetail>}
       ></Route>
 
+      <Route path="/room/:roomId" element={<RoomDetail></RoomDetail>}></Route>
+      <Route path="/order/:orderId" element={<Payment></Payment>}></Route>
       <Route
-        path="/products/:productDetail/:chooseOption"
-        element={<ChooseOption></ChooseOption>}
-      ></Route>
-
-      <Route
-        path="/payment/:productDetail/:chooseOption"
-        element={<Payment></Payment>}
-      ></Route>
-      <Route
-        path="/completePayment/:productDetail/:chooseOption"
+        path="/completePayment/:productDetail/:RoomDetail"
         element={<CompletePayment></CompletePayment>}
       ></Route>
       <Route
