@@ -36,6 +36,8 @@ export const RoomDetail: React.FC = () => {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>An error has occurred: {error.message}</div>;
 
+  const isRoomAvailable = data.stock_quantity > 0;
+
   return (
     <styles.Container>
       <styles.Inner>
@@ -60,10 +62,10 @@ export const RoomDetail: React.FC = () => {
         >
           <Button
             colorScheme="pink"
-            disabled={data.stock_quantity <= 0}
+            disabled={!isRoomAvailable}
             onClick={handleReservationClick}
           >
-            {data.stock_quantity > 0 ? "예약하기" : "예약 마감"}
+            {isRoomAvailable ? "예약하기" : "예약 마감"}
           </Button>
         </RoomCard>
         <styles.Divider />
