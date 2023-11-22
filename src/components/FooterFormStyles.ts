@@ -10,10 +10,10 @@ export const FooterContainer = styled.div`
   background-color: #f8f8f9;
   color: #ababab;
 
-  font-weight: 400;
   h3 {
     margin-bottom: 12px;
 
+    font-weight: 700;
     font-size: 16px;
   }
   span {
