@@ -1,12 +1,6 @@
 import { useState } from "react";
 import * as S from "./LoginStyles";
-import {
-  FormControl,
-  FormHelperText,
-  Input,
-  Button,
-  Checkbox
-} from "@chakra-ui/react";
+import { FormControl, FormHelperText, Input, Button } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { Login } from "./Login.types";
 import { LoginApi } from "../../api/login/LoginApi";
@@ -47,6 +41,7 @@ export const LoginForm = (): JSX.Element => {
             placeholder="이메일"
             value={email}
             onChange={handleChangeEmail}
+            autoComplete="userEmail"
           />
           {isEmailText ? (
             <FormHelperText className="errorText">
@@ -60,6 +55,7 @@ export const LoginForm = (): JSX.Element => {
             placeholder="비밀번호"
             value={password}
             onChange={handleChangePassword}
+            autoComplete="new-password"
           />
           {isPasswordText ? (
             <FormHelperText className="errorText">
@@ -67,14 +63,9 @@ export const LoginForm = (): JSX.Element => {
             </FormHelperText>
           ) : null}
         </FormControl>
-        {/* 로그인 버튼 로직 아직 x */}
+
         <Button onClick={handleClickLoginButton}>로그인</Button>
         <div className="flex">
-          <div className="flexItem">
-            {/* 로그인 유지 기능 아직 x */}
-            <Checkbox defaultChecked>로그인 유지</Checkbox>
-          </div>
-
           <div className="flexItem">
             <Link to="/register">
               <span>회원가입</span>
