@@ -1,19 +1,26 @@
 import styled from "styled-components";
+export const Header = styled.div`
+  width: 100%;
+  height: 72px;
 
+  display: flex;
+  justify-content: center;
+`;
 export const HeaderContainer = styled.div`
+  position: fixed;
+
   width: 1280px;
   height: 72px;
 
   padding: 0px 24px;
 
-  margin-left: auto;
-  margin-right: auto;
-
   display: flex;
   justify-content: space-around;
   align-items: center;
 
-  background-color: hsla(0, 0%, 92.9%, 0);
+  z-index: 10;
+
+  background-color: #fff;
 
   .Title {
     font-size: 24px;
