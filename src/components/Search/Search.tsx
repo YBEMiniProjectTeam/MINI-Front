@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as styles from "./Search.styles";
 import {
   Stack,
@@ -18,15 +18,30 @@ import {
 import { IoLocationOutline } from "react-icons/io5";
 import { CiCalendar } from "react-icons/ci";
 import { SearchIcon } from "@chakra-ui/icons";
+import { truncateText } from "@utils/truncateText";
+import { convertDateFormat2 as convertDateFormat } from "../../utils/convertDateFormat2";
 import ChooseRegionModal from "../ChooseRegionModal/ChooseRegionModal";
-import { truncateText } from "../../utils/truncateText";
+import ChooseDateModal from "../ChooseDateModal/ChooseDateModal";
 
 const Search = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const {
+    isOpen: isOpenChooseRegionModal,
+    onOpen: onOpenChooseRegionModal,
+    onClose: onCloseChooseRegionModal
+  } = useDisclosure();
+
+  const {
+    isOpen: isOpenChooseDateModal,
+    onOpen: onOpenChooseDateModal,
+    onClose: onCloseChooseDateModal
+  } = useDisclosure();
+
+  const [selectedDistrict, setSelectedDistrict] = useState<string>("");
+  const [selectedDate, setSelectedDate] = useState<string[] | undefined>([]);
   // 나중에 쿼리스트링으로 숙소명 초깃값 설정
-  const [accommodationName, setAccommodationName] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("모든 숙소");
+  const [accommodationName, setAccommodationName] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("모든 숙소");
+  const [isFromSearchResult, setIsFromSearchResult] = useState<boolean>(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAccommodationName(e.target.value);
@@ -36,13 +51,23 @@ const Search = () => {
     setSelectedCategory(e.target.value);
   };
 
+  useEffect(() => {
+    setIsFromSearchResult(true);
+  }, []);
+
   return (
     <>
       <ChooseRegionModal
-        isOpen={isOpen}
-        onClose={onClose}
+        isOpen={isOpenChooseRegionModal}
+        onClose={onCloseChooseRegionModal}
         selectedDistrict={selectedDistrict}
         setSelectedDistrict={setSelectedDistrict}
+      />
+      <ChooseDateModal
+        isOpen={isOpenChooseDateModal}
+        onClose={onCloseChooseDateModal}
+        setSelectedDate={setSelectedDate}
+        isFromSearchResult={isFromSearchResult}
       />
       <Stack spacing={4}>
         <InputGroup borderColor="gray.200">
@@ -64,7 +89,7 @@ const Search = () => {
             borderColor="gray.200"
             borderRadius="5px"
             width="33%"
-            onClick={onOpen}
+            onClick={onOpenChooseRegionModal}
           >
             <AccordionItem>
               <h2>
@@ -85,14 +110,18 @@ const Search = () => {
             borderColor="gray.200"
             borderRadius="5px"
             width="33%"
+            onClick={onOpenChooseDateModal}
           >
             <AccordionItem>
               <h2>
                 <AccordionButton>
                   <Box as="span" flex="1" textAlign="left">
                     <Icon as={CiCalendar} mr="1rem" />
-                    {/* 변경 필요 */}
-                    11.21 - 11.22
+                    {selectedDate && selectedDate?.length > 1 && selectedDate[0]
+                      ? `${convertDateFormat(
+                          selectedDate[0]
+                        )} - ${convertDateFormat(selectedDate[1])}`
+                      : "날짜 선택"}
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>

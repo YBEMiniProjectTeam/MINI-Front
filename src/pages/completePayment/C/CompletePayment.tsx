@@ -1,5 +1,5 @@
 import React from "react";
 
-export const CompletePayment = () => {
-  return <div>C</div>;
+export const CompletePayment: React.FC = () => {
+  return <div></div>;
 };
