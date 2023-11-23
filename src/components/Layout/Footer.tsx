@@ -1,6 +1,6 @@
-import * as S from "./FooterFormStyles";
+import * as S from "./Foote.styles.ts";
 
-export const FooterForm = (): JSX.Element => {
+export const Footer = (): JSX.Element => {
   return (
     <S.FooterContainer>
       <h3>DAILYHOTEL</h3>
