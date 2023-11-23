@@ -78,7 +78,7 @@ const ChooseDateModal = ({
       scrollBehavior="inside"
     >
       <ModalOverlay />
-      <ModalContent maxW="720px" maxH="600px" overflow="auto">
+      <ModalContent maxW="720px" maxH="700px" overflow="auto">
         {!isFromSearchResult ? (
           <ModalHeader
             display="flex"
@@ -165,6 +165,7 @@ const ChooseDateModal = ({
             borderRadius="5px"
             mt="1rem"
             width="100%"
+            lineHeight="10"
             onClick={onClose}
           >
             설정하기
