@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Calendar from 'react-calendar';
 
 export const HeaderScheduleWrapper = styled.div`
     display: flex;
@@ -51,15 +50,49 @@ export const CheckOutText = styled.span`
     text-align: right;
 `;
 
-export const StyledCalendar = styled(Calendar)`
-  .react-calendar__tile {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    color: #333;
+export const CalendarWrapper = styled.div`
+  .react-calendar {
+    width: 100%;
+    border: none;
   }
-
-  .react-calendar__month-view__weekdays__weekday {
-    color: #db074a;
-    font-weight: bold;
+  .react-calendar__tile--now {
+    background: white;
+    border: 1px solid #e7e7e7;
+    border-radius: 3px;
+  }
+  .react-calendar__tile--now:hover {
+    background: white;
+  }
+  .react-calendar__tile--active {
+    background-color: #db074a;
+  }
+  .react-calendar__tile--active:hover {
+    background-color: #db074a;
+  }
+  .react-calendar__tile {
+    height: 60px;
+  }
+  .react-calendar__navigation {
+    margin-bottom: 0;
+  }
+  .react-calendar__month-view__weekdays {
+    abbr {
+        text-decoration: none;
+    }
+  }
+  .react-calendar__month-view__days__day--neighboringMonth {
+    color: #f0f0f0;
+  }
+  .react-calendar__tile:disabled {
+    opacity: 0.5;
+    background-color: white;
+  }
+  .react-calendar__tile:enabled:hover,
+  .react-calendar__tile:enabled:focus,
+  .react-calendar__tile--active {
+    background: #db074a;
+    color: white;
+    border: none;
+    border-radius: 0px;
   }
 `;

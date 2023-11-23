@@ -159,7 +159,7 @@ const ChooseRegionModal = ({
         size="xl"
       >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent maxW="720px" maxH="600px" overflow="auto">
           <ModalHeader
             display="flex"
             justifyContent="center"
