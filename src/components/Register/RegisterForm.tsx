@@ -10,7 +10,7 @@ import {
 import Swal from "sweetalert2";
 import { AgreementModalForm } from "../AgreementModal/AgreementModalForm";
 import { isBirthdayValid, isEmailValid, isPasswordValid } from "./validators";
-import { RegisterApi } from "../../api/register/RegisterApi";
+import { RegisterApi } from "@api/register/RegisterApi";
 import { User } from "./Register.types";
 
 export const RegisterForm = (): JSX.Element => {

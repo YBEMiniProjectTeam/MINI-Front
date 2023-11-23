@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { Login } from "../../components/Login/Login.types";
+import { Login } from "@components/Login/Login.types";
 
 export const LoginApi = (login: Login): void => {
   const API_URL =

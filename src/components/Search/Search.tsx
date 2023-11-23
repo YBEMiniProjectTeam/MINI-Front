@@ -19,7 +19,7 @@ import { IoLocationOutline } from "react-icons/io5";
 import { CiCalendar } from "react-icons/ci";
 import { SearchIcon } from "@chakra-ui/icons";
 import ChooseRegionModal from "../ChooseRegionModal/ChooseRegionModal";
-import { truncateText } from "../../utils/truncateText";
+import { truncateText } from "@utils/truncateText";
 
 const Search = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
