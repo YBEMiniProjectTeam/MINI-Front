@@ -1,4 +1,4 @@
-import * as S from "./Foote.styles.ts";
+import * as S from "./Footer.styles.ts";
 
 export const Footer = (): JSX.Element => {
   return (
