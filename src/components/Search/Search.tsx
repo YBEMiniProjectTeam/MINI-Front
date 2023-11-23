@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as styles from "./Search.styles";
 import {
   Stack,
@@ -41,6 +41,7 @@ const Search = () => {
   // 나중에 쿼리스트링으로 숙소명 초깃값 설정
   const [accommodationName, setAccommodationName] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("모든 숙소");
+  const [isFromSearchResult, setIsFromSearchResult] = useState<boolean>(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAccommodationName(e.target.value);
@@ -49,6 +50,10 @@ const Search = () => {
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCategory(e.target.value);
   };
+
+  useEffect(() => {
+    setIsFromSearchResult(true);
+  }, []);
 
   return (
     <>
@@ -62,6 +67,7 @@ const Search = () => {
         isOpen={isOpenChooseDateModal}
         onClose={onCloseChooseDateModal}
         setSelectedDate={setSelectedDate}
+        isFromSearchResult={isFromSearchResult}
       />
       <Stack spacing={4}>
         <InputGroup borderColor="gray.200">

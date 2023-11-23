@@ -12,6 +12,8 @@ import {
   Button
 } from "@chakra-ui/react";
 import { RxDoubleArrowRight } from "react-icons/rx";
+import { CiCircleMinus } from "react-icons/ci";
+import { CiCirclePlus } from "react-icons/ci";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { convertDateFormat } from "../../utils/convertDateFormat";
@@ -20,19 +22,33 @@ import moment from "moment";
 const ChooseDateModal = ({
   isOpen,
   onClose,
-  setSelectedDate
+  setSelectedDate,
+  isFromSearchResult,
+  personCount,
+  setPersonCount
 }: DisclosureProps) => {
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
     null,
     null
   ]);
-
   // 타입지정 아무리해도 안돼서 any로 해놨음
   const handleDateChange = (value: any) => {
     if (Array.isArray(value)) {
       setDateRange([value[0], value[1] || null]);
     } else {
       setDateRange([value, null]);
+    }
+  };
+
+  const handleMinusClick = () => {
+    if (personCount && setPersonCount && personCount > 1) {
+      setPersonCount(personCount - 1);
+    }
+  };
+
+  const handlePlusClick = () => {
+    if (personCount && setPersonCount) {
+      setPersonCount(personCount + 1);
     }
   };
 
@@ -63,11 +79,44 @@ const ChooseDateModal = ({
     >
       <ModalOverlay />
       <ModalContent maxW="720px" maxH="600px" overflow="auto">
+        {!isFromSearchResult ? (
+          <ModalHeader
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            mt="3rem"
+          >
+            인원
+            <styles.HeaderPersonWrapper>
+              <Icon
+                as={CiCircleMinus}
+                backgroundColor="white"
+                width="2rem"
+                height="2rem"
+                color={personCount === 1 ? "gray" : "#db074a"}
+                opacity={personCount === 1 ? "0.5" : "1"}
+                onClick={handleMinusClick}
+                isDisabled={personCount === 1}
+                userSelect="none"
+              />
+              <styles.HeaderPersonCount>{personCount}</styles.HeaderPersonCount>
+              <Icon
+                as={CiCirclePlus}
+                backgroundColor="white"
+                width="2rem"
+                height="2rem"
+                color="#db074a"
+                onClick={handlePlusClick}
+                userSelect="none"
+              />
+            </styles.HeaderPersonWrapper>
+          </ModalHeader>
+        ) : null}
+
         <ModalHeader
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          position="relative"
           mt="2rem"
         >
           일정

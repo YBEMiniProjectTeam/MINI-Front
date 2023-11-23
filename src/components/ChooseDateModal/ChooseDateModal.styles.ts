@@ -50,6 +50,17 @@ export const CheckOutText = styled.span`
     text-align: right;
 `;
 
+export const HeaderPersonWrapper = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+`;
+
+export const HeaderPersonCount = styled.span`
+    font-weight: 700;
+    margin: 0 0.5rem;
+`;
+
 export const CalendarWrapper = styled.div`
   .react-calendar {
     width: 100%;
