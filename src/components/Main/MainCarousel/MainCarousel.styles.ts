@@ -23,7 +23,7 @@ export const SwiperWrapper = styled.div`
   position: relative;
 `;
 
-export const CarouselItem = styled.div`
+export const CarouselItem = styled.img`
   display: flex;
   width: 720px;
   height: 288px;
@@ -47,4 +47,8 @@ export const SwiperPagination = styled.div`
   color: white;
   line-height: 21px;
   text-align: center;
+`;
+
+export const SwiperPaginationTxt = styled.span`
+  font-size: 0.8rem;
 `;

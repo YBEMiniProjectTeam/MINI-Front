@@ -1,8 +1,8 @@
 import * as styled from "./Main.styles";
-import { MainCarousel } from "../../components/MainCarousel/MainCarousel";
-import { MainCategoryMenu } from "../../components/MainCategoryMenu/MainCategoryMenu";
-import { AccommodationSingleView } from "../../components/AccommodationSingleView/AccommodationSingleView";
-import { AccommodationGridView } from "../../components/AccommodationGridView/AccommodationGridView";
+import { MainCarousel } from "@components/Main/MainCarousel/MainCarousel";
+import { MainCategoryMenu } from "@components/Main/MainCategoryMenu/MainCategoryMenu";
+import { AccommodationSingleView } from "@components/Main/AccommodationSingleView/AccommodationSingleView";
+import { AccommodationGridView } from "@components/Main/AccommodationGridView/AccommodationGridView";
 
 export const Main = () => {
   return (
