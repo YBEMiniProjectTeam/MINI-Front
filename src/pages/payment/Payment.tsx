@@ -1,5 +1,5 @@
 import React from "react";
 
-export const Payment = () => {
+export const Payment: React.FC = () => {
   return <div>P</div>;
 };
