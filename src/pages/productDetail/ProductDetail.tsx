@@ -3,6 +3,7 @@ import { getAccomodationInfo } from "../../api/accomodation/getAccomodationInfo"
 import { Image } from "../../components/ProductDetail/Image/Image";
 import { WishListButton } from "../../components/ProductDetail/WishListButton/WishListButton";
 import { ChooseDetail } from "../../components/ProductDetail/ChooseDetail/ChooseDetail";
+import { ChooseRoom } from "../../components/ProductDetail/ChooseRoom/ChooseRoom";
 import { Accomodation } from "../../components/ProductDetail/ProductDetail.types";
 import { Flex, Box, Divider } from "@chakra-ui/react";
 
@@ -47,6 +48,7 @@ export const ProductDetail: React.FC = () => {
         </Box>
       </Flex>
       <ChooseDetail />
+      <ChooseRoom />
     </>
   );
 };
