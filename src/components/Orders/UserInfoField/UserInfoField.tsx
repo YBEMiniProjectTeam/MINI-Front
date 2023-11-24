@@ -1,18 +1,18 @@
 import React from "react";
 import * as styles from "./UserInfoField.styles";
-import { dummyUserData } from "@pages/payment/Payment.data.ts";
+import { useUserInfo } from "@hooks/useUserInfoQuery";
 
 const UserInfoField: React.FC = () => {
-  const user = dummyUserData.data;
+  const { data, isLoading } = useUserInfo();
+
+  if (isLoading) return <div>Loading...</div>;
+  const user = data.data;
+
   return (
     <styles.UserInfoContainer>
       <styles.UserInfoWrapperRow>
         <styles.UserInfoLabel>이름</styles.UserInfoLabel>
         <styles.UserInfoItem>{user.name}</styles.UserInfoItem>
-      </styles.UserInfoWrapperRow>
-      <styles.UserInfoWrapperRow>
-        <styles.UserInfoLabel>연락처</styles.UserInfoLabel>
-        <styles.UserInfoItem>+82 (0)1000000000</styles.UserInfoItem>
       </styles.UserInfoWrapperRow>
       <styles.UserInfoWrapperRow>
         <styles.UserInfoLabel>이메일</styles.UserInfoLabel>
