@@ -6,7 +6,7 @@ import { SearchResult } from "@pages/searchResult/SearchResult";
 import { ProductDetail } from "@pages/productDetail/ProductDetail";
 import { RoomDetail } from "@pages/roomDetail/RoomDetail.tsx";
 import { Payment } from "@pages/payment/Payment";
-import { CompletePayment } from "@pages/completePayment/C/CompletePayment";
+import CompletePayment from "@pages/completePayment/CompletePayment.tsx";
 import { ShoppingCart } from "@pages/shoppingCart/ShoppingCart";
 import { ReservationDetails } from "@pages/reservationDetails/ReservationDetails";
 import { WishList } from "@pages/wishList/WishList";
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
       { path: "orders/:orderId", element: <Payment /> },
       { path: "orders/:orderId/complete", element: <CompletePayment /> },
       { path: "shoppingCart", element: <ShoppingCart /> },
-      { path: "reservationDetails", element: <ReservationDetails /> },
+      { path: "reservations", element: <ReservationDetails /> },
       { path: "wishList", element: <WishList /> }
     ]
   }
