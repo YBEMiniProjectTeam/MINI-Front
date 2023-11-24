@@ -29,7 +29,7 @@ export const CategoryMenuItem = styled.div`
   }
 `;
 
-export const MenuIcon = styled.img`
+export const MenuIcon = styled.div`
   width: 40px;
   height: 40px;
 `;
