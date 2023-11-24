@@ -5,7 +5,7 @@ import WishListButton from "@components/ProductDetail/WishListButton/WishListBut
 import ChooseDetail from "@components/ProductDetail/ChooseDetail/ChooseDetail";
 import ChooseRoom from "@components/ProductDetail/ChooseRoom/ChooseRoom";
 import Map from "@components/ProductDetail/Map/Map";
-import { Accomodation } from "@components/ProductDetail/ProductDetail.types";
+import { Accomodation } from "./ProductDetail.types";
 import { Flex, Box, Divider } from "@chakra-ui/react";
 import { IoLocationOutline } from "react-icons/io5";
 

@@ -1,13 +1,13 @@
 import { useEffect } from "react";
+import { MapProps } from "./Map.types";
 import { Box } from "@chakra-ui/react";
 
-const Map = ({ lat, lng }: { lat: number; lng: number }) => {
+const Map = ({ lat, lng }: MapProps) => {
   const position = { lat, lng };
 
   useEffect(() => {
     let map: google.maps.Map;
     async function initMap(): Promise<void> {
-      //@ts-ignore
       const { Map } = (await google.maps.importLibrary(
         "maps"
       )) as google.maps.MapsLibrary;

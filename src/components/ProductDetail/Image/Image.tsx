@@ -1,4 +1,5 @@
 import { useDisclosure } from "@chakra-ui/react";
+import { ImageProps } from "./Image.types";
 import {
   Box,
   Grid,
@@ -11,7 +12,7 @@ import {
   ModalCloseButton
 } from "@chakra-ui/react";
 
-const Image = ({ images }: { images: { url: string }[] }): JSX.Element => {
+const Image = ({ images }: ImageProps): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const imageUrl1 = images[0]?.url;
