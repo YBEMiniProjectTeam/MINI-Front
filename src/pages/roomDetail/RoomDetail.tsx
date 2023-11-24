@@ -1,19 +1,25 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import * as styles from "./RoomDetail.styles";
-import RoomCarousel from "@components/Rooms/RoomCarousel/RoomCarousel.tsx";
 import { useRoomDetail } from "@hooks/useRoomDetailQuery";
-import RoomHeader from "@components/Rooms/RoomHeader/RoomHeader.tsx";
+import * as styles from "./RoomDetail.styles";
 import { Button } from "@chakra-ui/react";
+import RoomHeader from "@components/Rooms/RoomHeader/RoomHeader.tsx";
+import RoomCarousel from "@components/Rooms/RoomCarousel/RoomCarousel.tsx";
 import RoomCard from "@components/Rooms/RoomCard/RoomCard";
 import RoomInfoSection from "@components/Rooms/RoomInfoSection/RoomInfoSection.tsx";
-import { dummyData, dummyData1, dummyData2 } from "./RoomDetail.data.ts";
+import {
+  dummyData,
+  dummyData1,
+  dummyData2,
+  dummyRoomData
+} from "./RoomDetail.data.ts";
 
 export const RoomDetail: React.FC = () => {
   const { roomId } = useParams();
   const navigate = useNavigate();
 
-  const { data, error, isLoading } = useRoomDetail(roomId!);
+  // const { data, error, isLoading } = useRoomDetail(roomId!);
+  const data = dummyRoomData.data;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -22,7 +28,7 @@ export const RoomDetail: React.FC = () => {
   };
 
   const handleReservationClick = () => {
-    navigate(`/order/${roomId}`, {
+    navigate(`/orders/${roomId}`, {
       state: {
         roomId,
         name: data.name,
@@ -33,8 +39,8 @@ export const RoomDetail: React.FC = () => {
     });
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>An error has occurred: {error.message}</div>;
+  // if (isLoading) return <div>Loading...</div>;
+  // if (error) return <div>{error.message}</div>;
 
   const isRoomAvailable = data.stock_quantity > 0;
 

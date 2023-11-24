@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const FooterContainer = styled.div`
+  width: inherit;
+
   padding: 16px 20px;
 
   margin: 16px auto;

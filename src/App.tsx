@@ -15,7 +15,7 @@ import Layout from "@components/Layout/Layout";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />, // 레이아웃 컴포넌트
+    element: <Layout />,
     children: [
       { index: true, element: <Main /> },
       { path: "register", element: <Register /> },
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
   }
 ]);
 
-const App = () => {
+const App = (): JSX.Element => {
   return <RouterProvider router={router} />;
 };
 
