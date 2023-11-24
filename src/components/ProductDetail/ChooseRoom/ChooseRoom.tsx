@@ -1,7 +1,6 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { IoBedOutline } from "react-icons/io5";
 import { BsPerson } from "react-icons/bs";
-import { OptionCarousel } from "../OptionCarousel/OptionCarousel";
 
 export const ChooseRoom = (): JSX.Element => {
   return (
@@ -45,7 +44,6 @@ export const ChooseRoom = (): JSX.Element => {
             </Box>
           </Flex>
         </Flex>
-        <OptionCarousel />
       </Box>
     </Box>
   );
