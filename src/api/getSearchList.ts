@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API_BASE_URL } from "./config";
 
 export const getSearchList = async (  
     accomodationName: string,
@@ -7,7 +8,7 @@ export const getSearchList = async (
     endDate: string | undefined,
     category: string
 ) =>{
-    const GET_SEARCH_LIST_URL = `https://anti-bias.kr/api/accommodations?accomodationName=${accomodationName}&selectedDistrict=${selectedDistrict}&startDate=${startDate}&endDate=${endDate}&category=${category}`;
+    const GET_SEARCH_LIST_URL = `${API_BASE_URL}/accommodations?accomodationName=${accomodationName}&selectedDistrict=${selectedDistrict}&startDate=${startDate}&endDate=${endDate}&category=${category}`;
 
     const response = await axios.get(GET_SEARCH_LIST_URL);
 
