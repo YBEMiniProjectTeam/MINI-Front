@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as styles from "./Search.styles";
+import { SearchProps } from "./Search.types";
 import {
   Stack,
   InputGroup,
@@ -19,11 +20,11 @@ import { IoLocationOutline } from "react-icons/io5";
 import { CiCalendar } from "react-icons/ci";
 import { SearchIcon } from "@chakra-ui/icons";
 import { truncateText } from "@utils/truncateText";
-import { convertDateFormat2 as convertDateFormat } from "../../utils/convertDateFormat2";
+import { convertDateFormat2 as convertDateFormat } from "@utils/convertDateFormat2";
 import ChooseRegionModal from "../ChooseRegionModal/ChooseRegionModal";
 import ChooseDateModal from "../ChooseDateModal/ChooseDateModal";
 
-const Search = () => {
+const Search = ({ keyword, category }: SearchProps) => {
   const {
     isOpen: isOpenChooseRegionModal,
     onOpen: onOpenChooseRegionModal,
@@ -38,9 +39,29 @@ const Search = () => {
 
   const [selectedDistrict, setSelectedDistrict] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<string[] | undefined>([]);
-  // 나중에 쿼리스트링으로 숙소명 초깃값 설정
-  const [accommodationName, setAccommodationName] = useState<string>("");
-  const [selectedCategory, setSelectedCategory] = useState<string>("모든 숙소");
+  const [accommodationName, setAccommodationName] = useState<string>(
+    keyword ? keyword : "숙소명 입력"
+  );
+
+  if (category) {
+    switch (category) {
+      case "hotel":
+        category = "호텔/리조트";
+        break;
+      case "motel":
+        category = "모텔";
+        break;
+      case "pension":
+        category = "풀빌라/펜션";
+        break;
+      case "all":
+        category = "모든 숙소";
+        break;
+    }
+  }
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    category ? category : "모든 숙소"
+  );
   const [isFromSearchResult, setIsFromSearchResult] = useState<boolean>(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,11 +96,7 @@ const Search = () => {
             <SearchIcon />
           </InputLeftElement>
 
-          <Input
-            placeholder="숙소명 입력"
-            value={accommodationName}
-            onChange={handleInputChange}
-          />
+          <Input value={accommodationName} onChange={handleInputChange} />
         </InputGroup>
 
         <styles.AccordionWrapper>

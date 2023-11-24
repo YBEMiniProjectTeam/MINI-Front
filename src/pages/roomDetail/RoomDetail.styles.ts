@@ -5,7 +5,6 @@ export const Container = styled.div`
 `;
 
 export const Inner = styled.div`
-  max-width: 768px;
   margin: 0 auto;
   width: 100%;
 `;
