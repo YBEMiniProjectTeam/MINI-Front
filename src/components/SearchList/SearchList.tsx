@@ -9,7 +9,10 @@ import { useSearchList } from "@hooks/useSearchList";
 const SearchList = () => {
   const [searchListData, setSearchListData] = useState<Product[]>([]);
   const [isWish, setIsWish] = useState<boolean[]>([]);
+
   const { data, error, isLoading } = useSearchList();
+
+  if (!data) return null;
 
   if (error) {
     console.error("An error has occurred:", error.message);
@@ -17,11 +20,9 @@ const SearchList = () => {
   }
 
   useEffect(() => {
-    if (data) {
-      setSearchListData(data);
-      setIsWish(data.map((item: Product) => item.isWish));
-    }
-  }, [data]);
+    setSearchListData(data);
+    setIsWish(data.map((item: Product) => item.isWish));
+  }, []);
 
   const handleLikeClick = (index: number) => {
     const updatedIsLiked = [...isWish];
