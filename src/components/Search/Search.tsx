@@ -19,7 +19,7 @@ import { IoLocationOutline } from "react-icons/io5";
 import { CiCalendar } from "react-icons/ci";
 import { SearchIcon } from "@chakra-ui/icons";
 import { truncateText } from "@utils/truncateText";
-import { convertDateFormat2 as convertDateFormat } from "../../utils/convertDateFormat2";
+import { convertDateFormat2 as convertDateFormat } from "@utils/convertDateFormat2";
 import ChooseRegionModal from "../ChooseRegionModal/ChooseRegionModal";
 import ChooseDateModal from "../ChooseDateModal/ChooseDateModal";
 

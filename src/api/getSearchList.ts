@@ -6,7 +6,4 @@ export const getSearchList = async () =>{
     const response = await axios.get(GET_SEARCH_LIST_URL);
 
     return response.data.data.accomodations;
-
 }
-    
-
