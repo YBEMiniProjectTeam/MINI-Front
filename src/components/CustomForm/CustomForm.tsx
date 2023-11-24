@@ -101,7 +101,8 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   isLoading = false,
   type = "button",
   colorScheme = "pink",
-  width
+  width,
+  disabled
 }) => {
   return (
     <Button
@@ -110,6 +111,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       type={type}
       colorScheme={colorScheme}
       width={width}
+      disabled={disabled}
     >
       {children}
     </Button>

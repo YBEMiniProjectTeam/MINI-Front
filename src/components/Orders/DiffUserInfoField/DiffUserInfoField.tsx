@@ -14,21 +14,6 @@ const DiffUserInfoField: React.FC = () => {
         placeholder="이름 입력"
         rules={{ required: "이름을 입력해주세요." }}
       />
-
-      <CustomForm.Input
-        control={control}
-        name="phone"
-        label="연락처"
-        placeholder="전화번호 입력"
-        rules={{
-          required: "휴대폰 번호를 입력해주세요.",
-          pattern: {
-            value: /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/,
-            message: "유효한 휴대폰 번호를 입력해주세요."
-          }
-        }}
-      />
-
       <CustomForm.Input
         control={control}
         name="email"
