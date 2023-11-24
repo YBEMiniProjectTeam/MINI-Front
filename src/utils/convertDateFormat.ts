@@ -1,3 +1,4 @@
+// 2023. 11. 24. -> 11.24 (목)
 export function convertDateFormat(inputDate?: string): string | undefined{
     if (!inputDate) {
         return;
