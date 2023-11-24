@@ -5,7 +5,7 @@ import { CiCalendar } from "react-icons/ci";
 import { BsPeople } from "react-icons/bs";
 import { convertDateFormat } from "@/utils/convertDateFormat";
 
-export const ChooseDetail = (): JSX.Element => {
+const ChooseDetail = (): JSX.Element => {
   const [selectedDate, setSelectedDate] = useState<string[] | undefined>([]);
   const {
     isOpen: isOpenChooseDateModal,
@@ -63,3 +63,5 @@ export const ChooseDetail = (): JSX.Element => {
     </>
   );
 };
+
+export default ChooseDetail;

@@ -1,7 +1,7 @@
 import { Button } from "@chakra-ui/react";
 import { GoHeart } from "react-icons/go";
 
-export const WishListButton = (): JSX.Element => {
+const WishListButton = (): JSX.Element => {
   return (
     <Button
       leftIcon={<GoHeart />}
@@ -14,3 +14,5 @@ export const WishListButton = (): JSX.Element => {
     </Button>
   );
 };
+
+export default WishListButton;

@@ -3,7 +3,6 @@ import {
   Box,
   Grid,
   GridItem,
-  Button,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -12,11 +11,7 @@ import {
   ModalCloseButton
 } from "@chakra-ui/react";
 
-export const Image = ({
-  images
-}: {
-  images: { url: string }[];
-}): JSX.Element => {
+const Image = ({ images }: { images: { url: string }[] }): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const imageUrl1 = images[0]?.url;
@@ -24,7 +19,7 @@ export const Image = ({
   const imageUrl3 = images[2]?.url;
 
   return (
-    <Box w="720px" p={0} margin="0 auto">
+    <Box w="100%" p={0} margin="0 auto">
       <Grid
         templateColumns="1.7fr 1fr"
         autoRows="190px"
@@ -61,17 +56,20 @@ export const Image = ({
             filter: "brightness(90%)"
           }}
         />
-        <Button
+        <Box
+          as="button"
           bg="white"
-          variant="outline"
-          size="sm"
+          borderRadius="5px"
+          border="1px solid #5A5A5A"
+          padding="5px 15px"
           position="absolute"
           right="20px"
           bottom="20px"
+          fontSize="13px"
           onClick={onOpen}
         >
           사진 모두 보기
-        </Button>
+        </Box>
         <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent maxW="720px" maxH="600px" overflow="auto">
@@ -96,3 +94,5 @@ export const Image = ({
     </Box>
   );
 };
+
+export default Image;

@@ -2,7 +2,7 @@ import { Box, Flex } from "@chakra-ui/react";
 import { IoBedOutline } from "react-icons/io5";
 import { BsPerson } from "react-icons/bs";
 
-export const ChooseRoom = (): JSX.Element => {
+const ChooseRoom = (): JSX.Element => {
   return (
     <Box
       display="flex"
@@ -48,3 +48,5 @@ export const ChooseRoom = (): JSX.Element => {
     </Box>
   );
 };
+
+export default ChooseRoom;

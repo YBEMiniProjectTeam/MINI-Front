@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Box } from "@chakra-ui/react";
 
-export const Map = ({ lat, lng }: { lat: number; lng: number }) => {
+const Map = ({ lat, lng }: { lat: number; lng: number }) => {
   const position = { lat, lng };
 
   useEffect(() => {
@@ -31,3 +31,5 @@ export const Map = ({ lat, lng }: { lat: number; lng: number }) => {
 
   return <Box id="map" w="100%" minH="300px" margin="10px 0 40px" />;
 };
+
+export default Map;

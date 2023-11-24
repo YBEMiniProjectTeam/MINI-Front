@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { getAccomodationInfo } from "../../api/accomodation/getAccomodationInfo";
-import { Image } from "../../components/ProductDetail/Image/Image";
-import { WishListButton } from "../../components/ProductDetail/WishListButton/WishListButton";
-import { ChooseDetail } from "../../components/ProductDetail/ChooseDetail/ChooseDetail";
-import { ChooseRoom } from "../../components/ProductDetail/ChooseRoom/ChooseRoom";
-import { Map } from "../../components/ProductDetail/Map/Map";
-import { Accomodation } from "../../components/ProductDetail/ProductDetail.types";
+import getAccomodationInfo from "@api/accomodation/getAccomodationInfo";
+import Image from "@components/ProductDetail/Image/Image";
+import WishListButton from "@components/ProductDetail/WishListButton/WishListButton";
+import ChooseDetail from "@components/ProductDetail/ChooseDetail/ChooseDetail";
+import ChooseRoom from "@components/ProductDetail/ChooseRoom/ChooseRoom";
+import Map from "@components/ProductDetail/Map/Map";
+import { Accomodation } from "@components/ProductDetail/ProductDetail.types";
 import { Flex, Box, Divider } from "@chakra-ui/react";
 import { IoLocationOutline } from "react-icons/io5";
 
@@ -24,7 +24,7 @@ export const ProductDetail: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <Box w="720px">
       <Image images={images} />
       <Flex marginTop="30px" justifyContent="space-between" alignItems="center">
         <Box>
@@ -69,6 +69,6 @@ export const ProductDetail: React.FC = () => {
         </Flex>
       </Flex>
       <Map lat={34.93929248} lng={127.8740927} />
-    </>
+    </Box>
   );
 };
