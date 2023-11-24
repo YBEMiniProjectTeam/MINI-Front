@@ -1,15 +1,18 @@
-import React from "react";
 import { useFormContext } from "react-hook-form";
 import CustomForm from "@components/CustomForm/CustomForm";
-import { dummyReservationInfo } from "@pages/payment/Payment.data";
+import { useNavigate, useParams } from "react-router-dom";
 
-const PaymentSubmitButton: React.FC = () => {
-  const { handleSubmit } = useFormContext();
-
-  const dummyData = dummyReservationInfo.data.price;
+const PaymentSubmitButton = ({ price }: { price: number }) => {
+  const {
+    handleSubmit,
+    formState: { isValid }
+  } = useFormContext();
+  const { orderId } = useParams();
+  const navigate = useNavigate();
 
   const onSubmit = () => {
     console.log("결제하기 버튼 클릭됨");
+    navigate(`/orders/${orderId}/complete`);
   };
 
   return (
@@ -17,8 +20,10 @@ const PaymentSubmitButton: React.FC = () => {
       width="100%"
       type="submit"
       onClick={handleSubmit(onSubmit)}
+      disabled={!isValid}
+      colorScheme={isValid ? "pink" : "grey"}
     >
-      {dummyData} 결제하기
+      {price.toLocaleString()}원 결제하기
     </CustomForm.Button>
   );
 };
