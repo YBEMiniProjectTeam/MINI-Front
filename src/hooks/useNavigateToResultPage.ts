@@ -4,11 +4,7 @@ export const useNavigateToResultPage = () => {
   const navigate = useNavigate();
 
   const navigateToResultPage = (category: string) => {
-    navigate('/searchResult', {
-      state: {
-        category: category
-      }
-    });
+    navigate(`/searchResult?category=${category}`);
   };
 
   return {
