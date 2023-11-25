@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Slider from "react-slick";
 
 export const SingleViewWrapper = styled.div`
   padding: 16px 0px 0px;
@@ -62,11 +63,12 @@ export const SwiperWrapper = styled.div`
 
 const ArrowButtonWrapper = styled.button`
   border-radius: 50%;
-  padding: 0.25rem;
-  display: flex;
   position: absolute;
   top: 50%;
   z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &:hover {
     cursor: pointer;
@@ -84,10 +86,27 @@ export const RightArrowButtonWrapper = styled(ArrowButtonWrapper)`
   transform: translate(50%, -50%);
 `;
 
+export const StyledSlider = styled(Slider)`
+  max-width: 768px; 
+
+  .slick-prev::before,
+  .slick-next::before {
+    opacity: 0;
+    display: none;
+  }
+`;
+
 export const SwiperItem = styled.div`
-  flex: 0 0 calc(684px + 10px); 
-  margin: 0 12px;
-  position: relative;
+  &:hover {
+    cursor: pointer;
+  }
+
+  img {
+    width: 696px;
+    height: 480px;
+    object-fit: cover;
+    outline: none;
+  }
 `;
 
 export const InformationWrapper = styled.div`
