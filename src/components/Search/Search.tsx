@@ -40,12 +40,12 @@ const Search = ({ keyword, category }: SearchProps) => {
   } = useDisclosure();
 
   const [selectedDistrict, setSelectedDistrict] = useState<string>("");
-  const [selectedDate, setSelectedDate] = useState<string[] | undefined>([]);
+  const [selectedDate, setSelectedDate] = useState<string[] | null>([]);
   const [accommodationName, setAccommodationName] = useState<string>(
     keyword ? keyword : ""
   );
-  const [startDate, setStartDate] = useState<string | undefined>("");
-  const [endDate, setEndDate] = useState<string | undefined>("");
+  const [startDate, setStartDate] = useState<string | null>("");
+  const [endDate, setEndDate] = useState<string | null>("");
   const [selectedCategory, setSelectedCategory] = useState<string>(
     category ? category : ""
   );

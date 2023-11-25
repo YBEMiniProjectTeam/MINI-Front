@@ -1,7 +1,7 @@
 // 2023. 11. 24. -> 2023-11-24
-export function convertDateFormat3(inputDate?: string): string | undefined{
+export function convertDateFormat3(inputDate?: string): string | null{
     if (!inputDate) {
-        return;
+        return null;
     }
 
     const dateParts = inputDate.split('.').map(part => parseInt(part.trim(), 10));
