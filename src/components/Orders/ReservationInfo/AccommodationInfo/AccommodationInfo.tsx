@@ -1,9 +1,8 @@
-import React from "react";
 import * as styles from "./AccommodationInfo.styles";
 import { LiaUserFriendsSolid } from "react-icons/lia";
 import { AccommodationInfoProps } from "./AccommodationInfo.types";
 
-const AccommodationInfo: React.FC<AccommodationInfoProps> = ({ dummyData }) => {
+const AccommodationInfo = ({ dummyData }: AccommodationInfoProps) => {
   return (
     <>
       <styles.HotelName>{dummyData.hotelName}</styles.HotelName>

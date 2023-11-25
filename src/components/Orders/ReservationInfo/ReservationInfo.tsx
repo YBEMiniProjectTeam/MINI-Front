@@ -1,11 +1,7 @@
-import React from "react";
 import * as styles from "./ReservationInfo.styles.ts";
-import { ReservationInfoProps } from "./ReservationInfo.types";
+import type { ReservationInfoProps } from "./ReservationInfo.types";
 
-const ReservationInfo: React.FC<ReservationInfoProps> = ({
-  children,
-  dummyData
-}) => {
+const ReservationInfo = ({ children, dummyData }: ReservationInfoProps) => {
   return (
     <styles.Container>
       <styles.TopContainer>{children}</styles.TopContainer>

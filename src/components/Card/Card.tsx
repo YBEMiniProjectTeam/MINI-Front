@@ -1,8 +1,7 @@
-import React from "react";
 import * as styles from "./Card.styles.ts";
-import { CardProps } from "./Card.types.ts";
+import type { CardProps } from "./Card.types.ts";
 
-const Card: React.FC<CardProps> = ({ children }) => (
+const Card = ({ children }: CardProps) => (
   <styles.CardContainer>{children}</styles.CardContainer>
 );
 

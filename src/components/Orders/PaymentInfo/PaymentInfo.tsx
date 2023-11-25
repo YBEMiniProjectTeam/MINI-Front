@@ -1,8 +1,7 @@
-import React from "react";
-import * as styles from "./PaymentSummary.styles";
-import type { PaymentSummaryProps } from "./PaymentSummary.types";
+import * as styles from "./PaymentInfo.styles";
+import type { PaymentInfoProps } from "./PaymentInfo.types";
 
-const PaymentSummary: React.FC<PaymentSummaryProps> = ({ data, price }) => {
+const PaymentSummary = ({ data, price }: PaymentInfoProps) => {
   const calculateTotal = () => {
     return data?.reduce((total, item) => {
       if (typeof item.value === "number") {

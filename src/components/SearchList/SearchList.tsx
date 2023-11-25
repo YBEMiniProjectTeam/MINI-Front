@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as styles from "./SearchList.styles";
-import { Product } from "./SearchList.types";
+import type { Product } from "./SearchList.types";
 import { Box, Image, Icon, Tag, Text, Spinner } from "@chakra-ui/react";
 import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa";

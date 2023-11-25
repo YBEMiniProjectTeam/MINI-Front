@@ -1,10 +1,10 @@
-import React from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import * as styles from "./TermsAgreementField.styles";
+import { useState } from "react";
 
-const TermsAgreementField: React.FC = () => {
+const TermsAgreementField = () => {
   const { control } = useFormContext();
-  const [checkedItems, setCheckedItems] = React.useState([false, false]);
+  const [checkedItems, setCheckedItems] = useState([false, false]);
 
   const allChecked = checkedItems.every(Boolean);
 

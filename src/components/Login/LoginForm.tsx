@@ -2,7 +2,7 @@ import { useState } from "react";
 import * as S from "./LoginStyles";
 import { FormControl, FormHelperText, Input, Button } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { Login } from "./Login.types";
+import type { Login } from "./Login.types";
 import { LoginApi } from "@api/login/LoginApi";
 export const LoginForm = (): JSX.Element => {
   const [email, setEmail] = useState("");

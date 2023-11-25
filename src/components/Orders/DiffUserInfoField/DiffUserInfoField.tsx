@@ -1,8 +1,7 @@
-import React from "react";
 import { useFormContext } from "react-hook-form";
 import CustomForm from "@components/CustomForm/CustomForm";
 
-const DiffUserInfoField: React.FC = () => {
+const DiffUserInfoField = () => {
   const { control } = useFormContext();
 
   return (

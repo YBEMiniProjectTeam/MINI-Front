@@ -3,7 +3,7 @@ import * as styles from "./CompletePayment.styles";
 import Card from "@components/Card/Card";
 import ReservationInfo from "@components/Orders/ReservationInfo/ReservationInfo.tsx";
 import SuccessMark from "@components/CompletePayment/SuccessCheck.tsx";
-import PaymentSummary from "@components/Orders/PaymentSummary/PaymentSummary.tsx";
+import PaymentSummary from "@components/Orders/PaymentInfo/PaymentInfotsx";
 import { useCompletePayment } from "@hooks/useCompletePaymentQuery.ts";
 import CustomForm from "@components/CustomForm/CustomForm.tsx";
 import { useNavigate } from "react-router-dom";

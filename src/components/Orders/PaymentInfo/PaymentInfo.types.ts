@@ -1,4 +1,4 @@
-export interface PaymentSummaryProps {
+export interface PaymentInfoProps {
   data?: {
     label: string;
     value: number | string;

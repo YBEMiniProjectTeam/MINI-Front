@@ -1,8 +1,7 @@
-import React from "react";
 import Lottie from "lottie-react";
 import successCheckLottie from "@assets/lottie/success_check.json";
 
-const SuccessMark: React.FC = () => {
+const SuccessMark = () => {
   return (
     <Lottie
       animationData={successCheckLottie}

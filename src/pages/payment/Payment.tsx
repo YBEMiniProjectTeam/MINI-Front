@@ -5,7 +5,7 @@ import * as styles from "./Payment.styles";
 import DiffUserInfoField from "@components/Orders/DiffUserInfoField/DiffUserInfoField.tsx";
 import ReservationInfo from "@components/Orders/ReservationInfo/ReservationInfo.tsx";
 import UserInfoField from "@components/Orders/UserInfoField/UserInfoField.tsx";
-import PaymentSummary from "@components/Orders/PaymentSummary/PaymentSummary";
+import PaymentSummary from "@components/Orders/PaymentInfo/PaymentInfotsx";
 import Card from "@components/Card/Card";
 import TermsAgreementField from "@components/Orders/TermsAgreementField/TermsAgreementField.tsx";
 import PaymentSubmitButton from "@components/Orders/PaymentSubmitButton/PaymentSubmitButton.tsx";

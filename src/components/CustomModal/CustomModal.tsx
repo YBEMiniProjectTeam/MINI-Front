@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Modal,
   ModalOverlay,
@@ -7,15 +6,10 @@ import {
   ModalHeader,
   ModalBody
 } from "@chakra-ui/react";
-import { CustomModalType } from "./CustomModal.ts";
-import * as styles from "./CustomModal.styles.ts";
+import type { CustomModalType } from "./CustomModal";
+import * as styles from "./CustomModal.styles";
 
-const CustomModal: React.FC<CustomModalType> = ({
-  isOpen,
-  onClose,
-  children,
-  title
-}) => {
+const CustomModal = ({ isOpen, onClose, children, title }: CustomModalType) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xl" isCentered>
       <ModalOverlay />

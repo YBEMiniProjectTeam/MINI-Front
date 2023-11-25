@@ -1,8 +1,7 @@
-import React from "react";
 import * as styles from "./UserInfoField.styles";
 import { useUserInfo } from "@hooks/useUserInfoQuery";
 
-const UserInfoField: React.FC = () => {
+const UserInfoField = () => {
   const { data, isLoading } = useUserInfo();
 
   if (isLoading) return <div>Loading...</div>;
