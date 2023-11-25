@@ -2,16 +2,17 @@ import React, { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { Collapse } from "@chakra-ui/react";
 import * as styles from "./Payment.styles";
-import DiffUserInfoField from "@components/Orders/DiffUserInfoField/DiffUserInfoField.tsx";
-import ReservationInfo from "@components/Orders/ReservationInfo/ReservationInfo.tsx";
-import UserInfoField from "@components/Orders/UserInfoField/UserInfoField.tsx";
+import DiffUserInfoField from "@components/Orders/DiffUserInfoField/DiffUserInfoField";
+import ReservationInfo from "@components/Orders/ReservationInfo/ReservationInfo";
+import UserInfoField from "@components/Orders/UserInfoField/UserInfoField";
 import PaymentInfo from "@components/Orders/PaymentInfo/PaymentInfo";
 import Card from "@components/Card/Card";
-import TermsAgreementField from "@components/Orders/TermsAgreementField/TermsAgreementField.tsx";
-import PaymentSubmitButton from "@components/Orders/PaymentSubmitButton/PaymentSubmitButton.tsx";
+import TermsAgreementField from "@components/Orders/TermsAgreementField/TermsAgreementField";
+import PaymentSubmitButton from "@components/Orders/PaymentSubmitButton/PaymentSubmitButton";
 import AccommodationInfo from "@components/Orders/ReservationInfo/AccommodationInfo/AccommodationInfo";
-import { usePayment } from "@hooks/usePaymentQuery.ts";
+import { usePayment } from "@hooks/usePaymentQuery";
 import { useParams } from "react-router-dom";
+import { DevTool } from "@hookform/devtools";
 
 export const Payment: React.FC = () => {
   const methods = useForm({
@@ -65,6 +66,7 @@ export const Payment: React.FC = () => {
         </Card>
         <PaymentSubmitButton price={dummyData.price} />
       </FormProvider>
+      <DevTool control={methods.control} />
     </styles.Container>
   );
 };
