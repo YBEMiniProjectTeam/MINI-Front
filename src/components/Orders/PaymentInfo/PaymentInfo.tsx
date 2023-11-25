@@ -1,7 +1,7 @@
 import * as styles from "./PaymentInfo.styles";
 import type { PaymentInfoProps } from "./PaymentInfo.types";
 
-const PaymentSummary = ({ data, price }: PaymentInfoProps) => {
+const PaymentInfo = ({ data, price }: PaymentInfoProps) => {
   const calculateTotal = () => {
     return data?.reduce((total, item) => {
       if (typeof item.value === "number") {
@@ -39,4 +39,4 @@ const PaymentSummary = ({ data, price }: PaymentInfoProps) => {
   );
 };
 
-export default PaymentSummary;
+export default PaymentInfo;
