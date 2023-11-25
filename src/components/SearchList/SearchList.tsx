@@ -19,16 +19,15 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
     category
   );
 
-  if (!data) return null;
-
   if (error) {
     console.error("An error has occurred:", error.message);
-    return null;
   }
 
   useEffect(() => {
-    setSearchListData(data);
-    setIsWish(data.map((item: Product) => item.isWish));
+    if (data) {
+      setSearchListData(data);
+      setIsWish(data.map((item: Product) => item.isWish));
+    }
   }, [data]);
 
   const handleLikeClick = (index: number) => {
