@@ -23,13 +23,15 @@ const CustomInput = ({
   label,
   rules,
   placeholder,
-  helperText
+  helperText,
+  defaultValue
 }: CustomInputProps) => {
   return (
     <Controller
       name={name}
       control={control}
       rules={rules}
+      defaultValue={defaultValue}
       render={({ field, fieldState: { error } }) => (
         <FormControl isInvalid={!!error}>
           <FormLabel htmlFor={name}>{label}</FormLabel>

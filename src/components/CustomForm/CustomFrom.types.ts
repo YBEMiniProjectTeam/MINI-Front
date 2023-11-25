@@ -7,6 +7,7 @@ interface CustomInputProps {
   rules?: RegisterOptions;
   placeholder?: string;
   helperText?: string;
+  defaultValue?: string;
 }
 
 interface CustomSelectProps {
