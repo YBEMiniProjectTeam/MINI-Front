@@ -69,21 +69,21 @@ const ArrowButtonWrapper = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
 
   &:hover {
     cursor: pointer;
-    background: rgba(0, 0, 0, 0.07);
+    background: rgba(0, 0, 0, 0.05);
   }
 `;
 
 export const LeftArrowButtonWrapper = styled(ArrowButtonWrapper)`
   left: 12px;
-  transform: translate(-50%, -50%);
 `;
 
 export const RightArrowButtonWrapper = styled(ArrowButtonWrapper)`
   right: 12px;
-  transform: translate(50%, -50%);
 `;
 
 export const StyledSlider = styled(Slider)`
@@ -97,6 +97,8 @@ export const StyledSlider = styled(Slider)`
 `;
 
 export const SwiperItem = styled.div`
+  outline: none;
+  
   &:hover {
     cursor: pointer;
   }
@@ -105,7 +107,6 @@ export const SwiperItem = styled.div`
     width: 696px;
     height: 480px;
     object-fit: cover;
-    outline: none;
   }
 `;
 
@@ -157,5 +158,5 @@ export const InformationPriceTxt = styled.span`
   line-height: 16px;
   font-weight: 500;
   color: #4D4D4D;
+  font-size: 0.8rem;
 `;
-

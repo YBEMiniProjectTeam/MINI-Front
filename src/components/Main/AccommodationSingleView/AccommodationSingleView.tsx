@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import * as styled from './AccommodationSingleView.styles';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
-// 임시 데이터
+//
 const AccommodationData = [
   {
     imageUrl: "https://yaimg.yanolja.com/v5/2022/10/17/15/634d7563600ed4.17945107.jpg",
@@ -47,17 +47,17 @@ export const AccommodationSingleView = () => {
     speed: 500,
     slidesToShow: 1,
     centerMode: true,
-    centerPadding: "30px",
+    centerPadding: "28px",
     slidesToScroll: 1,
     beforeChange: (current: number, next: number) => setCurrentSlide(next),
     nextArrow: (
       <styled.RightArrowButtonWrapper>
-        <IoIosArrowForward color="black" size="2rem"/>
+        <IoIosArrowForward color="#4D4D4D" size="2rem"/>
       </styled.RightArrowButtonWrapper>
     ),
     prevArrow: (
       <styled.LeftArrowButtonWrapper>
-        <IoIosArrowBack color="black" size="2rem"/>
+        <IoIosArrowBack color="#4D4D4D" size="2rem"/>
       </styled.LeftArrowButtonWrapper>
     ),
   };
