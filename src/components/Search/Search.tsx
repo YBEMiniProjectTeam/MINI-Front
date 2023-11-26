@@ -24,6 +24,7 @@ import { convertDateFormat2 } from "@utils/convertDateFormat2";
 import { convertDateFormat3 } from "@/utils/convertDateFormat3";
 import ChooseRegionModal from "../ChooseRegionModal/ChooseRegionModal";
 import ChooseDateModal from "../ChooseDateModal/ChooseDateModal";
+import SearchList from "@components/SearchList/SearchList";
 import { useSearchList } from "@hooks/useSearchList";
 
 const Search = ({ keyword, category }: SearchProps) => {
@@ -56,7 +57,8 @@ const Search = ({ keyword, category }: SearchProps) => {
     selectedDistrict,
     startDate,
     endDate,
-    selectedCategory
+    selectedCategory,
+    1
   );
 
   useEffect(() => {
@@ -207,6 +209,12 @@ const Search = ({ keyword, category }: SearchProps) => {
           검색하기
         </Button>
       </Stack>
+      <SearchList
+        keyword={keyword}
+        category={category}
+        startDate={startDate}
+        endDate={endDate}
+      />
     </>
   );
 };

@@ -6,8 +6,17 @@ import { Box, Image, Icon, Tag, Text, Spinner } from "@chakra-ui/react";
 import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa";
 import { useSearchList } from "@hooks/useSearchList";
+import { useNavigate } from "react-router-dom";
+import { converDateFormat4 } from "@/utils/converDateFormat4";
 
-const SearchList = ({ keyword, category }: SearchListProps) => {
+const SearchList = ({
+  keyword,
+  category,
+  startDate,
+  endDate
+}: SearchListProps) => {
+  const navigate = useNavigate();
+
   const [searchList, setSearchList] = useState<Accommodation[]>([]);
   const [page, setPage] = useState(1);
 
@@ -64,6 +73,14 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
     }
   };
 
+  const handleAccomodationClick = (id: number) => {
+    navigate(
+      `/products/${id}?startDate=${converDateFormat4(
+        startDate
+      )}&endDate=${converDateFormat4(endDate)}`
+    );
+  };
+
   return (
     <>
       {isLoading ? (
@@ -84,6 +101,7 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
             overflow="hidden"
             backgroundColor="#f7fcfc"
             mb="1rem"
+            onClick={() => handleAccomodationClick(accomodation.id)}
           >
             <styles.ImageWrapper>
               <Image
