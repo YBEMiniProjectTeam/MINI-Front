@@ -7,11 +7,13 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
-  useDisclosure
+  useDisclosure,
+  Button
 } from "@chakra-ui/react";
 import { IoBedOutline } from "react-icons/io5";
 import { BsPerson } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
+import { IoCartOutline } from "react-icons/io5";
 
 const ChooseRoom = (): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -63,20 +65,35 @@ const ChooseRoom = (): JSX.Element => {
             <Box
               as="button"
               display="flex"
+              justifyContent="flex-end"
               alignItems="center"
               gap="2px"
               color="#166FA7"
-              fontWeight={600}
+              // marginTop="8px"
+              fontWeight={700}
               onClick={onOpen}
             >
               객실 편의시설
               <IoIosArrowForward size="19px" />
             </Box>
-            <Flex flexDirection="column" alignItems="flex-end">
+            <Flex flexDirection="column" alignItems="flex-end" marginTop="20px">
               <Box fontSize="14px">숙박</Box>
               <Box fontSize="20px" fontWeight={800}>
                 110,000원
               </Box>
+            </Flex>
+            <Flex gap="10px">
+              <Box
+                as="button"
+                border="1px solid #D9D9D9"
+                borderRadius="5px"
+                padding="5px"
+              >
+                <IoCartOutline size="20px" />
+              </Box>
+              <Button size="sm" w="130px">
+                결제하기
+              </Button>
             </Flex>
           </Flex>
         </Box>
