@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRoomListQuery } from "@/hooks/useRoomListQuery";
 import ChooseRoom from "../ChooseRoom/ChooseRoom";
 import ChooseDateModal from "@/components/ChooseDateModal/ChooseDateModal";
 import { ChooseDetailTypes } from "./ChooseDetail.types";
@@ -15,12 +16,23 @@ const ChooseDetail = ({
     startDate,
     endDate
   ]);
-  const [personCount, setPersonCount] = useState<number>(2);
+  const [guestNum, setGuestNum] = useState<number>(2);
+
   const {
     isOpen: isOpenChooseDateModal,
     onOpen: onOpenChooseDateModal,
     onClose: onCloseChooseDateModal
   } = useDisclosure();
+
+  const { isLoading, isError, data, error } = useRoomListQuery(
+    startDate,
+    endDate,
+    guestNum
+  );
+
+  if (isLoading) {
+    return;
+  }
 
   useEffect(() => {
     setSelectedDate([startDate, endDate]);
@@ -33,8 +45,8 @@ const ChooseDetail = ({
         onClose={onCloseChooseDateModal}
         setSelectedDate={setSelectedDate}
         isFromSearchResult={false}
-        personCount={personCount}
-        setPersonCount={setPersonCount}
+        personCount={guestNum}
+        setPersonCount={setGuestNum}
       />
       <Box marginTop="10px">
         <Flex gap="10px">
@@ -71,7 +83,7 @@ const ChooseDetail = ({
             onClick={onOpenChooseDateModal}
           >
             <BsPeople />
-            {personCount}명
+            {guestNum}명
           </Box>
         </Flex>
       </Box>
