@@ -10,6 +10,13 @@ export const useSearchList = (
 ) => {
   return useQuery({
     queryKey: ["searchList"],
-    queryFn: () => getSearchList(accomodationName, selectedDistrict, startDate, endDate, category),
+    queryFn: () =>
+      getSearchList(
+        accomodationName,
+        selectedDistrict,
+        startDate,
+        endDate,
+        category
+      )
   });
 };
