@@ -7,7 +7,8 @@ export const useSearchList = (
   startDate: string | null,
   endDate: string | null,
   category: string | null,
-  page: number
+  pageNum: number,
+  pageSize: number
 ) => {
   return useQuery({
     queryKey: ["searchList"],
@@ -18,7 +19,8 @@ export const useSearchList = (
         startDate,
         endDate,
         category,
-        page
+        pageNum,
+        pageSize
       )
   });
 };

@@ -58,7 +58,8 @@ const Search = ({ keyword, category }: SearchProps) => {
     startDate,
     endDate,
     selectedCategory,
-    1
+    1,
+    10
   );
 
   useEffect(() => {
