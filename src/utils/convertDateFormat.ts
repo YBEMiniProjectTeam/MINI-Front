@@ -1,6 +1,7 @@
-export function convertDateFormat(inputDate?: string): string | undefined{
+// 2023. 11. 24. -> 11.24 (목)
+export function convertDateFormat(inputDate?: string): string | null{
     if (!inputDate) {
-        return;
+        return null;
     }
 
     const inputDateObj = new Date(inputDate);
