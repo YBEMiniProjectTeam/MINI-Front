@@ -1,3 +1,4 @@
+// 2023. 11. 24. -> 11.24
 export function convertDateFormat2(inputDate: string): string {
     const inputDateTime = new Date(inputDate);
   
@@ -8,4 +9,3 @@ export function convertDateFormat2(inputDate: string): string {
   
     return outputDate;
 }
-  

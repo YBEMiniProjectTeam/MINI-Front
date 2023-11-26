@@ -1,28 +1,34 @@
 import React, { useEffect, useState } from "react";
 import * as styles from "./SearchList.styles";
 import { Product } from "./SearchList.types";
+import { SearchListProps } from "./SearchList.types";
 import { Box, Image, Icon, Tag, Text, Spinner } from "@chakra-ui/react";
 import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa";
 import { useSearchList } from "@hooks/useSearchList";
 
-const SearchList = () => {
+const SearchList = ({ keyword, category }: SearchListProps) => {
   const [searchListData, setSearchListData] = useState<Product[]>([]);
   const [isWish, setIsWish] = useState<boolean[]>([]);
 
-  const { data, error, isLoading } = useSearchList();
-
-  if (!data) return null;
+  const { data, error, isLoading } = useSearchList(
+    keyword,
+    null,
+    null,
+    null,
+    category
+  );
 
   if (error) {
     console.error("An error has occurred:", error.message);
-    return null;
   }
 
   useEffect(() => {
-    setSearchListData(data);
-    setIsWish(data.map((item: Product) => item.isWish));
-  }, []);
+    if (data) {
+      setSearchListData(data);
+      setIsWish(data.map((item: Product) => item.isWish));
+    }
+  }, [data]);
 
   const handleLikeClick = (index: number) => {
     const updatedIsLiked = [...isWish];

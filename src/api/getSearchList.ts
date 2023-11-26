@@ -1,7 +1,14 @@
 import axios from "axios";
+import { API_BASE_URL } from "./config";
 
-export const getSearchList = async () =>{
-    const GET_SEARCH_LIST_URL = "https://cca6d5da-811b-445f-8811-62cab12d0157.mock.pstmn.io/accommodations?region=1&district=1&date=2023-11-20";
+export const getSearchList = async (
+    accomodationName: string | null,
+    selectedDistrict: string | null,
+    startDate: string | null,
+    endDate: string | null,
+    category: string | null
+) => {
+    const GET_SEARCH_LIST_URL = `${API_BASE_URL}/accommodations?accomodationName=${accomodationName}&selectedDistrict=${selectedDistrict}&startDate=${startDate}&endDate=${endDate}&category=${category}`;
 
     const response = await axios.get(GET_SEARCH_LIST_URL);
 
