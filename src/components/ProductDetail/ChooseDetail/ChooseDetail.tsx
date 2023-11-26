@@ -1,19 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ChooseRoom from "../ChooseRoom/ChooseRoom";
 import ChooseDateModal from "@/components/ChooseDateModal/ChooseDateModal";
+import { ChooseDetailTypes } from "./ChooseDetail.types";
 import { Box, Flex, useDisclosure } from "@chakra-ui/react";
 import { CiCalendar } from "react-icons/ci";
 import { BsPeople } from "react-icons/bs";
 import { convertDateFormat } from "@/utils/convertDateFormat";
 
-const ChooseDetail = (): JSX.Element => {
-  const [selectedDate, setSelectedDate] = useState<string[] | null>([]);
+const ChooseDetail = ({
+  startDate,
+  endDate
+}: ChooseDetailTypes): JSX.Element => {
+  const [selectedDate, setSelectedDate] = useState<string[] | null>([
+    startDate,
+    endDate
+  ]);
   const [personCount, setPersonCount] = useState<number>(2);
   const {
     isOpen: isOpenChooseDateModal,
     onOpen: onOpenChooseDateModal,
     onClose: onCloseChooseDateModal
   } = useDisclosure();
+
+  useEffect(() => {
+    setSelectedDate([startDate, endDate]);
+  }, [startDate, endDate]);
 
   return (
     <>

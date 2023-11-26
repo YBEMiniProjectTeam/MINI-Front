@@ -2,12 +2,18 @@ import Image from "@components/ProductDetail/Image/Image";
 import WishListButton from "@components/ProductDetail/WishListButton/WishListButton";
 import ChooseDetail from "@components/ProductDetail/ChooseDetail/ChooseDetail";
 import Map from "@components/ProductDetail/Map/Map";
+import { useSearchParams } from "react-router-dom";
 import { useAccomodationQuery } from "@/hooks/useAccomodationQuery";
 import { Flex, Box, Divider } from "@chakra-ui/react";
 import { IoLocationOutline } from "react-icons/io5";
 
 export const ProductDetail: React.FC = () => {
-  const { isLoading, isError, data, error } = useAccomodationQuery(1);
+  const [searchParams] = useSearchParams();
+  const id = searchParams.get("id");
+  const startDate = searchParams.get("startDate");
+  const endDate = searchParams.get("endDate");
+
+  const { isLoading, isError, data, error } = useAccomodationQuery(Number(id));
 
   if (isLoading) {
     return;
@@ -50,7 +56,10 @@ export const ProductDetail: React.FC = () => {
           세금 / 봉사료 포함
         </Box>
       </Flex>
-      <ChooseDetail />
+      <ChooseDetail
+        startDate={startDate || Date()}
+        endDate={endDate || Date()}
+      />
       <Divider margin="40px 0" borderColor="#D9D9D9" />
       <Flex flexDir="column" alignItems="flex-start" gap="5px">
         <Box fontSize="26px" fontWeight={700}>
