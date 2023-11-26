@@ -1,27 +1,29 @@
-import React, { useState, useEffect } from "react";
-import getAccomodationInfo from "@api/accomodation/getAccomodationInfo";
 import Image from "@components/ProductDetail/Image/Image";
 import WishListButton from "@components/ProductDetail/WishListButton/WishListButton";
 import ChooseDetail from "@components/ProductDetail/ChooseDetail/ChooseDetail";
 import ChooseRoom from "@components/ProductDetail/ChooseRoom/ChooseRoom";
 import Map from "@components/ProductDetail/Map/Map";
-import { Accomodation } from "./ProductDetail.types";
+import { useAccomodationQuery } from "@/hooks/useAccomodationQuery";
 import { Flex, Box, Divider } from "@chakra-ui/react";
 import { IoLocationOutline } from "react-icons/io5";
 
 export const ProductDetail: React.FC = () => {
-  const [accomodationInfo, setAccomodationInfo] = useState<Accomodation>();
-  const images = accomodationInfo?.accomodation_image || [];
-  const { type, name } = accomodationInfo || {};
+  const { isLoading, isError, data, error } = useAccomodationQuery(1);
 
-  useEffect(() => {
-    const fetchData = async (): Promise<void> => {
-      const data = await getAccomodationInfo();
-      setAccomodationInfo(data);
-    };
+  if (isLoading) {
+    return;
+  }
 
-    fetchData();
-  }, []);
+  const { accommodation_image: images, description, isWish, name, type } = data;
+  const {
+    address,
+    cooking,
+    description: desc,
+    latitude,
+    longitude,
+    others,
+    parking
+  } = description;
 
   return (
     <Box w="720px">
@@ -65,10 +67,10 @@ export const ProductDetail: React.FC = () => {
           marginBottom="5px"
         >
           <IoLocationOutline />
-          경상남도 남해군 설천면 노량로 194
+          {address}
         </Flex>
       </Flex>
-      <Map lat={34.93929248} lng={127.8740927} />
+      <Map lat={Number(latitude)} lng={Number(longitude)} />
     </Box>
   );
 };
