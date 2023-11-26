@@ -6,7 +6,8 @@ export const useSearchList = (
   selectedDistrict: string | null,
   startDate: string | null,
   endDate: string | null,
-  category: string | null
+  category: string | null,
+  page: number
 ) => {
   return useQuery({
     queryKey: ["searchList"],
@@ -16,7 +17,8 @@ export const useSearchList = (
         selectedDistrict,
         startDate,
         endDate,
-        category
+        category,
+        page
       )
   });
 };

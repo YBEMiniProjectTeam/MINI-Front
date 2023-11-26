@@ -6,11 +6,12 @@ export const getSearchList = async (
   selectedDistrict: string | null,
   startDate: string | null,
   endDate: string | null,
-  category: string | null
+  category: string | null,
+  page: number
 ) => {
-  const GET_SEARCH_LIST_URL = `${API_BASE_URL}/accommodations?accomodationName=${accomodationName}&selectedDistrict=${selectedDistrict}&startDate=${startDate}&endDate=${endDate}&category=${category}`;
+  const GET_SEARCH_LIST_URL = `${API_BASE_URL}/accommodations?accomodationName=${accomodationName}&selectedDistrict=${selectedDistrict}&startDate=${startDate}&endDate=${endDate}&category=${category}&page=${page}`;
 
   const response = await axios.get(GET_SEARCH_LIST_URL);
 
-  return response.data.data.accomodations;
+  return response.data.data;
 };

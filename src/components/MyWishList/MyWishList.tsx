@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import * as styles from "./MyWishList.styles";
-import { Product } from "@components/SearchList/SearchList.types";
+import { Accommodation } from "@components/SearchList/SearchList.types";
 import { useWishList } from "@/hooks/useWishLIst";
 import { Box, Image, Icon, Tag, Text, Spinner } from "@chakra-ui/react";
 import { FaHeart } from "react-icons/fa";
 
 const MyWishList = () => {
-  const [wishList, setWishList] = useState<Product[]>([]);
+  const [wishList, setWishList] = useState<Accommodation[]>([]);
 
   const { data, error, isLoading } = useWishList();
 
@@ -16,7 +16,7 @@ const MyWishList = () => {
 
   useEffect(() => {
     if (data) {
-      setWishList(data?.filter((item: Product) => item.isWish));
+      setWishList(data?.filter((item: Accommodation) => item.isWish));
     }
   }, [data]);
 
@@ -37,9 +37,9 @@ const MyWishList = () => {
           size="md"
         />
       ) : (
-        wishList?.map((product, index) => (
+        wishList?.map((accomodation, index) => (
           <Box
-            key={product.id}
+            key={accomodation.id}
             width="100%"
             border="1px"
             borderColor="gray.200"
@@ -49,7 +49,7 @@ const MyWishList = () => {
           >
             <styles.ImageWrapper>
               <Image
-                src={product.url}
+                src={accomodation.url}
                 alt="이미지"
                 width="100%"
                 height="15rem"
@@ -77,7 +77,7 @@ const MyWishList = () => {
                 bottom="1rem"
                 left="1rem"
               >
-                {product.type}
+                {accomodation.type}
               </Tag>
             </styles.ImageWrapper>
 
@@ -93,7 +93,7 @@ const MyWishList = () => {
                 lineHeight="21px"
                 fontWeight="700"
               >
-                {product.name}
+                {accomodation.name}
               </Box>
 
               <Box
@@ -113,7 +113,7 @@ const MyWishList = () => {
                   fontWeight="700"
                   mr="0.3rem"
                 >
-                  {product.price}
+                  {accomodation.price}
                 </Text>
                 <Text>원</Text>
               </Box>

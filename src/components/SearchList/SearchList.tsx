@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as styles from "./SearchList.styles";
-import { Product } from "./SearchList.types";
+import { Accommodation } from "./SearchList.types";
 import { SearchListProps } from "./SearchList.types";
 import { Box, Image, Icon, Tag, Text, Spinner } from "@chakra-ui/react";
 import { CiHeart } from "react-icons/ci";
@@ -8,14 +8,16 @@ import { FaHeart } from "react-icons/fa";
 import { useSearchList } from "@hooks/useSearchList";
 
 const SearchList = ({ keyword, category }: SearchListProps) => {
-  const [searchList, setSearchList] = useState<Product[]>([]);
+  const [searchList, setSearchList] = useState<Accommodation[]>([]);
+  const [page, setPage] = useState(1);
 
-  const { data, error, isLoading } = useSearchList(
+  const { data, error, isLoading, refetch } = useSearchList(
     keyword,
     null,
     null,
     null,
-    category
+    category,
+    page
   );
 
   if (error) {
@@ -23,8 +25,18 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
   }
 
   useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
     if (data) {
-      setSearchList(data);
+      setSearchList((prevSearchList) => [
+        ...prevSearchList,
+        ...data.data.accomodations
+      ]);
     }
   }, [data]);
 
@@ -41,6 +53,17 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
     // post 요청 필요
   };
 
+  const handleScroll = () => {
+    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+
+    if (scrollTop + clientHeight >= scrollHeight - 10) {
+      if (!data.data.last) {
+        setPage((prevPage) => prevPage + 1);
+        refetch();
+      }
+    }
+  };
+
   return (
     <>
       {isLoading ? (
@@ -52,9 +75,9 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
           size="md"
         />
       ) : (
-        searchList?.map((product, index) => (
+        searchList?.map((accomodation, index) => (
           <Box
-            key={product.id}
+            key={accomodation.id}
             width="100%"
             border="1px"
             borderColor="gray.200"
@@ -64,14 +87,14 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
           >
             <styles.ImageWrapper>
               <Image
-                src={product.url}
+                src={accomodation.url}
                 alt="이미지"
                 width="100%"
                 height="15rem"
                 objectFit="cover"
                 position="relative"
               />
-              {product.isWish ? (
+              {accomodation.isWish ? (
                 <Icon
                   as={FaHeart}
                   position="absolute"
@@ -105,7 +128,7 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
                 bottom="1rem"
                 left="1rem"
               >
-                {product.type}
+                {accomodation.type}
               </Tag>
             </styles.ImageWrapper>
 
@@ -121,7 +144,7 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
                 lineHeight="21px"
                 fontWeight="700"
               >
-                {product.name}
+                {accomodation.name}
               </Box>
 
               <Box
@@ -141,7 +164,7 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
                   fontWeight="700"
                   mr="0.3rem"
                 >
-                  {product.price}
+                  {accomodation.price}
                 </Text>
                 <Text>원</Text>
               </Box>
