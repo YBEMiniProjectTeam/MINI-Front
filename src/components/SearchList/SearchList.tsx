@@ -8,8 +8,7 @@ import { FaHeart } from "react-icons/fa";
 import { useSearchList } from "@hooks/useSearchList";
 
 const SearchList = ({ keyword, category }: SearchListProps) => {
-  const [searchListData, setSearchListData] = useState<Product[]>([]);
-  const [isWish, setIsWish] = useState<boolean[]>([]);
+  const [searchList, setSearchList] = useState<Product[]>([]);
 
   const { data, error, isLoading } = useSearchList(
     keyword,
@@ -25,15 +24,20 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
 
   useEffect(() => {
     if (data) {
-      setSearchListData(data);
-      setIsWish(data.map((item: Product) => item.isWish));
+      setSearchList(data);
     }
   }, [data]);
 
   const handleLikeClick = (index: number) => {
-    const updatedIsLiked = [...isWish];
-    updatedIsLiked[index] = !updatedIsLiked[index];
-    setIsWish(updatedIsLiked);
+    const updatedSearchList = [...searchList];
+
+    updatedSearchList[index] = {
+      ...updatedSearchList[index],
+      isWish: !updatedSearchList[index].isWish
+    };
+
+    setSearchList(updatedSearchList);
+
     // post 요청 필요
   };
 
@@ -48,7 +52,7 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
           size="md"
         />
       ) : (
-        searchListData?.map((product, index) => (
+        searchList?.map((product, index) => (
           <Box
             key={product.id}
             width="100%"
@@ -67,7 +71,7 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
                 objectFit="cover"
                 position="relative"
               />
-              {isWish[index] ? (
+              {product.isWish ? (
                 <Icon
                   as={FaHeart}
                   position="absolute"
