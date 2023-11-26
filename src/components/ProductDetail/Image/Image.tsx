@@ -15,9 +15,9 @@ import {
 const Image = ({ images }: ImageProps): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const imageUrl1 = images[0]?.url;
-  const imageUrl2 = images[1]?.url;
-  const imageUrl3 = images[2]?.url;
+  const imageUrl1 = images[0];
+  const imageUrl2 = images[1];
+  const imageUrl3 = images[2];
 
   return (
     <Box w="100%" p={0} margin="0 auto">
