@@ -1,7 +1,6 @@
 import Image from "@components/ProductDetail/Image/Image";
 import WishListButton from "@components/ProductDetail/WishListButton/WishListButton";
 import ChooseDetail from "@components/ProductDetail/ChooseDetail/ChooseDetail";
-import ChooseRoom from "@components/ProductDetail/ChooseRoom/ChooseRoom";
 import Map from "@components/ProductDetail/Map/Map";
 import { useAccomodationQuery } from "@/hooks/useAccomodationQuery";
 import { Flex, Box, Divider } from "@chakra-ui/react";
@@ -52,7 +51,6 @@ export const ProductDetail: React.FC = () => {
         </Box>
       </Flex>
       <ChooseDetail />
-      <ChooseRoom />
       <Divider margin="40px 0" borderColor="#D9D9D9" />
       <Flex flexDir="column" alignItems="flex-start" gap="5px">
         <Box fontSize="26px" fontWeight={700}>

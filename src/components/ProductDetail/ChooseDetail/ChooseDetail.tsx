@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ChooseRoom from "../ChooseRoom/ChooseRoom";
 import ChooseDateModal from "@/components/ChooseDateModal/ChooseDateModal";
 import { Box, Flex, useDisclosure } from "@chakra-ui/react";
 import { CiCalendar } from "react-icons/ci";
@@ -6,7 +7,8 @@ import { BsPeople } from "react-icons/bs";
 import { convertDateFormat } from "@/utils/convertDateFormat";
 
 const ChooseDetail = (): JSX.Element => {
-  const [selectedDate, setSelectedDate] = useState<string[] | undefined>([]);
+  const [selectedDate, setSelectedDate] = useState<string[] | null>([]);
+  const [personCount, setPersonCount] = useState<number>(2);
   const {
     isOpen: isOpenChooseDateModal,
     onOpen: onOpenChooseDateModal,
@@ -20,6 +22,8 @@ const ChooseDetail = (): JSX.Element => {
         onClose={onCloseChooseDateModal}
         setSelectedDate={setSelectedDate}
         isFromSearchResult={false}
+        personCount={personCount}
+        setPersonCount={setPersonCount}
       />
       <Box marginTop="10px">
         <Flex gap="10px">
@@ -56,10 +60,11 @@ const ChooseDetail = (): JSX.Element => {
             onClick={onOpenChooseDateModal}
           >
             <BsPeople />
-            2명
+            {personCount}명
           </Box>
         </Flex>
       </Box>
+      <ChooseRoom />
     </>
   );
 };
