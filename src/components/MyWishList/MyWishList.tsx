@@ -4,21 +4,38 @@ import { Accommodation } from "@components/SearchList/SearchList.types";
 import { useWishList } from "@/hooks/useWishLIst";
 import { Box, Image, Icon, Tag, Text, Spinner } from "@chakra-ui/react";
 import { FaHeart } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const MyWishList = () => {
-  const [wishList, setWishList] = useState<Accommodation[]>([]);
+  const navigate = useNavigate();
 
-  const { data, error, isLoading } = useWishList();
+  const [wishList, setWishList] = useState<Accommodation[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+
+  const { data, error, isLoading, refetch } = useWishList(page, 10);
 
   if (error) {
     console.error("An error has occurred:", error.message);
   }
 
   useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    document.documentElement.scrollTop = 0;
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
     if (data) {
       setWishList(data?.filter((item: Accommodation) => item.isWish));
+      setTotalPage(data.total_pages);
+      setIsLoadingMore(false);
     }
-  }, [data]);
+  }, [data, setWishList, setTotalPage, setIsLoadingMore]);
 
   const handleLikeClick = (index: number) => {
     const updatedWishList = wishList.filter((item, i) => i !== index);
@@ -26,16 +43,36 @@ const MyWishList = () => {
     setWishList(updatedWishList);
   };
 
+  const handleScroll = () => {
+    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+
+    if (scrollTop + clientHeight >= scrollHeight - 50) {
+      // total page null인 현상 해결 필요
+      if (page < 1000) {
+        setPage((prevPage) => prevPage + 1);
+        setIsLoadingMore(true);
+
+        refetch();
+      }
+    }
+  };
+
+  const handleAccomodationClick = (id: number) => {
+    navigate(`/products/${id}`);
+  };
+
   return (
     <>
       {isLoading ? (
-        <Spinner
-          thickness="2px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="#db074a"
-          size="md"
-        />
+        <styles.SpinnerWrapper>
+          <Spinner
+            thickness="2px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="#db074a"
+            size="md"
+          />
+        </styles.SpinnerWrapper>
       ) : (
         wishList?.map((accomodation, index) => (
           <Box
@@ -46,15 +83,19 @@ const MyWishList = () => {
             overflow="hidden"
             backgroundColor="#f7fcfc"
             mb="1rem"
+            onClick={() => handleAccomodationClick(accomodation.id)}
           >
             <styles.ImageWrapper>
               <Image
-                src={accomodation.url}
+                src={accomodation.thumbnail}
                 alt="이미지"
                 width="100%"
                 height="15rem"
                 objectFit="cover"
                 position="relative"
+                userSelect="none"
+                cursor="pointer"
+                onClick={() => handleAccomodationClick(accomodation.id)}
               />
 
               <Icon
@@ -66,22 +107,31 @@ const MyWishList = () => {
                 height="1.5rem"
                 color="red"
                 cursor="pointer"
+                zIndex="1000"
                 onClick={() => handleLikeClick(index)}
               />
 
-              <Tag
-                size="md"
-                variant="outline"
-                color="white"
-                position="absolute"
-                bottom="1rem"
-                left="1rem"
-              >
-                {accomodation.type}
-              </Tag>
+              {accomodation.type !== "NOT_CLASSIFIED" && (
+                <Tag
+                  size="md"
+                  variant="outline"
+                  color="white"
+                  position="absolute"
+                  bottom="1rem"
+                  left="1rem"
+                  userSelect="none"
+                >
+                  {accomodation.type}
+                </Tag>
+              )}
             </styles.ImageWrapper>
 
-            <Box pt="14px" pb="14px" ml="1rem">
+            <Box
+              pt="14px"
+              pb="14px"
+              ml="1rem"
+              onClick={() => handleAccomodationClick(accomodation.id)}
+            >
               <Box
                 overflow="hidden"
                 whiteSpace="nowrap"
@@ -113,14 +163,27 @@ const MyWishList = () => {
                   fontWeight="700"
                   mr="0.3rem"
                 >
-                  {accomodation.price}
+                  {accomodation.min_price !== 0
+                    ? accomodation.min_price
+                    : "정보 없음"}
                 </Text>
-                <Text>원</Text>
+                <Text>{accomodation.min_price !== 0 ? "원" : ""}</Text>
               </Box>
             </Box>
           </Box>
         ))
       )}
+      {isLoadingMore ? (
+        <styles.SpinnerWrapper>
+          <Spinner
+            thickness="2px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="#db074a"
+            size="md"
+          />
+        </styles.SpinnerWrapper>
+      ) : null}
     </>
   );
 };

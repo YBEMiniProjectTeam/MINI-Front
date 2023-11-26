@@ -52,7 +52,6 @@ const SearchList = ({
         ...data.accommodations
       ]);
       setTotalPage(data.total_pages);
-
       setIsLoadingMore(false);
     }
   }, [data, setSearchList, setTotalPage, setIsLoadingMore]);
