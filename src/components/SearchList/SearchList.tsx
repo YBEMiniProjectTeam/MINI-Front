@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import * as styles from "./SearchList.styles";
 import { Product } from "./SearchList.types";
 import { SearchListProps } from "./SearchList.types";
@@ -11,12 +11,19 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
   const [searchListData, setSearchListData] = useState<Product[]>([]);
   const [isWish, setIsWish] = useState<boolean[]>([]);
 
-  const { data, error, isLoading } = useSearchList(
+  const [searchList, setSearchList] = useState<Accommodation[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+
+  const { data, error, isLoading, refetch } = useSearchList(
     keyword,
     null,
     null,
     null,
-    category
+    category,
+    page,
+    10
   );
 
   if (error) {
@@ -24,11 +31,25 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
   }
 
   useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    document.documentElement.scrollTop = 0;
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
     if (data) {
-      setSearchListData(data);
-      setIsWish(data.map((item: Product) => item.isWish));
+      setSearchList((prevSearchList) => [
+        ...prevSearchList,
+        ...data.accommodations
+      ]);
+      setTotalPage(data.total_pages);
+
+      setIsLoadingMore(false);
     }
-  }, [data]);
+  }, [data, setSearchList, setTotalPage, setIsLoadingMore]);
 
   const handleLikeClick = (index: number) => {
     const updatedIsLiked = [...isWish];
@@ -37,20 +58,44 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
     // post 요청 필요
   };
 
+  const handleScroll = () => {
+    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+
+    if (scrollTop + clientHeight >= scrollHeight - 50) {
+      // total page null인 현상 해결 필요
+      if (page < 1000) {
+        setPage((prevPage) => prevPage + 1);
+        setIsLoadingMore(true);
+
+        refetch();
+      }
+    }
+  };
+
+  const handleAccomodationClick = (id: number) => {
+    navigate(
+      `/products/${id}?startDate=${converDateFormat4(
+        startDate
+      )}&endDate=${converDateFormat4(endDate)}`
+    );
+  };
+
   return (
     <>
       {isLoading ? (
-        <Spinner
-          thickness="2px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="#db074a"
-          size="md"
-        />
+        <styles.SpinnerWrapper>
+          <Spinner
+            thickness="2px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="#db074a"
+            size="md"
+          />
+        </styles.SpinnerWrapper>
       ) : (
         searchListData?.map((product, index) => (
           <Box
-            key={product.id}
+            key={index}
             width="100%"
             border="1px"
             borderColor="gray.200"
@@ -60,12 +105,15 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
           >
             <styles.ImageWrapper>
               <Image
-                src={product.url}
+                src={accomodation.thumbnail}
                 alt="이미지"
                 width="100%"
                 height="15rem"
                 objectFit="cover"
                 position="relative"
+                userSelect="none"
+                cursor="pointer"
+                onClick={() => handleAccomodationClick(accomodation.id)}
               />
               {isWish[index] ? (
                 <Icon
@@ -89,23 +137,33 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
                   height="2rem"
                   color="white"
                   cursor="pointer"
+                  zIndex="1000"
                   onClick={() => handleLikeClick(index)}
                 />
               )}
 
-              <Tag
-                size="md"
-                variant="outline"
-                color="white"
-                position="absolute"
-                bottom="1rem"
-                left="1rem"
-              >
-                {product.type}
-              </Tag>
+              {accomodation.type !== "NOT_CLASSIFIED" && (
+                <Tag
+                  size="md"
+                  variant="outline"
+                  color="white"
+                  position="absolute"
+                  bottom="1rem"
+                  left="1rem"
+                  userSelect="none"
+                >
+                  {accomodation.type}
+                </Tag>
+              )}
             </styles.ImageWrapper>
 
-            <Box pt="14px" pb="14px" ml="1rem">
+            <Box
+              pt="14px"
+              pb="14px"
+              ml="1rem"
+              onClick={() => handleAccomodationClick(accomodation.id)}
+              cursor="pointer"
+            >
               <Box
                 overflow="hidden"
                 whiteSpace="nowrap"
@@ -137,14 +195,27 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
                   fontWeight="700"
                   mr="0.3rem"
                 >
-                  {product.price}
+                  {accomodation.min_price !== 0
+                    ? accomodation.min_price
+                    : "정보 없음"}
                 </Text>
-                <Text>원</Text>
+                <Text>{accomodation.min_price !== 0 ? "원" : ""}</Text>
               </Box>
             </Box>
           </Box>
         ))
       )}
+      {isLoadingMore ? (
+        <styles.SpinnerWrapper>
+          <Spinner
+            thickness="2px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="#db074a"
+            size="md"
+          />
+        </styles.SpinnerWrapper>
+      ) : null}
     </>
   );
 };

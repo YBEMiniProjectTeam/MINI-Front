@@ -1,11 +1,10 @@
-export interface Product {
-    description: string;
-    id: number;
-    isWish: boolean;
-    name: string;
-    price: number;
-    type: string;
-    url: string;
+export interface Accommodation {
+  id: number;
+  name: string;
+  type: string;
+  thumbnail: string;
+  min_price: number;
+  isWish: boolean;
 }
   
 export interface SearchListProps {
