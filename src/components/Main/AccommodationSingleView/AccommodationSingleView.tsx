@@ -5,6 +5,7 @@ import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { useSearchList } from "@/hooks/useSearchList";
 import { Spinner } from "@chakra-ui/react";
 import { Accommodation } from "../AccommodationGridView/AccommodationGridView.types";
+import { printCategory } from "@/utils/printCategory";
 
 export const AccommodationSingleView = () => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
@@ -47,31 +48,7 @@ export const AccommodationSingleView = () => {
 
   // console.log(data);
 
-  const printCategory = (type: string) => {
-    let category = '';
-
-    switch (type) {
-    case 'HOTEL':
-      category = '호텔';
-      break;
-    case 'RESORT':
-      category = '리조트';
-      break;
-    case 'MOTEL':
-      category = '모텔';
-      break;
-    case 'PENSION':
-      category = '펜션';
-      break;
-    default:
-      category = '';
-    }
-
-    return category;
-  };
-
   // TODO:
-  // 지역 response 추가
   // 쿼리 스트링 잘 되는지 확인
   // page num, size 결정
 
