@@ -37,6 +37,7 @@ interface CustomButtonProps {
   type?: "button" | "submit" | "reset";
   colorScheme?: string;
   width?: string | number;
+  disabled?: boolean;
 }
 
 export type {

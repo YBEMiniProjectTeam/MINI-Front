@@ -3,35 +3,42 @@ import { useForm, FormProvider } from "react-hook-form";
 import { Collapse } from "@chakra-ui/react";
 import * as styles from "./Payment.styles";
 import DiffUserInfoField from "@components/Orders/DiffUserInfoField/DiffUserInfoField.tsx";
-import ReservationInfo from "@components/Orders/ReservationInfo/ReservationInfo";
+import ReservationInfo from "@components/Orders/ReservationInfo/ReservationInfo.tsx";
 import UserInfoField from "@components/Orders/UserInfoField/UserInfoField.tsx";
-import PaymentSummary from "@components/Orders/PaymentSummary/PaymentSummary";
+import PaymentInfo from "@components/Orders/PaymentInfo/PaymentInfo";
 import Card from "@components/Card/Card";
 import TermsAgreementField from "@components/Orders/TermsAgreementField/TermsAgreementField.tsx";
 import PaymentSubmitButton from "@components/Orders/PaymentSubmitButton/PaymentSubmitButton.tsx";
+import AccommodationInfo from "@components/Orders/ReservationInfo/AccommodationInfo/AccommodationInfo";
+import { usePayment } from "@hooks/usePaymentQuery.ts";
+import { useParams } from "react-router-dom";
 
 export const Payment: React.FC = () => {
-  // const reservationData = location.state;
-  // const { roomId, name, price, capacity, capacityMax } = reservationData;
-
   const methods = useForm({
     mode: "onChange"
   });
-
   const [isDiffUser, setIsDiffUser] = useState(false);
 
   const handleCheckboxChange = (e) => {
     setIsDiffUser(e.target.checked);
   };
 
-  // if (isLoading) return <div>Loading...</div>;
-  // if (error) return <div>{error.message}</div>;
+  const { orderId } = useParams();
+  const { data, isLoading, error } = usePayment(orderId!);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  const dummyData = data?.rawData.data;
+  const reservationData = data?.reservationData;
 
   return (
     <styles.Container>
       <FormProvider {...methods}>
         <Card>
-          <ReservationInfo />
+          <ReservationInfo dummyData={dummyData}>
+            <AccommodationInfo dummyData={dummyData} />
+          </ReservationInfo>
           <styles.CardContent>
             <styles.Label>
               <span>예약자 정보</span>
@@ -43,7 +50,7 @@ export const Payment: React.FC = () => {
               </styles.StyledCheckBox>
             </styles.UserInfoWhenDiffWrapper>
             <Collapse in={isDiffUser} animateOpacity>
-              <DiffUserInfoField />
+              {isDiffUser && <DiffUserInfoField />}
             </Collapse>
           </styles.CardContent>
         </Card>
@@ -51,12 +58,12 @@ export const Payment: React.FC = () => {
           <styles.Label>
             <span>결제 금액</span>
           </styles.Label>
-          <PaymentSummary />
+          <PaymentInfo data={reservationData} />
         </Card>
         <Card>
           <TermsAgreementField />
         </Card>
-        <PaymentSubmitButton />
+        <PaymentSubmitButton price={dummyData.price} />
       </FormProvider>
     </styles.Container>
   );

@@ -6,18 +6,28 @@ import theme from "./theme/index";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { CookiesProvider } from "react-cookie";
+import initMockAPI from "@mocks/index.ts";
 
 const queryClient = new QueryClient();
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <QueryClientProvider client={queryClient}>
-    <ReactQueryDevtools initialIsOpen={true} />
+async function deferRender() {
+  if (!import.meta.env.DEV) {
+    return;
+  }
+  await initMockAPI();
+}
 
-    <ChakraProvider theme={theme}>
-      <CookiesProvider>
-        <GlobalStyles />
-        <App />
-      </CookiesProvider>
-    </ChakraProvider>
-  </QueryClientProvider>
-);
+deferRender().then(() => {
+  ReactDOM.createRoot(document.getElementById("root")!).render(
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={true} />
+
+      <ChakraProvider theme={theme}>
+        <CookiesProvider>
+          <GlobalStyles />
+          <App />
+        </CookiesProvider>
+      </ChakraProvider>
+    </QueryClientProvider>
+  );
+});

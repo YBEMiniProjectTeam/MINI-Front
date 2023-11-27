@@ -6,7 +6,7 @@ import { SearchResult } from "@pages/searchResult/SearchResult";
 import { ProductDetail } from "@pages/productDetail/ProductDetail";
 import { RoomDetail } from "@pages/roomDetail/RoomDetail.tsx";
 import { Payment } from "@pages/payment/Payment";
-import { CompletePayment } from "@pages/completePayment/C/CompletePayment";
+import CompletePayment from "@pages/completePayment/CompletePayment.tsx";
 import { ShoppingCart } from "@pages/shoppingCart/ShoppingCart";
 import { Reservations } from "@pages/reservations/Reservations";
 import { ReservationDetails } from "@pages/reservationDetails/ReservationDetails";

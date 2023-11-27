@@ -1,4 +1,3 @@
-import React from "react";
 import { Controller } from "react-hook-form";
 import {
   FormControl,
@@ -18,14 +17,14 @@ import type {
   CustomButtonProps
 } from "./CustomFrom.types";
 
-const CustomInput: React.FC<CustomInputProps> = ({
+const CustomInput = ({
   control,
   name,
   label,
   rules,
   placeholder,
   helperText
-}) => {
+}: CustomInputProps) => {
   return (
     <Controller
       name={name}
@@ -101,7 +100,8 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   isLoading = false,
   type = "button",
   colorScheme = "pink",
-  width
+  width,
+  disabled
 }) => {
   return (
     <Button
@@ -110,6 +110,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       type={type}
       colorScheme={colorScheme}
       width={width}
+      disabled={disabled}
     >
       {children}
     </Button>

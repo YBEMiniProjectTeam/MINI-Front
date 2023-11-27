@@ -1,8 +1,13 @@
 import * as styled from "./AccommodationGridView.styles";
-import { GridItemProps } from "./AccommodationGridView.types";
+import type { GridItemProps } from "./AccommodationGridView.types";
 
-export const AccommodationGridItem: React.FC<GridItemProps> = ({ imageUrl, summary, name, price }) => (
-  <a href='products/:productDetail'>
+export const AccommodationGridItem: React.FC<GridItemProps> = ({
+  imageUrl,
+  summary,
+  name,
+  price
+}) => (
+  <a href="products/:productDetail">
     <styled.GridItem>
       <styled.GridItemImageWrapper>
         <styled.GridItemImage src={imageUrl} />

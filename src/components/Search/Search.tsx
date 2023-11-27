@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as styles from "./Search.styles";
-import { SearchProps } from "./Search.types";
+import type { SearchProps } from "./Search.types";
 import {
   Stack,
   InputGroup,

@@ -1,0 +1,12 @@
+{
+  "data": {
+    "id": 1,
+    "hotelName": "카파스 호텔",
+    "roomType": "민들레 실",
+    "guestNum": "3명",
+    "checkInDate": "11월 22일(수) 10:00",
+    "checkOutDate": "11월 24일(금) 12:00",
+    "price": 252700,
+    "stock_quantity": 2
+  }
+}

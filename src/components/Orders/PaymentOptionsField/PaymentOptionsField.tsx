@@ -1,6 +1,4 @@
-import React from "react";
-
-const PaymentOptionsField: React.FC = () => {
+const PaymentOptionsField = () => {
   return <div></div>;
 };
 
