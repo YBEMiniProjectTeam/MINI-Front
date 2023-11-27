@@ -36,7 +36,7 @@ const Image = ({ images }: ImageProps): JSX.Element => {
       >
         사진 모두 보기
       </Box>
-      <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent maxW="720px" maxH="600px" overflow="auto">
           <ModalHeader>이미지 전체보기</ModalHeader>
