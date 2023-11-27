@@ -23,3 +23,5 @@ mocks
 *.njsproj
 *.sln
 *.sw?
+
+.env.local
