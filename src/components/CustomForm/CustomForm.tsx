@@ -8,14 +8,25 @@ import {
   Button,
   Select,
   Checkbox,
-  CheckboxGroup
+  CheckboxGroup,
+  RadioGroup,
+  Stack,
+  Radio,
+  Box,
+  useRadio,
+  HStack,
+  useRadioGroup
 } from "@chakra-ui/react";
 import type {
   CustomInputProps,
   CustomSelectProps,
   CustomCheckboxProps,
-  CustomButtonProps
+  CustomButtonProps,
+  CustomRadioProps,
+  RadioCardProps,
+  CustomRadioBoxProps
 } from "./CustomFrom.types";
+import * as styles from "./CustomFrom.styles";
 
 const CustomInput = ({
   control,
@@ -24,7 +35,8 @@ const CustomInput = ({
   rules,
   placeholder,
   helperText,
-  defaultValue
+  defaultValue,
+  isRequired = false
 }: CustomInputProps) => {
   return (
     <Controller
@@ -33,7 +45,7 @@ const CustomInput = ({
       rules={rules}
       defaultValue={defaultValue}
       render={({ field, fieldState: { error } }) => (
-        <FormControl isInvalid={!!error}>
+        <FormControl isInvalid={!!error} isRequired={isRequired}>
           <FormLabel htmlFor={name}>{label}</FormLabel>
           <Input {...field} placeholder={placeholder} />
           {!error ? (
@@ -47,13 +59,13 @@ const CustomInput = ({
   );
 };
 
-const CustomSelect: React.FC<CustomSelectProps> = ({
+const CustomSelect = ({
   control,
   name,
   label,
   options,
   rules
-}) => {
+}: CustomSelectProps) => {
   return (
     <Controller
       name={name}
@@ -75,12 +87,12 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   );
 };
 
-const CustomCheckbox: React.FC<CustomCheckboxProps> = ({
+const CustomCheckbox = ({
   control,
   name,
   label,
   rules
-}) => {
+}: CustomCheckboxProps) => {
   return (
     <Controller
       name={name}
@@ -96,7 +108,117 @@ const CustomCheckbox: React.FC<CustomCheckboxProps> = ({
   );
 };
 
-const CustomButton: React.FC<CustomButtonProps> = ({
+const RadioCard = ({
+  children,
+  checkedBgColor,
+  checkedBorderColor,
+  ...props
+}: RadioCardProps) => {
+  const { getInputProps, getCheckboxProps } = useRadio(props);
+
+  const input = getInputProps();
+  const checkbox = getCheckboxProps();
+
+  return (
+    <Box as="label">
+      <input {...input} />
+      <styles.StyledRadioCard
+        {...checkbox}
+        checkedBgColor={checkedBgColor}
+        checkedBorderColor={checkedBorderColor}
+        data-checked={input.checked}
+      >
+        {children}
+      </styles.StyledRadioCard>
+    </Box>
+  );
+};
+
+const CustomRadioBox = ({
+  control,
+  rules,
+  name,
+  label,
+  options,
+  defaultValue,
+  isRequired,
+  checkedBgColor,
+  checkedBorderColor
+}: CustomRadioBoxProps) => {
+  const { getRootProps, getRadioProps } = useRadioGroup({ name, defaultValue });
+
+  const group = getRootProps();
+  return (
+    <Controller
+      name={name}
+      control={control}
+      rules={rules}
+      defaultValue={defaultValue}
+      render={({ field, fieldState: { error } }) => (
+        <FormControl as="fieldset" isInvalid={!!error} isRequired={isRequired}>
+          {label && <FormLabel as="legend">{label}</FormLabel>}
+          <HStack {...group}>
+            {options.map((option) => {
+              const radio = getRadioProps({ value: option.value });
+              return (
+                <RadioCard
+                  checkedBgColor={checkedBgColor}
+                  checkedBorderColor={checkedBorderColor}
+                  key={option.value}
+                  {...radio}
+                  onChange={(e) => {
+                    if (radio.onChange) {
+                      radio.onChange(e);
+                    }
+                    field.onChange(e);
+                  }}
+                >
+                  {option.label}
+                </RadioCard>
+              );
+            })}
+          </HStack>
+        </FormControl>
+      )}
+    />
+  );
+};
+
+const CustomRadio = ({
+  control,
+  name,
+  label,
+  options,
+  rules,
+  defaultValue,
+  isRequired
+}: CustomRadioProps) => {
+  return (
+    <Controller
+      name={name}
+      control={control}
+      rules={rules}
+      defaultValue={defaultValue}
+      render={({ field, fieldState: { error } }) => (
+        <FormControl as="fieldset" isInvalid={!!error} isRequired={isRequired}>
+          {label && <FormLabel as="legend">{label}</FormLabel>}
+          <RadioGroup {...field}>
+            <Stack direction="row">
+              {options.map((option) => (
+                <Radio key={option.value} value={option.value}>
+                  {option.label}
+                </Radio>
+              ))}
+            </Stack>
+          </RadioGroup>
+          <FormErrorMessage>{error?.message}</FormErrorMessage>
+        </FormControl>
+      )}
+    />
+  );
+};
+
+const CustomButton = ({
   children,
   onClick,
   isLoading = false,
@@ -104,7 +226,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   colorScheme = "pink",
   width,
   disabled
-}) => {
+}: CustomButtonProps) => {
   return (
     <Button
       onClick={onClick}
@@ -123,7 +245,9 @@ const CustomForm = {
   Input: CustomInput,
   Select: CustomSelect,
   Checkbox: CustomCheckbox,
-  Button: CustomButton
+  Button: CustomButton,
+  Radio: CustomRadio,
+  RadioBox: CustomRadioBox
 };
 
 export default CustomForm;

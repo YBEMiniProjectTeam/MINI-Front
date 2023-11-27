@@ -1,13 +1,16 @@
+import DiffUserCheckbox from "@components/Orders/DiffUserCheckbox/DiffUserCheckbox.tsx";
+import PaymentOptionsForm from "@components/Orders/PaymentOptionsForm/PaymentOptionsForm.tsx";
+import VisitOptionsForm from "@components/Orders/VisitOptionsForm/VisitOptionsForm.tsx";
 import React, { useState } from "react";
-import { useForm, FormProvider, Controller } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { Collapse } from "@chakra-ui/react";
 import * as styles from "./Payment.styles";
-import DiffUserInfoField from "@components/Orders/DiffUserInfoField/DiffUserInfoField";
+import DiffUserInfoForm from "@components/Orders/DiffUserInfoForm/DiffUserInfoForm.tsx";
 import ReservationInfo from "@components/Orders/ReservationInfo/ReservationInfo";
-import UserInfoField from "@components/Orders/UserInfoField/UserInfoField";
+import UserInfoForm from "@components/Orders/UserInfoForm/UserInfoForm.tsx";
 import PaymentInfo from "@components/Orders/PaymentInfo/PaymentInfo";
 import Card from "@components/Card/Card";
-import TermsAgreementField from "@components/Orders/TermsAgreementField/TermsAgreementField";
+import TermsAgreementForm from "@components/Orders/TermsAgreementForm/TermsAgreementForm.tsx";
 import PaymentSubmitButton from "@components/Orders/PaymentSubmitButton/PaymentSubmitButton";
 import AccommodationInfo from "@components/Orders/ReservationInfo/AccommodationInfo/AccommodationInfo";
 import { usePayment } from "@hooks/usePaymentQuery";
@@ -21,14 +24,11 @@ export const Payment: React.FC = () => {
   const [isDiffUser, setIsDiffUser] = useState(false);
 
   const { orderId } = useParams();
-  const { data: paymentData, isLoading, error } = usePayment(orderId!);
+  const { data: paymentData } = usePayment(orderId!);
   const { data: userData } = useUserInfo();
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-
-  const dummyData = paymentData?.rawData.data;
-  const reservationData = paymentData?.reservationData;
+  const dummyData = paymentData.rawData.data;
+  const reservationData = paymentData.reservationData;
 
   const user = userData.data;
 
@@ -39,43 +39,23 @@ export const Payment: React.FC = () => {
           <ReservationInfo dummyData={dummyData}>
             <AccommodationInfo dummyData={dummyData} />
           </ReservationInfo>
-          <styles.CardContent>
-            <styles.Label>
-              <span>예약자 정보</span>
-            </styles.Label>
-            <UserInfoField data={user} />
-            <styles.UserInfoWhenDiffWrapper>
-              <Controller
-                name="isDiffUser"
-                control={methods.control}
-                render={({ field: { onChange, value, ref } }) => (
-                  <styles.StyledCheckBox
-                    ref={ref}
-                    isChecked={value}
-                    size="lg"
-                    onChange={(e) => {
-                      onChange(e.target.checked);
-                      setIsDiffUser(e.target.checked);
-                    }}
-                  >
-                    <styles.Item> 예약자와 투숙자가 다릅니다.</styles.Item>
-                  </styles.StyledCheckBox>
-                )}
-              />
-            </styles.UserInfoWhenDiffWrapper>
+          <Card label="예약자 정보">
+            <UserInfoForm data={user} />
+            <DiffUserCheckbox setIsDiffUser={setIsDiffUser} />
             <Collapse in={isDiffUser} animateOpacity>
-              {isDiffUser && <DiffUserInfoField />}
+              {isDiffUser && <DiffUserInfoForm />}
             </Collapse>
-          </styles.CardContent>
+            <VisitOptionsForm />
+          </Card>
         </Card>
-        <Card>
-          <styles.Label>
-            <span>결제 금액</span>
-          </styles.Label>
+        <Card label="결제 금액">
           <PaymentInfo data={reservationData} />
         </Card>
+        <Card label="결제 수단">
+          <PaymentOptionsForm />
+        </Card>
         <Card>
-          <TermsAgreementField />
+          <TermsAgreementForm />
         </Card>
         <PaymentSubmitButton price={dummyData.price} userData={user} />
       </FormProvider>

@@ -1,11 +1,13 @@
+import { FormLabel } from "@chakra-ui/react";
 import { useFormContext } from "react-hook-form";
 import CustomForm from "@components/CustomForm/CustomForm";
 
-const DiffUserInfoField = () => {
+const DiffUserInfoForm = () => {
   const { control } = useFormContext();
 
   return (
-    <form>
+    <fieldset>
+      <FormLabel as="legend">투숙자 정보</FormLabel>
       <CustomForm.Input
         control={control}
         name="name"
@@ -28,8 +30,8 @@ const DiffUserInfoField = () => {
           }
         }}
       />
-    </form>
+    </fieldset>
   );
 };
 
-export default DiffUserInfoField;
+export default DiffUserInfoForm;
