@@ -31,7 +31,7 @@ const MyWishList = () => {
 
   useEffect(() => {
     if (data) {
-      setWishList(data?.filter((item: Accommodation) => item.isWish));
+      setWishList(data.filter((item: Accommodation) => item.isWish));
       setTotalPage(data.total_pages);
       setIsLoadingMore(false);
     }

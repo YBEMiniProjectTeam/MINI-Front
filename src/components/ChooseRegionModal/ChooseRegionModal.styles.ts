@@ -9,7 +9,7 @@ export const SideTabList = styled.div`
     display: flex;
     flex-direction: column;
     background-color: #f4f4f6;
-    width: 112px;
+    width: 130px;
 `;
 
 export const SideTab = styled.div<SideTabProps>`

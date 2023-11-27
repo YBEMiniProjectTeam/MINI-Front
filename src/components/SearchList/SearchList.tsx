@@ -7,7 +7,7 @@ import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa";
 import { useSearchList } from "@hooks/useSearchList";
 import { useNavigate } from "react-router-dom";
-import { converDateFormat4 } from "@/utils/converDateFormat4";
+import { convertDateFormat4 } from "@/utils/convertDateFormat4";
 
 const SearchList = ({
   keyword,
@@ -43,18 +43,16 @@ const SearchList = ({
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [totalPage]);
 
   useEffect(() => {
-    if (data) {
-      setSearchList((prevSearchList) => [
-        ...prevSearchList,
-        ...data.accommodations
-      ]);
-      setTotalPage(data.total_pages);
-      setIsLoadingMore(false);
-    }
-  }, [data, setSearchList, setTotalPage, setIsLoadingMore]);
+    setSearchList((prevSearchList) => [
+      ...prevSearchList,
+      ...data.accommodations
+    ]);
+    setTotalPage(data.total_pages);
+    setIsLoadingMore(false);
+  }, [data]);
 
   const handleLikeClick = (index: number) => {
     const updatedSearchList = [...searchList];
@@ -73,11 +71,9 @@ const SearchList = ({
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
 
     if (scrollTop + clientHeight >= scrollHeight - 50) {
-      // total page null인 현상 해결 필요
-      if (page < 1000) {
+      if (page < totalPage) {
         setPage((prevPage) => prevPage + 1);
         setIsLoadingMore(true);
-
         refetch();
       }
     }
@@ -85,9 +81,9 @@ const SearchList = ({
 
   const handleAccomodationClick = (id: number) => {
     navigate(
-      `/products/${id}?startDate=${converDateFormat4(
+      `/products?id=${id}&startDate=${convertDateFormat4(
         startDate
-      )}&endDate=${converDateFormat4(endDate)}`
+      )}&endDate=${convertDateFormat4(endDate)}`
     );
   };
 
