@@ -2,40 +2,18 @@ import { useState } from "react";
 import * as styled from './AccommodationSingleView.styles';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import { useSearchList } from "@/hooks/useSearchList";
+import { Spinner } from "@chakra-ui/react";
 
-//
-const AccommodationData = [
-  {
-    imageUrl: "https://yaimg.yanolja.com/v5/2022/10/17/15/634d7563600ed4.17945107.jpg",
-    region: "강원",
-    name: "강릉 세인트존스 호텔",
-    price: "89,000",
-  },
-  {
-    imageUrl: "https://yaimg.yanolja.com/v5/2022/09/02/16/63122c1e9ce9e4.94265324.jpg",
-    region: "서울",
-    name: "노보텔 스위트 앰배서더 서울 용산",
-    price: "242,550",
-  },
-  {
-    imageUrl: "https://yaimg.yanolja.com/v5/2022/09/27/20/633356449b6ed6.90935628.jpg",
-    region: "제주",
-    name: "해비치 호텔&리조트",
-    price: "245,840",
-  },
-  {
-    imageUrl: "https://yaimg.yanolja.com/v5/2022/10/27/17/635abceb287712.74610369.jpg",
-    region: "경기",
-    name: "라마다 앙코르 바이 윈덤 김포 한강 호텔",
-    price: "115,000",
-  },
-  {
-    imageUrl: "https://yaimg.yanolja.com/v5/2022/07/20/19/62d8568eb73523.97030183.jpg",
-    region: "경기",
-    name: "롤링힐스 호텔",
-    price: "189,000",
-  },
-];
+type Accommodation = {
+  id: number;
+  name: string;
+  type: string;
+  thumbnail: string;
+  min_price: number;
+  isWish: boolean;
+};
+
 
 export const AccommodationSingleView = () => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
@@ -62,6 +40,50 @@ export const AccommodationSingleView = () => {
     ),
   };
 
+  const { data, error, isLoading } = useSearchList(
+    null,
+    null,
+    null,
+    null,
+    '호텔',
+    4,
+    10
+  );
+
+  if (error) {
+    console.error("[ERROR] ", error.message);
+  }
+
+  // console.log(data);
+
+  const printCategory = (type: string) => {
+    let category = '';
+
+    switch (type) {
+    case 'HOTEL':
+      category = '호텔';
+      break;
+    case 'RESORT':
+      category = '리조트';
+      break;
+    case 'MOTEL':
+      category = '모텔';
+      break;
+    case 'PENSION':
+      category = '펜션';
+      break;
+    default:
+      category = '';
+    }
+
+    return category;
+  };
+
+  // TODO:
+  // 지역 response 추가
+  // 쿼리 스트링 잘 되는지 확인
+  // page num, size 결정
+
   return (
     <styled.SingleViewWrapper>
       <styled.MainViewTitleWrapper>
@@ -76,31 +98,44 @@ export const AccommodationSingleView = () => {
           </a>
         </styled.MoreButtonWrapper>
       </styled.MainViewTitleWrapper>
-      <styled.SwiperContainer>
-        <styled.StyledSlider {...settings}>
-          {AccommodationData.map((item, index) => (
-            <styled.SwiperItem key={index}>
-              <img src={item.imageUrl} alt={`Slide ${index + 1}`} />
-            </styled.SwiperItem>
-          ))}
-        </styled.StyledSlider>
-      </styled.SwiperContainer>
-      <styled.InformationWrapper>
-        <styled.InformationInner>
-          <styled.InformationRegion>
-            {AccommodationData[currentSlide].region}
-          </styled.InformationRegion>
-          <styled.InformationName>
-            {AccommodationData[currentSlide].name}
-          </styled.InformationName>
-          <div>
-            <styled.InformationPrice>
-              {AccommodationData[currentSlide].price}
-            </styled.InformationPrice>
-            <styled.InformationPriceTxt>원부터</styled.InformationPriceTxt>
-          </div>
-        </styled.InformationInner>
-      </styled.InformationWrapper>
+      {
+        isLoading ? (
+          <Spinner
+            thickness="2px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="#db074a"
+            size="md"
+          />
+        ) : (
+          <>
+            <styled.SwiperContainer>
+              <styled.StyledSlider {...settings}>
+                {data['accommodations'].map((item: Accommodation, index: number) => (
+                  <styled.SwiperItem key={index}>
+                    <img src={item.thumbnail} alt={`Slide ${index + 1}`} />
+                  </styled.SwiperItem>
+                ))}
+              </styled.StyledSlider>
+            </styled.SwiperContainer>
+            <styled.InformationWrapper>
+              <styled.InformationInner>
+                <styled.InformationRegion>
+                  {data['accommodations'][currentSlide].region} | {printCategory(data['accommodations'][currentSlide].type)}
+                </styled.InformationRegion>
+                <styled.InformationName>
+                  {data['accommodations'][currentSlide].name}
+                </styled.InformationName>
+                <div>
+                  <styled.InformationPrice>
+                    {data['accommodations'][currentSlide].min_price}
+                  </styled.InformationPrice>
+                  <styled.InformationPriceTxt>원부터</styled.InformationPriceTxt>
+                </div>
+              </styled.InformationInner>
+            </styled.InformationWrapper>
+          </>
+        )}
     </styled.SingleViewWrapper>
   );
 };
