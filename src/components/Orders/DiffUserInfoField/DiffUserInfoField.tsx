@@ -11,6 +11,7 @@ const DiffUserInfoField = () => {
         name="name"
         label="투숙자명"
         placeholder="이름 입력"
+        defaultValue=""
         rules={{ required: "이름을 입력해주세요." }}
       />
       <CustomForm.Input
@@ -18,6 +19,7 @@ const DiffUserInfoField = () => {
         name="email"
         label="이메일"
         placeholder="이메일 입력"
+        defaultValue=""
         rules={{
           required: "이메일을 입력해주세요.",
           pattern: {

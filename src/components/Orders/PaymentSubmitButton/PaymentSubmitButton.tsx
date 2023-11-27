@@ -1,17 +1,28 @@
 import { useFormContext } from "react-hook-form";
 import CustomForm from "@components/CustomForm/CustomForm";
 import { useNavigate, useParams } from "react-router-dom";
+import type { PaymentSubmitButtonProps } from "./PaymentSubmitButton.types";
 
-const PaymentSubmitButton = ({ price }: { price: number }) => {
+const PaymentSubmitButton = ({ price, userData }: PaymentSubmitButtonProps) => {
   const {
     handleSubmit,
-    formState: { isValid }
+    formState: { isValid },
+    getValues
   } = useFormContext();
   const { orderId } = useParams();
   const navigate = useNavigate();
 
-  const onSubmit = () => {
-    console.log("결제하기 버튼 클릭됨");
+  const onSubmit = (formData: any) => {
+    const isDifferentUser = getValues("isDiffUser");
+
+    const combinedData = {
+      ...userData,
+      ...(isDifferentUser && formData)
+    };
+
+    const { termsAgreement, isDiffUser, ...decodedData } = combinedData;
+
+    console.log("서버에 전송: ", decodedData);
     navigate(`/orders/${orderId}/complete`);
   };
 

@@ -1,11 +1,11 @@
 import React from "react";
 import * as styles from "./CompletePayment.styles";
 import Card from "@components/Card/Card";
-import ReservationInfo from "@components/Orders/ReservationInfo/ReservationInfo";
-import SuccessMark from "@components/CompletePayment/SuccessCheck";
+import ReservationInfo from "@components/Orders/ReservationInfo/ReservationInfo.tsx";
+import SuccessMark from "@components/CompletePayment/SuccessCheck.tsx";
 import PaymentInfo from "@components/Orders/PaymentInfo/PaymentInfo";
-import { useCompletePayment } from "@hooks/useCompletePaymentQuery";
-import CustomForm from "@components/CustomForm/CustomForm";
+import { useCompletePayment } from "@hooks/useCompletePaymentQuery.ts";
+import CustomForm from "@components/CustomForm/CustomForm.tsx";
 import { useNavigate } from "react-router-dom";
 
 const CompletePayment: React.FC = () => {

@@ -1,12 +1,20 @@
 import { useFormContext, Controller } from "react-hook-form";
 import * as styles from "./TermsAgreementField.styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const TermsAgreementField = () => {
-  const { control } = useFormContext();
+  const { control, setValue, watch } = useFormContext();
   const [checkedItems, setCheckedItems] = useState([false, false]);
 
-  const allChecked = checkedItems.every(Boolean);
+  const termsAgreement = watch("termsAgreement");
+
+  useEffect(() => {
+    const allChecked = checkedItems.every(Boolean);
+
+    if (termsAgreement !== allChecked) {
+      setValue("termsAgreement", allChecked);
+    }
+  }, [checkedItems, setValue, termsAgreement]);
 
   return (
     <styles.Form>
@@ -14,14 +22,13 @@ const TermsAgreementField = () => {
         name="termsAgreement"
         control={control}
         rules={{ required: true }}
-        render={({ field: { onChange, ref } }) => (
+        render={({ field: { onChange, ref, value } }) => (
           <styles.StyledCheckbox
             ref={ref}
-            isChecked={allChecked}
+            isChecked={value}
             onChange={(e) => {
-              const newChecked = e.target.checked;
-              onChange(newChecked);
-              setCheckedItems([newChecked, newChecked]);
+              onChange(e.target.checked);
+              setCheckedItems(checkedItems.map(() => e.target.checked));
             }}
           >
             <styles.Title>필수 약관 전체 동의</styles.Title>
@@ -37,6 +44,9 @@ const TermsAgreementField = () => {
               const newCheckedItems = [...checkedItems];
               newCheckedItems[index] = e.target.checked;
               setCheckedItems(newCheckedItems);
+
+              const allChecked = newCheckedItems.every(Boolean);
+              setValue("termsAgreement", allChecked, { shouldValidate: true });
             }}
           >
             <styles.Item>
