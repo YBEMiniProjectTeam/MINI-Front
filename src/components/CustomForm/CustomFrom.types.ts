@@ -10,6 +10,7 @@ interface CustomInputProps {
   helperText?: string;
   defaultValue?: string;
   isRequired?: boolean;
+  variant?: "outline" | "filled" | "flushed" | "unstyled";
 }
 
 interface CustomSelectProps {

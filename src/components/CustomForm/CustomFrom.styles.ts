@@ -1,24 +1,33 @@
-import { Box } from "@chakra-ui/react";
 import styled from "styled-components";
-import { RadioCardProps } from "./CustomFrom.types";
+import {
+  Input,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+  FormControl
+} from "@chakra-ui/react";
 
-export const StyledRadioCard = styled(Box)<RadioCardProps>`
-  cursor: pointer;
-  border-width: 1px;
-  padding: 5px 3px;
-  border-radius: md;
-  box-shadow: md;
-  transition:
-    background-color 0.2s,
-    border-color 0.2s;
+export const styledFormControl = styled(FormControl)``;
 
-  &[data-checked="true"] {
-    background-color: ${(props) => props.checkedBgColor || "pink.600"};
-    color: white;
-    border-color: ${(props) => props.checkedBorderColor || "pink.600"};
-  }
+export const FormField = styled.div`
+  display: flex;
 
-  &:focus {
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.6);
+  & > label {
+    display: flex;
+    width: 100px;
+    align-items: center;
+    margin: 0;
   }
 `;
+
+export const StyledInput = styled(Input)`
+  display: flex;
+  align-items: center;
+  text-align: end;
+`;
+
+export const StyledFormLabel = styled(FormLabel)``;
+
+export const StyledFormErrorMessage = styled(FormErrorMessage)``;
+
+export const styledFormHelperText = styled(FormHelperText)``;

@@ -1,4 +1,4 @@
-import { FormLabel } from "@chakra-ui/react";
+import * as styles from "./DiffUserInfoForm.styles";
 import { useFormContext } from "react-hook-form";
 import CustomForm from "@components/CustomForm/CustomForm";
 
@@ -6,14 +6,18 @@ const DiffUserInfoForm = () => {
   const { control } = useFormContext();
 
   return (
-    <fieldset>
-      <FormLabel as="legend">투숙자 정보</FormLabel>
+    <styles.FieldsetContainer isRequired>
+      <styles.StyledLabel as="legend">
+        투숙자 정보 <span>(필수 입력 사항)</span>
+      </styles.StyledLabel>
       <CustomForm.Input
         control={control}
         name="name"
         label="투숙자명"
         placeholder="이름 입력"
         defaultValue=""
+        isRequired
+        variant="flushed"
         rules={{ required: "이름을 입력해주세요." }}
       />
       <CustomForm.Input
@@ -22,6 +26,8 @@ const DiffUserInfoForm = () => {
         label="이메일"
         placeholder="이메일 입력"
         defaultValue=""
+        isRequired
+        variant="flushed"
         rules={{
           required: "이메일을 입력해주세요.",
           pattern: {
@@ -30,7 +36,7 @@ const DiffUserInfoForm = () => {
           }
         }}
       />
-    </fieldset>
+    </styles.FieldsetContainer>
   );
 };
 

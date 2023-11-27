@@ -3,28 +3,20 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
-  FormHelperText,
-  Input,
   Button,
   Select,
   Checkbox,
   CheckboxGroup,
   RadioGroup,
   Stack,
-  Radio,
-  Box,
-  useRadio,
-  HStack,
-  useRadioGroup
+  Radio
 } from "@chakra-ui/react";
 import type {
   CustomInputProps,
   CustomSelectProps,
   CustomCheckboxProps,
   CustomButtonProps,
-  CustomRadioProps,
-  RadioCardProps,
-  CustomRadioBoxProps
+  CustomRadioProps
 } from "./CustomFrom.types";
 import * as styles from "./CustomFrom.styles";
 
@@ -36,7 +28,8 @@ const CustomInput = ({
   placeholder,
   helperText,
   defaultValue,
-  isRequired = false
+  isRequired = false,
+  variant = "outline"
 }: CustomInputProps) => {
   return (
     <Controller
@@ -45,15 +38,28 @@ const CustomInput = ({
       rules={rules}
       defaultValue={defaultValue}
       render={({ field, fieldState: { error } }) => (
-        <FormControl isInvalid={!!error} isRequired={isRequired}>
-          <FormLabel htmlFor={name}>{label}</FormLabel>
-          <Input {...field} placeholder={placeholder} />
+        <styles.styledFormControl isInvalid={!!error} isRequired={isRequired}>
+          <styles.FormField>
+            <styles.StyledFormLabel htmlFor={name} fontSize="sm">
+              {label}
+            </styles.StyledFormLabel>
+            <styles.StyledInput
+              {...field}
+              placeholder={placeholder}
+              fontSize="sm"
+              variant={variant}
+            />
+          </styles.FormField>
           {!error ? (
-            <FormHelperText>{helperText}</FormHelperText>
+            <styles.styledFormHelperText>
+              {helperText}
+            </styles.styledFormHelperText>
           ) : (
-            <FormErrorMessage>{error.message}</FormErrorMessage>
+            <styles.StyledFormErrorMessage>
+              {error.message}
+            </styles.StyledFormErrorMessage>
           )}
-        </FormControl>
+        </styles.styledFormControl>
       )}
     />
   );
@@ -103,82 +109,6 @@ const CustomCheckbox = ({
           <Checkbox {...field}>{label}</Checkbox>
           {error && <p>{error.message}</p>}
         </CheckboxGroup>
-      )}
-    />
-  );
-};
-
-const RadioCard = ({
-  children,
-  checkedBgColor,
-  checkedBorderColor,
-  ...props
-}: RadioCardProps) => {
-  const { getInputProps, getCheckboxProps } = useRadio(props);
-
-  const input = getInputProps();
-  const checkbox = getCheckboxProps();
-
-  return (
-    <Box as="label">
-      <input {...input} />
-      <styles.StyledRadioCard
-        {...checkbox}
-        checkedBgColor={checkedBgColor}
-        checkedBorderColor={checkedBorderColor}
-        data-checked={input.checked}
-      >
-        {children}
-      </styles.StyledRadioCard>
-    </Box>
-  );
-};
-
-const CustomRadioBox = ({
-  control,
-  rules,
-  name,
-  label,
-  options,
-  defaultValue,
-  isRequired,
-  checkedBgColor,
-  checkedBorderColor
-}: CustomRadioBoxProps) => {
-  const { getRootProps, getRadioProps } = useRadioGroup({ name, defaultValue });
-
-  const group = getRootProps();
-  return (
-    <Controller
-      name={name}
-      control={control}
-      rules={rules}
-      defaultValue={defaultValue}
-      render={({ field, fieldState: { error } }) => (
-        <FormControl as="fieldset" isInvalid={!!error} isRequired={isRequired}>
-          {label && <FormLabel as="legend">{label}</FormLabel>}
-          <HStack {...group}>
-            {options.map((option) => {
-              const radio = getRadioProps({ value: option.value });
-              return (
-                <RadioCard
-                  checkedBgColor={checkedBgColor}
-                  checkedBorderColor={checkedBorderColor}
-                  key={option.value}
-                  {...radio}
-                  onChange={(e) => {
-                    if (radio.onChange) {
-                      radio.onChange(e);
-                    }
-                    field.onChange(e);
-                  }}
-                >
-                  {option.label}
-                </RadioCard>
-              );
-            })}
-          </HStack>
-        </FormControl>
       )}
     />
   );
@@ -246,8 +176,7 @@ const CustomForm = {
   Select: CustomSelect,
   Checkbox: CustomCheckbox,
   Button: CustomButton,
-  Radio: CustomRadio,
-  RadioBox: CustomRadioBox
+  Radio: CustomRadio
 };
 
 export default CustomForm;
