@@ -20,7 +20,8 @@ const PaymentSubmitButton = ({ price, userData }: PaymentSubmitButtonProps) => {
       ...(isDifferentUser && formData)
     };
 
-    const { termsAgreement, isDiffUser, ...decodedData } = combinedData;
+    const { termsAgreement, isDiffUser, paymentOptions, ...decodedData } =
+      combinedData;
 
     console.log("서버에 전송: ", decodedData);
     navigate(`/orders/${orderId}/complete`);
