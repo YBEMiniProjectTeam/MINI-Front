@@ -13,8 +13,12 @@ export const MainCategoryMenuItem: React.FC<MainCategoryMenuItemProps> = ({
   const { navigateToResultPage } = useNavigateToResultPage();
 
   return (
-    <styled.CategoryMenuItem onClick={() => navigateToResultPage(category)}>
-      {React.cloneElement(icon, { size, color: iconColor })}
+    <styled.CategoryMenuItem
+      onClick={() => navigateToResultPage(category)}
+    >
+      <styled.MenuIcon>
+        {React.cloneElement(icon, { size, color: iconColor })}
+      </styled.MenuIcon>
       <styled.MenuTitle>{title}</styled.MenuTitle>
     </styled.CategoryMenuItem>
   );

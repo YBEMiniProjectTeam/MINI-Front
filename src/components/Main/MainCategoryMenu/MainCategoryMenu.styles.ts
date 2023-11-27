@@ -32,6 +32,9 @@ export const CategoryMenuItem = styled.div`
 export const MenuIcon = styled.div`
   width: 40px;
   height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const MenuTitle = styled.div`
