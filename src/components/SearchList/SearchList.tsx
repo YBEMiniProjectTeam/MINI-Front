@@ -111,7 +111,6 @@ const SearchList = ({
           overflow="hidden"
           backgroundColor="#f7fcfc"
           mb="1rem"
-          onClick={() => handleAccomodationClick(accomodation.id)}
         >
           <styles.ImageWrapper>
             <Image
@@ -147,7 +146,6 @@ const SearchList = ({
                 height="2rem"
                 color="white"
                 cursor="pointer"
-                zIndex="1000"
                 onClick={() => handleLikeClick(index)}
               />
             )}

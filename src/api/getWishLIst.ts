@@ -9,5 +9,5 @@ export const getWishList = async (
 
   const response = await axios.get(GET_WISH_LIST_URL);
 
-  return response.data.data.accomodations;
+  return response.data.data;
 };
