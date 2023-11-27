@@ -160,3 +160,8 @@ export const InformationPriceTxt = styled.span`
   color: #4D4D4D;
   font-size: 0.8rem;
 `;
+
+export const LoadingWraaper = styled.div`
+  display: flex;
+  justify-content: center;
+`;

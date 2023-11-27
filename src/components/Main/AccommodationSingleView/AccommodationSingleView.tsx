@@ -100,13 +100,15 @@ export const AccommodationSingleView = () => {
       </styled.MainViewTitleWrapper>
       {
         isLoading ? (
-          <Spinner
-            thickness="2px"
-            speed="0.65s"
-            emptyColor="gray.200"
-            color="#db074a"
-            size="md"
-          />
+          <styled.LoadingWraaper>
+            <Spinner
+              thickness="2px"
+              speed="0.65s"
+              emptyColor="gray.200"
+              color="#db074a"
+              size="md"
+            />
+          </styled.LoadingWraaper>
         ) : (
           <>
             <styled.SwiperContainer>
