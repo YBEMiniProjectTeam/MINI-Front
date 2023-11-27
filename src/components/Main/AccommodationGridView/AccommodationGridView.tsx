@@ -2,8 +2,18 @@ import * as styled from "./AccommodationGridView.styles";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { MainViewTitleWrapper, MainViewTitle, Title, Description } from "../AccommodationSingleView/AccommodationSingleView.styles";
 import { AccommodationGridItem } from "./AccommodationGridItem";
+import { useState } from "react";
 
 export const AccommodationGridView = () => {
+  const [activeTab, setActiveTab] = useState('펜션'); 
+  
+  const handleTabClick = (tab: string) => {
+    setActiveTab(tab);
+  };
+
+  // 활성화 할 데이터
+  // const activedData = activeTab === "펜션" ? pensionData : hotelData;
+
   return (
     <styled.GridViewWrapper>
       <MainViewTitleWrapper>
@@ -16,12 +26,17 @@ export const AccommodationGridView = () => {
       <styled.CategoryTapWrapper>
         <styled.CategoryTapContainer>
           <styled.CategoryTap>
-            <styled.CategoryTapItem>
-              <styled.ActivedItem>펜션</styled.ActivedItem>
-              <styled.ActivedBar />
+            <styled.CategoryTapItem onClick={() => handleTabClick('펜션')}>
+              <styled.TabItem $isActive={activeTab === '펜션'} onClick={() => handleTabClick('펜션')}>
+                {activeTab === '펜션' && <styled.ActivedBar />}
+                펜션
+              </styled.TabItem>
             </styled.CategoryTapItem>
-            <styled.CategoryTapItem>
-              <styled.InactivedItem>호텔</styled.InactivedItem>
+            <styled.CategoryTapItem onClick={() => handleTabClick('호텔')}>
+              <styled.TabItem $isActive={activeTab === '호텔'}>
+                {activeTab === '호텔' && <styled.ActivedBar />}
+                호텔
+              </styled.TabItem>
             </styled.CategoryTapItem>
           </styled.CategoryTap>
         </styled.CategoryTapContainer>
@@ -32,13 +47,13 @@ export const AccommodationGridView = () => {
           imageUrl='https://yaimg.yanolja.com/v5/2023/01/12/17/63c0474bdc5902.06272388.jpg'
           summary='제주 | 펜션'
           name='서귀포 모이라 펜션'
-          price='69,000'
+          price={69000}
         />
         <AccommodationGridItem
           imageUrl='https://yaimg.yanolja.com/v5/2022/10/11/14/6345795b600849.89763742.jpg'
           summary='제주 | 펜션'
           name='제주 들멍놀멍펜션'
-          price='180,000'
+          price={180000}
         />
       </styled.GridWrapper>
       <styled.GridWrapper>
@@ -46,13 +61,13 @@ export const AccommodationGridView = () => {
           imageUrl='https://yaimg.yanolja.com/v5/2023/09/13/11/6501a212894bb6.59640283.jpg'
           summary='제주 | 펜션'
           name='서귀포 상상나무키즈펜션'
-          price='79,000'
+          price={79000}
         />
         <AccommodationGridItem
           imageUrl='https://yaimg.yanolja.com/v5/2023/10/10/11/65253885eb92b2.62972396.jpg'
           summary='제주 | 펜션'
           name='제주 패밀리가든빌리지펜션'
-          price='300,000'
+          price={300000}
         />
       </styled.GridWrapper>
       <styled.MoreButtonWrapper>
