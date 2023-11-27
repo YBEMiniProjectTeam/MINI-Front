@@ -12,7 +12,7 @@ export const SearchResult = () => {
   return (
     <styles.SearchContainer>
       <Search keyword={keyword} category={category} />
-      <SearchList />
+      <SearchList keyword={keyword} category={category} />
     </styles.SearchContainer>
   );
 };

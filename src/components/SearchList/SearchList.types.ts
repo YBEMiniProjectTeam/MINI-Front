@@ -8,3 +8,7 @@ export interface Product {
     url: string;
 }
   
+export interface SearchListProps {
+    keyword: string | null;
+    category: string | null;
+}

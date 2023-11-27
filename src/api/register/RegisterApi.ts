@@ -4,7 +4,7 @@ import { User } from "@components/Register/Register.types";
 
 export const RegisterApi = (user: User): void => {
   const API_URL =
-    "https://cca6d5da-811b-445f-8811-62cab12d0157.mock.pstmn.io/sign-up";
+    "https://anti-bias.kr/api/sign-up";
   const headers = {
     "Content-Type": "application/json"
   };
