@@ -2,5 +2,5 @@ export interface User {
   email: string;
   pwd: string;
   name: string;
-  birthday: string;
+  birthday?: string;
 }

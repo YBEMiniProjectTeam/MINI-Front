@@ -71,7 +71,9 @@ export const Header = (): JSX.Element => {
                       <Link to="/wishList">
                         <li>위시리스트</li>
                       </Link>
-
+                      <Link to="/shoppingCart">
+                        <li>장바구니</li>
+                      </Link>
                       <Link to="/" onClick={handleClickLogoutButton}>
                         <li>로그아웃</li>
                       </Link>
