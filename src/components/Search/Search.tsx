@@ -24,8 +24,9 @@ import { convertDateFormat2 } from "@utils/convertDateFormat2";
 import { convertDateFormat3 } from "@/utils/convertDateFormat3";
 import ChooseRegionModal from "../ChooseRegionModal/ChooseRegionModal";
 import ChooseDateModal from "../ChooseDateModal/ChooseDateModal";
-import SearchList from "@components/SearchList/SearchList";
 import { useSearchList } from "@hooks/useSearchList";
+import { checkInAndOutDateState } from "@recoil/checkInAndOutDate";
+import { useSetRecoilState } from "recoil";
 
 const Search = ({ keyword, category }: SearchProps) => {
   const {
@@ -52,6 +53,8 @@ const Search = ({ keyword, category }: SearchProps) => {
   );
   const [isFromSearchResult, setIsFromSearchResult] = useState<boolean>(false);
 
+  const setCheckInAndOutDateState = useSetRecoilState(checkInAndOutDateState);
+
   const { refetch } = useSearchList(
     accommodationName,
     selectedDistrict,
@@ -76,6 +79,15 @@ const Search = ({ keyword, category }: SearchProps) => {
       setEndDate(convertDateFormat3(selectedDate[1]));
     }
   }, [selectedDate]);
+
+  useEffect(() => {
+    const newCheckInAndOutDate = {
+      startDate,
+      endDate
+    };
+
+    setCheckInAndOutDateState(newCheckInAndOutDate);
+  }, [startDate, endDate]);
 
   if (category) {
     switch (category) {
@@ -213,12 +225,6 @@ const Search = ({ keyword, category }: SearchProps) => {
           검색하기
         </Button>
       </Stack>
-      <SearchList
-        keyword={keyword}
-        category={category}
-        startDate={startDate}
-        endDate={endDate}
-      />
     </>
   );
 };

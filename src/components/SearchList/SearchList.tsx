@@ -9,14 +9,13 @@ import { useSearchList } from "@hooks/useSearchList";
 import { useNavigate } from "react-router-dom";
 import { convertDateFormat4 } from "@/utils/convertDateFormat4";
 import { debounce } from "lodash";
+import { checkInAndOutDateState } from "@recoil/checkInAndOutDate";
+import { useRecoilValue } from "recoil";
 
-const SearchList = ({
-  keyword,
-  category,
-  startDate,
-  endDate
-}: SearchListProps) => {
+const SearchList = ({ keyword, category }: SearchListProps) => {
   const navigate = useNavigate();
+
+  const { startDate, endDate } = useRecoilValue(checkInAndOutDateState);
 
   const [searchList, setSearchList] = useState<Accommodation[]>([]);
   const [page, setPage] = useState(1);

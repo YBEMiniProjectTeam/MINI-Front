@@ -7,6 +7,7 @@ import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { CookiesProvider } from "react-cookie";
 import { Suspense } from "react";
+import { RecoilRoot } from "recoil";
 
 const queryClient = new QueryClient();
 
@@ -34,8 +35,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             </Box>
           }
         >
-          <GlobalStyles />
-          <App />
+          <RecoilRoot>
+            <GlobalStyles />
+            <App />
+          </RecoilRoot>
         </Suspense>
       </CookiesProvider>
     </ChakraProvider>
