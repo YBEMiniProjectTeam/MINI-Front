@@ -12,13 +12,13 @@ export const Header = (): JSX.Element => {
 
   const location = useLocation();
 
-  const [cookies, , removeCookie] = useCookies(["accessToken"]);
+  const [cookies, , removeCookie] = useCookies(["access-token"]);
 
   const [accessToken, setAccessToken] = useState<string | undefined>();
 
   const handleClickLogoutButton = (): void => {
-    if (cookies.accessToken) {
-      removeCookie("accessToken");
+    if (cookies["access-token"]) {
+      removeCookie("access-token");
     }
   };
 
@@ -31,9 +31,8 @@ export const Header = (): JSX.Element => {
       setIsShowInput(true);
     }
 
-    setAccessToken(cookies.accessToken);
-  }, [location.pathname, cookies.accessToken]);
-
+    setAccessToken(cookies["access-token"]);
+  }, [location.pathname, cookies]);
   return (
     <S.Header>
       <S.HeaderContainer>
