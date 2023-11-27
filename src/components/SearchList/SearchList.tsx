@@ -8,6 +8,7 @@ import { FaHeart } from "react-icons/fa";
 import { useSearchList } from "@hooks/useSearchList";
 import { useNavigate } from "react-router-dom";
 import { convertDateFormat4 } from "@/utils/convertDateFormat4";
+import { debounce } from "lodash";
 
 const SearchList = ({
   keyword,
@@ -67,7 +68,7 @@ const SearchList = ({
     // post 요청 필요
   };
 
-  const handleScroll = () => {
+  const handleScroll = debounce(() => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
 
     if (scrollTop + clientHeight >= scrollHeight - 50) {
@@ -77,7 +78,7 @@ const SearchList = ({
         refetch();
       }
     }
-  };
+  }, 200);
 
   const handleAccomodationClick = (id: number) => {
     navigate(
