@@ -80,13 +80,16 @@ const Search = ({ keyword, category }: SearchProps) => {
   if (category) {
     switch (category) {
       case "hotel":
-        category = "호텔/리조트";
+        category = "호텔";
+        break;
+      case "resort":
+        category = "리조트";
         break;
       case "motel":
         category = "모텔";
         break;
       case "pension":
-        category = "풀빌라/펜션";
+        category = "펜션";
         break;
       case "all":
         category = "";
@@ -193,9 +196,10 @@ const Search = ({ keyword, category }: SearchProps) => {
             defaultValue="모든 숙소"
           >
             <option value="모든 숙소">모든 숙소</option>
-            <option value="호텔/리조트">호텔/리조트</option>
+            <option value="호텔">호텔</option>
+            <option value="리조트">리조트</option>
             <option value="모텔">모텔</option>
-            <option value="풀빌라/펜션">풀빌라/펜션</option>
+            <option value="펜션">펜션</option>
           </Select>
         </styles.AccordionWrapper>
 
