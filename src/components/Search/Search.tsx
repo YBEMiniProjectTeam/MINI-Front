@@ -193,7 +193,6 @@ const Search = ({ keyword, category }: SearchProps) => {
             _hover={{ backgroundColor: "#f5f5f5" }}
             value={selectedCategory}
             onChange={handleCategoryChange}
-            defaultValue="모든 숙소"
           >
             <option value="모든 숙소">모든 숙소</option>
             <option value="호텔">호텔</option>

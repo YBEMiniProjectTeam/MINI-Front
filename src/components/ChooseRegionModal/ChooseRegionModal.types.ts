@@ -9,10 +9,6 @@ export interface SideTabProps {
     isSelected: boolean;
 }
 
-export interface DistrictListProps {
-    isSelected: boolean;
-}
-
 export interface Region {
     id: number;
     name: string;

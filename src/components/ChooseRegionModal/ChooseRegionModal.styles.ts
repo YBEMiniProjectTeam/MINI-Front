@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { SideTabProps, DistrictListProps } from "./ChooseRegionModal.types";
+import { SideTabProps } from "./ChooseRegionModal.types";
 
 export const SideTabs = styled.div`
     display: flex;
@@ -33,7 +33,7 @@ export const DistrictList = styled.div`
     width: 100%;
 `;
 
-export const District = styled.div<DistrictListProps>`
+export const District = styled.div`
     padding-left: 1rem;
     cursor: pointer;
     line-height: 48px;

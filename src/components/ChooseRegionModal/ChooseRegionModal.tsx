@@ -54,7 +54,9 @@ const ChooseRegionModal = ({
     districtRefetch();
   }, [selectedRegion]);
 
-  useEffect(() => {}, [selectedDistrict]);
+  useEffect(() => {
+    onClose();
+  }, [selectedDistrict]);
 
   const handleRegionSelect = (regionId: number) => {
     setSelectedRegion(regionId);
@@ -108,7 +110,6 @@ const ChooseRegionModal = ({
                   <styles.District
                     key={district.id}
                     onClick={() => handleDistrictSelect(district.name)}
-                    isSelected={selectedDistrict === district.name}
                   >
                     {district.name}
                   </styles.District>
