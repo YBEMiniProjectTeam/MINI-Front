@@ -13,8 +13,18 @@ import { PiCookingPot } from "react-icons/pi";
 export const ProductDetail: React.FC = () => {
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
-  const startDate = searchParams.get("startDate");
-  const endDate = searchParams.get("endDate");
+  const startDateParam = searchParams.get("startDate");
+  const endDateParam = searchParams.get("endDate");
+
+  const startDate =
+    startDateParam !== null && startDateParam !== "null"
+      ? new Date(startDateParam)
+      : new Date();
+
+  const endDate =
+    endDateParam !== null && endDateParam !== "null"
+      ? new Date(endDateParam)
+      : new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
 
   const { data } = useAccomodationQuery(Number(id));
 
@@ -64,8 +74,8 @@ export const ProductDetail: React.FC = () => {
           </Box>
         </Flex>
         <ChooseDetail
-          startDate={startDate || Date()}
-          endDate={endDate || Date()}
+          startDate={startDate.toString()}
+          endDate={endDate.toString()}
         />
         <Divider margin="40px 0" borderColor="#D9D9D9" />
         <Box fontSize="26px" fontWeight={700} marginBottom="8px">
