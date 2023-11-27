@@ -3,7 +3,7 @@ export function convertDateFormat3(inputDate?: string): string | null {
   if (!inputDate) {
     return null;
   }
-  console.log(inputDate);
+
   if (inputDate[2] !== "/") {
     const dateParts = inputDate
       .split(".")
