@@ -20,9 +20,12 @@ import { IoLocationOutline } from "react-icons/io5";
 import { CiCalendar } from "react-icons/ci";
 import { SearchIcon } from "@chakra-ui/icons";
 import { truncateText } from "@utils/truncateText";
-import { convertDateFormat2 as convertDateFormat } from "@utils/convertDateFormat2";
+import { convertDateFormat2 } from "@utils/convertDateFormat2";
+import { convertDateFormat3 } from "@/utils/convertDateFormat3";
 import ChooseRegionModal from "../ChooseRegionModal/ChooseRegionModal";
 import ChooseDateModal from "../ChooseDateModal/ChooseDateModal";
+import SearchList from "@components/SearchList/SearchList";
+import { useSearchList } from "@hooks/useSearchList";
 
 const Search = ({ keyword, category }: SearchProps) => {
   const {
@@ -38,10 +41,41 @@ const Search = ({ keyword, category }: SearchProps) => {
   } = useDisclosure();
 
   const [selectedDistrict, setSelectedDistrict] = useState<string>("");
-  const [selectedDate, setSelectedDate] = useState<string[] | undefined>([]);
+  const [selectedDate, setSelectedDate] = useState<string[] | null>([]);
   const [accommodationName, setAccommodationName] = useState<string>(
-    keyword ? keyword : "숙소명 입력"
+    keyword ? keyword : ""
   );
+  const [startDate, setStartDate] = useState<string | null>("");
+  const [endDate, setEndDate] = useState<string | null>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    category ? category : ""
+  );
+  const [isFromSearchResult, setIsFromSearchResult] = useState<boolean>(false);
+
+  const { refetch } = useSearchList(
+    accommodationName,
+    selectedDistrict,
+    startDate,
+    endDate,
+    selectedCategory,
+    1,
+    10
+  );
+
+  useEffect(() => {
+    setIsFromSearchResult(true);
+  }, []);
+
+  useEffect(() => {
+    setSelectedCategory(category ? category : "");
+  }, []);
+
+  useEffect(() => {
+    if (selectedDate && selectedDate.length > 1) {
+      setStartDate(convertDateFormat3(selectedDate[0]));
+      setEndDate(convertDateFormat3(selectedDate[1]));
+    }
+  }, [selectedDate]);
 
   if (category) {
     switch (category) {
@@ -55,14 +89,10 @@ const Search = ({ keyword, category }: SearchProps) => {
         category = "풀빌라/펜션";
         break;
       case "all":
-        category = "모든 숙소";
+        category = "";
         break;
     }
   }
-  const [selectedCategory, setSelectedCategory] = useState<string>(
-    category ? category : "모든 숙소"
-  );
-  const [isFromSearchResult, setIsFromSearchResult] = useState<boolean>(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAccommodationName(e.target.value);
@@ -72,9 +102,9 @@ const Search = ({ keyword, category }: SearchProps) => {
     setSelectedCategory(e.target.value);
   };
 
-  useEffect(() => {
-    setIsFromSearchResult(true);
-  }, []);
+  const handleSearchClick = () => {
+    refetch();
+  };
 
   return (
     <>
@@ -96,7 +126,11 @@ const Search = ({ keyword, category }: SearchProps) => {
             <SearchIcon />
           </InputLeftElement>
 
-          <Input value={accommodationName} onChange={handleInputChange} />
+          <Input
+            placeholder={accommodationName ? undefined : "숙소명 입력"}
+            value={accommodationName}
+            onChange={handleInputChange}
+          />
         </InputGroup>
 
         <styles.AccordionWrapper>
@@ -135,9 +169,9 @@ const Search = ({ keyword, category }: SearchProps) => {
                   <Box as="span" flex="1" textAlign="left">
                     <Icon as={CiCalendar} mr="1rem" />
                     {selectedDate && selectedDate?.length > 1 && selectedDate[0]
-                      ? `${convertDateFormat(
+                      ? `${convertDateFormat2(
                           selectedDate[0]
-                        )} - ${convertDateFormat(selectedDate[1])}`
+                        )} - ${convertDateFormat2(selectedDate[1])}`
                       : "날짜 선택"}
                   </Box>
                   <AccordionIcon />
@@ -156,6 +190,7 @@ const Search = ({ keyword, category }: SearchProps) => {
             _hover={{ backgroundColor: "#f5f5f5" }}
             value={selectedCategory}
             onChange={handleCategoryChange}
+            defaultValue="모든 숙소"
           >
             <option value="모든 숙소">모든 숙소</option>
             <option value="호텔/리조트">호텔/리조트</option>
@@ -170,10 +205,17 @@ const Search = ({ keyword, category }: SearchProps) => {
           textAlign="center"
           borderRadius="5px"
           mb="1rem"
+          onClick={handleSearchClick}
         >
           검색하기
         </Button>
       </Stack>
+      <SearchList
+        keyword={keyword}
+        category={category}
+        startDate={startDate}
+        endDate={endDate}
+      />
     </>
   );
 };

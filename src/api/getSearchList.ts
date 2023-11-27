@@ -1,9 +1,20 @@
 import axios from "axios";
+import { API_BASE_URL } from "./config";
 
-export const getSearchList = async () =>{
-    const GET_SEARCH_LIST_URL = "https://cca6d5da-811b-445f-8811-62cab12d0157.mock.pstmn.io/accommodations?region=1&district=1&date=2023-11-20";
-
-    const response = await axios.get(GET_SEARCH_LIST_URL);
-
-    return response.data.data.accomodations;
-}
+export const getSearchList = async (
+  accomodationName: string | null,
+  selectedDistrict: string | null,
+  startDate: string | null,
+  endDate: string | null,
+  category: string | null,
+  pageNum: number,
+  pageSize: number
+) => {
+  console.log("pageNum", pageNum);
+  
+  const GET_SEARCH_LIST_URL = `${API_BASE_URL}/accommodations?keyword=${accomodationName}&district=${selectedDistrict}&start_date=${startDate}&end_date=${endDate}&category=${category}&page_num=${pageNum}&page_size=${pageSize}`;
+  
+  const response = await axios.get(GET_SEARCH_LIST_URL);
+  
+  return response.data.data;
+};
