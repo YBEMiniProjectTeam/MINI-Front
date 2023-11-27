@@ -44,7 +44,7 @@ export const RegisterForm = (): JSX.Element => {
         navigate(-1);
       });
     }
-  }, []);
+  }, [cookies, navigate]);
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setEmail(e.currentTarget.value);
