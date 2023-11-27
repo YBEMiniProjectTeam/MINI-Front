@@ -11,7 +11,7 @@ export const useSearchList = (
   pageSize: number
 ) => {
   return useSuspenseQuery({
-    queryKey: ["searchList", accomodationName, selectedDistrict, startDate, endDate, category, pageNum, pageSize],
+    queryKey: ["searchList", selectedDistrict, startDate, endDate, category, pageNum, pageSize],
     queryFn: () =>
       getSearchList(
         accomodationName,
