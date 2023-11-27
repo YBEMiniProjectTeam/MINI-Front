@@ -48,16 +48,13 @@ const ChooseRegionModal = ({
 
   useEffect(() => {
     setDistrictList(districtData);
-    onClose();
   }, [districtData]);
 
   useEffect(() => {
     districtRefetch();
   }, [selectedRegion]);
 
-  useEffect(() => {
-    onClose();
-  }, [selectedDistrict]);
+  useEffect(() => {}, [selectedDistrict]);
 
   const handleRegionSelect = (regionId: number) => {
     setSelectedRegion(regionId);
