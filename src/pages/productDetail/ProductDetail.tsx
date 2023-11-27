@@ -35,7 +35,7 @@ export const ProductDetail: React.FC = () => {
   return (
     <Suspense fallback={<Spinner />}>
       <Box w="720px">
-        <Image images={images} />
+        {images && <Image images={images} />}
         <Flex
           marginTop="30px"
           justifyContent="space-between"
