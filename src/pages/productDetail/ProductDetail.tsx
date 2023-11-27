@@ -42,7 +42,7 @@ export const ProductDetail: React.FC = () => {
           alignItems="center"
         >
           <Box>
-            <Box fontSize="14px">{type}</Box>
+            {type !== "NOT_CLASSIFIED" && <Box fontSize="14px">{type}</Box>}
             <Box fontSize="30px" fontWeight={700}>
               {name}
             </Box>
