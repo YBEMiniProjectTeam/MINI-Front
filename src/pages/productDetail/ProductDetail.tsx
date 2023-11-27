@@ -81,9 +81,11 @@ export const ProductDetail: React.FC = () => {
         <Box fontSize="26px" fontWeight={700} marginBottom="8px">
           숙소 설명
         </Box>
-        <Text fontSize="16px" marginBottom="3px" lineHeight={1.7}>
-          {desc}
-        </Text>
+        {desc !== "." && (
+          <Text fontSize="16px" marginBottom="3px" lineHeight={1.7}>
+            {desc}
+          </Text>
+        )}
         <Divider margin="40px 0" borderColor="#D9D9D9" />
         <Box fontSize="26px" fontWeight={700} marginBottom="10px">
           숙소 정보
@@ -102,9 +104,11 @@ export const ProductDetail: React.FC = () => {
         <Box fontSize="26px" fontWeight={700} marginBottom="8px">
           부대시설
         </Box>
-        <Text fontSize="16px" marginBottom="3px" lineHeight={1.7}>
-          {others.split(" ").join(", ")}
-        </Text>
+        {others !== "." && (
+          <Text fontSize="16px" marginBottom="3px" lineHeight={1.7}>
+            {others}
+          </Text>
+        )}
         <Divider margin="40px 0" borderColor="#D9D9D9" />
         <Flex flexDir="column" alignItems="flex-start" gap="5px">
           <Box fontSize="26px" fontWeight={700}>
