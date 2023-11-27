@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useRoomListQuery } from "@/hooks/useRoomListQuery";
 import ChooseRoom from "../ChooseRoom/ChooseRoom";
 import ChooseDateModal from "@/components/ChooseDateModal/ChooseDateModal";
-import { ChooseDetailTypes } from "./ChooseDetail.types";
+import { ChooseDetailTypes, RoomTypes } from "./ChooseDetail.types";
 import { Box, Flex, useDisclosure } from "@chakra-ui/react";
 import { CiCalendar } from "react-icons/ci";
 import { BsPeople } from "react-icons/bs";
@@ -24,7 +24,7 @@ const ChooseDetail = ({
     onClose: onCloseChooseDateModal
   } = useDisclosure();
 
-  const { data } = useRoomListQuery(startDate, endDate, guestNum);
+  const { data: rooms } = useRoomListQuery(startDate, endDate, guestNum);
 
   useEffect(() => {
     setSelectedDate([startDate, endDate]);
@@ -79,7 +79,10 @@ const ChooseDetail = ({
           </Box>
         </Flex>
       </Box>
-      <ChooseRoom />
+      {rooms &&
+        rooms.map((room: RoomTypes, index: number) => (
+          <ChooseRoom key={index} room={room} />
+        ))}
     </>
   );
 };
