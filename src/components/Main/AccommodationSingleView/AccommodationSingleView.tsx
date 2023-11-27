@@ -4,16 +4,7 @@ import { ArrowForwardIcon } from '@chakra-ui/icons';
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { useSearchList } from "@/hooks/useSearchList";
 import { Spinner } from "@chakra-ui/react";
-
-type Accommodation = {
-  id: number;
-  name: string;
-  type: string;
-  thumbnail: string;
-  min_price: number;
-  isWish: boolean;
-};
-
+import { Accommodation } from "../AccommodationGridView/AccommodationGridView.types";
 
 export const AccommodationSingleView = () => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);

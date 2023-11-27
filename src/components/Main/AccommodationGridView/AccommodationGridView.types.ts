@@ -4,3 +4,13 @@ export interface GridItemProps {
   name: string;
   price: string;
 }
+
+export type Accommodation = {
+  id: number;
+  name: string;
+  region: string;
+  type: string;
+  thumbnail: string;
+  min_price: number;
+  isWish: boolean;
+};
