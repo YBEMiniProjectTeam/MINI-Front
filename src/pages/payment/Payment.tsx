@@ -45,7 +45,7 @@ export const Payment: React.FC = () => {
             <Collapse in={isDiffUser} animateOpacity>
               {isDiffUser && <DiffUserInfoForm />}
             </Collapse>
-            <VisitOptionsForm />
+            {/*<VisitOptionsForm />*/}
           </Card>
         </Card>
         <Card label="결제 금액">
