@@ -24,15 +24,7 @@ const ChooseDetail = ({
     onClose: onCloseChooseDateModal
   } = useDisclosure();
 
-  const { isLoading, isError, data, error } = useRoomListQuery(
-    startDate,
-    endDate,
-    guestNum
-  );
-
-  if (isLoading) {
-    return;
-  }
+  const { data } = useRoomListQuery(startDate, endDate, guestNum);
 
   useEffect(() => {
     setSelectedDate([startDate, endDate]);
