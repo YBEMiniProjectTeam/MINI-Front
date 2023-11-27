@@ -1,36 +1,20 @@
-import React, { useEffect, useState, useCallback } from "react";
-import * as styles from "./SearchList.styles";
-import { Accommodation } from "./SearchList.types";
-import { SearchListProps } from "./SearchList.types";
+import React, { useEffect, useState } from "react";
+import * as styles from "./MyWishList.styles";
+import { Accommodation } from "@components/SearchList/SearchList.types";
+import { useWishList } from "@/hooks/useWishLIst";
 import { Box, Image, Icon, Tag, Text, Spinner } from "@chakra-ui/react";
-import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa";
-import { useSearchList } from "@hooks/useSearchList";
 import { useNavigate } from "react-router-dom";
-import { converDateFormat4 } from "@/utils/converDateFormat4";
 
-const SearchList = ({
-  keyword,
-  category,
-  startDate,
-  endDate
-}: SearchListProps) => {
+const MyWishList = () => {
   const navigate = useNavigate();
 
-  const [searchList, setSearchList] = useState<Accommodation[]>([]);
+  const [wishList, setWishList] = useState<Accommodation[]>([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  const { data, error, isLoading, refetch } = useSearchList(
-    keyword,
-    null,
-    null,
-    null,
-    category,
-    page,
-    10
-  );
+  const { data, error, isLoading, refetch } = useWishList(page, 10);
 
   if (error) {
     console.error("An error has occurred:", error.message);
@@ -47,26 +31,16 @@ const SearchList = ({
 
   useEffect(() => {
     if (data) {
-      setSearchList((prevSearchList) => [
-        ...prevSearchList,
-        ...data.accommodations
-      ]);
+      setWishList(data?.filter((item: Accommodation) => item.isWish));
       setTotalPage(data.total_pages);
       setIsLoadingMore(false);
     }
-  }, [data, setSearchList, setTotalPage, setIsLoadingMore]);
+  }, [data, setWishList, setTotalPage, setIsLoadingMore]);
 
   const handleLikeClick = (index: number) => {
-    const updatedSearchList = [...searchList];
+    const updatedWishList = wishList.filter((item, i) => i !== index);
 
-    updatedSearchList[index] = {
-      ...updatedSearchList[index],
-      isWish: !updatedSearchList[index].isWish
-    };
-
-    setSearchList(updatedSearchList);
-
-    // post 요청 필요
+    setWishList(updatedWishList);
   };
 
   const handleScroll = () => {
@@ -84,11 +58,7 @@ const SearchList = ({
   };
 
   const handleAccomodationClick = (id: number) => {
-    navigate(
-      `/products/${id}?startDate=${converDateFormat4(
-        startDate
-      )}&endDate=${converDateFormat4(endDate)}`
-    );
+    navigate(`/products/${id}`);
   };
 
   return (
@@ -104,9 +74,9 @@ const SearchList = ({
           />
         </styles.SpinnerWrapper>
       ) : (
-        searchList?.map((accomodation, index) => (
+        wishList?.map((accomodation, index) => (
           <Box
-            key={index}
+            key={accomodation.id}
             width="100%"
             border="1px"
             borderColor="gray.200"
@@ -127,32 +97,19 @@ const SearchList = ({
                 cursor="pointer"
                 onClick={() => handleAccomodationClick(accomodation.id)}
               />
-              {accomodation.isWish ? (
-                <Icon
-                  as={FaHeart}
-                  position="absolute"
-                  top="1.325rem"
-                  right="1.275rem"
-                  width="1.5rem"
-                  height="1.5rem"
-                  color="red"
-                  cursor="pointer"
-                  onClick={() => handleLikeClick(index)}
-                />
-              ) : (
-                <Icon
-                  as={CiHeart}
-                  position="absolute"
-                  top="1rem"
-                  right="1rem"
-                  width="2rem"
-                  height="2rem"
-                  color="white"
-                  cursor="pointer"
-                  zIndex="1000"
-                  onClick={() => handleLikeClick(index)}
-                />
-              )}
+
+              <Icon
+                as={FaHeart}
+                position="absolute"
+                top="1.325rem"
+                right="1.275rem"
+                width="1.5rem"
+                height="1.5rem"
+                color="red"
+                cursor="pointer"
+                zIndex="1000"
+                onClick={() => handleLikeClick(index)}
+              />
 
               {accomodation.type !== "NOT_CLASSIFIED" && (
                 <Tag
@@ -174,7 +131,6 @@ const SearchList = ({
               pb="14px"
               ml="1rem"
               onClick={() => handleAccomodationClick(accomodation.id)}
-              cursor="pointer"
             >
               <Box
                 overflow="hidden"
@@ -232,4 +188,4 @@ const SearchList = ({
   );
 };
 
-export default SearchList;
+export default MyWishList;
