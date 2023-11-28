@@ -1,38 +1,8 @@
 import { Checkbox } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
+import { CartListProps } from "./ShoppinCart.types";
 
-interface RoomInfo {
-  cartId: number;
-  quantity: number;
-  address: string;
-  roomName: string;
-  accommodationThumbnailUrl: string;
-  price: number;
-  checkInDate: string;
-  checkOutDate: string;
-  checkInTime: string;
-  checkOutTime: string;
-  capacity: number;
-  capacityMax: number;
-  isChecked?: boolean;
-}
-
-interface Accommodation {
-  accommodationName: string;
-  roomInfos: RoomInfo[];
-}
-
-export const ShoppingCartList = (props: {
-  data: Accommodation;
-  isCheckAllBox: boolean;
-
-  setData: React.Dispatch<React.SetStateAction<Accommodation[]>>;
-  cartIdList: number[];
-  // handleCheckRoom: (hotelIndex: number, roomIndex: number) => void;
-  handleCheckRoom: (cartId: number) => void;
-  handleClickRoomDelete: (CartId: number) => void;
-  handleClickQuantity: (sign: string, cartId: number) => Promise<void>;
-}): JSX.Element => {
+export const ShoppingCartList = (props: CartListProps): JSX.Element => {
   return (
     <>
       {Object.keys(props.data.roomInfos).length ? (

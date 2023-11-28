@@ -12,27 +12,7 @@ import { useCookies } from "react-cookie";
 import { Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-
-interface RoomInfo {
-  cartId: number;
-  quantity: number;
-  address: string;
-  roomName: string;
-  accommodationThumbnailUrl: string;
-  price: number;
-  checkInDate: string;
-  checkOutDate: string;
-  checkInTime: string;
-  checkOutTime: string;
-  capacity: number;
-  capacityMax: number;
-  isChecked?: boolean;
-}
-
-interface Accommodation {
-  accommodationName: string;
-  roomInfos: RoomInfo[];
-}
+import { Accommodation } from "./ShoppinCart.types";
 
 // const initialData: Accommodation[] = [
 //   {
