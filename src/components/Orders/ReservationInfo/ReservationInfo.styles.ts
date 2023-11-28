@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   background-color: #fff;
-  border-bottom: 1px solid #f3f3f4;
 `;
 
 export const TopContainer = styled.div`

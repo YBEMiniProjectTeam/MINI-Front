@@ -1,3 +1,4 @@
+import { RadioProps } from "@chakra-ui/react";
 import { Control, FieldValues, RegisterOptions } from "react-hook-form";
 
 interface CustomInputProps {
@@ -8,6 +9,8 @@ interface CustomInputProps {
   placeholder?: string;
   helperText?: string;
   defaultValue?: string;
+  isRequired?: boolean;
+  variant?: "outline" | "filled" | "flushed" | "unstyled";
 }
 
 interface CustomSelectProps {
@@ -25,10 +28,14 @@ interface CustomCheckboxProps {
   rules?: object;
 }
 
-interface CustomCheckboxGroupProps {
+interface CustomRadioProps {
   control: Control<FieldValues, object>;
-  parentName: string;
-  children: React.ReactNode;
+  name: string;
+  label?: string;
+  options: { value: string; label: string }[];
+  rules?: object;
+  defaultValue?: string;
+  isRequired?: boolean;
 }
 
 interface CustomButtonProps {
@@ -41,10 +48,35 @@ interface CustomButtonProps {
   disabled?: boolean;
 }
 
+export interface Option {
+  label: string;
+  value: string;
+}
+
+interface CustomRadioBoxProps {
+  control: Control<FieldValues>;
+  rules?: RegisterOptions;
+  name: string;
+  label: string;
+  options: Option[];
+  defaultValue?: string;
+  isRequired?: boolean;
+  checkedBgColor: string;
+  checkedBorderColor: string;
+}
+
+interface RadioCardProps extends RadioProps {
+  children: React.ReactNode;
+  checkedBgColor: string;
+  checkedBorderColor: string;
+}
+
 export type {
   CustomInputProps,
   CustomSelectProps,
   CustomCheckboxProps,
-  CustomCheckboxGroupProps,
-  CustomButtonProps
+  CustomRadioProps,
+  CustomButtonProps,
+  RadioCardProps,
+  CustomRadioBoxProps
 };

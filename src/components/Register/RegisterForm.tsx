@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./RegisterStyles";
 import {
   FormControl,
@@ -12,6 +12,8 @@ import { AgreementModalForm } from "../AgreementModal/AgreementModalForm";
 import { isBirthdayValid, isEmailValid, isPasswordValid } from "./validators";
 import { RegisterApi } from "@api/register/RegisterApi";
 import type { User } from "./Register.types";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 export const RegisterForm = (): JSX.Element => {
   const [email, setEmail] = useState("");
@@ -28,6 +30,21 @@ export const RegisterForm = (): JSX.Element => {
   const [isAgreement, setIsAgreement] = useState(false);
 
   const [isShowModal, setIsShowModal] = useState(false);
+  const navigate = useNavigate();
+
+  const [cookies] = useCookies(["access-token"]);
+
+  useEffect(() => {
+    if (cookies["access-token"]) {
+      Swal.fire({
+        icon: "error",
+        title: "잘못된 요청입니다.",
+        text: "로그인이 된 상태면 해당 페이지에 들어갈 수 없습니다."
+      }).then(() => {
+        navigate(-1);
+      });
+    }
+  }, [cookies, navigate]);
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setEmail(e.currentTarget.value);
@@ -71,7 +88,9 @@ export const RegisterForm = (): JSX.Element => {
     }
   };
 
-  const handleClickSubmit = (e: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleClickSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ): Promise<void> => {
     e.preventDefault();
 
     if (
@@ -98,9 +117,29 @@ export const RegisterForm = (): JSX.Element => {
           email: email,
           pwd: password,
           name: name,
-          birthday: `${year}-${month}-${day}`
+
+          ...(birthday && {
+            birthday: `${year}-${month}-${day}`
+          })
         };
-        RegisterApi(user);
+        const statusCode = await RegisterApi(user);
+        if (statusCode === 200) {
+          Swal.fire("회원가입에 성공했습니다.!").then(() => {
+            navigate("/login");
+          });
+        } else if (statusCode === 400) {
+          Swal.fire({
+            icon: "error",
+            title: "회원가입에 실패했습니다.",
+            text: "잘못된 형식으로 요쳥했습니다."
+          });
+        } else if (statusCode === 500) {
+          Swal.fire({
+            icon: "error",
+            title: "서버에러.",
+            text: "잠시후 다시 입력해주세요!"
+          });
+        }
       }
     }
   };

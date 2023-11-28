@@ -1,12 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
-import { getWishList } from "@api/getWishLIst";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { getWishList } from "@/api/getWishList";
 
 export const useWishList = (
   pageNum: number,
   pageSize: number
 ) => {
-  return useQuery({
-    queryKey: ["wishList"],
+  return useSuspenseQuery({
+    queryKey: ["wishList", pageNum, pageSize],
     queryFn: () => getWishList(pageNum, pageSize)
   });
 };
