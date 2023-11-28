@@ -1,7 +1,7 @@
-import * as styles from "./UserInfoField.styles";
-import type { UserInfoFieldProps } from "./UserInfoField.types";
+import * as styles from "./UserInfoForm.styles";
+import { UserInfoFormProps } from "./UserInfoForm.types";
 
-const UserInfoField = ({ data }: UserInfoFieldProps) => {
+const UserInfoForm = ({ data }: UserInfoFormProps) => {
   return (
     <styles.UserInfoContainer>
       <styles.UserInfoWrapperRow>
@@ -16,4 +16,4 @@ const UserInfoField = ({ data }: UserInfoFieldProps) => {
   );
 };
 
-export default UserInfoField;
+export default UserInfoForm;

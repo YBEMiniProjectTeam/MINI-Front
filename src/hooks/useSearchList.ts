@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { getSearchList } from "@api/getSearchList";
 
 export const useSearchList = (
@@ -10,8 +10,8 @@ export const useSearchList = (
   pageNum: number,
   pageSize: number
 ) => {
-  return useQuery({
-    queryKey: ["searchList"],
+  return useSuspenseQuery({
+    queryKey: ["searchList", selectedDistrict, startDate, endDate, category, pageNum, pageSize],
     queryFn: () =>
       getSearchList(
         accomodationName,

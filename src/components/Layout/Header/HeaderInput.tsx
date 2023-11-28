@@ -17,6 +17,13 @@ export const HeaderInput = (): JSX.Element => {
   const handleClickSearchButton = (): void => {
     navigate(`/searchResult?keyword=${inputValue}`);
   };
+  const handleKeyDownEnter = (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ): void => {
+    if (e.key === "Enter") {
+      navigate(`/searchResult?keyword=${inputValue}`);
+    }
+  };
   return (
     <div className="inputContainer">
       <input
@@ -24,6 +31,7 @@ export const HeaderInput = (): JSX.Element => {
         placeholder="지역이나 숙소, 레저를 검색해보세요."
         onChange={handleChangeInput}
         value={inputValue}
+        onKeyDown={handleKeyDownEnter}
       ></input>
 
       {inputValue !== "" ? (
