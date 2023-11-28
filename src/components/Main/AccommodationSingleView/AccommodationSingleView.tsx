@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import * as styled from './AccommodationSingleView.styles';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
@@ -32,7 +32,7 @@ export const AccommodationSingleView = () => {
     ),
   };
 
-  const { data, error, isLoading } = useSearchList(
+  const { data, error } = useSearchList(
     null,
     null,
     null,
@@ -53,59 +53,58 @@ export const AccommodationSingleView = () => {
   // page num, size 결정
 
   return (
-    <styled.SingleViewWrapper>
-      <styled.MainViewTitleWrapper>
-        <styled.MainViewTitle>
-          <styled.Title>호캉스</styled.Title>
-          <styled.Description>지친 이번주, 호캉스는 어떠세요?</styled.Description>
-        </styled.MainViewTitle>
-        <styled.MoreButtonWrapper>
-          <a href="/searchResult">
-            <styled.MoreButtonTxt>모두 보기</styled.MoreButtonTxt>
-            <ArrowForwardIcon color={"#666666"}/>
-          </a>
-        </styled.MoreButtonWrapper>
-      </styled.MainViewTitleWrapper>
-      {
-        isLoading ? (
-          <styled.LoadingWraaper>
-            <Spinner
-              thickness="2px"
-              speed="0.65s"
-              emptyColor="gray.200"
-              color="#db074a"
-              size="md"
-            />
-          </styled.LoadingWraaper>
-        ) : (
-          <>
-            <styled.SwiperContainer>
-              <styled.StyledSlider {...settings}>
-                {data['accommodations'].map((item: Accommodation, index: number) => (
-                  <styled.SwiperItem key={index}>
-                    <img src={item.thumbnail} alt={`Slide ${index + 1}`} />
-                  </styled.SwiperItem>
-                ))}
-              </styled.StyledSlider>
-            </styled.SwiperContainer>
-            <styled.InformationWrapper>
-              <styled.InformationInner>
-                <styled.InformationRegion>
-                  {data['accommodations'][currentSlide].region} | {printCategory(data['accommodations'][currentSlide].type)}
-                </styled.InformationRegion>
-                <styled.InformationName>
-                  {data['accommodations'][currentSlide].name}
-                </styled.InformationName>
-                <div>
-                  <styled.InformationPrice>
-                    {data['accommodations'][currentSlide].min_price}
-                  </styled.InformationPrice>
-                  <styled.InformationPriceTxt>원부터</styled.InformationPriceTxt>
-                </div>
-              </styled.InformationInner>
-            </styled.InformationWrapper>
-          </>
-        )}
-    </styled.SingleViewWrapper>
+    <Suspense
+      fallback={
+        <styled.LoadingWraaper>
+          <Spinner
+            thickness="2px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="#db074a"
+            size="md"
+          />
+        </styled.LoadingWraaper>
+      }
+    >
+      <styled.SingleViewWrapper>
+        <styled.MainViewTitleWrapper>
+          <styled.MainViewTitle>
+            <styled.Title>호캉스</styled.Title>
+            <styled.Description>지친 이번주, 호캉스는 어떠세요?</styled.Description>
+          </styled.MainViewTitle>
+          <styled.MoreButtonWrapper>
+            <a href="/searchResult">
+              <styled.MoreButtonTxt>모두 보기</styled.MoreButtonTxt>
+              <ArrowForwardIcon color={"#666666"}/>
+            </a>
+          </styled.MoreButtonWrapper>
+        </styled.MainViewTitleWrapper>
+        <styled.SwiperContainer>
+          <styled.StyledSlider {...settings}>
+            {data?.accommodations?.map((item: Accommodation, index: number) => (
+              <styled.SwiperItem key={index}>
+                <img src={item.thumbnail} alt={`Slide ${index + 1}`} />
+              </styled.SwiperItem>
+            ))}
+          </styled.StyledSlider>
+        </styled.SwiperContainer>
+        <styled.InformationWrapper>
+          <styled.InformationInner>
+            <styled.InformationRegion>
+              {data?.accommodations?.[currentSlide].region} | {printCategory(data?.accommodations?.[currentSlide].type)}
+            </styled.InformationRegion>
+            <styled.InformationName>
+              {data?.accommodations?.[currentSlide].name}
+            </styled.InformationName>
+            <div>
+              <styled.InformationPrice>
+                {data?.accommodations?.[currentSlide].min_price}
+              </styled.InformationPrice>
+              <styled.InformationPriceTxt>원부터</styled.InformationPriceTxt>
+            </div>
+          </styled.InformationInner>
+        </styled.InformationWrapper>
+      </styled.SingleViewWrapper>
+    </Suspense>
   );
 };
