@@ -1,7 +1,8 @@
 export interface PaymentSubmitButtonProps {
-  price: number;
+  totalPrice: number;
   userData?: {
     name: string;
     email: string;
   };
+  cartIds: number[];
 }
