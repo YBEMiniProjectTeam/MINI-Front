@@ -11,6 +11,7 @@ import { convertDateFormat4 } from "@/utils/convertDateFormat4";
 import { debounce } from "lodash";
 import { checkInAndOutDateState } from "@recoil/checkInAndOutDate";
 import { useRecoilValue } from "recoil";
+import Swal from "sweetalert2";
 
 const SearchList = ({ keyword, category }: SearchListProps) => {
   const navigate = useNavigate();
@@ -32,10 +33,15 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
     10
   );
 
+  const accessTokenCookie = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("accessToken="));
+
   if (error) {
     console.error("An error has occurred:", error.message);
   }
 
+  // 모듈화
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     document.documentElement.scrollTop = 0;
@@ -55,6 +61,14 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
   }, [data]);
 
   const handleLikeClick = (index: number) => {
+    if (!accessTokenCookie) {
+      Swal.fire({
+        icon: "error",
+        text: "로그인이 필요한 서비스입니다.",
+        footer: '<a href="/login">로그인하러 가기</a>'
+      });
+      return;
+    }
     const updatedSearchList = [...searchList];
 
     updatedSearchList[index] = {
@@ -67,6 +81,7 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
     // post 요청 필요
   };
 
+  // 모듈화
   const handleScroll = debounce(() => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
 

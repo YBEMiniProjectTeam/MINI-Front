@@ -18,6 +18,10 @@ const MyWishList = () => {
 
   const { data, error, refetch } = useWishList(page, 10);
 
+  const accessTokenCookie = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("accessToken="));
+
   if (error) {
     console.error("An error has occurred:", error.message);
   }
@@ -47,13 +51,10 @@ const MyWishList = () => {
 
     // post 요청 필요
 
-    // Swal.fire({
-    //   position: "center",
-    //   icon: "success",
-    //   title: "위시리스트에서 삭제되었습니다",
-    //   showConfirmButton: false,
-    //   timer: 1500
-    // });
+    Swal.fire({
+      icon: "warning",
+      text: "위시리스트에서 삭제되었습니다"
+    });
   };
 
   const handleScroll = debounce(() => {
