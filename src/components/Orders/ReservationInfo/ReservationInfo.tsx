@@ -1,20 +1,24 @@
 import { Box, Divider, Flex } from "@chakra-ui/react";
-import * as styles from "./ReservationInfo.styles.ts";
+import * as styles from "./ReservationInfo.styles";
 import type { ReservationInfoProps } from "./ReservationInfo.types";
+import { calculateNights } from "@utils/calculateNights";
 
 const ReservationInfo = ({ children, roomInfo }: ReservationInfoProps) => {
+  if (!roomInfo) return;
+  const nights = calculateNights(roomInfo.checkInDate, roomInfo.checkOutDate);
+
   return (
     <styles.Container>
       <styles.TopContainer>{children}</styles.TopContainer>
       <Flex justifyContent="space-evenly" alignItems="center">
         <Flex flexDir="column" alignItems="center">
-          <Box color="#7F7F7F" fontSize="14px" fontWeight={500}>
+          <Box color="#7F7F7F" fontSize="0.9rem" fontWeight={500}>
             체크인
           </Box>
-          <Box fontSize="18px" fontWeight={500}>
+          <Box fontSize="1rem" fontWeight={500}>
             {roomInfo?.checkInDate}
           </Box>
-          <Box fontSize="22px" fontWeight={800}>
+          <Box fontSize="1.1rem" fontWeight={800}>
             {roomInfo?.checkInTime}
           </Box>
         </Flex>
@@ -22,21 +26,21 @@ const ReservationInfo = ({ children, roomInfo }: ReservationInfoProps) => {
           display="inline-block"
           bg="#FDDCEC"
           color="#D63F8B"
-          fontSize="13px"
+          fontSize="0.8rem"
           fontWeight={600}
-          padding="5px 10px"
+          padding="0.2rem 0.6rem"
           borderRadius="5px"
         >
-          1박
+          {nights}박
         </Box>
         <Flex flexDir="column" alignItems="center">
-          <Box color="#7F7F7F" fontSize="14px" fontWeight={500}>
+          <Box color="#7F7F7F" fontSize="0.9rem" fontWeight={500}>
             체크아웃
           </Box>
-          <Box fontSize="18px" fontWeight={500}>
+          <Box fontSize="1rem" fontWeight={500}>
             {roomInfo?.checkOutDate}
           </Box>
-          <Box fontSize="22px" fontWeight={800}>
+          <Box fontSize="1.1rem" fontWeight={800}>
             {roomInfo?.checkOutTime}
           </Box>
         </Flex>
@@ -53,35 +57,3 @@ const ReservationInfo = ({ children, roomInfo }: ReservationInfoProps) => {
 };
 
 export default ReservationInfo;
-
-// import * as styles from "./ReservationInfo.styles.ts";
-// import type { ReservationInfoProps } from "./ReservationInfo.types";
-//
-// const ReservationInfo = ({ children, roomInfo }: ReservationInfoProps) => {
-//   return (
-//     <styles.Container>
-//       <styles.TopContainer>{children}</styles.TopContainer>
-//       <styles.StayPeriodContainer>
-//         <styles.StayPeriodDetail>2박</styles.StayPeriodDetail>
-//         <styles.StayPeriodBox>
-//           <span className="type">체크인</span>
-//           <div className="date">{roomInfo?.checkInDate}</div>
-//           <div className="time">{roomInfo?.checkInTime}</div>
-//         </styles.StayPeriodBox>
-//         <styles.StayPeriodBox>
-//           <span className="type">체크아웃</span>
-//           <div className="date">{roomInfo?.checkOutDate}</div>
-//           <div className="time">{roomInfo?.checkOutTime}</div>
-//         </styles.StayPeriodBox>
-//       </styles.StayPeriodContainer>
-//       <styles.PriceLabel>
-//         <styles.PriceItem>
-//           <b>{roomInfo?.price.toLocaleString()}</b>원
-//         </styles.PriceItem>
-//         <styles.PriceDesc>취소 및 환불불가</styles.PriceDesc>
-//       </styles.PriceLabel>
-//     </styles.Container>
-//   );
-// };
-//
-// export default ReservationInfo;
