@@ -1,12 +1,9 @@
+import { getUserInfo } from "@api/getUserInfo.ts";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import axios from "axios";
 
-export const useUserInfo = () => {
+export const useUserInfo = (headers: { [key: string]: string }) => {
   return useSuspenseQuery({
     queryKey: ["userInfo"],
-    queryFn: async () => {
-      const response = await axios.get(`/api/member`);
-      return response.data;
-    }
+    queryFn: () => getUserInfo(headers)
   });
 };
