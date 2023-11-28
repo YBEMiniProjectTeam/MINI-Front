@@ -1,8 +1,8 @@
 import { useFormContext, Controller } from "react-hook-form";
-import * as styles from "./TermsAgreementField.styles";
+import * as styles from "./TermsAgreementForm.styles";
 import { useEffect, useState } from "react";
 
-const TermsAgreementField = () => {
+const TermsAgreementForm = () => {
   const { control, setValue, watch } = useFormContext();
   const [checkedItems, setCheckedItems] = useState([false, false]);
 
@@ -61,4 +61,4 @@ const TermsAgreementField = () => {
   );
 };
 
-export default TermsAgreementField;
+export default TermsAgreementForm;

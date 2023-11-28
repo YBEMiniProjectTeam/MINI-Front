@@ -24,8 +24,9 @@ import { convertDateFormat2 } from "@utils/convertDateFormat2";
 import { convertDateFormat3 } from "@/utils/convertDateFormat3";
 import ChooseRegionModal from "../ChooseRegionModal/ChooseRegionModal";
 import ChooseDateModal from "../ChooseDateModal/ChooseDateModal";
-import SearchList from "@components/SearchList/SearchList";
 import { useSearchList } from "@hooks/useSearchList";
+import { checkInAndOutDateState } from "@recoil/checkInAndOutDate";
+import { useSetRecoilState } from "recoil";
 
 const Search = ({ keyword, category }: SearchProps) => {
   const {
@@ -52,6 +53,8 @@ const Search = ({ keyword, category }: SearchProps) => {
   );
   const [isFromSearchResult, setIsFromSearchResult] = useState<boolean>(false);
 
+  const setCheckInAndOutDateState = useSetRecoilState(checkInAndOutDateState);
+
   const { refetch } = useSearchList(
     accommodationName,
     selectedDistrict,
@@ -77,16 +80,28 @@ const Search = ({ keyword, category }: SearchProps) => {
     }
   }, [selectedDate]);
 
+  useEffect(() => {
+    const newCheckInAndOutDate = {
+      startDate,
+      endDate
+    };
+
+    setCheckInAndOutDateState(newCheckInAndOutDate);
+  }, [startDate, endDate]);
+
   if (category) {
     switch (category) {
       case "hotel":
-        category = "호텔/리조트";
+        category = "호텔";
+        break;
+      case "resort":
+        category = "리조트";
         break;
       case "motel":
         category = "모텔";
         break;
       case "pension":
-        category = "풀빌라/펜션";
+        category = "펜션";
         break;
       case "all":
         category = "";
@@ -190,12 +205,12 @@ const Search = ({ keyword, category }: SearchProps) => {
             _hover={{ backgroundColor: "#f5f5f5" }}
             value={selectedCategory}
             onChange={handleCategoryChange}
-            defaultValue="모든 숙소"
           >
             <option value="모든 숙소">모든 숙소</option>
-            <option value="호텔/리조트">호텔/리조트</option>
+            <option value="호텔">호텔</option>
+            <option value="리조트">리조트</option>
             <option value="모텔">모텔</option>
-            <option value="풀빌라/펜션">풀빌라/펜션</option>
+            <option value="펜션">펜션</option>
           </Select>
         </styles.AccordionWrapper>
 
@@ -210,12 +225,6 @@ const Search = ({ keyword, category }: SearchProps) => {
           검색하기
         </Button>
       </Stack>
-      <SearchList
-        keyword={keyword}
-        category={category}
-        startDate={startDate}
-        endDate={endDate}
-      />
     </>
   );
 };

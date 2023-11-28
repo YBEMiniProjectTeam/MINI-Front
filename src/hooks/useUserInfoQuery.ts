@@ -1,8 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 export const useUserInfo = () => {
-  return useQuery({
+  return useSuspenseQuery({
     queryKey: ["userInfo"],
     queryFn: async () => {
       const response = await axios.get(`/api/member`);

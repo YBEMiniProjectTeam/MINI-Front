@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 type PaymentData = {
@@ -7,7 +7,7 @@ type PaymentData = {
 };
 
 export const usePayment = (orderId: string) => {
-  return useQuery<PaymentData>({
+  return useSuspenseQuery<PaymentData>({
     queryKey: ["payment", orderId],
     queryFn: async () => {
       const response = await axios.get(`/api/orders/${orderId}`);
