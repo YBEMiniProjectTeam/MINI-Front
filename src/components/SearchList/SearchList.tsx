@@ -1,7 +1,10 @@
 import React, { useEffect, useState, Suspense } from "react";
 import * as styles from "./SearchList.styles";
-import { Accommodation } from "./SearchList.types";
-import { SearchListProps } from "./SearchList.types";
+import {
+  Accommodation,
+  SearchListProps,
+  ResponseType
+} from "./SearchList.types";
 import { Box, Image, Icon, Tag, Text, Spinner } from "@chakra-ui/react";
 import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa";
@@ -11,6 +14,9 @@ import { convertDateFormat4 } from "@/utils/convertDateFormat4";
 import { debounce } from "lodash";
 import { checkInAndOutDateState } from "@recoil/checkInAndOutDate";
 import { useRecoilValue } from "recoil";
+import { useMutation } from "@tanstack/react-query";
+import { postLike } from "@api/postLike";
+import { deleteLike } from "@api/deleteLike";
 import Swal from "sweetalert2";
 
 const SearchList = ({ keyword, category }: SearchListProps) => {
@@ -37,6 +43,32 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
     .split("; ")
     .find((row) => row.startsWith("accessToken="));
 
+  const headers = {
+    ...(accessTokenCookie && { Authorization: `Bearer ${accessTokenCookie}` })
+  };
+
+  const postMutate = useMutation<ResponseType, Error, number>({
+    mutationFn: (accommodationId) => postLike(accommodationId, headers),
+    onSuccess: (res) => {
+      console.log(res.statusCode, res.message);
+      Swal.fire({
+        icon: "warning",
+        text: "위시리스트에 추가되었습니다."
+      });
+    }
+  }).mutate;
+
+  const deleteMutate = useMutation<ResponseType, Error, number>({
+    mutationFn: (accommodationId) => deleteLike(accommodationId, headers),
+    onSuccess: (res) => {
+      console.log(res.statusCode, res.message);
+      Swal.fire({
+        icon: "warning",
+        text: "위시리스트에서 삭제되었습니다."
+      });
+    }
+  }).mutate;
+
   if (error) {
     console.error("An error has occurred:", error.message);
   }
@@ -60,7 +92,7 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
     setIsLoadingMore(false);
   }, [data]);
 
-  const handleLikeClick = (index: number) => {
+  const handleLikeClick = (index: number, accommodationId: number) => {
     if (!accessTokenCookie) {
       Swal.fire({
         icon: "error",
@@ -79,6 +111,11 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
     setSearchList(updatedSearchList);
 
     // post 요청 필요
+    if (updatedSearchList[index].isWish === true) {
+      postMutate(accommodationId);
+    } else {
+      deleteMutate(accommodationId);
+    }
   };
 
   // 모듈화
@@ -148,7 +185,7 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
                 height="1.5rem"
                 color="red"
                 cursor="pointer"
-                onClick={() => handleLikeClick(index)}
+                onClick={() => handleLikeClick(index, accomodation.id)}
               />
             ) : (
               <Icon
@@ -160,7 +197,7 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
                 height="2rem"
                 color="white"
                 cursor="pointer"
-                onClick={() => handleLikeClick(index)}
+                onClick={() => handleLikeClick(index, accomodation.id)}
               />
             )}
 
