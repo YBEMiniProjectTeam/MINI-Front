@@ -1,6 +1,8 @@
 import { useState } from "react";
 import * as styled from './MainCarousel.styles';
 import Slider from "react-slick";
+import img1 from "@assets/image/main_carousel1.png";
+import img2 from "@assets/image/main_carousel2.png";
 
 export const MainCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -13,18 +15,13 @@ export const MainCarousel = () => {
     infinite: true,
     autoplay: true,
     speed: 500,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 4000,
     slidesToShow: 1,
     slidesToScroll: 1,
     afterChange: (index: number): void => setCurrentIndex(index),
   };
 
-  // 임시 이미지
-  const imageUrls = [ 
-    "https://img.dailyhotel.me/resources/images/home_event/231120_main_1700108431.jpg",
-    "https://yaimg.yanolja.com/v5/2022/08/22/10/6303603c981178.49851277.jpg",
-    "https://yaimg.yanolja.com/v5/2022/09/07/18/6318e30fbf0735.43714064.jpg"
-  ];
+  const imageUrls = [img1, img2];
 
   return (
     <styled.CarouselOuter>
