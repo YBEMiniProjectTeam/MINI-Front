@@ -22,6 +22,15 @@ const MyWishList = () => {
     .split("; ")
     .find((row) => row.startsWith("accessToken="));
 
+  if (!accessTokenCookie) {
+    Swal.fire({
+      icon: "error",
+      text: "로그인이 필요한 서비스입니다.",
+      footer: '<a href="/login">로그인하러 가기</a>'
+    });
+    return;
+  }
+
   if (error) {
     console.error("An error has occurred:", error.message);
   }

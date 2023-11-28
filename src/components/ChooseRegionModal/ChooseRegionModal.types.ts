@@ -6,7 +6,7 @@ export interface DisclosureProps {
 }
 
 export interface SideTabProps {
-    isSelected: boolean;
+    selected: boolean;
 }
 
 export interface Region {

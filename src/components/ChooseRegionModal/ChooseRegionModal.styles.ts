@@ -19,11 +19,11 @@ export const SideTab = styled.div<SideTabProps>`
     width: 100%;
     line-height: 48px;
     font-size: 14px;
-    color: ${(props) => (props.isSelected ? '#db074a' : '#888')};
-    background-color: ${(props) => (props.isSelected ? 'white' : '#f4f4f6')};
+    color: ${(props) => (props.selected ? '#db074a' : '#888')};
+    background-color: ${(props) => (props.selected ? 'white' : '#f4f4f6')};
 
     &:hover {
-        background-color: ${(props) => (props.isSelected ? 'white' : '#e0e0e0')};
+        background-color: ${(props) => (props.selected ? 'white' : '#e0e0e0')};
     }
 `;
 
