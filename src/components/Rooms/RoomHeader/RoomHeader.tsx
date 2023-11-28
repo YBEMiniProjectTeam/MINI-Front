@@ -1,16 +1,15 @@
-import React from "react";
-import { RoomHeaderTypes } from "./RoomHeader.types.ts";
+import type { RoomHeaderTypes } from "./RoomHeader.types.ts";
 import * as styles from "./RoomHeader.styles.ts";
 import { IoBedOutline, IoResize } from "react-icons/io5";
 import { LiaUserFriendsSolid } from "react-icons/lia";
 import { MdSmokeFree } from "react-icons/md";
 
-const RoomHeader: React.FC<RoomHeaderTypes> = ({
+const RoomHeader = ({
   name,
   introMessage,
   capacity,
   capacityMax
-}) => {
+}: RoomHeaderTypes) => {
   return (
     <styles.Container>
       <styles.RoomTitle>{name}</styles.RoomTitle>

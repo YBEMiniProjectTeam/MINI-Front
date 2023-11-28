@@ -1,3 +1,24 @@
+export const dummyRoomData = {
+  status: "SUCCESS",
+  data: {
+    id: 1,
+    name: "민들레실",
+    price: 10000,
+    capacity: 2,
+    capacity_max: 4,
+    intro_message: "1번 객실입니다. 좋아요",
+    stock_quantity: 3,
+    room_image: [
+      {
+        url: "https://bit.ly/2Z4KKcF"
+      },
+      {
+        url: "https://bit.ly/2Z4KKcF"
+      }
+    ]
+  }
+};
+
 const dummyData = [
   "무료 와이파이",
   "무료 와이파이",

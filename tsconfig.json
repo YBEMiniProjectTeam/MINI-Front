@@ -16,7 +16,7 @@
       "@styles/*": ["styles/*"],
       "@utils/*": ["utils/*"],
       "@theme/*": ["theme/*"],
-      "@components/*": ["components/*"]
+      "@components/*": ["components/*"],
     },
 
     /* Bundler mode */

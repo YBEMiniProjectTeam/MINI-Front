@@ -1,9 +1,9 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
+import { Header } from "@/components/Layout/Header/Header";
 import { Footer } from "@/components/Layout/Footer/Footer";
-import * as styles from "@components/Layout/Layout.styles.ts";
-import { Header } from "./Header/Header";
-const Layout: React.FC = () => {
+import * as styles from "@components/Layout/Layout.styles";
+
+const Layout = () => {
   return (
     <styles.Container>
       <Header />

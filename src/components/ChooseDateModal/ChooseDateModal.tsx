@@ -16,7 +16,7 @@ import { CiCircleMinus } from "react-icons/ci";
 import { CiCirclePlus } from "react-icons/ci";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { convertDateFormat } from "../../utils/convertDateFormat";
+import { convertDateFormat } from "@utils/convertDateFormat";
 import moment from "moment";
 
 const ChooseDateModal = ({

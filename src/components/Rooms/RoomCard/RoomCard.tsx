@@ -1,17 +1,16 @@
-import React from "react";
-import { RoomCardTypes } from "./RoomCard.types.ts";
+import type { RoomCardTypes } from "./RoomCard.types.ts";
 import * as styles from "./RoomCard.styles.ts";
 import { FaRegClock, FaRegUser } from "react-icons/fa6";
 import { LiaInfoCircleSolid } from "react-icons/lia";
 import { formatPrice } from "@utils/priceFormatter.ts";
 
-const RoomCard: React.FC<RoomCardTypes> = ({
+const RoomCard = ({
   price,
   capacity,
   capacityMax,
   stockQuantity,
   children
-}) => {
+}: RoomCardTypes) => {
   const formattedPrice = formatPrice(price);
 
   return (

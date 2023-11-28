@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Slider from "react-slick";
-import * as styles from "./RoomCarousel.styles.ts";
+import * as styles from "./RoomCarousel.styles";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { RoomCarouselTypes, ArrowProps } from "./RoomCarousel.types.ts";
+import type { RoomCarouselTypes, ArrowProps } from "./RoomCarousel.types";
 
-const RoomCarousel: React.FC<RoomCarouselTypes> = ({ images, onClick }) => {
+const RoomCarousel = ({ images, onClick }: RoomCarouselTypes) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const settings = {
