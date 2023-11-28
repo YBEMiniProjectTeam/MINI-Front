@@ -3,19 +3,22 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
-  FormHelperText,
-  Input,
   Button,
   Select,
   Checkbox,
-  CheckboxGroup
+  CheckboxGroup,
+  RadioGroup,
+  Stack,
+  Radio
 } from "@chakra-ui/react";
 import type {
   CustomInputProps,
   CustomSelectProps,
   CustomCheckboxProps,
-  CustomButtonProps
+  CustomButtonProps,
+  CustomRadioProps
 } from "./CustomFrom.types";
+import * as styles from "./CustomFrom.styles";
 
 const CustomInput = ({
   control,
@@ -24,7 +27,9 @@ const CustomInput = ({
   rules,
   placeholder,
   helperText,
-  defaultValue
+  defaultValue,
+  isRequired = false,
+  variant = "outline"
 }: CustomInputProps) => {
   return (
     <Controller
@@ -33,27 +38,40 @@ const CustomInput = ({
       rules={rules}
       defaultValue={defaultValue}
       render={({ field, fieldState: { error } }) => (
-        <FormControl isInvalid={!!error}>
-          <FormLabel htmlFor={name}>{label}</FormLabel>
-          <Input {...field} placeholder={placeholder} />
+        <styles.styledFormControl isInvalid={!!error} isRequired={isRequired}>
+          <styles.FormField>
+            <styles.StyledFormLabel htmlFor={name} fontSize="sm">
+              {label}
+            </styles.StyledFormLabel>
+            <styles.StyledInput
+              {...field}
+              placeholder={placeholder}
+              fontSize="sm"
+              variant={variant}
+            />
+          </styles.FormField>
           {!error ? (
-            <FormHelperText>{helperText}</FormHelperText>
+            <styles.styledFormHelperText>
+              {helperText}
+            </styles.styledFormHelperText>
           ) : (
-            <FormErrorMessage>{error.message}</FormErrorMessage>
+            <styles.StyledFormErrorMessage>
+              {error.message}
+            </styles.StyledFormErrorMessage>
           )}
-        </FormControl>
+        </styles.styledFormControl>
       )}
     />
   );
 };
 
-const CustomSelect: React.FC<CustomSelectProps> = ({
+const CustomSelect = ({
   control,
   name,
   label,
   options,
   rules
-}) => {
+}: CustomSelectProps) => {
   return (
     <Controller
       name={name}
@@ -75,12 +93,12 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   );
 };
 
-const CustomCheckbox: React.FC<CustomCheckboxProps> = ({
+const CustomCheckbox = ({
   control,
   name,
   label,
   rules
-}) => {
+}: CustomCheckboxProps) => {
   return (
     <Controller
       name={name}
@@ -96,7 +114,41 @@ const CustomCheckbox: React.FC<CustomCheckboxProps> = ({
   );
 };
 
-const CustomButton: React.FC<CustomButtonProps> = ({
+const CustomRadio = ({
+  control,
+  name,
+  label,
+  options,
+  rules,
+  defaultValue,
+  isRequired
+}: CustomRadioProps) => {
+  return (
+    <Controller
+      name={name}
+      control={control}
+      rules={rules}
+      defaultValue={defaultValue}
+      render={({ field, fieldState: { error } }) => (
+        <FormControl as="fieldset" isInvalid={!!error} isRequired={isRequired}>
+          {label && <FormLabel as="legend">{label}</FormLabel>}
+          <RadioGroup {...field}>
+            <Stack direction="row">
+              {options.map((option) => (
+                <Radio key={option.value} value={option.value}>
+                  {option.label}
+                </Radio>
+              ))}
+            </Stack>
+          </RadioGroup>
+          <FormErrorMessage>{error?.message}</FormErrorMessage>
+        </FormControl>
+      )}
+    />
+  );
+};
+
+const CustomButton = ({
   children,
   onClick,
   isLoading = false,
@@ -104,7 +156,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   colorScheme = "pink",
   width,
   disabled
-}) => {
+}: CustomButtonProps) => {
   return (
     <Button
       onClick={onClick}
@@ -123,7 +175,8 @@ const CustomForm = {
   Input: CustomInput,
   Select: CustomSelect,
   Checkbox: CustomCheckbox,
-  Button: CustomButton
+  Button: CustomButton,
+  Radio: CustomRadio
 };
 
 export default CustomForm;
