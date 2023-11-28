@@ -1,92 +1,118 @@
 import { Checkbox } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 
-interface Room {
+interface RoomInfo {
+  cartId: number;
+  quantity: number;
+  address: string;
   roomName: string;
-  img: string;
-
-  capacity: number;
-  capcityMax: number;
-
-  checkin: string;
-  checkout: string;
+  accommodationThumbnailUrl: string;
   price: number;
-
+  checkInDate: string;
+  checkOutDate: string;
+  checkInTime: string;
+  checkOutTime: string;
+  capacity: number;
+  capacityMax: number;
   isChecked?: boolean;
 }
 
-interface Hotel {
-  hotelId: string;
-  hotelName: string;
-  hotelAddress: string;
-  roomList: { [key: string]: Room };
+interface Accommodation {
+  accommodationName: string;
+  roomInfos: RoomInfo[];
 }
 
 export const ShoppingCartList = (props: {
-  key: string;
-  data: Hotel;
+  data: Accommodation;
   isCheckAllBox: boolean;
-  handleCheckRoom: (hotelid: string, roomid: string) => void;
-  handleClickRoomDelete: (hotelid: string, roomid: string) => void;
+
+  setData: React.Dispatch<React.SetStateAction<Accommodation[]>>;
+  cartIdList: number[];
+  // handleCheckRoom: (hotelIndex: number, roomIndex: number) => void;
+  handleCheckRoom: (cartId: number) => void;
+  handleClickRoomDelete: (CartId: number) => void;
+  handleClickQuantity: (sign: string, cartId: number) => Promise<void>;
 }): JSX.Element => {
   return (
     <>
-      {Object.keys(props.data.roomList).length ? (
+      {Object.keys(props.data.roomInfos).length ? (
         <div className="cartInfoContainer WrapStyle">
           <div className="titleWrap">
-            <h3>{props.data.hotelName}</h3>
-            <p className="colorGray">{props.data.hotelAddress}</p>
+            <h3>{props.data.accommodationName}</h3>
+            {/* <p className="colorGray">{props.data.hotelAddress}</p> */}
           </div>
-          {Object.keys(props.data.roomList).map((roomKey) => {
-            const room = props.data.roomList[roomKey];
-            return (
-              <div key={roomKey} className="roomListWrap">
-                <h3>{room.roomName}</h3>
-                <button
-                  className="roomDeleteButton"
-                  onClick={() =>
-                    props.handleClickRoomDelete(props.data.hotelId, roomKey)
-                  }
-                >
-                  X
-                </button>
-                <div className="dataList">
-                  <div>
-                    <Checkbox
-                      onChange={() => {
-                        props.handleCheckRoom(props.data.hotelId, roomKey);
-                      }}
-                      isChecked={room.isChecked}
-                    ></Checkbox>
-                  </div>
-
-                  <div>
-                    <img src={room.img} alt="이미지" />
-                  </div>
-                  <div>
-                    <span>2023-1124</span>
-                    <br />
-                    <span className="colorGray">
-                      체크인{room.checkin} 체크아웃{room.checkout}
-                    </span>
-                    <br />
-                    <span className="colorGray">
-                      기존 {room.capacity}명 / 최대 {room.capcityMax}명
-                    </span>
-                  </div>
+          {props.data.roomInfos.map((room, roomIndex) => (
+            <div key={roomIndex} className="roomListWrap">
+              <h3>{room.roomName}</h3>
+              <button
+                className="roomDeleteButton"
+                onClick={() => props.handleClickRoomDelete(room.cartId)}
+              >
+                X
+              </button>
+              <div className="dataList">
+                <div>
+                  <Checkbox
+                    onChange={() => props.handleCheckRoom(room.cartId)}
+                    isChecked={
+                      props.cartIdList
+                        ? props.cartIdList.includes(room.cartId)
+                        : false
+                    }
+                  ></Checkbox>
                 </div>
-                <div className="priceWrap">
-                  <div>
-                    <span>
-                      숙박 <span className="bold">{room.price}원</span>
-                    </span>
 
-                    <br />
-                    <span className="warningText">취소 및 환불불가</span>
-                  </div>
+                <div>
+                  <img src={room.accommodationThumbnailUrl} alt="이미지" />
+                </div>
+                <div>
+                  <span>2023-11-24</span>
+                  <br />
+                  <span className="colorGray">
+                    체크인 {room.checkInDate} 체크아웃 {room.checkOutDate}
+                  </span>
+                  <br />
+                  <span className="colorGray">
+                    기존 {room.capacity}명 / 최대 {room.capacityMax}명
+                  </span>
+                  <br />
                 </div>
               </div>
-            );
-          })}
+              <div className="priceWrap">
+                <div>
+                  <span>수량 </span>
+                  <Button
+                    size="xs"
+                    ml={1}
+                    mr={3}
+                    onClick={() => {
+                      props.handleClickQuantity("decrease", room.cartId);
+                    }}
+                  >
+                    -
+                  </Button>
+                  <span className="bold">{room.quantity}</span>
+                  <Button
+                    size="xs"
+                    ml={3}
+                    onClick={() => {
+                      props.handleClickQuantity("increase", room.cartId);
+                    }}
+                  >
+                    +
+                  </Button>
+                  <br />
+                  <span>
+                    숙박{" "}
+                    <span className="bold">{room.quantity * room.price}원</span>
+                  </span>
+
+                  <br />
+                  <span className="warningText">취소 및 환불불가</span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       ) : null}
     </>

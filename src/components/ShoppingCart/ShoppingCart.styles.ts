@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const ShoppingCartContainer = styled.div`
   padding: 32px 0px;
   background-color: #f8f8f9;
+
   h3 {
     font-size: 24px;
     font-weight: 700;
@@ -91,6 +92,10 @@ export const ShoppingCartContainer = styled.div`
       font-size: 24px;
       font-weight: 700;
     }
+  }
+
+  .reservationButton {
+    width: 100%;
   }
 
   .bold {

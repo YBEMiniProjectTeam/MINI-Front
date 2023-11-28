@@ -1,162 +1,286 @@
-import { ShoppingCartContainer } from "./ShoppingCart.styles";
+import * as styles from "./ShoppingCart.styles";
 import { Checkbox } from "@chakra-ui/react";
 import { ShoppingCartList } from "./ShoppingCartList";
 import { useEffect, useState } from "react";
+import {
+  ShoppingCartApi,
+  DeleteCartApi,
+  QuantityCartApi
+} from "@/api/shoppingCart/shoppingCartApi";
 
-interface Room {
+import { useCookies } from "react-cookie";
+import { Button } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
+interface RoomInfo {
+  cartId: number;
+  quantity: number;
+  address: string;
   roomName: string;
-  img: string;
-
-  capacity: number;
-  capcityMax: number;
-
-  checkin: string;
-  checkout: string;
+  accommodationThumbnailUrl: string;
   price: number;
-
+  checkInDate: string;
+  checkOutDate: string;
+  checkInTime: string;
+  checkOutTime: string;
+  capacity: number;
+  capacityMax: number;
   isChecked?: boolean;
 }
 
-interface Hotel {
-  hotelId: string;
-  hotelName: string;
-  hotelAddress: string;
-  roomList: { [key: string]: Room };
+interface Accommodation {
+  accommodationName: string;
+  roomInfos: RoomInfo[];
 }
 
-interface Data {
-  [key: string]: Hotel;
-}
-const initialData: Data = {
-  ["1"]: {
-    hotelId: "1",
-    hotelName: "호텔이름1",
-    hotelAddress: "주소",
-    roomList: {
-      ["1"]: {
-        roomName: "방이름1",
-        img: "data:image/jpeg;base64,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",
-        capacity: 2,
-        capcityMax: 4,
-        checkin: "1124",
-        checkout: "1125",
-        price: 190000,
-        isChecked: false
-      },
-      ["2"]: {
-        roomName: "방이름2",
-        img: "data:image/jpeg;base64,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",
-        capacity: 2,
-        capcityMax: 4,
-        checkin: "1124",
-        checkout: "1125",
-        price: 190000,
-        isChecked: false
-      }
-    }
-  },
-  ["2"]: {
-    hotelId: "2",
-    hotelName: "호텔이름2",
-    hotelAddress: "주소",
-    roomList: {
-      ["3"]: {
-        roomName: "방이름",
-        img: "data:image/jpeg;base64,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",
-        capacity: 2,
-        capcityMax: 4,
-        checkin: "1124",
-        checkout: "1125",
-        price: 190000,
-        isChecked: false
-      }
-    }
-  }
-};
+// const initialData: Accommodation[] = [
+//   {
+//     accommodationName: "조선 호텔 (숙소명)",
+//     roomInfos: [
+//       {
+//         cartId: 1,
+//         quantity: 2,
+//         address: "서울시 동대문구 (숙소 주소)",
+//         roomName: "스위트룸 1",
+//         accommodationThumbnailUrl: "숙소 썸네일 Image URL",
+//         price: 50000,
+//         checkInDate: "2023-11-11",
+//         checkOutDate: "2023-11-15",
+//         checkInTime: "15:00",
+//         checkOutTime: "11:00",
+//         capacity: 2,
+//         capacityMax: 4,
+//         isChecked: false
+//       }
+//     ]
+//   },
+//   {
+//     accommodationName: "신라 호텔",
+//     roomInfos: [
+//       {
+//         cartId: 2,
+//         quantity: 2,
+//         address: "서울시 동대문구 (숙소 주소)",
+//         roomName: "스위트룸 2",
+//         accommodationThumbnailUrl: "숙소 썸네일 Image URL",
+//         price: 50000,
+//         checkInDate: "2023-11-11",
+//         checkOutDate: "2023-11-15",
+//         checkInTime: "15:00",
+//         checkOutTime: "11:00",
+//         capacity: 2,
+//         capacityMax: 4,
+//         isChecked: false
+//       },
+//       {
+//         cartId: 3,
+//         quantity: 2,
+//         address: "서울시 동대문구 (숙소 주소)",
+//         roomName: "스위트룸3",
+//         accommodationThumbnailUrl: "숙소 썸네일 Image URL",
+//         price: 50000,
+//         checkInDate: "2023-11-11",
+//         checkOutDate: "2023-11-15",
+//         checkInTime: "15:00",
+//         checkOutTime: "11:00",
+//         capacity: 2,
+//         capacityMax: 4,
+//         isChecked: false
+//       }
+//     ]
+//   }
+// ];
 
 export const ShoppingCartComp = (): JSX.Element => {
-  const [data, setData] = useState<Data>(initialData);
+  const [data, setData] = useState<Accommodation[]>([]);
+
   const [price, setPrice] = useState(0);
 
   const [isCheckAllBox, setIsCheckAllBox] = useState(false);
 
+  const [cookies] = useCookies(["access-token"]);
+  const [accessToken, setAccessToken] = useState<string>();
+  const [cartIdList, setCartIdList] = useState<number[]>([]);
+
+  const navigate = useNavigate();
+
   useEffect(() => {
+    if (cookies["access-token"]) {
+      setAccessToken(cookies["access-token"]);
+    } else {
+      Swal.fire("잘못된 접근입니다.").then(() => {
+        navigate(-1);
+      });
+    }
+  }, [cookies]);
+
+  useEffect(() => {
+    fetchData();
+
     let totalPrice = 0;
+
     Object.values(data).forEach((hotel) => {
-      Object.values(hotel.roomList).forEach((room) => {
-        totalPrice += room.price;
+      Object.values(hotel.roomInfos).forEach((room) => {
+        totalPrice += room.quantity * room.price;
       });
     });
+
     setPrice(totalPrice);
   }, [data]);
 
-  const handleCheckAllRooms = (isCheckAllBox: boolean): void => {
-    setData((prevData) => {
-      const updatedData = { ...prevData };
-
-      for (const hotelKey in updatedData) {
-        const hotel = updatedData[hotelKey];
-
-        for (const roomKey in hotel.roomList) {
-          hotel.roomList[roomKey].isChecked = !isCheckAllBox;
-        }
+  const fetchData = async () => {
+    if (accessToken) {
+      const response = await ShoppingCartApi(accessToken);
+      if (response.data) {
+        setData(response.data);
       }
-
-      return updatedData;
-    });
-    setIsCheckAllBox(!isCheckAllBox);
+    }
   };
 
-  const handleCheckRoom = (hotelId: string, roomId: string): void => {
-    setData((prevData) => {
-      const updatedData = { ...prevData };
-      updatedData[hotelId].roomList[roomId].isChecked =
-        !updatedData[hotelId].roomList[roomId].isChecked;
-      return updatedData;
+  const handleCheckAllRooms = (): void => {
+    // setData((prevData) => {
+    //   const isAllRoomsChecked = prevData.every((hotel) =>
+    //     hotel.roomInfos.every((room) => room.isChecked)
+    //   );
+
+    //   const updatedData = prevData.map((hotel) => ({
+    //     ...hotel,
+    //     roomInfos: hotel.roomInfos.map((room) => ({
+    //       ...room,
+    //       isChecked: !isAllRoomsChecked
+    //     }))
+    //   }));
+
+    //   setIsCheckAllBox(!isAllRoomsChecked);
+
+    //   return updatedData;
+    // });
+    const newArr: number[] = [];
+    if (!isCheckAllBox) {
+      data.map((hotel) => {
+        hotel.roomInfos.map((room) => {
+          newArr.push(room.cartId);
+        });
+      });
+    }
+
+    setCartIdList(newArr);
+    setIsCheckAllBox(!isCheckAllBox);
+    console.log(cartIdList);
+  };
+
+  // const handleCheckRoom = (hotelIndex: number, roomIndex: number): void => {
+  //   setData((prevData) => {
+  //     const updatedData = [...prevData];
+  //     const updatedHotel = { ...updatedData[hotelIndex] };
+  //     const updatedRoom = { ...updatedHotel.roomInfos[roomIndex] };
+
+  //     updatedRoom.isChecked = !updatedRoom.isChecked;
+
+  //     updatedHotel.roomInfos[roomIndex] = updatedRoom;
+
+  //     updatedData[hotelIndex] = updatedHotel;
+
+  //     return updatedData;
+  //   });
+
+  // };
+  const handleCheckRoom = (cartId: number): void => {
+    setCartIdList((prev) => {
+      const newArr: number[] = [...prev];
+
+      const index = newArr.findIndex((data) => data === cartId);
+
+      if (index !== -1) {
+        newArr.splice(index, 1);
+      } else {
+        newArr.push(cartId);
+      }
+
+      return newArr;
     });
+
+    console.log(cartIdList);
   };
 
   const handleSelectDelete = (): void => {
-    setData((prevData) => {
-      const newData: Data = {};
+    // const accessToken = cookies["access-token"];
+    // setData((prevData) => {
+    //   const newData: Accommodation[] = [];
 
-      for (const hotelId in prevData) {
-        const hotel = prevData[hotelId];
-        const newRoomList: { [key: string]: Room } = {};
+    //   for (const hotel of prevData) {
+    //     const newRoomInfos: RoomInfo[] = [];
 
-        for (const roomId in hotel.roomList) {
-          if (!hotel.roomList[roomId].isChecked) {
-            newRoomList[roomId] = { ...hotel.roomList[roomId] };
-          }
-        }
+    //     for (const roomInfo of hotel.roomInfos) {
+    //       if (roomInfo.isChecked) {
+    //         newRoomInfos.push({ ...roomInfo });
+    //       }
+    //     }
 
-        if (Object.keys(newRoomList).length > 0) {
-          newData[hotelId] = { ...hotel, roomList: newRoomList };
-        }
+    //     if (newRoomInfos.length > 0) {
+    //       newData.push({ ...hotel, roomInfos: newRoomInfos });
+    //     }
+    //   }
+
+    //   return newData;
+    // });
+    if (accessToken) {
+      const res = DeleteCartApi(accessToken, cartIdList);
+      fetchData();
+      console.log(res);
+    }
+  };
+
+  const handleClickRoomDelete = (cartId: number): void => {
+    // const accessToken = cookies["access-token"];
+    // setData((prevData) => {
+    //   const newData = [...prevData];
+
+    //   newData[hotelIndex].roomInfos = newData[hotelIndex].roomInfos.filter(
+    //     (_, index) => index !== roomIndex
+    //   );
+    //   return newData;
+    // });
+    if (accessToken) {
+      const res = DeleteCartApi(accessToken, [cartId]);
+      fetchData();
+      console.log(res);
+    }
+  };
+  const handleClickQuantity = async (sign: string, cartId: number) => {
+    const accessToken = cookies["access-token"];
+
+    if (sign === "increase") {
+      const response = await QuantityCartApi(accessToken, "increase", [cartId]);
+
+      if (response) {
+        fetchData();
+        console.log(response);
       }
-
-      return newData;
-    });
+    } else if (sign === "decrease") {
+      const response = await QuantityCartApi(accessToken, "decrease", [cartId]);
+      if (response) {
+        fetchData();
+        console.log(response);
+      }
+    }
   };
-
-  const handleClickRoomDelete = (hotelId: string, roomId: string): void => {
-    setData((prevData) => {
-      const newData = { ...prevData };
-
-      delete newData[hotelId].roomList[roomId];
-
-      return newData;
-    });
+  const handleClickReservation = () => {
+    const queryString = cartIdList
+      .sort()
+      .map((cartId) => `cartId=${cartId}`)
+      .join("&");
+    navigate(`/orders/${queryString}`);
   };
-
   return (
-    <ShoppingCartContainer>
+    <styles.ShoppingCartContainer>
       <h3>장바구니</h3>
       <div className="selectCheckWrap WrapStyle">
         <div>
           <Checkbox
             onChange={() => {
-              handleCheckAllRooms(isCheckAllBox);
+              handleCheckAllRooms();
             }}
           >
             전체 선택
@@ -167,13 +291,16 @@ export const ShoppingCartComp = (): JSX.Element => {
         </div>
       </div>
 
-      {Object.keys(data).map((key) => (
+      {data.map((hotel, hotelIndex) => (
         <ShoppingCartList
-          data={data[key]}
-          key={key}
+          key={hotelIndex}
+          data={hotel}
           isCheckAllBox={isCheckAllBox}
+          setData={setData}
           handleCheckRoom={handleCheckRoom}
           handleClickRoomDelete={handleClickRoomDelete}
+          handleClickQuantity={handleClickQuantity}
+          cartIdList={cartIdList}
         />
       ))}
 
@@ -187,7 +314,6 @@ export const ShoppingCartComp = (): JSX.Element => {
             <span className="colorGray">{price}</span>
           </div>
         </div>
-
         <div className="roomPrice expectedPayment">
           <div>
             <span>결제 예상 금액</span>
@@ -196,7 +322,11 @@ export const ShoppingCartComp = (): JSX.Element => {
             <span>{price}</span>
           </div>
         </div>
+
+        <Button className="reservationButton" onClick={handleClickReservation}>
+          예약하기
+        </Button>
       </div>
-    </ShoppingCartContainer>
+    </styles.ShoppingCartContainer>
   );
 };
