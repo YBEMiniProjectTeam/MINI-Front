@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import * as styles from "./SearchList.styles";
 import { Accommodation } from "./SearchList.types";
 import { SearchListProps } from "./SearchList.types";
@@ -7,22 +7,22 @@ import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa";
 import { useSearchList } from "@hooks/useSearchList";
 import { useNavigate } from "react-router-dom";
-import { converDateFormat4 } from "@/utils/converDateFormat4";
+import { convertDateFormat4 } from "@/utils/convertDateFormat4";
+import { debounce } from "lodash";
+import { checkInAndOutDateState } from "@recoil/checkInAndOutDate";
+import { useRecoilValue } from "recoil";
 
-const SearchList = ({
-  keyword,
-  category,
-  startDate,
-  endDate
-}: SearchListProps) => {
+const SearchList = ({ keyword, category }: SearchListProps) => {
   const navigate = useNavigate();
+
+  const { startDate, endDate } = useRecoilValue(checkInAndOutDateState);
 
   const [searchList, setSearchList] = useState<Accommodation[]>([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  const { data, error, isLoading, refetch } = useSearchList(
+  const { data, error, refetch } = useSearchList(
     keyword,
     null,
     null,
@@ -43,18 +43,16 @@ const SearchList = ({
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [totalPage]);
 
   useEffect(() => {
-    if (data) {
-      setSearchList((prevSearchList) => [
-        ...prevSearchList,
-        ...data.accommodations
-      ]);
-      setTotalPage(data.total_pages);
-      setIsLoadingMore(false);
-    }
-  }, [data, setSearchList, setTotalPage, setIsLoadingMore]);
+    setSearchList((prevSearchList) => [
+      ...prevSearchList,
+      ...data.accommodations
+    ]);
+    setTotalPage(data.total_pages);
+    setIsLoadingMore(false);
+  }, [data]);
 
   const handleLikeClick = (index: number) => {
     const updatedSearchList = [...searchList];
@@ -69,31 +67,29 @@ const SearchList = ({
     // post 요청 필요
   };
 
-  const handleScroll = () => {
+  const handleScroll = debounce(() => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
 
     if (scrollTop + clientHeight >= scrollHeight - 50) {
-      // total page null인 현상 해결 필요
-      if (page < 1000) {
+      if (page < totalPage) {
         setPage((prevPage) => prevPage + 1);
         setIsLoadingMore(true);
-
         refetch();
       }
     }
-  };
+  }, 200);
 
   const handleAccomodationClick = (id: number) => {
     navigate(
-      `/products/${id}?startDate=${converDateFormat4(
+      `/products?id=${id}&startDate=${convertDateFormat4(
         startDate
-      )}&endDate=${converDateFormat4(endDate)}`
+      )}&endDate=${convertDateFormat4(endDate)}`
     );
   };
 
   return (
-    <>
-      {isLoading ? (
+    <Suspense
+      fallback={
         <styles.SpinnerWrapper>
           <Spinner
             thickness="2px"
@@ -103,120 +99,118 @@ const SearchList = ({
             size="md"
           />
         </styles.SpinnerWrapper>
-      ) : (
-        searchList?.map((accomodation, index) => (
-          <Box
-            key={index}
-            width="100%"
-            border="1px"
-            borderColor="gray.200"
-            overflow="hidden"
-            backgroundColor="#f7fcfc"
-            mb="1rem"
-            onClick={() => handleAccomodationClick(accomodation.id)}
-          >
-            <styles.ImageWrapper>
-              <Image
-                src={accomodation.thumbnail}
-                alt="이미지"
-                width="100%"
-                height="15rem"
-                objectFit="cover"
-                position="relative"
-                userSelect="none"
+      }
+    >
+      {searchList?.map((accomodation, index) => (
+        <Box
+          key={index}
+          width="100%"
+          border="1px"
+          borderColor="gray.200"
+          overflow="hidden"
+          backgroundColor="#f7fcfc"
+          mb="1rem"
+        >
+          <styles.ImageWrapper>
+            <Image
+              src={accomodation.thumbnail}
+              alt="이미지"
+              width="100%"
+              height="15rem"
+              objectFit="cover"
+              position="relative"
+              userSelect="none"
+              cursor="pointer"
+              onClick={() => handleAccomodationClick(accomodation.id)}
+            />
+            {accomodation.isWish ? (
+              <Icon
+                as={FaHeart}
+                position="absolute"
+                top="1.325rem"
+                right="1.275rem"
+                width="1.5rem"
+                height="1.5rem"
+                color="red"
                 cursor="pointer"
-                onClick={() => handleAccomodationClick(accomodation.id)}
+                onClick={() => handleLikeClick(index)}
               />
-              {accomodation.isWish ? (
-                <Icon
-                  as={FaHeart}
-                  position="absolute"
-                  top="1.325rem"
-                  right="1.275rem"
-                  width="1.5rem"
-                  height="1.5rem"
-                  color="red"
-                  cursor="pointer"
-                  onClick={() => handleLikeClick(index)}
-                />
-              ) : (
-                <Icon
-                  as={CiHeart}
-                  position="absolute"
-                  top="1rem"
-                  right="1rem"
-                  width="2rem"
-                  height="2rem"
-                  color="white"
-                  cursor="pointer"
-                  zIndex="1000"
-                  onClick={() => handleLikeClick(index)}
-                />
-              )}
+            ) : (
+              <Icon
+                as={CiHeart}
+                position="absolute"
+                top="1rem"
+                right="1rem"
+                width="2rem"
+                height="2rem"
+                color="white"
+                cursor="pointer"
+                onClick={() => handleLikeClick(index)}
+              />
+            )}
 
-              {accomodation.type !== "NOT_CLASSIFIED" && (
-                <Tag
-                  size="md"
-                  variant="outline"
-                  color="white"
-                  position="absolute"
-                  bottom="1rem"
-                  left="1rem"
-                  userSelect="none"
-                >
-                  {accomodation.type}
-                </Tag>
-              )}
-            </styles.ImageWrapper>
+            {accomodation.type !== "NOT_CLASSIFIED" && (
+              <Tag
+                size="md"
+                variant="outline"
+                color="white"
+                position="absolute"
+                bottom="1rem"
+                left="1rem"
+                userSelect="none"
+              >
+                {accomodation.type}
+              </Tag>
+            )}
+          </styles.ImageWrapper>
+
+          <Box
+            pt="14px"
+            pb="14px"
+            ml="1rem"
+            onClick={() => handleAccomodationClick(accomodation.id)}
+            cursor="pointer"
+          >
+            <Box
+              overflow="hidden"
+              whiteSpace="nowrap"
+              textOverflow="ellipsis"
+              mb="1rem"
+              pb="1px"
+              pr="20px"
+              fontSize="18px"
+              lineHeight="21px"
+              fontWeight="700"
+            >
+              {accomodation.name}
+            </Box>
 
             <Box
-              pt="14px"
-              pb="14px"
-              ml="1rem"
-              onClick={() => handleAccomodationClick(accomodation.id)}
-              cursor="pointer"
+              m="0"
+              p="0"
+              border="0"
+              verticalAlign="initial"
+              outline="none"
+              boxSizing="border-box"
+              color="#323232"
+              display="flex"
+              flexDirection="row"
             >
-              <Box
-                overflow="hidden"
-                whiteSpace="nowrap"
-                textOverflow="ellipsis"
-                mb="1rem"
-                pb="1px"
-                pr="20px"
+              <Text
                 fontSize="18px"
                 lineHeight="21px"
                 fontWeight="700"
+                mr="0.3rem"
               >
-                {accomodation.name}
-              </Box>
-
-              <Box
-                m="0"
-                p="0"
-                border="0"
-                verticalAlign="initial"
-                outline="none"
-                boxSizing="border-box"
-                color="#323232"
-                display="flex"
-                flexDirection="row"
-              >
-                <Text
-                  fontSize="18px"
-                  lineHeight="21px"
-                  fontWeight="700"
-                  mr="0.3rem"
-                >
-                  {accomodation.min_price !== 0
-                    ? accomodation.min_price
-                    : "정보 없음"}
-                </Text>
-                <Text>{accomodation.min_price !== 0 ? "원" : ""}</Text>
-              </Box>
+                {accomodation.min_price !== 0
+                  ? accomodation.min_price
+                  : "정보 없음"}
+              </Text>
+              <Text>{accomodation.min_price !== 0 ? "원" : ""}</Text>
             </Box>
           </Box>
-        ))
-      )}
+        </Box>
+      ))}
       {isLoadingMore ? (
         <styles.SpinnerWrapper>
           <Spinner
@@ -228,7 +222,7 @@ const SearchList = ({
           />
         </styles.SpinnerWrapper>
       ) : null}
-    </>
+    </Suspense>
   );
 };
 

@@ -1,5 +1,5 @@
 // 2023-11-29 -> 11/29/2023 
-export function converDateFormat4(inputDate: string | null): string | null{
+export function convertDateFormat4(inputDate: string | null): string | null{
     if (!inputDate) {
         return null;
     }
