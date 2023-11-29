@@ -18,7 +18,7 @@ import {
 } from "@hooks/useSearchListMutation";
 import Swal from "sweetalert2";
 
-const SearchList = ({ keyword, category }: SearchListProps) => {
+const SearchList = ({ keyword }: SearchListProps) => {
   const navigate = useNavigate();
 
   const { startDate, endDate } = useRecoilValue(checkInAndOutDateState);
