@@ -39,8 +39,8 @@ const SearchList = ({ keyword }: SearchListProps) => {
 
   const { accessTokenCookie, headers } = getAuthLocalStorage();
 
-  const { mutate: postLike } = usePostWish();
-  const { mutate: deleteLike } = useDeleteWish();
+  const { mutate: postWish } = usePostWish();
+  const { mutate: deleteWish } = useDeleteWish();
 
   if (error) {
     console.error("An error has occurred:", error.message);
@@ -85,9 +85,9 @@ const SearchList = ({ keyword }: SearchListProps) => {
 
     // post 요청 필요
     if (updatedSearchList[index].isWish === true) {
-      postLike({ accommodationId, headers });
+      postWish({ accommodationId, headers });
     } else {
-      deleteLike({ accommodationId, headers });
+      deleteWish({ accommodationId, headers });
     }
   };
 
