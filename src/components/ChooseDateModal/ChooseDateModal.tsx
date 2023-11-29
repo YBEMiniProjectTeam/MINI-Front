@@ -78,7 +78,6 @@ const ChooseDateModal = ({
 
   return (
     <Modal
-      closeOnOverlayClick={false}
       isOpen={isOpen}
       onClose={onClose}
       isCentered
@@ -106,6 +105,7 @@ const ChooseDateModal = ({
                 onClick={handleMinusClick}
                 isDisabled={personCount === 1}
                 userSelect="none"
+                _hover={{ cursor: "pointer" }}
               />
               <styles.HeaderPersonCount>{personCount}</styles.HeaderPersonCount>
               <Icon
@@ -116,6 +116,7 @@ const ChooseDateModal = ({
                 color="#db074a"
                 onClick={handlePlusClick}
                 userSelect="none"
+                _hover={{ cursor: "pointer" }}
               />
             </styles.HeaderPersonWrapper>
           </ModalHeader>
