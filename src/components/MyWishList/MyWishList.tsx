@@ -1,14 +1,14 @@
 import { getAuthLocalStorage } from "@utils/getAuthLocalStorage.ts";
-import React, { useEffect, useState, Suspense } from "react";
+import { useEffect, useState, Suspense } from "react";
 import * as styles from "./MyWishList.styles";
 import { Accommodation } from "@components/SearchList/SearchList.types";
-import { useWishList } from "@hooks/useWishLIst";
+import { useWishList } from "@/hooks/useWishList";
 import { Box, Image, Icon, Tag, Text, Spinner } from "@chakra-ui/react";
 import { FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
 import { useMutation } from "@tanstack/react-query";
-import { deleteLike } from "@api/deleteLike";
+import { deleteWish } from "@/api/deleteWish";
 import { ResponseType } from "@components/SearchList/SearchList.types";
 import Swal from "sweetalert2";
 
@@ -25,7 +25,7 @@ const MyWishList = () => {
   const { accessTokenCookie, headers } = getAuthLocalStorage();
 
   const { mutate } = useMutation<ResponseType, Error, number>({
-    mutationFn: (accommodationId) => deleteLike(accommodationId, headers),
+    mutationFn: (accommodationId) => deleteWish(accommodationId, headers),
     onSuccess: (res) => {
       console.log(res.statusCode, res.message);
       Swal.fire({

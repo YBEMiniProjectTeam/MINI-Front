@@ -12,10 +12,7 @@ import { debounce } from "lodash";
 import { checkInAndOutDateState } from "@recoil/checkInAndOutDate";
 import { districtState, categoryState } from "@recoil/searchStates";
 import { useRecoilValue } from "recoil";
-import {
-  useSearchListPost,
-  useSearchListDelete
-} from "@hooks/useSearchListMutation";
+import { usePostWish, useDeleteWish } from "@hooks/useWishMutation";
 import Swal from "sweetalert2";
 
 const SearchList = ({ keyword }: SearchListProps) => {
@@ -42,8 +39,8 @@ const SearchList = ({ keyword }: SearchListProps) => {
 
   const { accessTokenCookie, headers } = getAuthLocalStorage();
 
-  const { mutate: postLike } = useSearchListPost();
-  const { mutate: deleteLike } = useSearchListDelete();
+  const { mutate: postLike } = usePostWish();
+  const { mutate: deleteLike } = useDeleteWish();
 
   if (error) {
     console.error("An error has occurred:", error.message);
