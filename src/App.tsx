@@ -12,7 +12,7 @@ import { Reservations } from "@pages/reservations/Reservations";
 import { ReservationDetails } from "@pages/reservationDetails/ReservationDetails";
 import { WishList } from "@pages/wishList/WishList";
 import Layout from "@components/Layout/Layout";
-import { NotFound } from "./pages/notFound/notFound";
+import { NotFound } from "@pages/notFound/NotFound";
 
 const router = createBrowserRouter([
   {

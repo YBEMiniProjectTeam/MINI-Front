@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
-import { postLike } from "@api/postLike";
-import { deleteLike } from "@api/deleteLike";
-import { ResponseType } from "@/components/SearchList/SearchList.types";
+import { postWish } from "@api/postWish";
+import { deleteWish } from "@api/deleteWish";
+import { ResponseType } from "@components/SearchList/SearchList.types";
 import Swal from "sweetalert2";
 
 interface LikeProps {
@@ -9,10 +9,10 @@ interface LikeProps {
   headers: { [key: string]: string };
 }
 
-export const useSearchListPost = () => {
+export const usePostWish = () => {
   return useMutation<ResponseType, Error, LikeProps>({
     mutationFn: ({ accommodationId, headers }: LikeProps) =>
-      postLike(accommodationId, headers),
+      postWish(accommodationId, headers),
     onSuccess: (res) => {
       console.log(res.statusCode, res.message);
       Swal.fire({
@@ -26,10 +26,10 @@ export const useSearchListPost = () => {
   });
 };
 
-export const useSearchListDelete = () => {
+export const useDeleteWish = () => {
   return useMutation<ResponseType, Error, LikeProps>({
     mutationFn: ({ accommodationId, headers }: LikeProps) =>
-      deleteLike(accommodationId, headers),
+      deleteWish(accommodationId, headers),
     onSuccess: (res) => {
       console.log(res.statusCode, res.message);
       Swal.fire({
