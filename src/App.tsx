@@ -12,6 +12,7 @@ import { Reservations } from "@pages/reservations/Reservations";
 import { ReservationDetails } from "@pages/reservationDetails/ReservationDetails";
 import { WishList } from "@pages/wishList/WishList";
 import Layout from "@components/Layout/Layout";
+import { NotFound } from "./pages/notFound/notFound";
 
 const router = createBrowserRouter([
   {
@@ -34,7 +35,8 @@ const router = createBrowserRouter([
       },
       { path: "wishList", element: <WishList /> }
     ]
-  }
+  },
+  { path: "*", element: <NotFound /> }
 ]);
 
 const App = (): JSX.Element => {
