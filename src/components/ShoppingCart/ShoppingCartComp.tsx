@@ -13,6 +13,7 @@ import { Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Accommodation } from "./ShoppinCart.types";
+import axios from "axios";
 
 // const initialData: Accommodation[] = [
 //   {
@@ -80,24 +81,46 @@ export const ShoppingCartComp = (): JSX.Element => {
   const [isCheckAllBox, setIsCheckAllBox] = useState(false);
 
   const [cookies] = useCookies(["access-token"]);
-  const [accessToken, setAccessToken] = useState<string>();
+  const [accessToken, setAccessToken] = useState<string>("");
   const [cartIdList, setCartIdList] = useState<number[]>([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (cookies["access-token"]) {
-      setAccessToken(cookies["access-token"]);
+    if (localStorage.getItem("access-token")) {
+      const at = localStorage.getItem("access-token");
+      if (at) {
+        setAccessToken(at);
+        fetchData();
+      }
     } else {
       Swal.fire("잘못된 접근입니다.").then(() => {
         navigate(-1);
       });
     }
-  }, [cookies]);
+  }, []);
+  // useEffect(() => {
+  // if (cookies["access-token"]) {
+  //   setAccessToken(cookies["access-token"]);
+  // } else {
+  //   Swal.fire("잘못된 접근입니다.").then(() => {
+  //     navigate(-1);
+  //   });
+  // }
+  // if (localStorage.getItem("access-token")) {
+  //   const at = localStorage.getItem("access-token");
+  //   if (at) {
+  //     setAccessToken(at);
+  //   }
+  // } else {
+  //   Swal.fire("잘못된 접근입니다.").then(() => {
+  //     navigate(-1);
+  //   });
+  // }
+  // fetchData();
+  // }, [cookies]);
 
   useEffect(() => {
-    fetchData();
-
     let totalPrice = 0;
 
     Object.values(data).forEach((hotel) => {
@@ -110,11 +133,9 @@ export const ShoppingCartComp = (): JSX.Element => {
   }, [data]);
 
   const fetchData = async () => {
-    if (accessToken) {
-      const response = await ShoppingCartApi(accessToken);
-      if (response.data) {
-        setData(response.data);
-      }
+    const response = await ShoppingCartApi(accessToken);
+    if (response.data) {
+      setData(response.data);
     }
   };
 
@@ -232,14 +253,14 @@ export const ShoppingCartComp = (): JSX.Element => {
     const accessToken = cookies["access-token"];
 
     if (sign === "increase") {
-      const response = await QuantityCartApi(accessToken, "increase", [cartId]);
+      const response = await QuantityCartApi(accessToken, "increase", cartId);
 
       if (response) {
         fetchData();
         console.log(response);
       }
     } else if (sign === "decrease") {
-      const response = await QuantityCartApi(accessToken, "decrease", [cartId]);
+      const response = await QuantityCartApi(accessToken, "decrease", cartId);
       if (response) {
         fetchData();
         console.log(response);
@@ -247,14 +268,85 @@ export const ShoppingCartComp = (): JSX.Element => {
     }
   };
   const handleClickReservation = () => {
-    const queryString = cartIdList
-      .sort()
-      .map((cartId) => `cartId=${cartId}`)
-      .join("&");
-    navigate(`/orders?${queryString}`);
+    if (cartIdList.length > 0) {
+      const queryString = cartIdList
+        .sort()
+        .map((cartId) => `cartId=${cartId}`)
+        .join("&");
+      navigate(`/orders/${queryString}`);
+    } else {
+      Swal.fire("장바구니에 물건을 담아주세요");
+    }
   };
+
+  const test = async (at: string, n: number) => {
+    const API_URL = `https://api.anti-bias.kr/api/carts`;
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${at}`
+    };
+    const reqBody = {
+      roomId: n,
+      checkInDate: "2023-12-29",
+      checkOutDate: "2023-12-29"
+    };
+    // console.log(at, n);
+    const response = await axios.post(API_URL, reqBody, { headers });
+
+    console.log(response);
+  };
+
   return (
     <styles.ShoppingCartContainer>
+      <Button
+        onClick={() => {
+          test(accessToken, 5);
+        }}
+      >
+        1
+      </Button>
+      <Button
+        onClick={() => {
+          test(accessToken, 6);
+        }}
+      >
+        2
+      </Button>
+      <Button
+        onClick={() => {
+          test(accessToken, 7);
+        }}
+      >
+        3
+      </Button>
+      <Button
+        onClick={() => {
+          test(accessToken, 8);
+        }}
+      >
+        4
+      </Button>
+      <Button
+        onClick={() => {
+          handleClickQuantity("increase", 1);
+        }}
+      >
+        증가
+      </Button>
+      <Button
+        onClick={() => {
+          handleClickQuantity("decrease", 1);
+        }}
+      >
+        감소
+      </Button>
+      <Button
+        onClick={() => {
+          handleClickRoomDelete(1);
+        }}
+      >
+        삭제
+      </Button>
       <h3>장바구니</h3>
       <div className="selectCheckWrap WrapStyle">
         <div>

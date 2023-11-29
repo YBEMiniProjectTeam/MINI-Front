@@ -7,15 +7,14 @@ export const ShoppingCartApi = async (accessToken: string) => {
     "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`
   };
-
   const response = await axios.get(API_URL, { headers });
 
-  return response.data;
+  return response;
 };
 export const QuantityCartApi = async (
   accessToken: string,
   sign: string,
-  cartId: number[]
+  cartId: number
 ) => {
   const API_URL = `${API_BASE_URL}/${sign}`;
   const headers = {

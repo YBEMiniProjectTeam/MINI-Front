@@ -1,2 +1,1 @@
-export const API_BASE_URL =
-  "https://api.anti-bias.kr/api";
+export const API_BASE_URL = "https://anti-bias.kr/api";
