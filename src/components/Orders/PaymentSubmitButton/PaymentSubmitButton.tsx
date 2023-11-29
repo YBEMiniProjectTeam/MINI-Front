@@ -23,11 +23,8 @@ const PaymentSubmitButton = ({
       ...{ isDifferentUser, cartIds }
     };
 
-    const queryString = cartIds
-      .map((id) => `cartId=${encodeURIComponent(id)}`)
-      .join("&");
-
-    navigate(`/complete?${queryString}`);
+    const orderId = `orderId=${cartIds.length}`;
+    navigate(`/reservationComplete?${orderId}`);
   };
 
   return (
