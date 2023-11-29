@@ -1,26 +1,27 @@
 import * as styles from "./PaymentInfo.styles";
 import type { PaymentInfoProps } from "./PaymentInfo.types";
 
-const PaymentInfo = ({ data, price }: PaymentInfoProps) => {
-  const calculateTotal = () => {
-    return data?.reduce((total, item) => {
-      if (typeof item.value === "number") {
-        return total + item.value;
-      }
-      return total;
-    }, 0);
-  };
+const PaymentInfo = ({ data }: PaymentInfoProps) => {
+  const totalPaymentItem = data?.find(
+    (item) => item.key === "total" || item.key === "price"
+  );
 
-  const totalAmount = price ?? calculateTotal();
-  const formattedTotalAmount = totalAmount?.toLocaleString() + "원";
+  const formattedTotalPayment =
+    totalPaymentItem?.value.toLocaleString() + "원" || "0원";
+
+  const totalPaymentLabel =
+    totalPaymentItem?.key === "total" ? "총 결제 금액" : "결제 금액";
+
+  const itemsToRender =
+    data?.filter((item) => item.key !== "total" && item.key !== "price") || [];
 
   return (
     <styles.PaymentContainer>
-      {data?.map((item, index) => (
+      {itemsToRender.map((item, index) => (
         <styles.PaymentWrapperRow key={index}>
           <styles.PaymentLabel>{item.label}</styles.PaymentLabel>
           <styles.PaymentItem>
-            {typeof item.value === "number"
+            {item.key === "label" && typeof item.value === "number"
               ? item.value.toLocaleString() + "원"
               : item.value}
           </styles.PaymentItem>
@@ -29,10 +30,10 @@ const PaymentInfo = ({ data, price }: PaymentInfoProps) => {
       <styles.Divider />
       <styles.TotalPaymentPriceWrapper>
         <styles.Label>
-          <span>총 결제 금액</span>
+          <span>{totalPaymentLabel}</span>
         </styles.Label>
         <styles.TotalPaymentPrice>
-          {formattedTotalAmount}
+          {formattedTotalPayment}
         </styles.TotalPaymentPrice>
       </styles.TotalPaymentPriceWrapper>
     </styles.PaymentContainer>

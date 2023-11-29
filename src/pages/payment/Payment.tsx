@@ -34,6 +34,9 @@ export const Payment = () => {
 
   const dummyData = paymentData.rawData;
   const reservationData = paymentData.reservationData;
+  const totalPrice = reservationData[0][0].value;
+
+  console.log(dummyData);
 
   return (
     <styles.Container>
@@ -60,9 +63,11 @@ export const Payment = () => {
             {isDiffUser && <DiffUserInfoForm />}
           </Collapse>
         </Card>
-        <Card label="결제 금액">
-          <PaymentInfo data={reservationData} />
-        </Card>
+        {reservationData.map((group, index) => (
+          <Card label="결제 정보" key={index}>
+            <PaymentInfo data={group} />
+          </Card>
+        ))}
         <Card label="결제 수단">
           <PaymentOptionsForm />
         </Card>
@@ -70,7 +75,7 @@ export const Payment = () => {
           <TermsAgreementForm />
         </Card>
         <PaymentSubmitButton
-          totalPrice={reservationData[0].value}
+          totalPrice={totalPrice}
           cartIds={cartIds}
           userData={userData}
         />
