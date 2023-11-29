@@ -35,7 +35,16 @@ export const RegisterForm = (): JSX.Element => {
   const [cookies] = useCookies(["access-token"]);
 
   useEffect(() => {
-    if (cookies["access-token"]) {
+    // if (cookies["access-token"]) {
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "잘못된 요청입니다.",
+    //     text: "로그인이 된 상태면 해당 페이지에 들어갈 수 없습니다."
+    //   }).then(() => {
+    //     navigate(-1);
+    //   });
+    // }
+    if (localStorage.getItem("access-token")) {
       Swal.fire({
         icon: "error",
         title: "잘못된 요청입니다.",
