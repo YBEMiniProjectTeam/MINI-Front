@@ -1,5 +1,5 @@
 import React from "react";
-
-export const ShoppingCart = () => {
-  return <div>shoppingCart</div>;
+import { ShoppingCartComp } from "@/components/ShoppingCart/ShoppingCartComp";
+export const ShoppingCart = (): JSX.Element => {
+  return <ShoppingCartComp></ShoppingCartComp>;
 };

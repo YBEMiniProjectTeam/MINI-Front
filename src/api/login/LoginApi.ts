@@ -7,10 +7,8 @@ export const LoginApi = (login: Login): Promise<number> => {
   const headers = {
     "Content-Type": "application/json"
   };
-  const statusCode = axios
-    .post(API_URL, login, { headers })
-    .then((res): number => {
-      return res.data.statusCode;
-    });
-  return statusCode;
+  const data = axios.post(API_URL, login, { headers }).then((res) => {
+    return res.data;
+  });
+  return data;
 };

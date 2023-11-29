@@ -2,9 +2,47 @@ import * as styled from "./AccommodationGridView.styles";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { MainViewTitleWrapper, MainViewTitle, Title, Description } from "../AccommodationSingleView/AccommodationSingleView.styles";
 import { AccommodationGridItem } from "./AccommodationGridItem";
+import { Suspense, startTransition, useState } from "react";
+import { useSearchList } from "@/hooks/useSearchList";
+import { Accommodation } from "./AccommodationGridView.types";
+import { printCategory } from "@/utils/printCategory";
+import { Spinner } from "@chakra-ui/react";
 
 export const AccommodationGridView = () => {
+  const [activeTab, setActiveTab] = useState('펜션'); 
+  
+  const handleTabClick = (tab: string) => {
+    startTransition(() => { 
+      setActiveTab(tab);
+    });
+  };
+
+  const { data, error } = useSearchList(
+    null,
+    null,
+    null,
+    null,
+    activeTab, // TODO: 쿼리 스트링 수정되면 데이터 잘 바뀌는지 확인
+    0,
+    4
+  );
+
+  if (error) {
+    console.error("[ERROR] ", error.message);
+  }
+
   return (
+    <Suspense
+      fallback={
+          <Spinner
+            thickness="2px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="#db074a"
+            size="md"
+          />
+      }
+    >
     <styled.GridViewWrapper>
       <MainViewTitleWrapper>
         <MainViewTitle>
@@ -16,44 +54,32 @@ export const AccommodationGridView = () => {
       <styled.CategoryTapWrapper>
         <styled.CategoryTapContainer>
           <styled.CategoryTap>
-            <styled.CategoryTapItem>
-              <styled.ActivedItem>펜션</styled.ActivedItem>
-              <styled.ActivedBar />
+            <styled.CategoryTapItem onClick={() => handleTabClick('펜션')}>
+              <styled.TabItem $isActive={activeTab === '펜션'} onClick={() => handleTabClick('펜션')}>
+                {activeTab === '펜션' && <styled.ActivedBar />}
+                펜션
+              </styled.TabItem>
             </styled.CategoryTapItem>
-            <styled.CategoryTapItem>
-              <styled.InactivedItem>호텔</styled.InactivedItem>
+            <styled.CategoryTapItem onClick={() => handleTabClick('호텔')}>
+              <styled.TabItem $isActive={activeTab === '호텔'}>
+                {activeTab === '호텔' && <styled.ActivedBar />}
+                호텔
+              </styled.TabItem>
             </styled.CategoryTapItem>
           </styled.CategoryTap>
         </styled.CategoryTapContainer>
       </styled.CategoryTapWrapper>
       <styled.Border />
       <styled.GridWrapper>
-        <AccommodationGridItem
-          imageUrl='https://yaimg.yanolja.com/v5/2023/01/12/17/63c0474bdc5902.06272388.jpg'
-          summary='제주 | 펜션'
-          name='서귀포 모이라 펜션'
-          price='69,000'
-        />
-        <AccommodationGridItem
-          imageUrl='https://yaimg.yanolja.com/v5/2022/10/11/14/6345795b600849.89763742.jpg'
-          summary='제주 | 펜션'
-          name='제주 들멍놀멍펜션'
-          price='180,000'
-        />
-      </styled.GridWrapper>
-      <styled.GridWrapper>
-        <AccommodationGridItem
-          imageUrl='https://yaimg.yanolja.com/v5/2023/09/13/11/6501a212894bb6.59640283.jpg'
-          summary='제주 | 펜션'
-          name='서귀포 상상나무키즈펜션'
-          price='79,000'
-        />
-        <AccommodationGridItem
-          imageUrl='https://yaimg.yanolja.com/v5/2023/10/10/11/65253885eb92b2.62972396.jpg'
-          summary='제주 | 펜션'
-          name='제주 패밀리가든빌리지펜션'
-          price='300,000'
-        />
+        {data?.accommodations?.map((accommodation: Accommodation, index: number) => (
+          <AccommodationGridItem
+            key={index}
+            imageUrl={accommodation.thumbnail}
+            summary={`${accommodation.region} | ${printCategory(accommodation.type)}`}
+            name={accommodation.name}
+            price={accommodation.min_price}
+          />
+        ))}
       </styled.GridWrapper>
       <styled.MoreButtonWrapper>
         <a>
@@ -64,5 +90,6 @@ export const AccommodationGridView = () => {
         </a>
       </styled.MoreButtonWrapper>
     </styled.GridViewWrapper>
+    </Suspense>
   );
 };

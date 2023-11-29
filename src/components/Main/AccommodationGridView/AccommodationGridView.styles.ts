@@ -55,12 +55,8 @@ export const CategoryTapItem = styled.div`
   }
 `;
 
-export const ActivedItem = styled.span`
-  color: #323232;
-`;
-
-export const InactivedItem = styled.span`
-  color: #666666;
+export const TabItem = styled.span<{ $isActive: boolean }>`
+  color: ${({ $isActive }) => ($isActive ? "#323232" : "#666666")};
 `;
 
 export const ActivedBar = styled.div`
