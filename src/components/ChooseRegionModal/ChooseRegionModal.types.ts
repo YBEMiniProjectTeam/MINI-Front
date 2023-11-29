@@ -1,20 +1,20 @@
 export interface DisclosureProps {
-    isOpen: boolean;
-    onClose: () => void;
-    selectedDistrict: string;
-    setSelectedDistrict: React.Dispatch<React.SetStateAction<string>>;
+  isOpen: boolean;
+  onClose: () => void;
+  selectedDistrict: string;
+  setSelectedDistrict: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface SideTabProps {
-    isSelected: boolean;
+  $isSelected: boolean;
 }
 
 export interface Region {
-    id: number;
-    name: string;
+  id: number;
+  name: string;
 }
 
 export interface District {
-    id: number;
-    name: string;
+  id: number;
+  name: string;
 }

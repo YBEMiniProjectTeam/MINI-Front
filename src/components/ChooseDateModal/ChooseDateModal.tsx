@@ -155,7 +155,10 @@ const ChooseDateModal = ({
               prev2Label={null}
               calendarType="gregory"
               tileDisabled={tileDisabled}
-              formatDay={(locale, date) => moment(date).format("DD")}
+              formatDay={(locale, date) => {
+                locale = locale;
+                return moment(date).format("DD");
+              }}
             />
           </styles.CalendarWrapper>
           <Button

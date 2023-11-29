@@ -6,8 +6,8 @@ import { useSearchParams } from "react-router-dom";
 
 export const SearchResult = () => {
   const [searchParams] = useSearchParams();
-  const keyword = searchParams.get("keyword");
-  const category = searchParams.get("category");
+  const keyword = searchParams?.get("keyword");
+  const category = searchParams?.get("category");
 
   return (
     <styles.SearchContainer>

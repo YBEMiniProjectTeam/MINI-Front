@@ -1,7 +1,8 @@
 export interface AccommodationInfoProps {
-  dummyData: {
-    hotelName: string;
-    roomType: string;
-    guestNum: string;
+  hotelName: string;
+  roomInfo: {
+    roomName: string;
+    capacity: number;
+    capacityMax: number;
   };
 }
