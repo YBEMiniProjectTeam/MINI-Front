@@ -26,6 +26,7 @@ import ChooseRegionModal from "../ChooseRegionModal/ChooseRegionModal";
 import ChooseDateModal from "../ChooseDateModal/ChooseDateModal";
 import { useSearchList } from "@hooks/useSearchList";
 import { checkInAndOutDateState } from "@recoil/checkInAndOutDate";
+import { districtState, categoryState } from "@recoil/searchStates";
 import { useSetRecoilState } from "recoil";
 
 const Search = ({ keyword, category, region }: SearchProps) => {
@@ -56,6 +57,8 @@ const Search = ({ keyword, category, region }: SearchProps) => {
   const [isFromSearchResult, setIsFromSearchResult] = useState<boolean>(false);
 
   const setCheckInAndOutDateState = useSetRecoilState(checkInAndOutDateState);
+  const setDistrictState = useSetRecoilState(districtState);
+  const setCategoryState = useSetRecoilState(categoryState);
 
   const { refetch } = useSearchList(
     accommodationName,
@@ -72,11 +75,15 @@ const Search = ({ keyword, category, region }: SearchProps) => {
   }, []);
 
   useEffect(() => {
-    setSelectedCategory(category ? category : "");
+    const newCategory = category ? category : "";
+    setSelectedCategory(newCategory);
+    setCategoryState(newCategory);
   }, []);
 
   useEffect(() => {
-    setSelectedDistrict(region ? region : "");
+    const newDistrict = region ? region : "";
+    setSelectedDistrict(newDistrict);
+    setDistrictState(newDistrict);
   }, []);
 
   useEffect(() => {
