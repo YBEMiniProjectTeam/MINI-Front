@@ -7,7 +7,7 @@ export const useRoomListQuery = (
   guestNum: number
 ) => {
   return useSuspenseQuery({
-    queryKey: ["roomList", startDate, endDate, guestNum],
+    queryKey: ["roomList", startDate, endDate],
     queryFn: () => getRoomList(startDate, endDate, guestNum)
   });
 };

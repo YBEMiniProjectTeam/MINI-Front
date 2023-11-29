@@ -12,10 +12,8 @@ const ChooseDetail = ({
   startDate,
   endDate
 }: ChooseDetailTypes): JSX.Element => {
-  const [selectedDate, setSelectedDate] = useState<string[] | null>([
-    startDate,
-    endDate
-  ]);
+  const [selectedDate, setSelectedDate] = useState<string[] | null>([]);
+
   const [guestNum, setGuestNum] = useState<number>(2);
 
   const {
@@ -24,11 +22,15 @@ const ChooseDetail = ({
     onClose: onCloseChooseDateModal
   } = useDisclosure();
 
-  const { data: rooms } = useRoomListQuery(startDate, endDate, guestNum);
+  const { data: rooms, refetch } = useRoomListQuery(
+    startDate,
+    endDate,
+    guestNum
+  );
 
   useEffect(() => {
     setSelectedDate([startDate, endDate]);
-  }, [startDate, endDate]);
+  }, []);
 
   return (
     <>
@@ -39,6 +41,7 @@ const ChooseDetail = ({
         isFromSearchResult={false}
         personCount={guestNum}
         setPersonCount={setGuestNum}
+        refetch={refetch}
       />
       <Box marginTop="10px">
         <Flex gap="10px">
@@ -81,7 +84,12 @@ const ChooseDetail = ({
       </Box>
       {rooms &&
         rooms.map((room: RoomTypes, index: number) => (
-          <ChooseRoom key={index} room={room} />
+          <ChooseRoom
+            key={index}
+            room={room}
+            startDate={startDate}
+            endDate={startDate}
+          />
         ))}
     </>
   );
