@@ -8,6 +8,10 @@ const theme = extendTheme(
           bg: ""
         }
       })
+    },
+    fonts: {
+      heading: `'Pretendard-Regular', sans-serif`,
+      body: `'Pretendard-Regular', sans-serif`
     }
   },
   withDefaultColorScheme({

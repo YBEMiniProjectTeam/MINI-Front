@@ -9,6 +9,7 @@ import { CookiesProvider } from "react-cookie";
 import initMockAPI from "@mocks/index";
 import { Suspense } from "react";
 import { RecoilRoot } from "recoil";
+import Fonts from "@theme/Fonts.tsx";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ deferRender().then(() => {
       <ReactQueryDevtools initialIsOpen={true} />
 
       <ChakraProvider theme={theme}>
+        <Fonts />
         <CookiesProvider>
           <Suspense
             fallback={

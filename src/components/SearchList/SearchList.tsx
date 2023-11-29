@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { convertDateFormat4 } from "@/utils/convertDateFormat4";
 import { debounce } from "lodash";
 import { checkInAndOutDateState } from "@recoil/checkInAndOutDate";
+import { districtState, categoryState } from "@recoil/searchStates";
 import { useRecoilValue } from "recoil";
 import {
   useSearchListPost,
@@ -17,10 +18,12 @@ import {
 } from "@hooks/useSearchListMutation";
 import Swal from "sweetalert2";
 
-const SearchList = ({ keyword, category }: SearchListProps) => {
+const SearchList = ({ keyword }: SearchListProps) => {
   const navigate = useNavigate();
 
   const { startDate, endDate } = useRecoilValue(checkInAndOutDateState);
+  const selectedDistrict = useRecoilValue(districtState);
+  const selectedCategory = useRecoilValue(categoryState);
 
   const [searchList, setSearchList] = useState<Accommodation[]>([]);
   const [page, setPage] = useState(1);
@@ -29,10 +32,10 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
 
   const { data, error, refetch } = useSearchList(
     keyword,
-    null,
-    null,
-    null,
-    category,
+    selectedDistrict,
+    startDate,
+    endDate,
+    selectedCategory,
     page,
     10
   );

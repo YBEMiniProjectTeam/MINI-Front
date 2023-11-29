@@ -22,7 +22,6 @@ export interface ApiResponse {
 
 export interface SearchListProps {
   keyword: string | null;
-  category: string | null;
 }
 
 export interface ResponseType {
