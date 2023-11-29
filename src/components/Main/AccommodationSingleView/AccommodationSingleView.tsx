@@ -6,8 +6,12 @@ import { useSearchList } from "@/hooks/useSearchList";
 import { Spinner } from "@chakra-ui/react";
 import { Accommodation } from "../AccommodationGridView/AccommodationGridView.types";
 import { printCategory } from "@/utils/printCategory";
+import { useNavigateToResultPage } from "@/hooks/useNavigateToResultPage";
+import { useNavigateToDetailPage } from "@/hooks/useNavigateToDetailPage";
 
 export const AccommodationSingleView = () => {
+  const { navigateToResultPage } = useNavigateToResultPage();
+  const { navigateToDetailPage } = useNavigateToDetailPage();
   const [currentSlide, setCurrentSlide] = useState<number>(0);
 
   const settings = {
@@ -72,17 +76,15 @@ export const AccommodationSingleView = () => {
             <styled.Title>호캉스</styled.Title>
             <styled.Description>지친 이번주, 호캉스는 어떠세요?</styled.Description>
           </styled.MainViewTitle>
-          <styled.MoreButtonWrapper>
-            <a href="/searchResult">
-              <styled.MoreButtonTxt>모두 보기</styled.MoreButtonTxt>
-              <ArrowForwardIcon color={"#666666"}/>
-            </a>
+          <styled.MoreButtonWrapper onClick={() => navigateToResultPage('hotel', '')}>
+            <styled.MoreButtonTxt>모두 보기</styled.MoreButtonTxt>
+            <ArrowForwardIcon color={"#666666"}/>
           </styled.MoreButtonWrapper>
         </styled.MainViewTitleWrapper>
         <styled.SwiperContainer>
           <styled.StyledSlider {...settings}>
             {data?.accommodations?.map((item: Accommodation, index: number) => (
-              <styled.SwiperItem key={index}>
+              <styled.SwiperItem key={index} onClick={() => navigateToDetailPage(item.id)}>
                 <img src={item.thumbnail} alt={`Slide ${index + 1}`} />
               </styled.SwiperItem>
             ))}
