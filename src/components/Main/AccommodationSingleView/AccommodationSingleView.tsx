@@ -8,8 +8,12 @@ import { Accommodation } from "../AccommodationGridView/AccommodationGridView.ty
 import { printCategory } from "@/utils/printCategory";
 import { formatPrice } from "@utils/priceFormatter";
 import { Button } from '@chakra-ui/react'
+import { useNavigateToResultPage } from "@/hooks/useNavigateToResultPage";
+import { useNavigateToDetailPage } from "@/hooks/useNavigateToDetailPage";
 
 export const AccommodationSingleView = () => {
+  const { navigateToResultPage } = useNavigateToResultPage();
+  const { navigateToDetailPage } = useNavigateToDetailPage();
   const [currentSlide, setCurrentSlide] = useState<number>(0);
 
   const settings = {
@@ -74,7 +78,7 @@ export const AccommodationSingleView = () => {
             <styled.Title>호캉스</styled.Title>
             <styled.Description>지친 이번주, 호캉스는 어떠세요?</styled.Description>
           </styled.MainViewTitle>
-          <styled.MoreButtonWrapper>
+          <styled.MoreButtonWrapper onClick={() => navigateToResultPage('hotel', '')}>
             <Button
               color="#666666"
               background="white"
@@ -89,7 +93,7 @@ export const AccommodationSingleView = () => {
         <styled.SwiperContainer>
           <styled.StyledSlider {...settings}>
             {data?.accommodations?.map((item: Accommodation, index: number) => (
-              <styled.SwiperItem key={index}>
+              <styled.SwiperItem key={index} onClick={() => navigateToDetailPage(item.id)}>
                 <img src={item.thumbnail} alt={`Slide ${index + 1}`} />
               </styled.SwiperItem>
             ))}
