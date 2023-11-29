@@ -70,7 +70,9 @@ const ChooseDateModal = ({
   };
 
   const handleClick = () => {
-    refetch();
+    if (refetch) {
+      refetch();
+    }
     onClose();
   };
 
