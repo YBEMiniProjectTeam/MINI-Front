@@ -1,30 +1,33 @@
 import { useFormContext } from "react-hook-form";
 import CustomForm from "@components/CustomForm/CustomForm";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import type { PaymentSubmitButtonProps } from "./PaymentSubmitButton.types";
 
-const PaymentSubmitButton = ({ price, userData }: PaymentSubmitButtonProps) => {
+const PaymentSubmitButton = ({
+  totalPrice,
+  userData,
+  cartIds
+}: PaymentSubmitButtonProps) => {
   const {
     handleSubmit,
     formState: { isValid },
     getValues
   } = useFormContext();
-  const { orderId } = useParams();
   const navigate = useNavigate();
 
-  const onSubmit = (formData: any) => {
+  const onSubmit = () => {
     const isDifferentUser = getValues("isDiffUser");
 
     const combinedData = {
-      ...userData,
-      ...(isDifferentUser && formData)
+      ...{ userData, cartIds },
+      ...{ isDifferentUser, cartIds }
     };
 
-    const { termsAgreement, isDiffUser, paymentOptions, ...decodedData } =
-      combinedData;
+    const queryString = cartIds
+      .map((id) => `cartId=${encodeURIComponent(id)}`)
+      .join("&");
 
-    console.log("서버에 전송: ", decodedData);
-    navigate(`/orders/${orderId}/complete`);
+    navigate(`/complete?${queryString}`);
   };
 
   return (
@@ -35,7 +38,7 @@ const PaymentSubmitButton = ({ price, userData }: PaymentSubmitButtonProps) => {
       disabled={!isValid}
       colorScheme={isValid ? "pink" : "grey"}
     >
-      {price.toLocaleString()}원 결제하기
+      {totalPrice.toLocaleString()}원 결제하기
     </CustomForm.Button>
   );
 };

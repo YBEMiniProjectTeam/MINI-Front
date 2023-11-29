@@ -1,7 +1,10 @@
 export interface ReservationInfoProps {
   children: React.ReactNode;
-  dummyData?: {
+  roomInfo?: {
     checkInDate: string;
     checkOutDate: string;
+    checkInTime: string;
+    checkOutTime: string;
+    price: number;
   };
 }

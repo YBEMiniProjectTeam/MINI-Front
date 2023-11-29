@@ -1,18 +1,20 @@
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { getCompletedPayment } from "@api/getCompletedPayment.ts";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 type CompletePaymentData = {
   reservationData: { label: string; value: string }[];
   rawData: any;
 };
 
-export const useCompletePayment = () => {
-  return useQuery<CompletePaymentData>({
-    queryKey: ["completePayment"],
-    queryFn: async () => {
-      const response = await axios.get(`/api/orders/1/complete`);
-      return response.data;
-    },
+export const useCompletedPayment = (
+  cartIds: number[],
+  reservationName: string,
+  headers: { [key: string]: string }
+) => {
+  return useSuspenseQuery<CompletePaymentData>({
+    queryKey: ["completedPayment"],
+    queryFn: async () =>
+      await getCompletedPayment({ cartIds, reservationName, headers }),
     select: (rawData) => {
       return {
         reservationData: encodeReservationData(rawData),
