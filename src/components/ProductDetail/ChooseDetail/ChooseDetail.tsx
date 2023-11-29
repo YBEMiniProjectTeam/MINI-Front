@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useRoomListQuery } from "@/hooks/useRoomListQuery";
 import ChooseRoom from "../ChooseRoom/ChooseRoom";
 import ChooseDateModal from "@/components/ChooseDateModal/ChooseDateModal";
-import { ChooseDetailTypes } from "./ChooseDetail.types";
+import { ChooseDetailTypes, RoomTypes } from "./ChooseDetail.types";
 import { Box, Flex, useDisclosure } from "@chakra-ui/react";
 import { CiCalendar } from "react-icons/ci";
 import { BsPeople } from "react-icons/bs";
@@ -12,10 +12,8 @@ const ChooseDetail = ({
   startDate,
   endDate
 }: ChooseDetailTypes): JSX.Element => {
-  const [selectedDate, setSelectedDate] = useState<string[] | null>([
-    startDate,
-    endDate
-  ]);
+  const [selectedDate, setSelectedDate] = useState<string[] | null>([]);
+
   const [guestNum, setGuestNum] = useState<number>(2);
 
   const {
@@ -24,19 +22,15 @@ const ChooseDetail = ({
     onClose: onCloseChooseDateModal
   } = useDisclosure();
 
-  const { isLoading, isError, data, error } = useRoomListQuery(
+  const { data: rooms, refetch } = useRoomListQuery(
     startDate,
     endDate,
     guestNum
   );
 
-  if (isLoading) {
-    return;
-  }
-
   useEffect(() => {
     setSelectedDate([startDate, endDate]);
-  }, [startDate, endDate]);
+  }, []);
 
   return (
     <>
@@ -47,6 +41,7 @@ const ChooseDetail = ({
         isFromSearchResult={false}
         personCount={guestNum}
         setPersonCount={setGuestNum}
+        refetch={refetch}
       />
       <Box marginTop="10px">
         <Flex gap="10px">
@@ -87,7 +82,15 @@ const ChooseDetail = ({
           </Box>
         </Flex>
       </Box>
-      <ChooseRoom />
+      {rooms &&
+        rooms.map((room: RoomTypes, index: number) => (
+          <ChooseRoom
+            key={index}
+            room={room}
+            startDate={startDate}
+            endDate={startDate}
+          />
+        ))}
     </>
   );
 };

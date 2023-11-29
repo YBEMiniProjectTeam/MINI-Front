@@ -7,7 +7,7 @@ const Map = ({ lat, lng }: MapProps) => {
 
   useEffect(() => {
     let map: google.maps.Map;
-    async function initMap(): Promise<void> {
+    const initMap = async (): Promise<void> => {
       const { Map } = (await google.maps.importLibrary(
         "maps"
       )) as google.maps.MapsLibrary;
@@ -24,7 +24,7 @@ const Map = ({ lat, lng }: MapProps) => {
         map: map,
         position: position
       });
-    }
+    };
 
     initMap();
   }, []);

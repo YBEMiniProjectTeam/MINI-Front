@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import * as styles from "./ChooseDateModal.styles";
 import { DisclosureProps } from "./ChooseDateModal.types";
 import {
@@ -25,7 +25,8 @@ const ChooseDateModal = ({
   setSelectedDate,
   isFromSearchResult,
   personCount,
-  setPersonCount
+  setPersonCount,
+  refetch
 }: DisclosureProps) => {
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
     null,
@@ -66,6 +67,11 @@ const ChooseDateModal = ({
     twoDaysAgo.setDate(today.getDate());
     twoDaysAgo.setHours(0, 0, 0, 0);
     return date < twoDaysAgo;
+  };
+
+  const handleClick = () => {
+    refetch();
+    onClose();
   };
 
   return (
@@ -155,10 +161,7 @@ const ChooseDateModal = ({
               prev2Label={null}
               calendarType="gregory"
               tileDisabled={tileDisabled}
-              formatDay={(locale, date) => {
-                locale = locale;
-                return moment(date).format("DD");
-              }}
+              formatDay={(locale, date) => moment(date).format("DD")}
             />
           </styles.CalendarWrapper>
           <Button
@@ -169,7 +172,7 @@ const ChooseDateModal = ({
             mt="1rem"
             width="100%"
             lineHeight="10"
-            onClick={onClose}
+            onClick={handleClick}
           >
             설정하기
           </Button>
