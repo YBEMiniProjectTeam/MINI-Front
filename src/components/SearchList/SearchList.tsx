@@ -1,10 +1,6 @@
 import React, { useEffect, useState, Suspense } from "react";
 import * as styles from "./SearchList.styles";
-import {
-  Accommodation,
-  SearchListProps,
-  ResponseType
-} from "./SearchList.types";
+import { Accommodation, SearchListProps } from "./SearchList.types";
 import { Box, Image, Icon, Tag, Text, Spinner } from "@chakra-ui/react";
 import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa";
@@ -14,9 +10,10 @@ import { convertDateFormat4 } from "@/utils/convertDateFormat4";
 import { debounce } from "lodash";
 import { checkInAndOutDateState } from "@recoil/checkInAndOutDate";
 import { useRecoilValue } from "recoil";
-import { useMutation } from "@tanstack/react-query";
-import { postLike } from "@api/postLike";
-import { deleteLike } from "@api/deleteLike";
+import {
+  useSearchListPost,
+  useSearchListDelete
+} from "@hooks/useSearchListMutation";
 import Swal from "sweetalert2";
 
 const SearchList = ({ keyword, category }: SearchListProps) => {
@@ -47,27 +44,8 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
     ...(accessTokenCookie && { Authorization: `Bearer ${accessTokenCookie}` })
   };
 
-  const postMutate = useMutation<ResponseType, Error, number>({
-    mutationFn: (accommodationId) => postLike(accommodationId, headers),
-    onSuccess: (res) => {
-      console.log(res.statusCode, res.message);
-      Swal.fire({
-        icon: "warning",
-        text: "위시리스트에 추가되었습니다."
-      });
-    }
-  }).mutate;
-
-  const deleteMutate = useMutation<ResponseType, Error, number>({
-    mutationFn: (accommodationId) => deleteLike(accommodationId, headers),
-    onSuccess: (res) => {
-      console.log(res.statusCode, res.message);
-      Swal.fire({
-        icon: "warning",
-        text: "위시리스트에서 삭제되었습니다."
-      });
-    }
-  }).mutate;
+  const { mutate: postLike } = useSearchListPost();
+  const { mutate: deleteLike } = useSearchListDelete();
 
   if (error) {
     console.error("An error has occurred:", error.message);
@@ -112,9 +90,9 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
 
     // post 요청 필요
     if (updatedSearchList[index].isWish === true) {
-      postMutate(accommodationId);
+      postLike({ accommodationId, headers });
     } else {
-      deleteMutate(accommodationId);
+      deleteLike({ accommodationId, headers });
     }
   };
 

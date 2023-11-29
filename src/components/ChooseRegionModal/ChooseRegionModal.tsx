@@ -99,7 +99,7 @@ const ChooseRegionModal = ({
                   <styles.SideTab
                     key={region.id}
                     onClick={() => handleRegionSelect(region.id)}
-                    selected={selectedRegion === region.id}
+                    $isSelected={selectedRegion === region.id}
                   >
                     {region.name}
                   </styles.SideTab>
