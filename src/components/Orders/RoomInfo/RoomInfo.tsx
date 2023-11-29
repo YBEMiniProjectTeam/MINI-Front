@@ -52,25 +52,28 @@ const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
             <HStack spacing="1" alignItems="center">
               <Icon as={BsPerson} />
               <Text fontSize="sm">
-                기준 {roomInfo.capacity}명 / 최대 {roomInfo.capacityMax}명
+                기준 {roomInfo.capacity}명 / 최대{" "}
+                {roomInfo.capacityMax || roomInfo.capacity_max}명
               </Text>
             </HStack>
-            <Flex alignItems="center" gap="8px">
-              <Box
-                display="inline-block"
-                bg="#FDDCEC"
-                color="#D63F8B"
-                fontSize="sm"
-                fontWeight={600}
-                padding="0.1rem 0.5rem"
-                borderRadius="5px"
-              >
-                {nights}박
-              </Box>
-              <Text fontSize="lg" fontWeight="bold">
-                {roomInfo.price.toLocaleString()}원
-              </Text>
-            </Flex>
+            {roomInfo.roomName && (
+              <Flex alignItems="center" gap="8px">
+                <Box
+                  display="inline-block"
+                  bg="#FDDCEC"
+                  color="#D63F8B"
+                  fontSize="sm"
+                  fontWeight={600}
+                  padding="0.1rem 0.5rem"
+                  borderRadius="5px"
+                >
+                  {nights}박
+                </Box>
+                <Text fontSize="lg" fontWeight="bold">
+                  {roomInfo.price.toLocaleString()}원
+                </Text>
+              </Flex>
+            )}
           </HStack>
         </GridItem>
       </Grid>

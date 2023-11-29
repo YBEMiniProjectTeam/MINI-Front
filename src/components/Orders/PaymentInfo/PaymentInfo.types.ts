@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface PaymentInfoProps {
   data?: {
     key: "label" | "total" | "price";
@@ -5,4 +7,5 @@ export interface PaymentInfoProps {
     value: number | string;
   }[];
   totalPrice?: number;
+  onClick?: Dispatch<SetStateAction<boolean>>;
 }

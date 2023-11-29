@@ -6,8 +6,7 @@ const PaymentInfo = ({ data }: PaymentInfoProps) => {
     (item) => item.key === "total" || item.key === "price"
   );
 
-  const formattedTotalPayment =
-    totalPaymentItem?.value.toLocaleString() + "원" || "0원";
+  const TotalPayment = totalPaymentItem?.value.toLocaleString() + "원" || "0원";
 
   const totalPaymentLabel =
     totalPaymentItem?.key === "total" ? "총 결제 금액" : "결제 금액";
@@ -32,9 +31,7 @@ const PaymentInfo = ({ data }: PaymentInfoProps) => {
         <styles.Label>
           <span>{totalPaymentLabel}</span>
         </styles.Label>
-        <styles.TotalPaymentPrice>
-          {formattedTotalPayment}
-        </styles.TotalPaymentPrice>
+        <styles.TotalPaymentPrice>{TotalPayment}</styles.TotalPaymentPrice>
       </styles.TotalPaymentPriceWrapper>
     </styles.PaymentContainer>
   );

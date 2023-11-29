@@ -1,14 +1,16 @@
 export interface RoomInfoProps {
-  roomInfo?: {
+  roomInfo: {
     roomName?: string;
+    room_name?: string;
     checkInDate?: string;
     checkOutDate?: string;
     checkInTime?: string;
     checkOutTime?: string;
     price: number;
+    capacity: number;
+    capacityMax?: number;
     check_in?: string;
     check_out?: string;
-    capacity: number;
-    capacityMax: number;
+    capacity_max?: number;
   };
 }
