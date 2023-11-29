@@ -1,3 +1,4 @@
+import { getAuthLocalStorage } from "@utils/getAuthLocalStorage.ts";
 import React, { useEffect, useState, Suspense } from "react";
 import * as styles from "./SearchList.styles";
 import { Accommodation, SearchListProps } from "./SearchList.types";
@@ -36,13 +37,7 @@ const SearchList = ({ keyword, category }: SearchListProps) => {
     10
   );
 
-  const accessTokenCookie = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("accessToken="));
-
-  const headers = {
-    ...(accessTokenCookie && { Authorization: `Bearer ${accessTokenCookie}` })
-  };
+  const { accessTokenCookie, headers } = getAuthLocalStorage();
 
   const { mutate: postLike } = useSearchListPost();
   const { mutate: deleteLike } = useSearchListDelete();
