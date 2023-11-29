@@ -1,4 +1,4 @@
-import { getAuthCookie } from "@utils/getAuthCookie.ts";
+import { getAuthLocalStorage } from "@utils/getAuthLocalStorage.ts";
 import React from "react";
 import * as styles from "./CompletePayment.styles";
 import Card from "@components/Card/Card";
@@ -10,36 +10,45 @@ import CustomForm from "@components/CustomForm/CustomForm.tsx";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const CompletePayment = () => {
-  const [searchParams] = useSearchParams();
-  const cartIds = searchParams.getAll("cartId").map(Number);
-  const { headers } = getAuthCookie();
-
   const navigate = useNavigate();
+  const { headers } = getAuthLocalStorage();
+
   const handleNavigate = () => {
     navigate(`/reservations?Status=oncoming`);
   };
 
-  // FIXME: api 변경 요청
-  const reservationName = "예약자";
+  const [searchParams] = useSearchParams();
+  const orderIdString = searchParams.get("orderId");
+  const orderId = orderIdString ? Number(orderIdString) : null;
 
-  const { data } = useCompletedPayment(cartIds, reservationName, headers);
+  const { data } = useCompletedPayment(orderId!, headers);
 
   const dummyData = data.rawData;
+  const reservationName = data.reservationName;
+  const totalPrice = data.totalPrice;
   const reservationData = data.reservationData;
+
+  console.log(dummyData);
 
   return (
     <styles.Container>
       <Card>
-        <ReservationInfo dummyData={dummyData}>
-          <styles.SuccessInfoWrapper>
-            <SuccessMark />
-            {dummyData.userInfo.name}님의 <br /> 결제가 완료되었습니다!
-          </styles.SuccessInfoWrapper>
-        </ReservationInfo>
+        <styles.SuccessInfoWrapper>
+          <SuccessMark />
+          {reservationName}님의 <br /> 결제가 완료되었습니다!
+        </styles.SuccessInfoWrapper>
+        {dummyData.map((reservation) => (
+          <ReservationInfo
+            key={reservation.accommodation_name}
+            roomInfo={reservation.room_info}
+          />
+        ))}
       </Card>
-      <Card>
-        <PaymentInfo data={reservationData} price={dummyData.price} />
-      </Card>
+      {data.reservationData.map((reservationGroup, index) => (
+        <Card key={index}>
+          <PaymentInfo data={reservationGroup} totalPrice={totalPrice} />
+        </Card>
+      ))}
       <CustomForm.Button width="100%" onClick={handleNavigate}>
         예약 확인
       </CustomForm.Button>
