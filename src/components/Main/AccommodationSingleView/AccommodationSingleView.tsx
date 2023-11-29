@@ -6,6 +6,8 @@ import { useSearchList } from "@/hooks/useSearchList";
 import { Spinner } from "@chakra-ui/react";
 import { Accommodation } from "../AccommodationGridView/AccommodationGridView.types";
 import { printCategory } from "@/utils/printCategory";
+import { formatPrice } from "@utils/priceFormatter";
+import { Button } from '@chakra-ui/react'
 import { useNavigateToResultPage } from "@/hooks/useNavigateToResultPage";
 import { useNavigateToDetailPage } from "@/hooks/useNavigateToDetailPage";
 
@@ -77,8 +79,15 @@ export const AccommodationSingleView = () => {
             <styled.Description>지친 이번주, 호캉스는 어떠세요?</styled.Description>
           </styled.MainViewTitle>
           <styled.MoreButtonWrapper onClick={() => navigateToResultPage('hotel', '')}>
-            <styled.MoreButtonTxt>모두 보기</styled.MoreButtonTxt>
-            <ArrowForwardIcon color={"#666666"}/>
+            <Button
+              color="#666666"
+              background="white"
+              fontSize="0.8rem;"
+              _hover={{ bg: "rgba(0, 0, 0, 0.05);" }}
+              rightIcon={<ArrowForwardIcon color={"#666666"} />}
+            >
+              모두 보기
+            </Button>
           </styled.MoreButtonWrapper>
         </styled.MainViewTitleWrapper>
         <styled.SwiperContainer>
@@ -100,7 +109,7 @@ export const AccommodationSingleView = () => {
             </styled.InformationName>
             <div>
               <styled.InformationPrice>
-                {data?.accommodations?.[currentSlide].min_price}
+                {formatPrice(data?.accommodations?.[currentSlide].min_price)}
               </styled.InformationPrice>
               <styled.InformationPriceTxt>원부터</styled.InformationPriceTxt>
             </div>

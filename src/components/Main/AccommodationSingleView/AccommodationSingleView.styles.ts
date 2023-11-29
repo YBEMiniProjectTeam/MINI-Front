@@ -39,13 +39,6 @@ export const MoreButtonWrapper = styled.div`
   }
 `;
 
-export const MoreButtonTxt = styled.div`
-  display: inline-block;
-  font-size: 0.8rem;
-  color: #666666;
-  margin-right: 4px;
-`;
-
 export const SwiperContainer = styled.div`
   margin: 0 auto;
   position: relative;
