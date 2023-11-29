@@ -1,7 +1,8 @@
+import { getAuthLocalStorage } from "@utils/getAuthLocalStorage.ts";
 import React, { useEffect, useState, Suspense } from "react";
 import * as styles from "./MyWishList.styles";
 import { Accommodation } from "@components/SearchList/SearchList.types";
-import { useWishList } from "@/hooks/useWishList";
+import { useWishList } from "@hooks/useWishLIst";
 import { Box, Image, Icon, Tag, Text, Spinner } from "@chakra-ui/react";
 import { FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -21,13 +22,7 @@ const MyWishList = () => {
 
   const { data, error, refetch } = useWishList(page, 10);
 
-  const accessTokenCookie = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("accessToken="));
-
-  const headers = {
-    ...(accessTokenCookie && { Authorization: `Bearer ${accessTokenCookie}` })
-  };
+  const { accessTokenCookie, headers } = getAuthLocalStorage();
 
   const { mutate } = useMutation<ResponseType, Error, number>({
     mutationFn: (accommodationId) => deleteLike(accommodationId, headers),
