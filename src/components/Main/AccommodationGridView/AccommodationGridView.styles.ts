@@ -89,6 +89,10 @@ export const GridItem = styled.div`
   &:nth-child(2n) {
     margin-left: 1%;
   }
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const GridItemImageWrapper = styled.div`

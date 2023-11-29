@@ -1,4 +1,5 @@
 export interface GridItemProps {
+  id: number;
   imageUrl: string;
   summary: string;
   name: string;

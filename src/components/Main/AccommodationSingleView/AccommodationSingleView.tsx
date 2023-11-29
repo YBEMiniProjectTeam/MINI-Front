@@ -7,9 +7,11 @@ import { Spinner } from "@chakra-ui/react";
 import { Accommodation } from "../AccommodationGridView/AccommodationGridView.types";
 import { printCategory } from "@/utils/printCategory";
 import { useNavigateToResultPage } from "@/hooks/useNavigateToResultPage";
+import { useNavigateToDetailPage } from "@/hooks/useNavigateToDetailPage";
 
 export const AccommodationSingleView = () => {
   const { navigateToResultPage } = useNavigateToResultPage();
+  const { navigateToDetailPage } = useNavigateToDetailPage();
   const [currentSlide, setCurrentSlide] = useState<number>(0);
 
   const settings = {
@@ -82,7 +84,7 @@ export const AccommodationSingleView = () => {
         <styled.SwiperContainer>
           <styled.StyledSlider {...settings}>
             {data?.accommodations?.map((item: Accommodation, index: number) => (
-              <styled.SwiperItem key={index}>
+              <styled.SwiperItem key={index} onClick={() => navigateToDetailPage(item.id)}>
                 <img src={item.thumbnail} alt={`Slide ${index + 1}`} />
               </styled.SwiperItem>
             ))}

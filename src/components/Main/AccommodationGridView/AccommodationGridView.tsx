@@ -76,6 +76,7 @@ export const AccommodationGridView = () => {
         {data?.accommodations?.map((accommodation: Accommodation, index: number) => (
           <AccommodationGridItem
             key={index}
+            id={accommodation.id}
             imageUrl={accommodation.thumbnail}
             summary={`${accommodation.region} | ${printCategory(accommodation.type)}`}
             name={accommodation.name}
