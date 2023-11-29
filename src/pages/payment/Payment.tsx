@@ -12,7 +12,7 @@ import PaymentInfo from "@components/Orders/PaymentInfo/PaymentInfo";
 import Card from "@components/Card/Card";
 import TermsAgreementForm from "@components/Orders/TermsAgreementForm/TermsAgreementForm.tsx";
 import PaymentSubmitButton from "@components/Orders/PaymentSubmitButton/PaymentSubmitButton";
-import AccommodationInfo from "@components/Orders/ReservationInfo/AccommodationInfo/AccommodationInfo";
+import RoomInfo from "@components/Orders/RoomInfo/RoomInfo";
 import DiffUserCheckbox from "@components/Orders/DiffUserCheckbox/DiffUserCheckbox";
 import PaymentOptionsForm from "@components/Orders/PaymentOptionsForm/PaymentOptionsForm";
 import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
@@ -36,25 +36,20 @@ export const Payment = () => {
   const reservationData = paymentData.reservationData;
   const totalPrice = reservationData[0][0].value;
 
-  console.log(dummyData);
-
   return (
     <styles.Container>
       <FormProvider {...methods}>
         <Card>
-          {dummyData.map((accommodation) => (
-            <>
-              {accommodation.roomInfos.map((roomInfo) => (
-                <ReservationInfo key={roomInfo.roomName} roomInfo={roomInfo}>
-                  <AccommodationInfo
-                    key={roomInfo.roomName}
-                    hotelName={accommodation.accommodationName}
-                    roomInfo={roomInfo}
-                  />
-                </ReservationInfo>
-              ))}
-            </>
-          ))}
+          {dummyData.map((accommodation, index) =>
+            accommodation.roomInfos.map((room, roomIndex) => (
+              <ReservationInfo
+                key={`${index}-${roomIndex}`}
+                hotelName={accommodation.accommodationName}
+              >
+                <RoomInfo key={room.cartId} roomInfo={room} />
+              </ReservationInfo>
+            ))
+          )}
         </Card>
         <Card label="예약자 정보">
           <UserInfoForm userData={userData} />
