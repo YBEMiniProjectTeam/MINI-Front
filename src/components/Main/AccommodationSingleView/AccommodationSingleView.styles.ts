@@ -33,6 +33,10 @@ export const MoreButtonWrapper = styled.div`
   bottom: 0px;
   right: 24px;
   margin-bottom: 18px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const MoreButtonTxt = styled.div`

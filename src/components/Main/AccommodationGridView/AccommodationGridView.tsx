@@ -7,9 +7,11 @@ import { useSearchList } from "@/hooks/useSearchList";
 import { Accommodation } from "./AccommodationGridView.types";
 import { printCategory } from "@/utils/printCategory";
 import { Spinner } from "@chakra-ui/react";
+import { useNavigateToResultPage } from "@/hooks/useNavigateToResultPage";
 
 export const AccommodationGridView = () => {
-  const [activeTab, setActiveTab] = useState('펜션'); 
+  const { navigateToResultPage } = useNavigateToResultPage();
+  const [activeTab, setActiveTab] = useState('pension'); 
   
   const handleTabClick = (tab: string) => {
     startTransition(() => { 
@@ -18,7 +20,7 @@ export const AccommodationGridView = () => {
   };
 
   const { data, error } = useSearchList(
-    null,
+    '제주', 
     null,
     null,
     null,
@@ -54,15 +56,15 @@ export const AccommodationGridView = () => {
       <styled.CategoryTapWrapper>
         <styled.CategoryTapContainer>
           <styled.CategoryTap>
-            <styled.CategoryTapItem onClick={() => handleTabClick('펜션')}>
-              <styled.TabItem $isActive={activeTab === '펜션'} onClick={() => handleTabClick('펜션')}>
-                {activeTab === '펜션' && <styled.ActivedBar />}
+            <styled.CategoryTapItem onClick={() => handleTabClick('pension')}>
+              <styled.TabItem $isActive={activeTab === 'pension'} onClick={() => handleTabClick('pension')}>
+                {activeTab === 'pension' && <styled.ActivedBar />}
                 펜션
               </styled.TabItem>
             </styled.CategoryTapItem>
-            <styled.CategoryTapItem onClick={() => handleTabClick('호텔')}>
-              <styled.TabItem $isActive={activeTab === '호텔'}>
-                {activeTab === '호텔' && <styled.ActivedBar />}
+            <styled.CategoryTapItem onClick={() => handleTabClick('hotel')}>
+              <styled.TabItem $isActive={activeTab === 'hotel'}>
+                {activeTab === 'hotel' && <styled.ActivedBar />}
                 호텔
               </styled.TabItem>
             </styled.CategoryTapItem>
@@ -83,7 +85,7 @@ export const AccommodationGridView = () => {
       </styled.GridWrapper>
       <styled.MoreButtonWrapper>
         <a>
-          <styled.MoreButton>
+          <styled.MoreButton onClick={() => navigateToResultPage(activeTab, 'jeju')}>
             <styled.MoreButtonTxt>모두 보기</styled.MoreButtonTxt>
             <ArrowForwardIcon />
           </styled.MoreButton>

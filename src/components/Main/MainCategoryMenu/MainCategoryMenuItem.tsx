@@ -14,7 +14,7 @@ export const MainCategoryMenuItem: React.FC<MainCategoryMenuItemProps> = ({
 
   return (
     <styled.CategoryMenuItem
-      onClick={() => navigateToResultPage(category)}
+      onClick={() => navigateToResultPage(category, '')}
     >
       <styled.MenuIcon>
         {React.cloneElement(icon, { size, color: iconColor })}
