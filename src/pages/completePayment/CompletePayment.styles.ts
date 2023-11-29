@@ -11,4 +11,15 @@ export const SuccessInfoWrapper = styled.div`
   text-align: center;
   font-size: 1.1rem;
   font-weight: 500;
+  padding: 1rem 0 1.5rem;
+`;
+
+export const PaymentInfoWrapper = styled.div`
+  margin-bottom: 1rem;
+  padding: 1rem 0;
+  background-color: #f8f8f9;
+  border-radius: 6px;
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;

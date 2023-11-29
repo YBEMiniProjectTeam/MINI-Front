@@ -58,11 +58,11 @@ export const Payment = () => {
             {isDiffUser && <DiffUserInfoForm />}
           </Collapse>
         </Card>
-        {reservationData.map((group, index) => (
-          <Card label="결제 정보" key={index}>
+        <Card label="결제 정보">
+          {reservationData.map((group) => (
             <PaymentInfo data={group} />
-          </Card>
-        ))}
+          ))}
+        </Card>
         <Card label="결제 수단">
           <PaymentOptionsForm />
         </Card>
