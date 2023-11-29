@@ -73,22 +73,16 @@ export const GridWrapper = styled.div`
   margin-top: 16px;
   padding: 0px 24px;
   display: block;
-  height: 412px;
+  height: 824px;
+  margin-left: -2%;
 `;
 
 export const GridItem = styled.div`
   float: left;
-  width: 49%;
+  width: 48%;
   margin-bottom: 20px;
   display: block;
-
-  &:nth-child(2n+1) {
-    margin-right: 1%;
-  }
-
-  &:nth-child(2n) {
-    margin-left: 1%;
-  }
+  margin-left: 2%;
 `;
 
 export const GridItemImageWrapper = styled.div`
