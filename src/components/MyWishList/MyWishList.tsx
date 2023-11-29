@@ -2,14 +2,12 @@ import { getAuthLocalStorage } from "@utils/getAuthLocalStorage.ts";
 import { useEffect, useState, Suspense } from "react";
 import * as styles from "./MyWishList.styles";
 import { Accommodation } from "@components/SearchList/SearchList.types";
-import { useWishList } from "@/hooks/useWishList";
+import { useWishList } from "@hooks/useWishList";
 import { Box, Image, Icon, Tag, Text, Spinner } from "@chakra-ui/react";
 import { FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
-import { useMutation } from "@tanstack/react-query";
-import { deleteWish } from "@/api/deleteWish";
-import { ResponseType } from "@components/SearchList/SearchList.types";
+import { useDeleteWish } from "@hooks/useWishMutation";
 import Swal from "sweetalert2";
 
 const MyWishList = () => {
@@ -24,17 +22,6 @@ const MyWishList = () => {
 
   const { accessTokenCookie, headers } = getAuthLocalStorage();
 
-  const { mutate } = useMutation<ResponseType, Error, number>({
-    mutationFn: (accommodationId) => deleteWish(accommodationId, headers),
-    onSuccess: (res) => {
-      console.log(res.statusCode, res.message);
-      Swal.fire({
-        icon: "warning",
-        text: "위시리스트에서 삭제되었습니다."
-      });
-    }
-  });
-
   if (!accessTokenCookie) {
     Swal.fire({
       icon: "error",
@@ -43,6 +30,8 @@ const MyWishList = () => {
     });
     return;
   }
+
+  const { mutate: deleteWish } = useDeleteWish();
 
   if (error) {
     console.error("An error has occurred:", error.message);
@@ -63,14 +52,14 @@ const MyWishList = () => {
     setIsLoadingMore(false);
   }, [data]);
 
-  const handleLikeClick = (index: number, accomodationId: number) => {
+  const handleLikeClick = (index: number, accommodationId: number) => {
     const updatedWishList = wishList.filter((item, i) => i !== index);
 
     setWishList(updatedWishList);
 
     // post 요청 필요
 
-    mutate(accomodationId);
+    deleteWish({ accommodationId, headers });
   };
 
   const handleScroll = debounce(() => {
