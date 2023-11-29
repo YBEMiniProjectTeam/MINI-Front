@@ -1,5 +1,6 @@
-import { Box, Divider, Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import type { ReservationInfoProps } from "./ReservationInfo.types";
+import * as styles from "./ReservationInfo.styles";
 
 const ReservationInfo = ({ hotelName, children }: ReservationInfoProps) => {
   return (
@@ -12,7 +13,7 @@ const ReservationInfo = ({ hotelName, children }: ReservationInfoProps) => {
           {children}
         </Flex>
       </Box>
-      <Divider margin="1rem 0" borderColor="rgb(240, 240, 240)" />
+      <styles.Divider />
     </>
   );
 };
