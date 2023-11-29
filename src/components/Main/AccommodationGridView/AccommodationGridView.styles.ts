@@ -137,21 +137,3 @@ export const MoreButtonWrapper = styled.div`
   padding: 0px 24px;
   margin-bottom: 20px;
 `;
-
-export const MoreButton = styled.button`
-  border: 1px solid #DCDCDD;
-  border-radius: 2px;
-  display: block;
-  width: 100%;
-  height: 44px;
-  background: #fff;
-`;
-
-export const MoreButtonTxt = styled.span`
-  display: inline-block;
-  line-height: 20px;
-  color: #666666;
-  font-weight: 500;
-  position: relative;
-  padding-right: 2px;
-`;

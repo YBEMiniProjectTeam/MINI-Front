@@ -7,6 +7,7 @@ import { Spinner } from "@chakra-ui/react";
 import { Accommodation } from "../AccommodationGridView/AccommodationGridView.types";
 import { printCategory } from "@/utils/printCategory";
 import { formatPrice } from "@utils/priceFormatter";
+import { Button } from '@chakra-ui/react'
 
 export const AccommodationSingleView = () => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
@@ -74,10 +75,15 @@ export const AccommodationSingleView = () => {
             <styled.Description>지친 이번주, 호캉스는 어떠세요?</styled.Description>
           </styled.MainViewTitle>
           <styled.MoreButtonWrapper>
-            <a href="/searchResult">
-              <styled.MoreButtonTxt>모두 보기</styled.MoreButtonTxt>
-              <ArrowForwardIcon color={"#666666"}/>
-            </a>
+            <Button
+              color="#666666"
+              background="white"
+              fontSize="0.8rem;"
+              _hover={{ bg: "rgba(0, 0, 0, 0.05);" }}
+              rightIcon={<ArrowForwardIcon color={"#666666"} />}
+            >
+              모두 보기
+            </Button>
           </styled.MoreButtonWrapper>
         </styled.MainViewTitleWrapper>
         <styled.SwiperContainer>

@@ -6,7 +6,7 @@ import { Suspense, startTransition, useState } from "react";
 import { useSearchList } from "@/hooks/useSearchList";
 import { Accommodation } from "./AccommodationGridView.types";
 import { printCategory } from "@/utils/printCategory";
-import { Spinner } from "@chakra-ui/react";
+import { Button, Spinner } from "@chakra-ui/react";
 
 export const AccommodationGridView = () => {
   const [activeTab, setActiveTab] = useState('펜션'); 
@@ -82,12 +82,17 @@ export const AccommodationGridView = () => {
         ))}
       </styled.GridWrapper>
       <styled.MoreButtonWrapper>
-        <a>
-          <styled.MoreButton>
-            <styled.MoreButtonTxt>모두 보기</styled.MoreButtonTxt>
-            <ArrowForwardIcon />
-          </styled.MoreButton>
-        </a>
+        <Button
+          color="#666666"
+          bg="white"
+          border="1px solid #DCDCDD;"
+          w="100%"
+          h="44px;"
+          _hover={{ bg: 'rgba(0, 0, 0, 0.05);' }}
+          rightIcon={<ArrowForwardIcon/>}    
+        >
+          모두 보기
+        </Button>
       </styled.MoreButtonWrapper>
     </styled.GridViewWrapper>
     </Suspense>
