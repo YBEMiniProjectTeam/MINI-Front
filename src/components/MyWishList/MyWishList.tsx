@@ -2,13 +2,13 @@ import { getAuthLocalStorage } from "@utils/getAuthLocalStorage.ts";
 import { useEffect, useState, Suspense } from "react";
 import * as styles from "./MyWishList.styles";
 import { Accommodation } from "@components/SearchList/SearchList.types";
-import { useWishList } from "@/hooks/useWishList";
+import { useWishList } from "@hooks/useWishList";
 import { Box, Image, Icon, Tag, Text, Spinner } from "@chakra-ui/react";
 import { FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
 import { useMutation } from "@tanstack/react-query";
-import { deleteWish } from "@/api/deleteWish";
+import { deleteWish } from "@api/deleteWish";
 import { ResponseType } from "@components/SearchList/SearchList.types";
 import Swal from "sweetalert2";
 
