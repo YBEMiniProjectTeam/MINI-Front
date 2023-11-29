@@ -28,7 +28,7 @@ import { useSearchList } from "@hooks/useSearchList";
 import { checkInAndOutDateState } from "@recoil/checkInAndOutDate";
 import { useSetRecoilState } from "recoil";
 
-const Search = ({ keyword, category }: SearchProps) => {
+const Search = ({ keyword, category, region }: SearchProps) => {
   const {
     isOpen: isOpenChooseRegionModal,
     onOpen: onOpenChooseRegionModal,
@@ -41,7 +41,9 @@ const Search = ({ keyword, category }: SearchProps) => {
     onClose: onCloseChooseDateModal
   } = useDisclosure();
 
-  const [selectedDistrict, setSelectedDistrict] = useState<string>("");
+  const [selectedDistrict, setSelectedDistrict] = useState<string>(
+    region ? region : ""
+  );
   const [selectedDate, setSelectedDate] = useState<string[] | null>([]);
   const [accommodationName, setAccommodationName] = useState<string>(
     keyword ? keyword : ""
@@ -71,6 +73,10 @@ const Search = ({ keyword, category }: SearchProps) => {
 
   useEffect(() => {
     setSelectedCategory(category ? category : "");
+  }, []);
+
+  useEffect(() => {
+    setSelectedDistrict(region ? region : "");
   }, []);
 
   useEffect(() => {
@@ -105,6 +111,14 @@ const Search = ({ keyword, category }: SearchProps) => {
         break;
       case "all":
         category = "";
+        break;
+    }
+  }
+
+  if (region) {
+    switch (region) {
+      case "jeju":
+        region = "제주시";
         break;
     }
   }
