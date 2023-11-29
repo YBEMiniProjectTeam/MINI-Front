@@ -1,4 +1,4 @@
-import { getCompletedPayment } from "@api/getCompletedPayment.ts";
+import { getCompletedPaymentInfo } from "@api/getCompletedPaymentInfo.ts";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 export interface Reservation {
@@ -70,7 +70,7 @@ export const useCompletedPayment = (
 ) => {
   return useSuspenseQuery<Reservation[], Error, CompletePaymentResponse>({
     queryKey: ["completedPayment"],
-    queryFn: async () => await getCompletedPayment({ count, headers }),
+    queryFn: async () => await getCompletedPaymentInfo({ count, headers }),
     select: (reservations: Reservation[]): CompletePaymentResponse => {
       return {
         reservationData: encodeReservationData(reservations),
