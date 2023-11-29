@@ -251,7 +251,7 @@ export const ShoppingCartComp = (): JSX.Element => {
       .sort()
       .map((cartId) => `cartId=${cartId}`)
       .join("&");
-    navigate(`/orders/${queryString}`);
+    navigate(`/orders?${queryString}`);
   };
   return (
     <styles.ShoppingCartContainer>

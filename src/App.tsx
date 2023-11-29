@@ -12,6 +12,7 @@ import { Reservations } from "@pages/reservations/Reservations";
 import { ReservationDetails } from "@pages/reservationDetails/ReservationDetails";
 import { WishList } from "@pages/wishList/WishList";
 import Layout from "@components/Layout/Layout";
+import { NotFound } from "@pages/notFound/NotFound";
 
 const router = createBrowserRouter([
   {
@@ -22,10 +23,10 @@ const router = createBrowserRouter([
       { path: "register", element: <Register /> },
       { path: "login", element: <Login /> },
       { path: "searchResult", element: <SearchResult /> },
-      { path: "products/:productDetail", element: <ProductDetail /> },
+      { path: "products", element: <ProductDetail /> },
       { path: "rooms/:roomId", element: <RoomDetail /> },
-      { path: "orders/:orderId", element: <Payment /> },
-      { path: "orders/:orderId/complete", element: <CompletePayment /> },
+      { path: "orders", element: <Payment /> },
+      { path: "complete", element: <CompletePayment /> },
       { path: "shoppingCart", element: <ShoppingCart /> },
       { path: "reservations", element: <Reservations /> },
       {
@@ -34,7 +35,8 @@ const router = createBrowserRouter([
       },
       { path: "wishList", element: <WishList /> }
     ]
-  }
+  },
+  { path: "*", element: <NotFound /> }
 ]);
 
 const App = (): JSX.Element => {

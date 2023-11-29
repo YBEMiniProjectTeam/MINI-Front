@@ -33,13 +33,10 @@ export const MoreButtonWrapper = styled.div`
   bottom: 0px;
   right: 24px;
   margin-bottom: 18px;
-`;
 
-export const MoreButtonTxt = styled.div`
-  display: inline-block;
-  font-size: 0.8rem;
-  color: #666666;
-  margin-right: 4px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const SwiperContainer = styled.div`
@@ -159,4 +156,9 @@ export const InformationPriceTxt = styled.span`
   font-weight: 500;
   color: #4D4D4D;
   font-size: 0.8rem;
+`;
+
+export const LoadingWraaper = styled.div`
+  display: flex;
+  justify-content: center;
 `;

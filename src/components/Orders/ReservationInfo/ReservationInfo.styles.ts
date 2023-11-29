@@ -2,12 +2,15 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   background-color: #fff;
+  margin-bottom: 1.5rem;
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 export const TopContainer = styled.div`
   width: 100%;
-  text-align: center;
-  padding: 24px 24.5px;
+  padding: 0 1rem;
 `;
 
 export const StayPeriodContainer = styled.div`
@@ -34,7 +37,7 @@ export const StayPeriodDetail = styled.span`
 
 export const StayPeriodBox = styled.div`
   text-align: center;
-  padding: 0px 38px;
+  padding: 0 2.1rem;
 
   .type {
     margin-top: 16px;
@@ -58,4 +61,25 @@ export const StayPeriodBox = styled.div`
     letter-spacing: -0.5px;
     color: rgb(51, 51, 51);
   }
+`;
+
+export const PriceLabel = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 1rem;
+  border-radius: 7px;
+  background-color: #f8f8f8;
+`;
+
+export const PriceItem = styled.span`
+  font-size: 1.1rem;
+  font-weight: 500;
+`;
+
+export const PriceDesc = styled.span`
+  color: #dc0328;
+  cursor: text;
+  font-size: 0.8rem;
+  font-weight: bold;
 `;

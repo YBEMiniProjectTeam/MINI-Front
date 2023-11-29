@@ -1,11 +1,13 @@
-import React, { useEffect, useState, Suspense } from "react";
+import { getAuthLocalStorage } from "@utils/getAuthLocalStorage.ts";
+import { useEffect, useState, Suspense } from "react";
 import * as styles from "./MyWishList.styles";
 import { Accommodation } from "@components/SearchList/SearchList.types";
-import { useWishList } from "@/hooks/useWishList";
+import { useWishList } from "@hooks/useWishList";
 import { Box, Image, Icon, Tag, Text, Spinner } from "@chakra-ui/react";
 import { FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
+import { useDeleteWish } from "@hooks/useWishMutation";
 import Swal from "sweetalert2";
 
 const MyWishList = () => {
@@ -17,6 +19,19 @@ const MyWishList = () => {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   const { data, error, refetch } = useWishList(page, 10);
+
+  const { accessTokenCookie, headers } = getAuthLocalStorage();
+
+  if (!accessTokenCookie) {
+    Swal.fire({
+      icon: "error",
+      text: "로그인이 필요한 서비스입니다.",
+      footer: '<a href="/login">로그인하러 가기</a>'
+    });
+    return;
+  }
+
+  const { mutate: deleteWish } = useDeleteWish();
 
   if (error) {
     console.error("An error has occurred:", error.message);
@@ -32,28 +47,19 @@ const MyWishList = () => {
   }, [totalPage]);
 
   useEffect(() => {
-    setWishList((prevWishList) => [
-      ...prevWishList,
-      ...data.accommodations.filter((item: Accommodation) => item.isWish)
-    ]);
+    setWishList((prevWishList) => [...prevWishList, ...data.accommodations]);
     setTotalPage(data.total_pages);
     setIsLoadingMore(false);
   }, [data]);
 
-  const handleLikeClick = (index: number) => {
+  const handleLikeClick = (index: number, accommodationId: number) => {
     const updatedWishList = wishList.filter((item, i) => i !== index);
 
     setWishList(updatedWishList);
 
     // post 요청 필요
 
-    // Swal.fire({
-    //   position: "center",
-    //   icon: "success",
-    //   title: "위시리스트에서 삭제되었습니다",
-    //   showConfirmButton: false,
-    //   timer: 1500
-    // });
+    deleteWish({ accommodationId, headers });
   };
 
   const handleScroll = debounce(() => {
@@ -108,7 +114,6 @@ const MyWishList = () => {
               cursor="pointer"
               onClick={() => handleAccomodationClick(accomodation.id)}
             />
-
             <Icon
               as={FaHeart}
               position="absolute"
@@ -118,9 +123,8 @@ const MyWishList = () => {
               height="1.5rem"
               color="red"
               cursor="pointer"
-              onClick={() => handleLikeClick(index)}
+              onClick={() => handleLikeClick(index, accomodation.id)}
             />
-
             {accomodation.type !== "NOT_CLASSIFIED" && (
               <Tag
                 size="md"

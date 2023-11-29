@@ -1,8 +1,8 @@
-import DiffUserCheckbox from "@components/Orders/DiffUserCheckbox/DiffUserCheckbox.tsx";
-import PaymentOptionsForm from "@components/Orders/PaymentOptionsForm/PaymentOptionsForm.tsx";
-import VisitOptionsForm from "@components/Orders/VisitOptionsForm/VisitOptionsForm.tsx";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
+import { useSearchParams } from "react-router-dom";
+import { useUserInfo } from "@hooks/useUserInfoQuery";
+import { usePayment } from "@hooks/usePaymentQuery";
 import { Collapse } from "@chakra-ui/react";
 import * as styles from "./Payment.styles";
 import DiffUserInfoForm from "@components/Orders/DiffUserInfoForm/DiffUserInfoForm.tsx";
@@ -13,40 +13,52 @@ import Card from "@components/Card/Card";
 import TermsAgreementForm from "@components/Orders/TermsAgreementForm/TermsAgreementForm.tsx";
 import PaymentSubmitButton from "@components/Orders/PaymentSubmitButton/PaymentSubmitButton";
 import AccommodationInfo from "@components/Orders/ReservationInfo/AccommodationInfo/AccommodationInfo";
-import { usePayment } from "@hooks/usePaymentQuery";
-import { useParams } from "react-router-dom";
-import { useUserInfo } from "@hooks/useUserInfoQuery";
+import DiffUserCheckbox from "@components/Orders/DiffUserCheckbox/DiffUserCheckbox";
+import PaymentOptionsForm from "@components/Orders/PaymentOptionsForm/PaymentOptionsForm";
+import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
 
-export const Payment: React.FC = () => {
+export const Payment = () => {
   const methods = useForm({
     mode: "onChange"
   });
+
   const [isDiffUser, setIsDiffUser] = useState(false);
 
-  const { orderId } = useParams();
-  const { data: paymentData } = usePayment(orderId!);
-  const { data: userData } = useUserInfo();
+  const [searchParams] = useSearchParams();
+  const cartIds = searchParams.getAll("cartId").map(Number);
 
-  const dummyData = paymentData.rawData.data;
+  const { headers } = getAuthLocalStorage();
+
+  const { data: paymentData } = usePayment(cartIds, headers);
+  const { data: userData } = useUserInfo(headers);
+
+  const dummyData = paymentData.rawData;
   const reservationData = paymentData.reservationData;
-
-  const user = userData.data;
 
   return (
     <styles.Container>
       <FormProvider {...methods}>
         <Card>
-          <ReservationInfo dummyData={dummyData}>
-            <AccommodationInfo dummyData={dummyData} />
-          </ReservationInfo>
-          <Card label="예약자 정보">
-            <UserInfoForm data={user} />
-            <DiffUserCheckbox setIsDiffUser={setIsDiffUser} />
-            <Collapse in={isDiffUser} animateOpacity>
-              {isDiffUser && <DiffUserInfoForm />}
-            </Collapse>
-            {/*<VisitOptionsForm />*/}
-          </Card>
+          {dummyData.map((accommodation) => (
+            <>
+              {accommodation.roomInfos.map((roomInfo) => (
+                <ReservationInfo key={roomInfo.roomName} roomInfo={roomInfo}>
+                  <AccommodationInfo
+                    key={roomInfo.roomName}
+                    hotelName={accommodation.accommodationName}
+                    roomInfo={roomInfo}
+                  />
+                </ReservationInfo>
+              ))}
+            </>
+          ))}
+        </Card>
+        <Card label="예약자 정보">
+          <UserInfoForm userData={userData} />
+          <DiffUserCheckbox setIsDiffUser={setIsDiffUser} />
+          <Collapse in={isDiffUser} animateOpacity>
+            {isDiffUser && <DiffUserInfoForm />}
+          </Collapse>
         </Card>
         <Card label="결제 금액">
           <PaymentInfo data={reservationData} />
@@ -57,7 +69,11 @@ export const Payment: React.FC = () => {
         <Card>
           <TermsAgreementForm />
         </Card>
-        <PaymentSubmitButton price={dummyData.price} userData={user} />
+        <PaymentSubmitButton
+          totalPrice={reservationData[0].value}
+          cartIds={cartIds}
+          userData={userData}
+        />
       </FormProvider>
     </styles.Container>
   );

@@ -1,33 +1,23 @@
-import {
-  Box,
-  Flex,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  Button
-} from "@chakra-ui/react";
+import { ChooseRoomProps } from "./ChooseRoom.types";
+import FacilitiesModal from "../FacilitiesModal/FacilitiesModal";
+import { Box, Flex, useDisclosure, Button } from "@chakra-ui/react";
 import { IoBedOutline } from "react-icons/io5";
 import { BsPerson } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
 
-const ChooseRoom = (): JSX.Element => {
+const ChooseRoom = ({ room }: ChooseRoomProps): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { name, price, capacity, capacity_max, stock_quantity, description } =
+    room;
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>객실 편의시설</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody></ModalBody>
-        </ModalContent>
-      </Modal>
+      <FacilitiesModal
+        isOpen={isOpen}
+        onClose={onClose}
+        description={description}
+      />
       <Box
         display="flex"
         justifyContent="space-between"
@@ -38,27 +28,24 @@ const ChooseRoom = (): JSX.Element => {
         padding="30px"
       >
         <Box display="flex" justifyContent="space-between" w="100%">
-          <Flex flexDirection="column">
-            <Box fontSize="26px" fontWeight={700} marginBottom="50px">
-              A동 전실
-            </Box>
-            <Flex
-              fontSize="16px"
-              alignItems="center"
-              gap="5px"
-              marginBottom="3px"
-            >
-              <IoBedOutline />
-              체크인시 배정
+          <Flex flexDirection="column" justifyContent="space-between">
+            <Flex flexDirection="column">
+              <Box fontSize="26px" fontWeight={700}>
+                {name}
+              </Box>
+              <Box color="#D53F8C" fontSize="14px" fontWeight={700}>
+                남은 객실 {stock_quantity}개
+              </Box>
             </Flex>
-            <Flex
-              fontSize="16px"
-              alignItems="center"
-              gap="5px"
-              marginBottom="10px"
-            >
-              <BsPerson />
-              2인 기준 / 최대 4인
+            <Flex flexDirection="column">
+              <Flex fontSize="15px" alignItems="center" gap="5px">
+                <IoBedOutline />
+                체크인시 배정
+              </Flex>
+              <Flex fontSize="15px" alignItems="center" gap="5px">
+                <BsPerson />
+                {capacity}인 기준 / 최대 {capacity_max}인
+              </Flex>
             </Flex>
           </Flex>
           <Flex flexDirection="column" justifyContent="space-between">
@@ -69,7 +56,6 @@ const ChooseRoom = (): JSX.Element => {
               alignItems="center"
               gap="2px"
               color="#166FA7"
-              // marginTop="8px"
               fontWeight={700}
               onClick={onOpen}
             >
@@ -78,8 +64,8 @@ const ChooseRoom = (): JSX.Element => {
             </Box>
             <Flex flexDirection="column" alignItems="flex-end" marginTop="20px">
               <Box fontSize="14px">숙박</Box>
-              <Box fontSize="20px" fontWeight={800}>
-                110,000원
+              <Box fontSize="20px" fontWeight={800} marginBottom="3px">
+                {price}원
               </Box>
             </Flex>
             <Flex gap="10px">

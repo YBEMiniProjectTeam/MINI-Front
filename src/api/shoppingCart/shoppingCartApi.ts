@@ -1,7 +1,8 @@
 import axios from "axios";
+import { API_BASE_URL } from "../config";
 
 export const ShoppingCartApi = async (accessToken: string) => {
-  const API_URL = "https://api.anti-bias.kr/api/carts";
+  const API_URL = `${API_BASE_URL}/carts`;
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`
@@ -16,7 +17,7 @@ export const QuantityCartApi = async (
   sign: string,
   cartId: number[]
 ) => {
-  const API_URL = `https://api.anti-bias.kr/api/${sign}`;
+  const API_URL = `${API_BASE_URL}/${sign}`;
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`
@@ -27,7 +28,7 @@ export const QuantityCartApi = async (
   return response;
 };
 export const DeleteCartApi = async (accessToken: string, cartId: number[]) => {
-  const API_URL = `https://api.anti-bias.kr/api/carts`;
+  const API_URL = `${API_BASE_URL}/carts`;
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`
@@ -41,7 +42,7 @@ export const DeleteCartApi = async (accessToken: string, cartId: number[]) => {
   return response;
 };
 export const ReservationApi = async (accessToken: string, cartId: number[]) => {
-  const API_URL = `https://api.anti-bias.kr/api/carts`;
+  const API_URL = `${API_BASE_URL}/carts`;
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`
