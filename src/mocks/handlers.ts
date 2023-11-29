@@ -10,6 +10,9 @@ export const handlers = [
   http.get(`/api/member-info`, () => {
     return HttpResponse.json(dummyMemberinfoData);
   }),
+  http.post(`api/carts/orders/payments`, () => {
+    return HttpResponse.json({ statusCode: 200, message: "SUCCESS" });
+  }),
   http.get(`/api/carts/orders/complete`, () => {
     return HttpResponse.json(dummyCompletedPaymentData);
   })
