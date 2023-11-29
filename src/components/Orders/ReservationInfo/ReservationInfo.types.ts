@@ -1,10 +1,12 @@
 export interface ReservationInfoProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   roomInfo?: {
-    checkInDate: string;
-    checkOutDate: string;
-    checkInTime: string;
-    checkOutTime: string;
+    checkInDate?: string;
+    checkOutDate?: string;
+    checkInTime?: string;
+    checkOutTime?: string;
     price: number;
+    check_in?: string;
+    check_out?: string;
   };
 }
