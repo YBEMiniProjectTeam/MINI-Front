@@ -1,44 +1,63 @@
+import { useState } from "react";
+import { getAuthLocalStorage } from "@/utils/getAuthLocalStorage";
+import { usePostWish } from "@/hooks/useWishMutation";
+import { useDeleteWish } from "@/hooks/useWishMutation";
+import { WishListButtonProps } from "./WishListButton.types";
 import { Box } from "@chakra-ui/react";
 import { GoHeart } from "react-icons/go";
 import { GoHeartFill } from "react-icons/go";
+import Swal from "sweetalert2";
 
-const WishListButton = (): JSX.Element => {
+const WishListButton = ({ id, wish }: WishListButtonProps): JSX.Element => {
+  const [isWish, setIsWish] = useState(wish);
+  const { accessTokenCookie, headers } = getAuthLocalStorage();
+  const { mutate: postWish } = usePostWish();
+  const { mutate: deleteWish } = useDeleteWish();
+
+  const handleWishButton = (accommodationId: number) => {
+    if (!accessTokenCookie) {
+      Swal.fire({
+        icon: "error",
+        text: "로그인이 필요한 서비스입니다.",
+        footer: '<a href="/login">로그인하러 가기</a>'
+      });
+      return;
+    }
+    if (isWish) {
+      deleteWish({ accommodationId, headers });
+    } else {
+      postWish({ accommodationId, headers });
+    }
+    setIsWish((prevState) => !prevState);
+  };
+
   return (
-    <>
-      <Box
-        as="button"
-        display="flex"
-        alignItems="center"
-        gap="5px"
-        marginTop="14px"
-        padding="5px 10px"
-        borderRadius="10px"
-        transition="0.2s"
-        _hover={{
-          bg: "#F7F7F7"
-        }}
-      >
-        <GoHeart />
-        저장
-      </Box>
-      {/* 위시리스트에 있는 경우 */}
-      {/* <Box
-        as="button"
-        display="flex"
-        alignItems="center"
-        gap="5px"
-        marginTop="14px"
-        padding="5px 10px"
-        borderRadius="10px"
-        transition="0.2s"
-        _hover={{
-          bg: "#F7F7F7"
-        }}
-      >
-        <GoHeartFill color="#D53F8C" />
-        취소
-      </Box> */}
-    </>
+    <Box
+      as="button"
+      display="flex"
+      alignItems="center"
+      gap="5px"
+      marginTop="14px"
+      padding="5px 10px"
+      borderRadius="10px"
+      transition="0.2s"
+      _hover={{
+        bg: "#F7F7F7"
+      }}
+      onClick={() => handleWishButton(id)}
+    >
+      {isWish ? (
+        <>
+          <GoHeartFill color="#D53F8C" />
+          취소
+        </>
+      ) : (
+        <>
+          <GoHeart />
+          저장
+        </>
+      )}
+    </Box>
   );
 };
 
