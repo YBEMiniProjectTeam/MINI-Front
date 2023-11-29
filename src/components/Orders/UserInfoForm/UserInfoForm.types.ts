@@ -1,5 +1,5 @@
 export interface UserInfoFormProps {
-  data: {
+  userData: {
     name: string;
     email: string;
   };

@@ -17,7 +17,17 @@ export const LoginForm = (): JSX.Element => {
   const [cookies] = useCookies(["access-token"]);
 
   useEffect(() => {
-    if (cookies["access-token"]) {
+    // 테스트를 위한 주석
+    // if (cookies["access-token"]) {
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "잘못된 요청입니다.",
+    //     text: "로그인이 된 상태면 해당 페이지에 들어갈 수 없습니다."
+    //   }).then(() => {
+    //     navigate(-1);
+    //   });
+    // }
+    if (localStorage.getItem("access-token")) {
       Swal.fire({
         icon: "error",
         title: "잘못된 요청입니다.",
@@ -51,23 +61,25 @@ export const LoginForm = (): JSX.Element => {
     e.preventDefault();
     loginRequest();
   };
+
   const loginRequest = async (): Promise<void> => {
     const login: Login = {
       email: email,
       pwd: password
     };
 
-    const statusCode = await LoginApi(login);
+    const data = await LoginApi(login);
 
-    if (statusCode === 200) {
+    if (data.statusCode === 200) {
+      localStorage.setItem("access-token", data.data.accessToken);
       navigate("/");
-    } else if (statusCode === 400) {
+    } else if (data.statusCode === 400) {
       Swal.fire({
         icon: "error",
         title: "로그인에 실패했습니다.",
         text: "아이디나 비밀번호가 잘못되었습니다."
       });
-    } else if (statusCode === 500) {
+    } else if (data.statusCode === 500) {
       Swal.fire({
         icon: "error",
         title: "서버에러.",

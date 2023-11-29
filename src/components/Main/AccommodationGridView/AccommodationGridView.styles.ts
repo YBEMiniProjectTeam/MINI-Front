@@ -55,12 +55,8 @@ export const CategoryTapItem = styled.div`
   }
 `;
 
-export const ActivedItem = styled.span`
-  color: #323232;
-`;
-
-export const InactivedItem = styled.span`
-  color: #666666;
+export const TabItem = styled.span<{ $isActive: boolean }>`
+  color: ${({ $isActive }) => ($isActive ? "#323232" : "#666666")};
 `;
 
 export const ActivedBar = styled.div`
@@ -77,22 +73,16 @@ export const GridWrapper = styled.div`
   margin-top: 16px;
   padding: 0px 24px;
   display: block;
-  height: 412px;
+  height: 824px;
+  margin-left: -2%;
 `;
 
 export const GridItem = styled.div`
   float: left;
-  width: 49%;
+  width: 48%;
   margin-bottom: 20px;
   display: block;
-
-  &:nth-child(2n+1) {
-    margin-right: 1%;
-  }
-
-  &:nth-child(2n) {
-    margin-left: 1%;
-  }
+  margin-left: 2%;
 `;
 
 export const GridItemImageWrapper = styled.div`
@@ -146,22 +136,4 @@ export const InformationPriceTxt = styled.span`
 export const MoreButtonWrapper = styled.div`
   padding: 0px 24px;
   margin-bottom: 20px;
-`;
-
-export const MoreButton = styled.button`
-  border: 1px solid #DCDCDD;
-  border-radius: 2px;
-  display: block;
-  width: 100%;
-  height: 44px;
-  background: #fff;
-`;
-
-export const MoreButtonTxt = styled.span`
-  display: inline-block;
-  line-height: 20px;
-  color: #666666;
-  font-weight: 500;
-  position: relative;
-  padding-right: 2px;
 `;

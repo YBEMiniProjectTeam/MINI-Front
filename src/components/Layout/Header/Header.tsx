@@ -3,7 +3,7 @@ import * as S from "./Header.styles";
 import { Link, useLocation } from "react-router-dom";
 
 import { HeaderInput } from "./HeaderInput";
-import { useCookies } from "react-cookie";
+// import { useCookies } from "react-cookie";
 
 export const Header = (): JSX.Element => {
   const [isSubMenuVisible, setSubMenuVisible] = useState(false);
@@ -12,15 +12,16 @@ export const Header = (): JSX.Element => {
 
   const location = useLocation();
 
-  const [cookies, , removeCookie] = useCookies(["access-token"]);
-
   const [accessToken, setAccessToken] = useState<string | undefined>();
 
-  const handleClickLogoutButton = (): void => {
-    if (cookies["access-token"]) {
-      removeCookie("access-token");
-    }
-  };
+  // 쿠키값 조회 부분 주석처리.
+  // const [cookies, , removeCookie] = useCookies(["access-token"]);
+
+  // const handleClickLogoutButton = (): void => {
+  //   if (cookies["access-token"]) {
+  //     removeCookie("access-token");
+  //   }
+  // };
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -31,8 +32,21 @@ export const Header = (): JSX.Element => {
       setIsShowInput(true);
     }
 
-    setAccessToken(cookies["access-token"]);
-  }, [location.pathname, cookies]);
+    // setAccessToken(cookies["access-token"]); 임시 주석
+    const accesstkoen = localStorage.getItem("access-token");
+    if (accesstkoen) {
+      setAccessToken(accesstkoen);
+    }
+  }, [location.pathname, accessToken]);
+
+  // 임시 테스트용 함수
+  const handleClickLogoutButton = (): void => {
+    if (accessToken) {
+      localStorage.removeItem("access-token");
+      setAccessToken("");
+    }
+  };
+
   return (
     <S.Header>
       <S.HeaderContainer>

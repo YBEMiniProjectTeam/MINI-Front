@@ -34,8 +34,8 @@ export const TotalPaymentPriceWrapper = styled.div`
 `;
 
 export const TotalPaymentPrice = styled.div`
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: 1.2rem;
+  font-weight: bold;
   color: #de2e5f;
 `;
 
