@@ -7,6 +7,8 @@ import { LoginApi } from "@api/login/LoginApi";
 import { useCookies } from "react-cookie";
 // import Swal from "sweetalert2";
 import { toast } from "react-hot-toast";
+import { useRecoilState } from "recoil";
+import { loginUrlState } from "@recoil/loginUrl";
 
 export const LoginForm = (): JSX.Element => {
   const navigate = useNavigate();
@@ -17,6 +19,8 @@ export const LoginForm = (): JSX.Element => {
   const [isPasswordText, setIsPasswordText] = useState(false);
 
   const [cookies] = useCookies(["access-token"]);
+
+  const [loginUrl] = useRecoilState(loginUrlState);
 
   useEffect(() => {
     if (localStorage.getItem("access-token")) {
@@ -58,7 +62,7 @@ export const LoginForm = (): JSX.Element => {
 
     if (data.statusCode === 200) {
       localStorage.setItem("access-token", data.data.accessToken);
-      navigate(-1);
+      navigate(loginUrl);
     } else if (data.statusCode === 400) {
       toast.error("아이디나 비밀번호가 잘못되었습니다.");
     } else if (data.statusCode === 500) {
