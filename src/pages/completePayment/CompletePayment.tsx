@@ -66,7 +66,7 @@ const CompletePayment = () => {
             hotelName={accommodation.accommodation_name}
           >
             <RoomInfo
-              key={accommodation.room_info.roomName}
+              key={`${index}-${accommodation.room_info.roomName}`}
               roomInfo={accommodation.room_info}
             />
           </ReservationInfo>
@@ -81,8 +81,8 @@ const CompletePayment = () => {
               </AccordionButton>
             </TotalPaymentInfo>
             <AccordionPanel>
-              {reservationData.map((reservationGroup) => (
-                <styles.PaymentInfoWrapper>
+              {reservationData.map((reservationGroup, index) => (
+                <styles.PaymentInfoWrapper key={index}>
                   <PaymentInfo data={reservationGroup} />
                 </styles.PaymentInfoWrapper>
               ))}
