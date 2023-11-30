@@ -40,14 +40,16 @@ export const ShoppingCartList = (props: CartListProps): JSX.Element => {
                   />
                 </div>
                 <div>
-                  <span>2023-11-24</span>
-                  <br />
-                  <span className="colorGray">
-                    체크인 {room.checkInDate} 체크아웃 {room.checkOutDate}
+                  <span>
+                    {room.checkInDate} ~ {room.checkOutDate}
                   </span>
                   <br />
                   <span className="colorGray">
-                    기존 {room.capacity}명 / 최대 {room.capacityMax}명
+                    체크인 {room.checkInTime} 체크아웃 {room.checkOutTime}
+                  </span>
+                  <br />
+                  <span className="colorGray">
+                    기준 {room.capacity}명 / 최대 {room.capacityMax}명
                   </span>
                   <br />
                 </div>
