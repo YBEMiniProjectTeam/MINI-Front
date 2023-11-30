@@ -1,13 +1,13 @@
 import { Suspense, useState } from "react";
-import * as styled from './AccommodationSingleView.styles';
-import { ArrowForwardIcon } from '@chakra-ui/icons';
+import * as styled from "./AccommodationSingleView.styles";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { useSearchList } from "@/hooks/useSearchList";
 import { Spinner } from "@chakra-ui/react";
 import { Accommodation } from "../AccommodationGridView/AccommodationGridView.types";
 import { printCategory } from "@/utils/printCategory";
 import { formatPrice } from "@utils/priceFormatter";
-import { Button } from '@chakra-ui/react'
+import { Button } from "@chakra-ui/react";
 import { useNavigateToResultPage } from "@/hooks/useNavigateToResultPage";
 import { useNavigateToDetailPage } from "@/hooks/useNavigateToDetailPage";
 import { sliceAccommodationName } from "@/utils/sliceAccommodationName";
@@ -29,22 +29,22 @@ export const AccommodationSingleView = () => {
     beforeChange: (current: number, next: number) => setCurrentSlide(next),
     nextArrow: (
       <styled.RightArrowButtonWrapper>
-        <IoIosArrowForward color="#4D4D4D" size="2rem"/>
+        <IoIosArrowForward color="#4D4D4D" size="2rem" />
       </styled.RightArrowButtonWrapper>
     ),
     prevArrow: (
       <styled.LeftArrowButtonWrapper>
-        <IoIosArrowBack color="#4D4D4D" size="2rem"/>
+        <IoIosArrowBack color="#4D4D4D" size="2rem" />
       </styled.LeftArrowButtonWrapper>
-    ),
+    )
   };
 
   const { data, error } = useSearchList(
-    '',
-    '',
-    '2023-11-30',
-    '2023-12-01',
-    '호텔',
+    "",
+    "",
+    "2023-11-30",
+    "2023-12-01",
+    "호텔",
     36,
     50
   );
@@ -77,9 +77,13 @@ export const AccommodationSingleView = () => {
         <styled.MainViewTitleWrapper>
           <styled.MainViewTitle>
             <styled.Title>호캉스</styled.Title>
-            <styled.Description>지친 이번주, 호캉스는 어떠세요?</styled.Description>
+            <styled.Description>
+              지친 이번주, 호캉스는 어떠세요?
+            </styled.Description>
           </styled.MainViewTitle>
-          <styled.MoreButtonWrapper onClick={() => navigateToResultPage('호텔', '')}>
+          <styled.MoreButtonWrapper
+            onClick={() => navigateToResultPage("호텔", "")}
+          >
             <Button
               color="#666666"
               background="white"
@@ -94,8 +98,15 @@ export const AccommodationSingleView = () => {
         <styled.SwiperContainer>
           <styled.StyledSlider {...settings}>
             {data?.accommodations?.map((item: Accommodation, index: number) => (
-              <styled.SwiperItem key={index} onClick={() => navigateToDetailPage(item.id)}>
-                <img src={item.thumbnail} alt={`Slide ${index + 1}`} />
+              <styled.SwiperItem
+                key={index}
+                onClick={() => navigateToDetailPage(item.id)}
+              >
+                <img
+                  src={item.thumbnail}
+                  alt={`Slide ${index + 1}`}
+                  loading="lazy"
+                />
               </styled.SwiperItem>
             ))}
           </styled.StyledSlider>
@@ -103,10 +114,13 @@ export const AccommodationSingleView = () => {
         <styled.InformationWrapper>
           <styled.InformationInner>
             <styled.InformationRegion>
-              {data?.accommodations?.[currentSlide].region} | {printCategory(data?.accommodations?.[currentSlide].type)}
+              {data?.accommodations?.[currentSlide].region} |{" "}
+              {printCategory(data?.accommodations?.[currentSlide].type)}
             </styled.InformationRegion>
             <styled.InformationName>
-              {sliceAccommodationName(data?.accommodations?.[currentSlide].name)}
+              {sliceAccommodationName(
+                data?.accommodations?.[currentSlide].name
+              )}
             </styled.InformationName>
             <div>
               <styled.InformationPrice>

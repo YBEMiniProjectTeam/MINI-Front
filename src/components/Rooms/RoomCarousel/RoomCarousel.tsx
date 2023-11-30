@@ -33,7 +33,7 @@ const RoomCarousel = ({ images, onClick }: RoomCarouselTypes) => {
             key={index}
             onClick={() => onClick && onClick(image.url)}
           >
-            <img src={image.url} alt={`Image ${index}`} />
+            <img src={image.url} alt={`Image ${index}`} loading="lazy" />
           </styles.Carousel>
         ))}
       </Slider>
