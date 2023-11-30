@@ -18,6 +18,7 @@ import {
 import { useRecoilState, useRecoilValue } from "recoil";
 import { usePostWish, useDeleteWish } from "@hooks/useWishMutation";
 import { sliceAccommodationName } from "@utils/sliceAccommodationName";
+import { formatPrice } from "@utils/priceFormatter";
 
 const SearchList = ({ keyword }: SearchListProps) => {
   const navigate = useNavigate();
@@ -133,6 +134,11 @@ const SearchList = ({ keyword }: SearchListProps) => {
         </styles.SpinnerWrapper>
       }
     >
+      {searchList?.length === 0 ? (
+        <Text textAlign="center" mt="1rem">
+          검색 결과가 없습니다.
+        </Text>
+      ) : null}
       {searchList?.map((accomodation, index) => (
         <Box
           key={index}
@@ -237,7 +243,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
                 mr="0.3rem"
               >
                 {accomodation.min_price !== 0
-                  ? accomodation.min_price
+                  ? formatPrice(accomodation.min_price)
                   : "정보 없음"}
               </Text>
               <Text>{accomodation.min_price !== 0 ? "원" : ""}</Text>
