@@ -56,7 +56,6 @@ export const ShoppingCartComp = (): JSX.Element => {
       const response = await ShoppingCartApi(accessToken);
       if (response.data && response.data.data) {
         setData(response.data.data);
-        console.log("일반패칭");
       }
     } catch (error) {
       console.error("Error fetching data:", error);
