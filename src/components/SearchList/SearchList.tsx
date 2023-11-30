@@ -1,5 +1,5 @@
 import { getAuthLocalStorage } from "@utils/getAuthLocalStorage.ts";
-import React, { useEffect, useState, Suspense } from "react";
+import { useEffect, useState, Suspense } from "react";
 import * as styles from "./SearchList.styles";
 import { Accommodation, SearchListProps } from "./SearchList.types";
 import { Box, Image, Icon, Tag, Text, Spinner } from "@chakra-ui/react";
