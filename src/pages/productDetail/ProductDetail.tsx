@@ -12,7 +12,7 @@ import { PiCookingPot } from "react-icons/pi";
 
 export const ProductDetail: React.FC = () => {
   const [searchParams] = useSearchParams();
-  const id = searchParams.get("id");
+  const id = Number(searchParams.get("id"));
   const startDateParam = searchParams.get("startDate");
   const endDateParam = searchParams.get("endDate");
 
@@ -26,7 +26,7 @@ export const ProductDetail: React.FC = () => {
       ? new Date(endDateParam)
       : new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
 
-  const { data } = useAccomodationQuery(Number(id));
+  const { data } = useAccomodationQuery(id);
 
   const {
     images,
@@ -57,7 +57,7 @@ export const ProductDetail: React.FC = () => {
               {name}
             </Box>
           </Box>
-          <WishListButton />
+          <WishListButton id={id} wish={isWish} />
         </Flex>
         <Divider margin="30px 0" borderColor="#D9D9D9" />
         <Flex alignItems="flex-end" gap="14px">

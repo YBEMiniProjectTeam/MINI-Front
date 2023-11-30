@@ -1,15 +1,46 @@
 import { ChooseRoomProps } from "./ChooseRoom.types";
 import FacilitiesModal from "../FacilitiesModal/FacilitiesModal";
+import { convertDateFormat5 } from "@/utils/convertDateFormat5";
+import { getAuthLocalStorage } from "@/utils/getAuthLocalStorage";
+import { usePostCart } from "@/hooks/useCartMutation";
 import { Box, Flex, useDisclosure, Button } from "@chakra-ui/react";
 import { IoBedOutline } from "react-icons/io5";
 import { BsPerson } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
 
-const ChooseRoom = ({ room }: ChooseRoomProps): JSX.Element => {
+const ChooseRoom = ({
+  room,
+  startDate,
+  endDate
+}: ChooseRoomProps): JSX.Element => {
+  const { headers } = getAuthLocalStorage();
+  const { mutate: postCart } = usePostCart();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { name, price, capacity, capacity_max, stock_quantity, description } =
-    room;
+
+  const {
+    id,
+    name,
+    price,
+    capacity,
+    capacity_max,
+    stock_quantity,
+    description
+  } = room;
+
+  const body = {
+    room_id: id,
+    check_in_date: convertDateFormat5(startDate),
+    check_out_date: convertDateFormat5(endDate)
+  };
+
+  const handleCartButton = async () => {
+    if (!headers) {
+      alert("로그인이 필요한 서비스입니다!");
+      return;
+    }
+    postCart({ body, headers });
+  };
 
   return (
     <>
@@ -74,6 +105,7 @@ const ChooseRoom = ({ room }: ChooseRoomProps): JSX.Element => {
                 border="1px solid #D9D9D9"
                 borderRadius="5px"
                 padding="5px"
+                onClick={handleCartButton}
               >
                 <IoCartOutline size="20px" />
               </Box>
