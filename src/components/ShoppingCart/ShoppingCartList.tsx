@@ -5,13 +5,13 @@ import { CartListProps } from "./ShoppinCart.types";
 export const ShoppingCartList = (props: CartListProps): JSX.Element => {
   return (
     <>
-      {Object.keys(props.data.roomInfos).length ? (
+      {props.data.room_infos.length ? (
         <div className="cartInfoContainer WrapStyle">
           <div className="titleWrap">
-            <h3>{props.data.accommodationName}</h3>
-            {/* <p className="colorGray">{props.data.hotelAddress}</p> */}
+            <h3>{props.data.accommodation_name}</h3>
+            <p>{props.data.address}</p>
           </div>
-          {props.data.roomInfos.map((room, roomIndex) => (
+          {props.data.room_infos.map((room, roomIndex) => (
             <div key={roomIndex} className="roomListWrap">
               <h3>{room.roomName}</h3>
               <button

@@ -8,70 +8,10 @@ import {
   QuantityCartApi
 } from "@/api/shoppingCart/shoppingCartApi";
 
-import { useCookies } from "react-cookie";
 import { Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Accommodation } from "./ShoppinCart.types";
-import axios from "axios";
-
-// const initialData: Accommodation[] = [
-//   {
-//     accommodationName: "조선 호텔 (숙소명)",
-//     roomInfos: [
-//       {
-//         cartId: 1,
-//         quantity: 2,
-//         address: "서울시 동대문구 (숙소 주소)",
-//         roomName: "스위트룸 1",
-//         accommodationThumbnailUrl: "숙소 썸네일 Image URL",
-//         price: 50000,
-//         checkInDate: "2023-11-11",
-//         checkOutDate: "2023-11-15",
-//         checkInTime: "15:00",
-//         checkOutTime: "11:00",
-//         capacity: 2,
-//         capacityMax: 4,
-//         isChecked: false
-//       }
-//     ]
-//   },
-//   {
-//     accommodationName: "신라 호텔",
-//     roomInfos: [
-//       {
-//         cartId: 2,
-//         quantity: 2,
-//         address: "서울시 동대문구 (숙소 주소)",
-//         roomName: "스위트룸 2",
-//         accommodationThumbnailUrl: "숙소 썸네일 Image URL",
-//         price: 50000,
-//         checkInDate: "2023-11-11",
-//         checkOutDate: "2023-11-15",
-//         checkInTime: "15:00",
-//         checkOutTime: "11:00",
-//         capacity: 2,
-//         capacityMax: 4,
-//         isChecked: false
-//       },
-//       {
-//         cartId: 3,
-//         quantity: 2,
-//         address: "서울시 동대문구 (숙소 주소)",
-//         roomName: "스위트룸3",
-//         accommodationThumbnailUrl: "숙소 썸네일 Image URL",
-//         price: 50000,
-//         checkInDate: "2023-11-11",
-//         checkOutDate: "2023-11-15",
-//         checkInTime: "15:00",
-//         checkOutTime: "11:00",
-//         capacity: 2,
-//         capacityMax: 4,
-//         isChecked: false
-//       }
-//     ]
-//   }
-// ];
 
 export const ShoppingCartComp = (): JSX.Element => {
   const [data, setData] = useState<Accommodation[]>([]);
@@ -80,51 +20,30 @@ export const ShoppingCartComp = (): JSX.Element => {
 
   const [isCheckAllBox, setIsCheckAllBox] = useState(false);
 
-  const [cookies] = useCookies(["access-token"]);
+  // const [cookies] = useCookies(["access-token"]);
   const [accessToken, setAccessToken] = useState<string>("");
   const [cartIdList, setCartIdList] = useState<number[]>([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem("access-token")) {
-      const at = localStorage.getItem("access-token");
-      if (at) {
-        setAccessToken(at);
-        fetchData();
-      }
+    const access = localStorage.getItem("access-token");
+
+    if (access) {
+      setAccessToken(access);
+      fetchData(access);
     } else {
       Swal.fire("잘못된 접근입니다.").then(() => {
         navigate(-1);
       });
     }
-  }, []);
-  // useEffect(() => {
-  // if (cookies["access-token"]) {
-  //   setAccessToken(cookies["access-token"]);
-  // } else {
-  //   Swal.fire("잘못된 접근입니다.").then(() => {
-  //     navigate(-1);
-  //   });
-  // }
-  // if (localStorage.getItem("access-token")) {
-  //   const at = localStorage.getItem("access-token");
-  //   if (at) {
-  //     setAccessToken(at);
-  //   }
-  // } else {
-  //   Swal.fire("잘못된 접근입니다.").then(() => {
-  //     navigate(-1);
-  //   });
-  // }
-  // fetchData();
-  // }, [cookies]);
+  }, [accessToken, navigate]);
 
   useEffect(() => {
     let totalPrice = 0;
 
-    Object.values(data).forEach((hotel) => {
-      Object.values(hotel.roomInfos).forEach((room) => {
+    data.map((hotel) => {
+      hotel.room_infos.map((room) => {
         totalPrice += room.quantity * room.price;
       });
     });
@@ -132,35 +51,23 @@ export const ShoppingCartComp = (): JSX.Element => {
     setPrice(totalPrice);
   }, [data]);
 
-  const fetchData = async () => {
-    const response = await ShoppingCartApi(accessToken);
-    if (response.data) {
-      setData(response.data);
+  const fetchData = async (accessToken: string) => {
+    try {
+      const response = await ShoppingCartApi(accessToken);
+      if (response.data && response.data.data) {
+        setData(response.data.data);
+        console.log("일반패칭");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
   };
 
   const handleCheckAllRooms = (): void => {
-    // setData((prevData) => {
-    //   const isAllRoomsChecked = prevData.every((hotel) =>
-    //     hotel.roomInfos.every((room) => room.isChecked)
-    //   );
-
-    //   const updatedData = prevData.map((hotel) => ({
-    //     ...hotel,
-    //     roomInfos: hotel.roomInfos.map((room) => ({
-    //       ...room,
-    //       isChecked: !isAllRoomsChecked
-    //     }))
-    //   }));
-
-    //   setIsCheckAllBox(!isAllRoomsChecked);
-
-    //   return updatedData;
-    // });
     const newArr: number[] = [];
     if (!isCheckAllBox) {
       data.map((hotel) => {
-        hotel.roomInfos.map((room) => {
+        hotel.room_infos.map((room) => {
           newArr.push(room.cartId);
         });
       });
@@ -168,25 +75,8 @@ export const ShoppingCartComp = (): JSX.Element => {
 
     setCartIdList(newArr);
     setIsCheckAllBox(!isCheckAllBox);
-    console.log(cartIdList);
   };
 
-  // const handleCheckRoom = (hotelIndex: number, roomIndex: number): void => {
-  //   setData((prevData) => {
-  //     const updatedData = [...prevData];
-  //     const updatedHotel = { ...updatedData[hotelIndex] };
-  //     const updatedRoom = { ...updatedHotel.roomInfos[roomIndex] };
-
-  //     updatedRoom.isChecked = !updatedRoom.isChecked;
-
-  //     updatedHotel.roomInfos[roomIndex] = updatedRoom;
-
-  //     updatedData[hotelIndex] = updatedHotel;
-
-  //     return updatedData;
-  //   });
-
-  // };
   const handleCheckRoom = (cartId: number): void => {
     setCartIdList((prev) => {
       const newArr: number[] = [...prev];
@@ -201,69 +91,32 @@ export const ShoppingCartComp = (): JSX.Element => {
 
       return newArr;
     });
-
-    console.log(cartIdList);
   };
 
-  const handleSelectDelete = (): void => {
-    // const accessToken = cookies["access-token"];
-    // setData((prevData) => {
-    //   const newData: Accommodation[] = [];
-
-    //   for (const hotel of prevData) {
-    //     const newRoomInfos: RoomInfo[] = [];
-
-    //     for (const roomInfo of hotel.roomInfos) {
-    //       if (roomInfo.isChecked) {
-    //         newRoomInfos.push({ ...roomInfo });
-    //       }
-    //     }
-
-    //     if (newRoomInfos.length > 0) {
-    //       newData.push({ ...hotel, roomInfos: newRoomInfos });
-    //     }
-    //   }
-
-    //   return newData;
-    // });
+  const handleSelectDelete = async (): Promise<void> => {
     if (accessToken) {
-      const res = DeleteCartApi(accessToken, cartIdList);
-      fetchData();
-      console.log(res);
+      await DeleteCartApi(accessToken, cartIdList);
+      fetchData(accessToken);
     }
   };
 
-  const handleClickRoomDelete = (cartId: number): void => {
-    // const accessToken = cookies["access-token"];
-    // setData((prevData) => {
-    //   const newData = [...prevData];
-
-    //   newData[hotelIndex].roomInfos = newData[hotelIndex].roomInfos.filter(
-    //     (_, index) => index !== roomIndex
-    //   );
-    //   return newData;
-    // });
+  const handleClickRoomDelete = async (cartId: number): Promise<void> => {
     if (accessToken) {
-      const res = DeleteCartApi(accessToken, [cartId]);
-      fetchData();
-      console.log(res);
+      await DeleteCartApi(accessToken, [cartId]);
+      fetchData(accessToken);
     }
   };
   const handleClickQuantity = async (sign: string, cartId: number) => {
-    const accessToken = cookies["access-token"];
-
     if (sign === "increase") {
       const response = await QuantityCartApi(accessToken, "increase", cartId);
 
       if (response) {
-        fetchData();
-        console.log(response);
+        fetchData(accessToken);
       }
     } else if (sign === "decrease") {
       const response = await QuantityCartApi(accessToken, "decrease", cartId);
       if (response) {
-        fetchData();
-        console.log(response);
+        fetchData(accessToken);
       }
     }
   };
@@ -279,74 +132,8 @@ export const ShoppingCartComp = (): JSX.Element => {
     }
   };
 
-  const test = async (at: string, n: number) => {
-    const API_URL = `https://api.anti-bias.kr/api/carts`;
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${at}`
-    };
-    const reqBody = {
-      roomId: n,
-      checkInDate: "2023-12-29",
-      checkOutDate: "2023-12-29"
-    };
-    // console.log(at, n);
-    const response = await axios.post(API_URL, reqBody, { headers });
-
-    console.log(response);
-  };
-
   return (
     <styles.ShoppingCartContainer>
-      <Button
-        onClick={() => {
-          test(accessToken, 5);
-        }}
-      >
-        1
-      </Button>
-      <Button
-        onClick={() => {
-          test(accessToken, 6);
-        }}
-      >
-        2
-      </Button>
-      <Button
-        onClick={() => {
-          test(accessToken, 7);
-        }}
-      >
-        3
-      </Button>
-      <Button
-        onClick={() => {
-          test(accessToken, 8);
-        }}
-      >
-        4
-      </Button>
-      <Button
-        onClick={() => {
-          handleClickQuantity("increase", 1);
-        }}
-      >
-        증가
-      </Button>
-      <Button
-        onClick={() => {
-          handleClickQuantity("decrease", 1);
-        }}
-      >
-        감소
-      </Button>
-      <Button
-        onClick={() => {
-          handleClickRoomDelete(1);
-        }}
-      >
-        삭제
-      </Button>
       <h3>장바구니</h3>
       <div className="selectCheckWrap WrapStyle">
         <div>
@@ -363,18 +150,24 @@ export const ShoppingCartComp = (): JSX.Element => {
         </div>
       </div>
 
-      {data.map((hotel, hotelIndex) => (
-        <ShoppingCartList
-          key={hotelIndex}
-          data={hotel}
-          isCheckAllBox={isCheckAllBox}
-          setData={setData}
-          handleCheckRoom={handleCheckRoom}
-          handleClickRoomDelete={handleClickRoomDelete}
-          handleClickQuantity={handleClickQuantity}
-          cartIdList={cartIdList}
-        />
-      ))}
+      {data.length > 0 ? (
+        data.map((hotel, hotelIndex) => (
+          <ShoppingCartList
+            key={hotelIndex}
+            data={hotel}
+            isCheckAllBox={isCheckAllBox}
+            setData={setData}
+            handleCheckRoom={handleCheckRoom}
+            handleClickRoomDelete={handleClickRoomDelete}
+            handleClickQuantity={handleClickQuantity}
+            cartIdList={cartIdList}
+          />
+        ))
+      ) : (
+        <div className="noneCartList WrapStyle">
+          장바구니에 아무것도 담겨져 있지 않습니다.
+        </div>
+      )}
 
       <div className="WrapStyle">
         <h3>예약 상품</h3>

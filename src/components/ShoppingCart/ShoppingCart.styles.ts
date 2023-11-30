@@ -94,6 +94,18 @@ export const ShoppingCartContainer = styled.div`
     }
   }
 
+  .noneCartList {
+    height: 300px;
+
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.5;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .reservationButton {
     width: 100%;
   }

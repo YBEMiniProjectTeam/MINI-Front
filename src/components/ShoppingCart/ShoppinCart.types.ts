@@ -1,7 +1,7 @@
 export interface RoomInfo {
   cartId: number;
   quantity: number;
-  address: string;
+
   roomName: string;
   accommodationThumbnailUrl: string;
   price: number;
@@ -15,8 +15,9 @@ export interface RoomInfo {
 }
 
 export interface Accommodation {
-  accommodationName: string;
-  roomInfos: RoomInfo[];
+  accommodation_name: string;
+  address: string;
+  room_infos: RoomInfo[];
 }
 export interface CartListProps {
   data: Accommodation;
