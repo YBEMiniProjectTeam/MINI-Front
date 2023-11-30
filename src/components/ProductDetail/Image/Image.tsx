@@ -20,6 +20,8 @@ const Image = ({ images }: ImageProps): JSX.Element => {
       p={0}
       margin="0 auto"
       bgImage={images[0]}
+      bgSize="cover"
+      bgPosition="center"
       position="relative"
     >
       <Box
