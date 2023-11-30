@@ -1,8 +1,8 @@
 import { ChooseRoomProps } from "./ChooseRoom.types";
 import FacilitiesModal from "../FacilitiesModal/FacilitiesModal";
-import { convertDateFormat5 } from "@/utils/convertDateFormat5";
-import { getAuthLocalStorage } from "@/utils/getAuthLocalStorage";
-import { usePostCart } from "@/hooks/useCartMutation";
+import { convertDateFormat5 } from "@utils/convertDateFormat5";
+import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
+import { usePostCart } from "@hooks/useCartMutation";
 import { Box, Flex, useDisclosure, Button } from "@chakra-ui/react";
 import { IoBedOutline } from "react-icons/io5";
 import { BsPerson } from "react-icons/bs";
@@ -14,7 +14,7 @@ const ChooseRoom = ({
   startDate,
   endDate
 }: ChooseRoomProps): JSX.Element => {
-  const { headers } = getAuthLocalStorage();
+  const { accessTokenCookie, headers } = getAuthLocalStorage();
   const { mutate: postCart } = usePostCart();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -35,7 +35,7 @@ const ChooseRoom = ({
   };
 
   const handleCartButton = async () => {
-    if (!headers) {
+    if (!accessTokenCookie) {
       alert("로그인이 필요한 서비스입니다!");
       return;
     }
