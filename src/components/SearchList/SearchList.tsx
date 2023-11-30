@@ -185,12 +185,13 @@ const SearchList = ({ keyword }: SearchListProps) => {
             {accomodation.type !== "NOT_CLASSIFIED" && (
               <Tag
                 size="md"
-                variant="outline"
+                variant="solid"
                 color="white"
                 position="absolute"
                 bottom="1rem"
                 left="1rem"
                 userSelect="none"
+                backgroundColor="rgba(0, 0, 0, 0.5)"
               >
                 {accomodation.type}
               </Tag>
