@@ -3,30 +3,26 @@ import * as S from "./Footer.styles.ts";
 export const Footer = (): JSX.Element => {
   return (
     <S.FooterContainer>
-      <h3>DAILYHOTEL</h3>
-      <span>
-        (주) 야놀자ㅣ대표이사: 이수진, 김종윤, 배보찬ㅣ대표연락처: 1800-9120
-      </span>
+      <h3>삼천리 호텔</h3>
+      <span>패스트캠퍼스 프론트엔드/백엔드 개발부트캠프1기_미니프로젝트</span>
       <br />
-      <span>주소: 서울시 강남구 테헤란로 108길 42</span>
+      <span>기간: 2023.11.17 ~ 20323.12.01</span>
       <br />
-      <span>사업자등록번호: 220-87-42885</span>
+      <span>프론트엔드:박나영, 박용희, 이승현, 정서현, 한은지</span>
       <br />
-      <span>통신판매업 신고번호: 강남-14211호</span>
+      <span>백엔드: 고동훤, 김준래, 박경탁, 정현도</span>
       <br />
-      <span>대표이메일주소: help@dailyhotel.com</span>
+      <span>저희 프젝인원들 수고하셨어요.</span>
 
       <div className="copyrightContainer">
         <p>
-          (주)야놀자는 통신판매중개자로서 통신판매의 당사자가 아니며 상품의
-          예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게 있습니다.
+          <a href="https://github.com/YBEMiniProjectTeam">
+            해당 GitHub 바로가기
+          </a>
         </p>
         <br />
         <p>
-          (주)야놀자가 소유/운영/관리하는 웹사이트 및 앱 내의 상품/판매자/이벤트
-          정보, 디자인 및 화면의 구성, UI를 포함하여 일체의 콘텐츠에 대한 무단
-          복제, 배포, 방송 또는 전송, 스크래핑 등의 행위는 저작권법 및
-          콘텐츠산업 진흥법 등 관련 법령에 의하여 엄격히 금지 됩니다.
+          <a href="https://fastcampus.co.kr/">패스트캠퍼스 바로가기</a>
         </p>
       </div>
     </S.FooterContainer>
