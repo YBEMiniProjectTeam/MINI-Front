@@ -3,7 +3,7 @@ import { postCart } from "@api/accomodation/postCart";
 import {
   ResponseType,
   PostCartProps
-} from "@/components/ProductDetail/ChooseRoom/ChooseRoom.types";
+} from "@components/ProductDetail/ChooseRoom/ChooseRoom.types";
 
 export const usePostCart = () => {
   return useMutation<ResponseType, Error, PostCartProps>({

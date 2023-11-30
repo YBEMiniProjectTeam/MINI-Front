@@ -3,7 +3,7 @@ import { API_BASE_URL } from "../config";
 import {
   ResponseType,
   PostCartProps
-} from "@/components/ProductDetail/ChooseRoom/ChooseRoom.types";
+} from "@components/ProductDetail/ChooseRoom/ChooseRoom.types";
 
 export const postCart = async ({
   body,
