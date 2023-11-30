@@ -27,7 +27,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
   const { startDate, endDate } = useRecoilValue(checkInAndOutDateState);
   const selectedDistrict = useRecoilValue(districtState);
   const selectedCategory = useRecoilValue(categoryState);
-  const [isRefetched, setIsRefetched] = useRecoilState(isRefetchedState);
+  const [isRefetched] = useRecoilState(isRefetchedState);
 
   const [searchList, setSearchList] = useState<Accommodation[]>([]);
   const [page, setPage] = useState(1);

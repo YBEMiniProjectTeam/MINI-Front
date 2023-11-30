@@ -3,12 +3,6 @@ import * as S from "./LoginStyles";
 import { FormControl, FormHelperText, Input, Button } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import type { Login } from "./Login.types";
-
-import { useCookies } from "react-cookie";
-// import Swal from "sweetalert2";
-import { toast } from "react-hot-toast";
-import { useRecoilState } from "recoil";
-import { loginUrlState } from "@recoil/loginUrl";
 import { useLoginMutation } from "@hooks/login/useLoginMutation";
 
 export const LoginForm = (): JSX.Element => {
