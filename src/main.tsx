@@ -23,7 +23,6 @@ deferRender().then(() => {
   ReactDOM.createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={true} />
-
       <ChakraProvider theme={theme}>
         <CookiesProvider>
           <Suspense

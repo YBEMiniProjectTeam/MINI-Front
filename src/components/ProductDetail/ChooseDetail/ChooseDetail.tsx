@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { useRoomListQuery } from "@/hooks/useRoomListQuery";
+import { useRoomListQuery } from "@hooks/useRoomListQuery";
 import ChooseRoom from "../ChooseRoom/ChooseRoom";
-import ChooseDateModal from "@/components/ChooseDateModal/ChooseDateModal";
+import ChooseDateModal from "@components/ChooseDateModal/ChooseDateModal";
 import { ChooseDetailTypes } from "./ChooseDetail.types";
 import { Box, Flex, useDisclosure } from "@chakra-ui/react";
 import { CiCalendar } from "react-icons/ci";
 import { BsPeople } from "react-icons/bs";
-import { convertDateFormat } from "@/utils/convertDateFormat";
+import { convertDateFormat } from "@utils/convertDateFormat";
 
 const ChooseDetail = ({
   startDate,

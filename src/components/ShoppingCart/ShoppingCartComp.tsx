@@ -6,7 +6,7 @@ import {
   ShoppingCartApi,
   DeleteCartApi,
   QuantityCartApi
-} from "@/api/shoppingCart/shoppingCartApi";
+} from "@api/shoppingCart/shoppingCartApi";
 
 import { useCookies } from "react-cookie";
 import { Button } from "@chakra-ui/react";

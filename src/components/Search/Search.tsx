@@ -21,7 +21,7 @@ import { CiCalendar } from "react-icons/ci";
 import { SearchIcon } from "@chakra-ui/icons";
 import { truncateText } from "@utils/truncateText";
 import { convertDateFormat2 } from "@utils/convertDateFormat2";
-import { convertDateFormat3 } from "@/utils/convertDateFormat3";
+import { convertDateFormat3 } from "@utils/convertDateFormat3";
 import ChooseRegionModal from "../ChooseRegionModal/ChooseRegionModal";
 import ChooseDateModal from "../ChooseDateModal/ChooseDateModal";
 import { useSearchList } from "@hooks/useSearchList";

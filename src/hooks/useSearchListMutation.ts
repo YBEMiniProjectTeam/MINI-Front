@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { postLike } from "@api/postLike";
 import { deleteLike } from "@api/deleteLike";
-import { ResponseType } from "@/components/SearchList/SearchList.types";
+import { ResponseType } from "@components/SearchList/SearchList.types";
 import Swal from "sweetalert2";
 
 interface LikeProps {

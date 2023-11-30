@@ -1,15 +1,15 @@
 import { Suspense, useState } from "react";
-import * as styled from './AccommodationSingleView.styles';
-import { ArrowForwardIcon } from '@chakra-ui/icons';
+import * as styled from "./AccommodationSingleView.styles";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
-import { useSearchList } from "@/hooks/useSearchList";
+import { useSearchList } from "@hooks/useSearchList";
 import { Spinner } from "@chakra-ui/react";
 import { Accommodation } from "../AccommodationGridView/AccommodationGridView.types";
-import { printCategory } from "@/utils/printCategory";
+import { printCategory } from "@utils/printCategory";
 import { formatPrice } from "@utils/priceFormatter";
-import { Button } from '@chakra-ui/react'
-import { useNavigateToResultPage } from "@/hooks/useNavigateToResultPage";
-import { useNavigateToDetailPage } from "@/hooks/useNavigateToDetailPage";
+import { Button } from "@chakra-ui/react";
+import { useNavigateToResultPage } from "@hooks/useNavigateToResultPage";
+import { useNavigateToDetailPage } from "@hooks/useNavigateToDetailPage";
 
 export const AccommodationSingleView = () => {
   const { navigateToResultPage } = useNavigateToResultPage();
@@ -28,25 +28,17 @@ export const AccommodationSingleView = () => {
     beforeChange: (current: number, next: number) => setCurrentSlide(next),
     nextArrow: (
       <styled.RightArrowButtonWrapper>
-        <IoIosArrowForward color="#4D4D4D" size="2rem"/>
+        <IoIosArrowForward color="#4D4D4D" size="2rem" />
       </styled.RightArrowButtonWrapper>
     ),
     prevArrow: (
       <styled.LeftArrowButtonWrapper>
-        <IoIosArrowBack color="#4D4D4D" size="2rem"/>
+        <IoIosArrowBack color="#4D4D4D" size="2rem" />
       </styled.LeftArrowButtonWrapper>
-    ),
+    )
   };
 
-  const { data, error } = useSearchList(
-    null,
-    null,
-    null,
-    null,
-    '호텔',
-    4,
-    10
-  );
+  const { data, error } = useSearchList(null, null, null, null, "호텔", 4, 10);
 
   if (error) {
     console.error("[ERROR] ", error.message);
@@ -76,9 +68,13 @@ export const AccommodationSingleView = () => {
         <styled.MainViewTitleWrapper>
           <styled.MainViewTitle>
             <styled.Title>호캉스</styled.Title>
-            <styled.Description>지친 이번주, 호캉스는 어떠세요?</styled.Description>
+            <styled.Description>
+              지친 이번주, 호캉스는 어떠세요?
+            </styled.Description>
           </styled.MainViewTitle>
-          <styled.MoreButtonWrapper onClick={() => navigateToResultPage('hotel', '')}>
+          <styled.MoreButtonWrapper
+            onClick={() => navigateToResultPage("hotel", "")}
+          >
             <Button
               color="#666666"
               background="white"
@@ -93,7 +89,10 @@ export const AccommodationSingleView = () => {
         <styled.SwiperContainer>
           <styled.StyledSlider {...settings}>
             {data?.accommodations?.map((item: Accommodation, index: number) => (
-              <styled.SwiperItem key={index} onClick={() => navigateToDetailPage(item.id)}>
+              <styled.SwiperItem
+                key={index}
+                onClick={() => navigateToDetailPage(item.id)}
+              >
                 <img src={item.thumbnail} alt={`Slide ${index + 1}`} />
               </styled.SwiperItem>
             ))}
@@ -102,7 +101,8 @@ export const AccommodationSingleView = () => {
         <styled.InformationWrapper>
           <styled.InformationInner>
             <styled.InformationRegion>
-              {data?.accommodations?.[currentSlide].region} | {printCategory(data?.accommodations?.[currentSlide].type)}
+              {data?.accommodations?.[currentSlide].region} |{" "}
+              {printCategory(data?.accommodations?.[currentSlide].type)}
             </styled.InformationRegion>
             <styled.InformationName>
               {data?.accommodations?.[currentSlide].name}

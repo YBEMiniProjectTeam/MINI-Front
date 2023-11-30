@@ -1,7 +1,7 @@
-import { useNavigateToDetailPage } from "@/hooks/useNavigateToDetailPage";
+import { useNavigateToDetailPage } from "@hooks/useNavigateToDetailPage";
 import * as styled from "./AccommodationGridView.styles";
 import type { GridItemProps } from "./AccommodationGridView.types";
-import { formatPrice } from "@/utils/priceFormatter";
+import { formatPrice } from "@utils/priceFormatter";
 
 export const AccommodationGridItem: React.FC<GridItemProps> = ({
   id,
@@ -25,4 +25,4 @@ export const AccommodationGridItem: React.FC<GridItemProps> = ({
       </styled.InformationWrapper>
     </styled.GridItem>
   );
-}
+};
