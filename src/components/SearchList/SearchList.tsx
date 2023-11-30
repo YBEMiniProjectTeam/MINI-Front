@@ -13,6 +13,7 @@ import { checkInAndOutDateState } from "@recoil/checkInAndOutDate";
 import { districtState, categoryState } from "@recoil/searchStates";
 import { useRecoilValue } from "recoil";
 import { usePostWish, useDeleteWish } from "@hooks/useWishMutation";
+import { sliceAccommodationName } from "@utils/sliceAccommodationName";
 
 const SearchList = ({ keyword }: SearchListProps) => {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
 
   useEffect(() => {
     setSearchList((prevSearchList) => [
-      ...prevSearchList,
+      // ...prevSearchList,
       ...data.accommodations
     ]);
     setTotalPage(data.total_pages);
@@ -202,7 +203,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
               lineHeight="21px"
               fontWeight="700"
             >
-              {accomodation.name}
+              {sliceAccommodationName(accomodation.name)}
             </Box>
 
             <Box

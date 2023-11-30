@@ -42,11 +42,11 @@ export const AccommodationSingleView = () => {
   const { data, error } = useSearchList(
     "",
     "",
-    "2023-11-30",
-    "2023-12-01",
+    "",
+    "",
     "호텔",
-    36,
-    50
+    60,
+    7
   );
 
   if (error) {
@@ -55,14 +55,10 @@ export const AccommodationSingleView = () => {
 
   // console.log(data);
 
-  // TODO:
-  // 쿼리 스트링 잘 되는지 확인
-  // page num, size 결정
-
   return (
     <Suspense
       fallback={
-        <styled.LoadingWraaper>
+        <styled.LoadingWrapper>
           <Spinner
             thickness="2px"
             speed="0.65s"
@@ -70,16 +66,14 @@ export const AccommodationSingleView = () => {
             color="#db074a"
             size="md"
           />
-        </styled.LoadingWraaper>
+        </styled.LoadingWrapper>
       }
     >
       <styled.SingleViewWrapper>
         <styled.MainViewTitleWrapper>
           <styled.MainViewTitle>
-            <styled.Title>호캉스</styled.Title>
-            <styled.Description>
-              지친 이번주, 호캉스는 어떠세요?
-            </styled.Description>
+            <styled.Title>힐링 호캉스 타임</styled.Title>
+            <styled.Description>지친 이번주, 호캉스는 어떠세요? 🌿</styled.Description>
           </styled.MainViewTitle>
           <styled.MoreButtonWrapper
             onClick={() => navigateToResultPage("호텔", "")}
