@@ -88,6 +88,7 @@ export const RightArrowButtonWrapper = styled(ArrowButtonWrapper)`
 
 export const StyledSlider = styled(Slider)`
   max-width: 768px; 
+  height: 486px;
 
   .slick-prev::before,
   .slick-next::before {
