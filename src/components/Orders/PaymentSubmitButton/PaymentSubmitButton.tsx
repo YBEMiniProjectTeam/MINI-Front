@@ -2,7 +2,6 @@ import { useSendPaymentMutation } from "@hooks/useSendPaymentMutation.ts";
 import { getAuthLocalStorage } from "@utils/getAuthLocalStorage.ts";
 import { useFormContext } from "react-hook-form";
 import CustomForm from "@components/CustomForm/CustomForm";
-import { useNavigate } from "react-router-dom";
 import type { PaymentSubmitButtonProps } from "./PaymentSubmitButton.types";
 
 const PaymentSubmitButton = ({
@@ -15,7 +14,7 @@ const PaymentSubmitButton = ({
     formState: { isValid },
     getValues
   } = useFormContext();
-  const navigate = useNavigate();
+
   const { mutate: sendPayment } = useSendPaymentMutation();
   const { headers } = getAuthLocalStorage();
 
@@ -26,15 +25,7 @@ const PaymentSubmitButton = ({
     // FIXME: 에러 핸들링 필요
     if (!reservationName) return;
 
-    sendPayment(
-      { reservationName, cartIds, headers },
-      {
-        onSuccess: () => {
-          const orderId = `orderId=${cartIds.length}`;
-          navigate(`/reservationComplete?${orderId}`);
-        }
-      }
-    );
+    sendPayment({ reservationName, cartIds, headers });
   };
 
   return (
