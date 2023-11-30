@@ -72,10 +72,8 @@ export const AccommodationSingleView = () => {
       <styled.SingleViewWrapper>
         <styled.MainViewTitleWrapper>
           <styled.MainViewTitle>
-            <styled.Title>호캉스</styled.Title>
-            <styled.Description>
-              지친 이번주, 호캉스는 어떠세요?
-            </styled.Description>
+            <styled.Title>힐링 호캉스 타임</styled.Title>
+            <styled.Description>지친 이번주, 호캉스는 어떠세요? 🌿</styled.Description>
           </styled.MainViewTitle>
           <styled.MoreButtonWrapper
             onClick={() => navigateToResultPage("호텔", "")}
