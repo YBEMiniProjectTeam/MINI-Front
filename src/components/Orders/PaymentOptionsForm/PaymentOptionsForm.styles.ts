@@ -8,6 +8,10 @@ export const Container = styled.div`
 export const StyledRadioGroup = styled(RadioGroup)`
   border: 1px solid rgb(240, 240, 240);
   padding: 1.2rem;
+
+  .css-h7h9pp {
+    color: #e2e8f0 !important;
+  }
 `;
 
 export const StyledRadio = styled(Radio)`
