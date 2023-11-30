@@ -42,11 +42,11 @@ export const AccommodationSingleView = () => {
   const { data, error } = useSearchList(
     "",
     "",
-    "2023-11-30",
-    "2023-12-01",
+    "",
+    "",
     "호텔",
-    36,
-    50
+    60,
+    7
   );
 
   if (error) {
@@ -55,14 +55,10 @@ export const AccommodationSingleView = () => {
 
   // console.log(data);
 
-  // TODO:
-  // 쿼리 스트링 잘 되는지 확인
-  // page num, size 결정
-
   return (
     <Suspense
       fallback={
-        <styled.LoadingWraaper>
+        <styled.LoadingWrapper>
           <Spinner
             thickness="2px"
             speed="0.65s"
@@ -70,7 +66,7 @@ export const AccommodationSingleView = () => {
             color="#db074a"
             size="md"
           />
-        </styled.LoadingWraaper>
+        </styled.LoadingWrapper>
       }
     >
       <styled.SingleViewWrapper>

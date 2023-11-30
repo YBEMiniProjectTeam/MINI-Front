@@ -27,11 +27,11 @@ export const AccommodationGridView = () => {
   const { data, error, refetch } = useSearchList(
     "",
     "서귀포시",
-    "2023-11-30",
-    "2023-12-01",
-    activeTab, // TODO: 쿼리 스트링 수정되면 데이터 잘 바뀌는지 확인
-    2,
-    25
+    "",
+    "",
+    activeTab, 
+    activeTab === "펜션" ? 2 : 3,
+    4
   );
 
   if (error) {

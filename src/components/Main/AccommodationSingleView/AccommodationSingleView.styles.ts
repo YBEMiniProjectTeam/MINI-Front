@@ -158,7 +158,7 @@ export const InformationPriceTxt = styled.span`
   font-size: 0.8rem;
 `;
 
-export const LoadingWraaper = styled.div`
+export const LoadingWrapper = styled.div`
   display: flex;
   justify-content: center;
 `;
