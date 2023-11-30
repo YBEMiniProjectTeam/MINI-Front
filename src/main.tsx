@@ -13,46 +13,37 @@ import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient();
 
-async function deferRender() {
-  if (!import.meta.env.DEV) {
-    return;
-  }
-  await initMockAPI();
-}
-
-deferRender().then(() => {
-  ReactDOM.createRoot(document.getElementById("root")!).render(
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={true} />
-      <Toaster />
-      <ChakraProvider theme={theme}>
-        <Fonts />
-        <CookiesProvider>
-          <Suspense
-            fallback={
-              <Box
-                width="100vw"
-                height="100vh"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Spinner
-                  thickness="4px"
-                  speed="0.65s"
-                  emptyColor="gray.200"
-                  size="xl"
-                />
-              </Box>
-            }
-          >
-            <RecoilRoot>
-              <GlobalStyles />
-              <App />
-            </RecoilRoot>
-          </Suspense>
-        </CookiesProvider>
-      </ChakraProvider>
-    </QueryClientProvider>
-  );
-});
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <QueryClientProvider client={queryClient}>
+    <ReactQueryDevtools initialIsOpen={true} />
+    <Toaster />
+    <ChakraProvider theme={theme}>
+      <Fonts />
+      <CookiesProvider>
+        <Suspense
+          fallback={
+            <Box
+              width="100vw"
+              height="100vh"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Spinner
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                size="xl"
+              />
+            </Box>
+          }
+        >
+          <RecoilRoot>
+            <GlobalStyles />
+            <App />
+          </RecoilRoot>
+        </Suspense>
+      </CookiesProvider>
+    </ChakraProvider>
+  </QueryClientProvider>
+);

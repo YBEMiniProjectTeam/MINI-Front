@@ -16,8 +16,8 @@ import { useNavigateToResultPage } from "@hooks/useNavigateToResultPage";
 
 export const AccommodationGridView = () => {
   const { navigateToResultPage } = useNavigateToResultPage();
-  const [activeTab, setActiveTab] = useState('펜션'); 
-  
+  const [activeTab, setActiveTab] = useState("펜션");
+
   const handleTabClick = (tab: string) => {
     startTransition(() => {
       setActiveTab(tab);
@@ -25,10 +25,10 @@ export const AccommodationGridView = () => {
   };
 
   const { data, error, refetch } = useSearchList(
-    '',
-    '서귀포시', 
-    '2023-11-30',
-    '2023-12-01',
+    "",
+    "서귀포시",
+    "2023-11-30",
+    "2023-12-01",
     activeTab, // TODO: 쿼리 스트링 수정되면 데이터 잘 바뀌는지 확인
     2,
     25
@@ -42,7 +42,7 @@ export const AccommodationGridView = () => {
 
   useEffect(() => {
     refetch();
-  }, [activeTab])
+  }, [activeTab]);
 
   return (
     <Suspense
@@ -56,54 +56,54 @@ export const AccommodationGridView = () => {
         />
       }
     >
-    <styled.GridViewWrapper>
-      <MainViewTitleWrapper>
-        <MainViewTitle>
-          <Title>제주도</Title>
-          <Description>나랑 귤 따러 가지 않을래? 🍊</Description>
-        </MainViewTitle>
-      </MainViewTitleWrapper>
-      <styled.Border />
-      <styled.CategoryTapWrapper>
-        <styled.CategoryTapContainer>
-          <styled.CategoryTap>
-            <styled.CategoryTapItem onClick={() => handleTabClick('펜션')}>
-              <styled.TabItem $isActive={activeTab === '펜션'} onClick={() => handleTabClick('펜션')}>
-                {activeTab === '펜션' && <styled.ActivedBar />}
-                펜션
-              </styled.TabItem>
-            </styled.CategoryTapItem>
-            <styled.CategoryTapItem onClick={() => handleTabClick('호텔')}>
-              <styled.TabItem $isActive={activeTab === '호텔'}>
-                {activeTab === '호텔' && <styled.ActivedBar />}
-                호텔
-              </styled.TabItem>
-            </styled.CategoryTapItem>
-          </styled.CategoryTap>
-        </styled.CategoryTapContainer>
-      </styled.CategoryTapWrapper>
-      <styled.Border />
-      <styled.GridWrapper>
-        {data?.accommodations?.map((accommodation: Accommodation, index: number) => (
-          <AccommodationGridItem
-            key={index}
-            id={accommodation.id}
-            imageUrl={accommodation.thumbnail}
-            summary={`${accommodation.region} | ${printCategory(accommodation.type)}`}
-            name={accommodation.name}
-            price={accommodation.min_price}
-          />
-        ))}
-      </styled.GridWrapper>
-      <styled.MoreButtonWrapper onClick={() => navigateToResultPage(activeTab, '서귀포시')}>
-        <Button
-          color="#666666"
-          bg="white"
-          border="1px solid #DCDCDD;"
-          w="100%"
-          h="44px;"
-          _hover={{ bg: 'rgba(0, 0, 0, 0.05);' }}
-          rightIcon={<ArrowForwardIcon/>}    
+      <styled.GridViewWrapper>
+        <MainViewTitleWrapper>
+          <MainViewTitle>
+            <Title>제주도</Title>
+            <Description>나랑 귤 따러 가지 않을래? 🍊</Description>
+          </MainViewTitle>
+        </MainViewTitleWrapper>
+        <styled.Border />
+        <styled.CategoryTapWrapper>
+          <styled.CategoryTapContainer>
+            <styled.CategoryTap>
+              <styled.CategoryTapItem onClick={() => handleTabClick("펜션")}>
+                <styled.TabItem
+                  $isActive={activeTab === "펜션"}
+                  onClick={() => handleTabClick("펜션")}
+                >
+                  {activeTab === "펜션" && <styled.ActivedBar />}
+                  펜션
+                </styled.TabItem>
+              </styled.CategoryTapItem>
+              <styled.CategoryTapItem onClick={() => handleTabClick("호텔")}>
+                <styled.TabItem $isActive={activeTab === "호텔"}>
+                  {activeTab === "호텔" && <styled.ActivedBar />}
+                  호텔
+                </styled.TabItem>
+              </styled.CategoryTapItem>
+            </styled.CategoryTap>
+          </styled.CategoryTapContainer>
+        </styled.CategoryTapWrapper>
+        <styled.Border />
+        <styled.GridWrapper>
+          {data?.accommodations?.map(
+            (accommodation: Accommodation, index: number) => (
+              <AccommodationGridItem
+                key={index}
+                id={accommodation.id}
+                imageUrl={accommodation.thumbnail}
+                summary={`${accommodation.region} | ${printCategory(
+                  accommodation.type
+                )}`}
+                name={accommodation.name}
+                price={accommodation.min_price}
+              />
+            )
+          )}
+        </styled.GridWrapper>
+        <styled.MoreButtonWrapper
+          onClick={() => navigateToResultPage(activeTab, "서귀포시")}
         >
           <Button
             color="#666666"
