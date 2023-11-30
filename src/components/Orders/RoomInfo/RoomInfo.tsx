@@ -21,9 +21,12 @@ const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
   const checkOutTime =
     roomInfo.checkOut?.split(" ")[1] || roomInfo.checkOutTime;
 
-  console.log(checkInDate);
-
-  const nights = calculateNights(checkInDate!, checkOutDate!);
+  const nights = calculateNights({
+    checkInDate,
+    checkOutDate,
+    checkInTime,
+    checkOutTime
+  });
 
   return (
     <Box width="full">
@@ -57,7 +60,7 @@ const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
                 기준 {roomInfo.capacity}명 / 최대 {roomInfo.capacityMax}명
               </Text>
             </HStack>
-            {roomInfo.roomName && (
+            {roomInfo.checkInDate && (
               <Flex alignItems="center" gap="8px">
                 <Box
                   display="inline-block"
@@ -68,10 +71,10 @@ const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
                   padding="0.1rem 0.5rem"
                   borderRadius="5px"
                 >
-                  {nights}박
+                  {nights}
                 </Box>
                 <Text fontSize="lg" fontWeight="bold">
-                  {roomInfo.price.toLocaleString()}원
+                  {(roomInfo.price * roomInfo.quantity).toLocaleString()}원
                 </Text>
               </Flex>
             )}
