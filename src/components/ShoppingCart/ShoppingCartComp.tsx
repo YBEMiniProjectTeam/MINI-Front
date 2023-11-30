@@ -24,11 +24,9 @@ export const ShoppingCartComp = (): JSX.Element => {
 
   const navigate = useNavigate();
 
-  const { accessTokenCookie, headers } = getAuthLocalStorage();
+  const { accessTokenCookie } = getAuthLocalStorage();
 
-  const { data, error, refetch } = useShoppingCartList(
-    accessTokenCookie as string
-  );
+  const { data, refetch } = useShoppingCartList(accessTokenCookie as string);
 
   useEffect(() => {
     const access = localStorage.getItem("access-token");

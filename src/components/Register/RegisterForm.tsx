@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { AgreementModalForm } from "../AgreementModal/AgreementModalForm";
 import { isBirthdayValid, isEmailValid, isPasswordValid } from "./validators";
-import { RegisterApi } from "@api/register/RegisterApi";
+
 import type { User } from "./Register.types";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
@@ -115,7 +115,7 @@ export const RegisterForm = (): JSX.Element => {
             birthday: `${year}-${month}-${day}`
           })
         };
-        const response = await resgisterMutate(user);
+        await resgisterMutate(user);
       }
     }
   };

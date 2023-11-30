@@ -29,7 +29,6 @@ export const useLoginMutation = () => {
         localStorage.setItem("access-token", res.data?.accessToken as string);
         navigate(loginUrl);
       }
-      // queryClient.invalidateQueries([queryKeys.appointments]);
     },
     onError: (err) => {
       console.log(err);
@@ -42,7 +41,6 @@ interface logoutProps {
 }
 
 export const useLogoutMutation = () => {
-  const navigate = useNavigate();
   return useMutation<login, Error, logoutProps>({
     mutationFn: ({ accessToken }: logoutProps) => LogoutApi(accessToken),
     onSuccess: (res) => {
