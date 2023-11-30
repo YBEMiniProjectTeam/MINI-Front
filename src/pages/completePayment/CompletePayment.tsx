@@ -49,16 +49,18 @@ const CompletePayment = () => {
           />
           {reservationName}님의 <br /> 결제가 완료되었습니다!
         </styles.SuccessInfoWrapper>
-        <Box
-          display="inline-block"
-          bg="#D63F8B"
-          color="#fff"
-          fontSize="13px"
-          fontWeight={600}
-          padding="2px 5px"
-          borderRadius="5px"
-        >
-          예약 완료
+        <Box padding="0 1rem">
+          <Box
+            display="inline-block"
+            bg="#D63F8B"
+            color="#fff"
+            fontSize="13px"
+            fontWeight={600}
+            padding="2px 5px"
+            borderRadius="5px"
+          >
+            예약 완료
+          </Box>
         </Box>
         {dummyData.map((accommodation, index) => (
           <ReservationInfo
