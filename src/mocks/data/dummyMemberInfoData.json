@@ -1,9 +1,0 @@
-{
-  "statusCode": 200,
-  "message": "success",
-  "data": {
-    "email": "nana@naver.com",
-    "name": "나나",
-    "birthday": "2023-11-28"
-  }
-}
