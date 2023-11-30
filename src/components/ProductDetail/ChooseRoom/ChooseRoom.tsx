@@ -2,6 +2,7 @@ import { ChooseRoomProps } from "./ChooseRoom.types";
 import FacilitiesModal from "../FacilitiesModal/FacilitiesModal";
 import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
 import { usePostCart } from "@hooks/useCartMutation";
+import { formatPrice } from "@utils/priceFormatter";
 import { Box, Flex, useDisclosure, Button } from "@chakra-ui/react";
 import { IoBedOutline } from "react-icons/io5";
 import { BsPerson } from "react-icons/bs";
@@ -39,6 +40,14 @@ const ChooseRoom = ({
       return;
     }
     postCart({ body, headers });
+  };
+
+  const handlePayButton = () => {
+    if (!accessTokenCookie) {
+      alert("로그인이 필요한 서비스입니다!");
+      return;
+    }
+    // postPayment({ body, headers });
   };
 
   return (
@@ -110,7 +119,7 @@ const ChooseRoom = ({
             <Flex flexDirection="column" alignItems="flex-end" marginTop="20px">
               <Box fontSize="14px">숙박</Box>
               <Box fontSize="20px" fontWeight={800} marginBottom="3px">
-                {price}원
+                {formatPrice(price)}원
               </Box>
             </Flex>
             {stock_quantity ? (
@@ -124,7 +133,7 @@ const ChooseRoom = ({
                 >
                   <IoCartOutline size="20px" />
                 </Box>
-                <Button size="sm" w="130px">
+                <Button size="sm" w="130px" onClick={handlePayButton}>
                   결제하기
                 </Button>
               </Flex>
