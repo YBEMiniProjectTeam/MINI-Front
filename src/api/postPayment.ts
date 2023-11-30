@@ -8,8 +8,9 @@ export interface PaymentInfoProps {
 }
 
 export interface ResponseType {
-  statusCode: number;
+  status_code: number;
   message: string;
+  data: any[]; // FIXME: 데이터 타입 고치기
 }
 
 export const postPayment = async ({
@@ -18,5 +19,10 @@ export const postPayment = async ({
   headers
 }: PaymentInfoProps): Promise<ResponseType> => {
   const API_URL = `/api/carts/orders/payments`;
-  return await axios.post(API_URL, { cartIds, reservationName }, { headers });
+  const response = await axios.post(
+    API_URL,
+    { cartIds, reservationName },
+    { headers }
+  );
+  return response.data;
 };
