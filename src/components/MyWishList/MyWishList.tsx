@@ -49,7 +49,6 @@ const MyWishList = () => {
   const handleLikeClick = (index: number, accommodationId: number) => {
     const updatedWishList = wishList.filter((item, i) => {
       i !== index;
-      console.log(item);
     });
 
     setWishList(updatedWishList);
