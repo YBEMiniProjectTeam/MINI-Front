@@ -74,6 +74,7 @@ export const ProductDetail: React.FC = () => {
           </Box>
         </Flex>
         <ChooseDetail
+          id={id}
           startDate={startDate.toString()}
           endDate={endDate.toString()}
         />

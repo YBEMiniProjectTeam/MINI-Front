@@ -1,4 +1,5 @@
 export interface ChooseDetailTypes {
+  id: number;
   startDate: string;
   endDate: string;
 }
