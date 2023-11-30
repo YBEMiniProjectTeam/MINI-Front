@@ -7,23 +7,22 @@ export const ShoppingCartApi = async (accessToken: string) => {
     "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`
   };
-
   const response = await axios.get(API_URL, { headers });
 
-  return response.data;
+  return response;
 };
 export const QuantityCartApi = async (
   accessToken: string,
   sign: string,
-  cartId: number[]
+  cartId: number
 ) => {
-  const API_URL = `${API_BASE_URL}/${sign}`;
+  const API_URL = `${API_BASE_URL}/carts/${sign}`;
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`
   };
 
-  const response = await axios.put(API_URL, { cartIds: cartId }, { headers });
+  const response = await axios.put(API_URL, { cart_id: cartId }, { headers });
 
   return response;
 };
@@ -36,7 +35,7 @@ export const DeleteCartApi = async (accessToken: string, cartId: number[]) => {
 
   const response = await axios.delete(API_URL, {
     headers,
-    data: { cartIds: cartId }
+    data: { cart_ids: cartId }
   });
 
   return response;
@@ -48,7 +47,7 @@ export const ReservationApi = async (accessToken: string, cartId: number[]) => {
     Authorization: `Bearer ${accessToken}`
   };
 
-  const response = await axios.post(API_URL, { cartIds: cartId }, { headers });
+  const response = await axios.post(API_URL, { cart_id: cartId }, { headers });
 
   return response;
 };

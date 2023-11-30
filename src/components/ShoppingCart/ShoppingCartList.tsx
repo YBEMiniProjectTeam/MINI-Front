@@ -5,13 +5,13 @@ import { CartListProps } from "./ShoppinCart.types";
 export const ShoppingCartList = (props: CartListProps): JSX.Element => {
   return (
     <>
-      {Object.keys(props.data.roomInfos).length ? (
+      {props.data.room_infos.length ? (
         <div className="cartInfoContainer WrapStyle">
           <div className="titleWrap">
-            <h3>{props.data.accommodationName}</h3>
-            {/* <p className="colorGray">{props.data.hotelAddress}</p> */}
+            <h3>{props.data.accommodation_name}</h3>
+            <p>{props.data.address}</p>
           </div>
-          {props.data.roomInfos.map((room, roomIndex) => (
+          {props.data.room_infos.map((room, roomIndex) => (
             <div key={roomIndex} className="roomListWrap">
               <h3>{room.roomName}</h3>
               <button
@@ -33,17 +33,23 @@ export const ShoppingCartList = (props: CartListProps): JSX.Element => {
                 </div>
 
                 <div>
-                  <img src={room.accommodationThumbnailUrl} alt="이미지" />
+                  <img
+                    src={room.accommodationThumbnailUrl}
+                    loading="lazy"
+                    alt="이미지"
+                  />
                 </div>
                 <div>
-                  <span>2023-11-24</span>
-                  <br />
-                  <span className="colorGray">
-                    체크인 {room.checkInDate} 체크아웃 {room.checkOutDate}
+                  <span>
+                    {room.checkInDate} ~ {room.checkOutDate}
                   </span>
                   <br />
                   <span className="colorGray">
-                    기존 {room.capacity}명 / 최대 {room.capacityMax}명
+                    체크인 {room.checkInTime} 체크아웃 {room.checkOutTime}
+                  </span>
+                  <br />
+                  <span className="colorGray">
+                    기준 {room.capacity}명 / 최대 {room.capacityMax}명
                   </span>
                   <br />
                 </div>
