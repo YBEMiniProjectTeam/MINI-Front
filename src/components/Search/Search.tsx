@@ -31,7 +31,7 @@ import {
   categoryState,
   isRefetchedState
 } from "@recoil/searchStates";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 const Search = ({ keyword, category, region }: SearchProps) => {
   const {
@@ -63,7 +63,7 @@ const Search = ({ keyword, category, region }: SearchProps) => {
   const setCheckInAndOutDateState = useSetRecoilState(checkInAndOutDateState);
   const setDistrictState = useSetRecoilState(districtState);
   const setCategoryState = useSetRecoilState(categoryState);
-  const setIsRefetched = useSetRecoilState(isRefetchedState);
+  const [isRefetched, setIsRefetched] = useRecoilState(isRefetchedState);
 
   const { data, refetch } = useSearchList(
     accommodationName,
@@ -148,7 +148,10 @@ const Search = ({ keyword, category, region }: SearchProps) => {
   };
 
   const handleSearchClick = () => {
-    setIsRefetched(true);
+    let newRefetchState = isRefetched;
+    newRefetchState = !newRefetchState;
+
+    setIsRefetched(newRefetchState);
     refetch();
   };
 

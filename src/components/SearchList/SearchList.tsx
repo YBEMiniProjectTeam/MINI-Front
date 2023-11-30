@@ -76,7 +76,6 @@ const SearchList = ({ keyword }: SearchListProps) => {
     setSearchList(() => [...data.accommodations]);
     setTotalPage(data.total_pages);
     setIsLoadingMore(false);
-    setIsRefetched(false);
   }, [isRefetched]);
 
   const handleLikeClick = (index: number, accommodationId: number) => {
