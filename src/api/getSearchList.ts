@@ -8,7 +8,8 @@ export const getSearchList = async (
   endDate: string | null,
   category: string | null,
   pageNum: number,
-  pageSize: number
+  pageSize: number,
+  headers: { [key: string]: string }
 ) => {
 
   let url = `${API_BASE_URL}/accommodations?`;
@@ -24,9 +25,13 @@ export const getSearchList = async (
   if (category)
     url += `category=${category}&`;
 
-  url += `page_num=${pageNum}&page_size=${pageSize}`
+  url += `page_num=${pageNum}&page_size=${pageSize}`;
 
-  const response = await axios.get(url);
+  console.log(headers);
+
+  const response = await axios.get(url, { headers });
+
+  console.log(response.data.data);
 
   return response.data.data;
 };

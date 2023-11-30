@@ -34,6 +34,8 @@ const SearchList = ({ keyword }: SearchListProps) => {
   const [totalPage, setTotalPage] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
+  const { accessTokenCookie, headers } = getAuthLocalStorage();
+
   const { data, error, refetch } = useSearchList(
     keyword,
     selectedDistrict,
@@ -41,10 +43,9 @@ const SearchList = ({ keyword }: SearchListProps) => {
     endDate,
     selectedCategory,
     page,
-    10
+    10,
+    headers
   );
-
-  const { accessTokenCookie, headers } = getAuthLocalStorage();
 
   const { mutate: postWish } = usePostWish();
   const { mutate: deleteWish } = useDeleteWish();
@@ -78,24 +79,30 @@ const SearchList = ({ keyword }: SearchListProps) => {
     setIsLoadingMore(false);
   }, [isRefetched]);
 
-  const handleLikeClick = (index: number, accommodationId: number) => {
+  const handleLikeClick = async (index: number, accommodationId: number) => {
     if (!accessTokenCookie) {
       toast.error("로그인이 필요한 서비스입니다.");
       return;
     }
-    const updatedSearchList = [...searchList];
+    // const updatedSearchList = [...searchList];
 
-    updatedSearchList[index] = {
-      ...updatedSearchList[index],
-      isWish: !updatedSearchList[index].isWish
-    };
+    // console.log(updatedSearchList);
 
-    setSearchList(updatedSearchList);
+    // updatedSearchList[index] = {
+    //   ...updatedSearchList[index],
+    //   isWish: !updatedSearchList[index].isWish
+    // };
 
-    if (updatedSearchList[index].isWish === true) {
-      postWish({ accommodationId, headers });
+    // setSearchList(updatedSearchList);
+
+    if (searchList[index].isWish === false) {
+      await postWish({ accommodationId, headers });
+      searchList[index].isWish = true;
+      refetch();
     } else {
-      deleteWish({ accommodationId, headers });
+      await deleteWish({ accommodationId, headers });
+      searchList[index].isWish = false;
+      refetch();
     }
   };
 
