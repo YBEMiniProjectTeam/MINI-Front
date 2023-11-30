@@ -9,6 +9,7 @@ export const ReservationDetails = (): JSX.Element => {
         objectFit="cover"
         w="100%"
         h="200px"
+        loading="lazy"
       />
       <Flex gap="15px" color="#7F7F7F" fontWeight={500} marginTop="30px">
         <Box

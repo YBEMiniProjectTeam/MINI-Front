@@ -108,6 +108,7 @@ const MyWishList = () => {
               userSelect="none"
               cursor="pointer"
               onClick={() => handleAccomodationClick(accomodation.id)}
+              loading="lazy"
             />
             <Icon
               as={FaHeart}

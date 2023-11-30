@@ -121,6 +121,7 @@ export const Reservations = (): JSX.Element => {
               w="230px"
               h="130px"
               objectFit="cover"
+              loading="lazy"
             />
           </Flex>
         </Box>

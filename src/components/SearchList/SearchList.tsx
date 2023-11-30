@@ -141,6 +141,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
               userSelect="none"
               cursor="pointer"
               onClick={() => handleAccomodationClick(accomodation.id)}
+              loading="lazy"
             />
             {accomodation.isWish ? (
               <Icon
