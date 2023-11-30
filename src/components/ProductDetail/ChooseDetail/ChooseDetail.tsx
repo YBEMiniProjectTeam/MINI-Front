@@ -84,7 +84,12 @@ const ChooseDetail = ({
       </Box>
       {rooms &&
         rooms.map((room: RoomTypes, index: number) => (
-          <ChooseRoom key={index} room={room} />
+          <ChooseRoom
+            key={index}
+            room={room}
+            startDate={startDate}
+            endDate={endDate}
+          />
         ))}
     </>
   );

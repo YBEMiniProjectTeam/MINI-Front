@@ -22,4 +22,18 @@ export interface ChooseRoomProps {
       tv: boolean;
     };
   };
+  startDate: string;
+  endDate: string;
+}
+
+export interface ResponseType {
+  statusCode: number;
+  message: string;
+}
+
+export interface PostCartProps {
+  body: { room_id: number; check_in_date: string; check_out_date: string };
+  headers: {
+    [key: string]: string;
+  };
 }
