@@ -32,6 +32,7 @@ import {
   isRefetchedState
 } from "@recoil/searchStates";
 import { useRecoilState, useSetRecoilState } from "recoil";
+import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
 
 const Search = ({ keyword, category, region }: SearchProps) => {
   const {
@@ -65,6 +66,8 @@ const Search = ({ keyword, category, region }: SearchProps) => {
   const setCategoryState = useSetRecoilState(categoryState);
   const [isRefetched, setIsRefetched] = useRecoilState(isRefetchedState);
 
+  const { headers } = getAuthLocalStorage();
+
   const { data, refetch } = useSearchList(
     accommodationName,
     selectedDistrict,
@@ -72,7 +75,9 @@ const Search = ({ keyword, category, region }: SearchProps) => {
     endDate,
     selectedCategory,
     1,
-    10
+    10,
+    isRefetched,
+    headers
   );
 
   useEffect(() => {
