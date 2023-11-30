@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Main } from "@pages/main/Main";
 import { Register } from "@pages/register/Register";
@@ -14,6 +15,7 @@ import { WishList } from "@pages/wishList/WishList";
 import Layout from "@components/Layout/Layout";
 import { NotFound } from "@pages/notFound/NotFound";
 import { NotLogin } from "@pages/notLogin/NotLogin";
+import { ErrorBoundary } from "@components/ErrorBoundary/ErrorBoundary";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +28,23 @@ const router = createBrowserRouter([
       { path: "searchResult", element: <SearchResult /> },
       { path: "products", element: <ProductDetail /> },
       { path: "rooms/:roomId", element: <RoomDetail /> },
-      { path: "orders", element: <Payment /> },
+      {
+        path: "orders",
+        element: (
+          <ErrorBoundary
+            fallback={({ error }) => {
+              console.log(error);
+              if (error?.response.status) {
+                return <p>404 오류입니다.</p>;
+              } else if (error) {
+                return <p>500 오류에요!</p>;
+              }
+            }}
+          >
+            <Payment />
+          </ErrorBoundary>
+        )
+      },
       { path: "reservationComplete", element: <CompletePayment /> },
       { path: "shoppingCart", element: <ShoppingCart /> },
       { path: "reservations", element: <Reservations /> },
