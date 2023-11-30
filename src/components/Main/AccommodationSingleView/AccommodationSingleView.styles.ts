@@ -95,6 +95,26 @@ export const StyledSlider = styled(Slider)`
     opacity: 0;
     display: none;
   }
+
+  .slick-list {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    margin: 0;
+    max-height: 975px;
+  }
+  
+  .slick-track {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+    max-height: 975px;
+  }
+
+  .slick-slide {
+    float: left;
+  }
 `;
 
 export const SwiperItem = styled.div`

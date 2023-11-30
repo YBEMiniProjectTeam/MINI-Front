@@ -35,6 +35,10 @@ export const StyledSlider = styled(Slider)`
     opacity: 0;
     display: none;
   }
+
+  .slick-slide {
+    float: left;
+  }
 `;
 
 export const CarouselItem = styled.img`
