@@ -12,7 +12,7 @@ const TotalPaymentInfo = ({ totalPrice, children }: TotalPaymentInfoProps) => {
       </styles.PaymentWrapperRow>
       <styles.PaymentWrapperRow>
         <styles.PaymentLabel>총 할인 금액</styles.PaymentLabel>
-        <styles.PaymentItem>{TotalPayment}0원</styles.PaymentItem>
+        <styles.PaymentItem>0원</styles.PaymentItem>
       </styles.PaymentWrapperRow>
       <styles.Divider />
       <styles.TotalPaymentPriceWrapper>
