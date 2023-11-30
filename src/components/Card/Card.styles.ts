@@ -4,8 +4,13 @@ export const CardContainer = styled.div`
   border-top: 1px solid rgb(240, 240, 240);
   border-bottom: 1px solid rgb(240, 240, 240);
   padding: 1.2rem 0;
-  margin: 1rem 0;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   background: #fff;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
 `;
 
 export const Label = styled.div`

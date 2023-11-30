@@ -80,7 +80,9 @@ export const ShoppingCartList = (props: CartListProps): JSX.Element => {
                   <br />
                   <span>
                     숙박{" "}
-                    <span className="bold">{room.quantity * room.price}원</span>
+                    <span className="bold">
+                      {(room.quantity * room.price).toLocaleString()}원
+                    </span>
                   </span>
 
                   <br />

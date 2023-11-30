@@ -1,5 +1,5 @@
 import * as styles from "./ShoppingCart.styles";
-import { Checkbox } from "@chakra-ui/react";
+import { Box, Checkbox, Flex, Text } from "@chakra-ui/react";
 import { ShoppingCartList } from "./ShoppingCartList";
 import { useEffect, useState } from "react";
 import {
@@ -130,8 +130,10 @@ export const ShoppingCartComp = (): JSX.Element => {
   return (
     <styles.ShoppingCartContainer>
       <div className="WrapStyle">
-        <div className="title">장바구니</div>
-        <div className="selectCheckWrap">
+        <Text fontSize="24px" fontWeight="700">
+          장바구니
+        </Text>
+        <Flex padding="1rem 0" justifyContent="space-between">
           <div>
             <Checkbox
               onChange={() => {
@@ -144,7 +146,7 @@ export const ShoppingCartComp = (): JSX.Element => {
           <div>
             <button onClick={handleSelectDelete}>선택 삭제</button>
           </div>
-        </div>
+        </Flex>
       </div>
       {data.length > 0 ? (
         data.map((hotel, hotelIndex) => (
@@ -171,7 +173,7 @@ export const ShoppingCartComp = (): JSX.Element => {
             <span className="colorGray">상품 금액</span>
           </div>
           <div>
-            <span className="colorGray">{price}</span>
+            <span className="colorGray">{price.toLocaleString()}</span>
           </div>
         </div>
         <div className="roomPrice expectedPayment">
@@ -179,7 +181,7 @@ export const ShoppingCartComp = (): JSX.Element => {
             <span>결제 예상 금액</span>
           </div>
           <div>
-            <span>{price}</span>
+            <span>{price.toLocaleString()}</span>
           </div>
         </div>
 
