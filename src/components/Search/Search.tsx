@@ -166,6 +166,11 @@ const Search = ({ keyword, category, region }: SearchProps) => {
             placeholder={accommodationName ? undefined : "숙소명 입력"}
             value={accommodationName}
             onChange={handleInputChange}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearchClick();
+              }
+            }}
           />
         </InputGroup>
 
@@ -227,7 +232,7 @@ const Search = ({ keyword, category, region }: SearchProps) => {
             value={selectedCategory}
             onChange={handleCategoryChange}
           >
-            <option value="모든 숙소">모든 숙소</option>
+            <option value="">모든 숙소</option>
             <option value="호텔">호텔</option>
             <option value="리조트">리조트</option>
             <option value="모텔">모텔</option>
