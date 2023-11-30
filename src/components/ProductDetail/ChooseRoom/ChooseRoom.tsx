@@ -1,6 +1,6 @@
 import { ChooseRoomProps } from "./ChooseRoom.types";
 import FacilitiesModal from "../FacilitiesModal/FacilitiesModal";
-import { convertDateFormat5 } from "@utils/convertDateFormat5";
+import { convertDateFormat3 } from "@utils/convertDateFormat3";
 import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
 import { usePostCart } from "@hooks/useCartMutation";
 import { Box, Flex, useDisclosure, Button } from "@chakra-ui/react";
@@ -30,8 +30,8 @@ const ChooseRoom = ({
 
   const body = {
     room_id: id,
-    check_in_date: convertDateFormat5(startDate),
-    check_out_date: convertDateFormat5(endDate)
+    check_in_date: convertDateFormat3(startDate) as string,
+    check_out_date: convertDateFormat3(endDate) as string
   };
 
   const handleCartButton = async () => {
