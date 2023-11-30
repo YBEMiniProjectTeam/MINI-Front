@@ -9,10 +9,11 @@ export const useSearchList = (
   category: string | null,
   pageNum: number,
   pageSize: number,
-  headers: { [key: string]: string }
+  isRefetched: boolean | null,
+  headers?: { [key: string]: string }
 ) => {
   return useSuspenseQuery({
-    queryKey: ["searchList", pageNum, pageSize, headers],
+    queryKey: ["searchList", pageNum, pageSize, headers, isRefetched],
     queryFn: () =>
       getSearchList(
         accomodationName,

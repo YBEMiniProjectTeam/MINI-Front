@@ -44,6 +44,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
     selectedCategory,
     page,
     10,
+    isRefetched,
     headers
   );
 
