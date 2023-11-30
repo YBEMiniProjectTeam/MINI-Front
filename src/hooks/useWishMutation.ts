@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { postWish } from "@api/postWish";
 import { deleteWish } from "@api/deleteWish";
 import { ResponseType } from "@components/SearchList/SearchList.types";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 interface LikeProps {
   accommodationId: number | null;
