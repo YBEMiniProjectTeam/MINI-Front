@@ -14,6 +14,7 @@ import type { User } from "./Register.types";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { toast } from "react-hot-toast";
+import { useRegister } from "@hooks/register/useRegisterMutation";
 
 export const RegisterForm = (): JSX.Element => {
   const [email, setEmail] = useState("");
@@ -35,25 +36,7 @@ export const RegisterForm = (): JSX.Element => {
   const [cookies] = useCookies(["access-token"]);
 
   useEffect(() => {
-    // if (cookies["access-token"]) {
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "잘못된 요청입니다.",
-    //     text: "로그인이 된 상태면 해당 페이지에 들어갈 수 없습니다."
-    //   }).then(() => {
-    //     navigate(-1);
-    //   });
-    // }
-
     if (localStorage.getItem("access-token")) {
-      // Swal.fire({
-      //   icon: "error",
-      //   title: "잘못된 요청입니다.",
-      //   text: "로그인이 된 상태면 해당 페이지에 들어갈 수 없습니다."
-      // }).then(() => {
-      //   navigate(-1);
-      // });
-
       navigate("/");
     }
   }, [cookies, navigate]);
@@ -100,6 +83,8 @@ export const RegisterForm = (): JSX.Element => {
     }
   };
 
+  const { mutate: resgisterMutate } = useRegister();
+
   const handleClickSubmit = async (
     e: React.MouseEvent<HTMLButtonElement>
   ): Promise<void> => {
@@ -130,15 +115,7 @@ export const RegisterForm = (): JSX.Element => {
             birthday: `${year}-${month}-${day}`
           })
         };
-        const statusCode = await RegisterApi(user);
-        if (statusCode === 200) {
-          toast.success("회원가입이 완료되었습니다.");
-          navigate("/login");
-        } else if (statusCode === 400) {
-          toast.error("잘못된 형식으로 요쳥했습니다.");
-        } else if (statusCode === 500) {
-          toast.error("서버에러. 잠시후 다시 입력해주세요!");
-        }
+        const response = await resgisterMutate(user);
       }
     }
   };

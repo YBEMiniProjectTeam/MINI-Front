@@ -3,12 +3,13 @@ import * as S from "./LoginStyles";
 import { FormControl, FormHelperText, Input, Button } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import type { Login } from "./Login.types";
-import { LoginApi } from "@api/login/LoginApi";
+
 import { useCookies } from "react-cookie";
 // import Swal from "sweetalert2";
 import { toast } from "react-hot-toast";
 import { useRecoilState } from "recoil";
 import { loginUrlState } from "@recoil/loginUrl";
+import { useLoginMutation } from "@hooks/login/useLoginMutation";
 
 export const LoginForm = (): JSX.Element => {
   const navigate = useNavigate();
@@ -18,26 +19,26 @@ export const LoginForm = (): JSX.Element => {
   const [isEmailText, setIsEmailText] = useState(false);
   const [isPasswordText, setIsPasswordText] = useState(false);
 
-  const [cookies] = useCookies(["access-token"]);
-
-  const [loginUrl] = useRecoilState(loginUrlState);
+  const { mutate: loginMutate } = useLoginMutation();
 
   useEffect(() => {
     if (localStorage.getItem("access-token")) {
       navigate("/");
     }
-  }, [cookies, navigate]);
+  }, []);
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setEmail(e.currentTarget.value);
     setIsEmailText(e.currentTarget.value === "");
   };
+
   const handleChangePassword = (
     e: React.ChangeEvent<HTMLInputElement>
   ): void => {
     setPassword(e.currentTarget.value);
     setIsPasswordText(e.currentTarget.value === "");
   };
+
   const handleKeyDownPassword = (
     e: React.KeyboardEvent<HTMLInputElement>
   ): void => {
@@ -45,6 +46,7 @@ export const LoginForm = (): JSX.Element => {
       loginRequest();
     }
   };
+
   const handleClickLoginButton = (
     e: React.MouseEvent<HTMLButtonElement>
   ): void => {
@@ -58,16 +60,8 @@ export const LoginForm = (): JSX.Element => {
       pwd: password
     };
 
-    const data = await LoginApi(login);
-
-    if (data.statusCode === 200) {
-      localStorage.setItem("access-token", data.data.accessToken);
-      navigate(loginUrl);
-    } else if (data.statusCode === 400) {
-      toast.error("아이디나 비밀번호가 잘못되었습니다.");
-    } else if (data.statusCode === 500) {
-      toast.error("잠시후 다시 입력해주세요!");
-    }
+    const data = await loginMutate(login);
+    console.log(data);
   };
   return (
     <S.LoginFormContainer>

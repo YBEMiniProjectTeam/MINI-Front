@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { HeaderInput } from "./HeaderInput";
 import { useRecoilState } from "recoil";
 import { loginUrlState } from "@recoil/loginUrl";
+import { useLogoutMutation } from "@hooks/login/useLoginMutation";
 
 export const Header = (): JSX.Element => {
   const [isSubMenuVisible, setSubMenuVisible] = useState(false);
@@ -35,9 +36,13 @@ export const Header = (): JSX.Element => {
   const handleClickLogin = (): void => {
     setLoginUrl(location.pathname);
   };
+  const { mutate: logoutMutate } = useLogoutMutation();
 
-  const handleClickLogoutButton = (): void => {
+  const handleClickLogoutButton = async (): Promise<void> => {
     if (accessToken) {
+      await logoutMutate({
+        accessToken
+      });
       localStorage.removeItem("access-token");
       setAccessToken("");
     }
@@ -83,6 +88,9 @@ export const Header = (): JSX.Element => {
                       <Link to="/shoppingCart">
                         <li>장바구니</li>
                       </Link>
+                      <div onClick={handleClickLogoutButton}>
+                        <li>로그아웃</li>
+                      </div>
                       <Link to="/" onClick={handleClickLogoutButton}>
                         <li>로그아웃</li>
                       </Link>

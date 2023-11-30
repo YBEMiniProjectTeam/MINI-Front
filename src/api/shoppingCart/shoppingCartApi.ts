@@ -9,24 +9,47 @@ export const ShoppingCartApi = async (accessToken: string) => {
   };
   const response = await axios.get(API_URL, { headers });
 
-  return response;
+  return response.data;
 };
-export const QuantityCartApi = async (
-  accessToken: string,
-  sign: string,
-  cartId: number
-) => {
+
+interface quantityReturnType {
+  statusCode: number;
+  message: string;
+  successful?: boolean;
+}
+export const QuantityCartApi = async ({
+  accessToken,
+  sign,
+  cart_ids
+}: {
+  accessToken: string;
+  sign: string;
+  cart_ids: number;
+}): Promise<quantityReturnType> => {
   const API_URL = `${API_BASE_URL}/carts/${sign}`;
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`
   };
 
-  const response = await axios.put(API_URL, { cart_id: cartId }, { headers });
+  const response = await axios.put(API_URL, { cart_id: cart_ids }, { headers });
 
-  return response;
+  return response.data;
 };
-export const DeleteCartApi = async (accessToken: string, cartId: number[]) => {
+
+interface deleteReturnType {
+  statusCode: number;
+  message: string;
+  successful?: boolean;
+}
+
+export const DeleteCartApi = async ({
+  accessToken,
+  cart_ids
+}: {
+  accessToken: string;
+  cart_ids: number[];
+}): Promise<deleteReturnType> => {
   const API_URL = `${API_BASE_URL}/carts`;
   const headers = {
     "Content-Type": "application/json",
@@ -35,19 +58,8 @@ export const DeleteCartApi = async (accessToken: string, cartId: number[]) => {
 
   const response = await axios.delete(API_URL, {
     headers,
-    data: { cart_ids: cartId }
+    data: { cart_ids: cart_ids }
   });
 
-  return response;
-};
-export const ReservationApi = async (accessToken: string, cartId: number[]) => {
-  const API_URL = `${API_BASE_URL}/carts`;
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${accessToken}`
-  };
-
-  const response = await axios.post(API_URL, { cart_id: cartId }, { headers });
-
-  return response;
+  return response.data;
 };
