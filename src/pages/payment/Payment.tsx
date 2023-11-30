@@ -3,7 +3,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
 import { useUserInfo } from "@hooks/useUserInfoQuery";
 import { usePayment } from "@hooks/usePaymentQuery";
-정import { Collapse, Text } from "@chakra-ui/react";
+import { Collapse, Text } from "@chakra-ui/react";
 import * as styles from "./Payment.styles";
 import DiffUserInfoForm from "@components/Orders/DiffUserInfoForm/DiffUserInfoForm.tsx";
 import ReservationInfo from "@components/Orders/ReservationInfo/ReservationInfo";
