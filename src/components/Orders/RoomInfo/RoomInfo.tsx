@@ -14,7 +14,16 @@ import { RoomInfoProps } from "./RoomInfo.types";
 const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
   if (!roomInfo) return null;
 
-  const nights = calculateNights(roomInfo.checkInDate!, roomInfo.checkOutDate!);
+  const checkInDate = roomInfo.checkIn?.split(" ")[0] || roomInfo.checkInDate;
+  const checkInTime = roomInfo.checkIn?.split(" ")[1] || roomInfo.checkInTime;
+  const checkOutDate =
+    roomInfo.checkOut?.split(" ")[0] || roomInfo.checkOutDate;
+  const checkOutTime =
+    roomInfo.checkOut?.split(" ")[1] || roomInfo.checkOutTime;
+
+  console.log(checkInDate);
+
+  const nights = calculateNights(checkInDate!, checkOutDate!);
 
   return (
     <Box width="full">
@@ -27,18 +36,18 @@ const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
             체크인
           </Text>
           <Text fontSize="md" fontWeight="bold">
-            {roomInfo.checkInDate}
+            {checkInDate}
           </Text>
-          <Text fontSize="lg">{roomInfo.checkInTime}</Text>
+          <Text fontSize="lg">{checkInTime}</Text>
         </GridItem>
         <GridItem>
           <Text fontSize="sm" color="gray.500">
             체크아웃
           </Text>
           <Text fontSize="md" fontWeight="bold">
-            {roomInfo.checkOutDate}
+            {checkOutDate}
           </Text>
-          <Text fontSize="lg">{roomInfo.checkOutTime}</Text>
+          <Text fontSize="lg">{checkOutTime}</Text>
         </GridItem>
         <GridItem colSpan={2}>
           <HStack justifyContent="space-between" width="full">

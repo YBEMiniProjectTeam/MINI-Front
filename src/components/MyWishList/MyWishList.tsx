@@ -8,7 +8,6 @@ import { FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
 import { useDeleteWish } from "@hooks/useWishMutation";
-import { toast } from "react-hot-toast";
 
 const MyWishList = () => {
   const navigate = useNavigate();
@@ -48,7 +47,10 @@ const MyWishList = () => {
   }, [data]);
 
   const handleLikeClick = (index: number, accommodationId: number) => {
-    const updatedWishList = wishList.filter((item, i) => i !== index);
+    const updatedWishList = wishList.filter((item, i) => {
+      i !== index;
+      console.log(item);
+    });
 
     setWishList(updatedWishList);
 

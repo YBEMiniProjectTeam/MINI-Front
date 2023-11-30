@@ -66,7 +66,7 @@ const CompletePayment = () => {
             hotelName={accommodation.accommodation_name}
           >
             <RoomInfo
-              key={accommodation.room_info.room_name}
+              key={accommodation.room_info.roomName}
               roomInfo={accommodation.room_info}
             />
           </ReservationInfo>
