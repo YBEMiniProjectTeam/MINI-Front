@@ -55,8 +55,6 @@ const MyWishList = () => {
 
     setWishList(updatedWishList);
 
-    // post 요청 필요
-
     deleteWish({ accommodationId, headers });
   };
 
