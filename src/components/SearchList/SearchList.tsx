@@ -15,7 +15,7 @@ import {
   categoryState,
   isRefetchedState
 } from "@recoil/searchStates";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { usePostWish, useDeleteWish } from "@hooks/useWishMutation";
 import { sliceAccommodationName } from "@utils/sliceAccommodationName";
 import { formatPrice } from "@utils/priceFormatter";
@@ -27,7 +27,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
   const { startDate, endDate } = useRecoilValue(checkInAndOutDateState);
   const selectedDistrict = useRecoilValue(districtState);
   const selectedCategory = useRecoilValue(categoryState);
-  const [isRefetched] = useRecoilState(isRefetchedState);
+  const isRefetched = useRecoilValue(isRefetchedState);
 
   const [searchList, setSearchList] = useState<Accommodation[]>([]);
   const [page, setPage] = useState(1);
