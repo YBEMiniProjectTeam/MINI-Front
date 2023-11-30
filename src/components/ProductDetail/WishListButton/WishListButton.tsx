@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { getAuthLocalStorage } from "@/utils/getAuthLocalStorage";
-import { usePostWish } from "@/hooks/useWishMutation";
-import { useDeleteWish } from "@/hooks/useWishMutation";
+import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
+import { usePostWish } from "@hooks/useWishMutation";
+import { useDeleteWish } from "@hooks/useWishMutation";
 import { WishListButtonProps } from "./WishListButton.types";
 import { Box } from "@chakra-ui/react";
 import { GoHeart } from "react-icons/go";

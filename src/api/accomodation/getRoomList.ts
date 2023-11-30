@@ -1,11 +1,13 @@
 import axios from "axios";
+import { API_BASE_URL } from "@api/config";
 
 const getRoomList = async (
-  startDate: string,
-  endDate: string,
+  id: number,
+  checkInDate: string,
+  checkOutDate: string,
   guestNum: number
 ) => {
-  const GET_ROOM_LIST_URL = `https://api.anti-bias.kr/api/accommodations/1/rooms?start_date=${startDate}&end_date=${endDate}&guest_num=${guestNum}`;
+  const GET_ROOM_LIST_URL = `${API_BASE_URL}/accommodations/${id}/rooms?start_date=${checkInDate}&end_date=${checkOutDate}&guest_num=${guestNum}`;
   const response = await axios.get(GET_ROOM_LIST_URL);
 
   return response.data.data.rooms;

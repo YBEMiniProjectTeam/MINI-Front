@@ -26,6 +26,7 @@ export const Title = styled.div`
 export const Description = styled.div`
   line-height: 18px;
   color: #4D4D4D;
+  margin-top: 0.5rem;
 `;
 
 export const MoreButtonWrapper = styled.div`
@@ -71,16 +72,16 @@ const ArrowButtonWrapper = styled.button`
 
   &:hover {
     cursor: pointer;
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.7);
   }
 `;
 
 export const LeftArrowButtonWrapper = styled(ArrowButtonWrapper)`
-  left: 12px;
+  left: 3px;
 `;
 
 export const RightArrowButtonWrapper = styled(ArrowButtonWrapper)`
-  right: 12px;
+  right: 16px;
 `;
 
 export const StyledSlider = styled(Slider)`

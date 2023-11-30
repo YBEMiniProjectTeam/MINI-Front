@@ -1,5 +1,5 @@
 import { getAuthLocalStorage } from "@utils/getAuthLocalStorage.ts";
-import React, { useEffect, useState, Suspense } from "react";
+import { useEffect, useState, Suspense } from "react";
 import * as styles from "./SearchList.styles";
 import { Accommodation, SearchListProps } from "./SearchList.types";
 import { Box, Image, Icon, Tag, Text, Spinner } from "@chakra-ui/react";
@@ -10,10 +10,15 @@ import { useNavigate } from "react-router-dom";
 import { convertDateFormat4 } from "@utils/convertDateFormat4";
 import { debounce } from "lodash";
 import { checkInAndOutDateState } from "@recoil/checkInAndOutDate";
-import { districtState, categoryState } from "@recoil/searchStates";
-import { useRecoilValue } from "recoil";
+import {
+  districtState,
+  categoryState,
+  isRefetchedState
+} from "@recoil/searchStates";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { usePostWish, useDeleteWish } from "@hooks/useWishMutation";
 import { sliceAccommodationName } from "@utils/sliceAccommodationName";
+import { formatPrice } from "@utils/priceFormatter";
 
 const SearchList = ({ keyword }: SearchListProps) => {
   const navigate = useNavigate();
@@ -21,6 +26,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
   const { startDate, endDate } = useRecoilValue(checkInAndOutDateState);
   const selectedDistrict = useRecoilValue(districtState);
   const selectedCategory = useRecoilValue(categoryState);
+  const [isRefetched, setIsRefetched] = useRecoilState(isRefetchedState);
 
   const [searchList, setSearchList] = useState<Accommodation[]>([]);
   const [page, setPage] = useState(1);
@@ -58,12 +64,19 @@ const SearchList = ({ keyword }: SearchListProps) => {
 
   useEffect(() => {
     setSearchList((prevSearchList) => [
-      // ...prevSearchList,
+      ...prevSearchList,
       ...data.accommodations
     ]);
     setTotalPage(data.total_pages);
     setIsLoadingMore(false);
-  }, [data]);
+  }, [page]);
+
+  useEffect(() => {
+    setSearchList(() => [...data.accommodations]);
+    setTotalPage(data.total_pages);
+    setIsLoadingMore(false);
+    setIsRefetched(false);
+  }, [isRefetched]);
 
   const handleLikeClick = (index: number, accommodationId: number) => {
     if (!accessTokenCookie) {
@@ -121,6 +134,11 @@ const SearchList = ({ keyword }: SearchListProps) => {
         </styles.SpinnerWrapper>
       }
     >
+      {searchList?.length === 0 ? (
+        <Text textAlign="center" mt="1rem">
+          검색 결과가 없습니다.
+        </Text>
+      ) : null}
       {searchList?.map((accomodation, index) => (
         <Box
           key={index}
@@ -173,12 +191,13 @@ const SearchList = ({ keyword }: SearchListProps) => {
             {accomodation.type !== "NOT_CLASSIFIED" && (
               <Tag
                 size="md"
-                variant="outline"
+                variant="solid"
                 color="white"
                 position="absolute"
                 bottom="1rem"
                 left="1rem"
                 userSelect="none"
+                backgroundColor="rgba(0, 0, 0, 0.5)"
               >
                 {accomodation.type}
               </Tag>
@@ -224,7 +243,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
                 mr="0.3rem"
               >
                 {accomodation.min_price !== 0
-                  ? accomodation.min_price
+                  ? formatPrice(accomodation.min_price)
                   : "정보 없음"}
               </Text>
               <Text>{accomodation.min_price !== 0 ? "원" : ""}</Text>

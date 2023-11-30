@@ -2,18 +2,27 @@ import { getCompletedPaymentInfo } from "@api/getCompletedPaymentInfo.ts";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 export interface Reservation {
-  reservation_name: string;
+  reservation_user_name?: string;
+  reservation_user_email?: string;
+  guest_name: string;
   accommodation_name: string;
+  accommodation_type: string;
   room_info: RoomInfo;
+  accommodation_thumbnail_url: string;
 }
 
 export interface RoomInfo {
-  room_name: string;
+  quantity?: number;
+  accommodationThumbnailUrl?: string;
+  roomName: string;
   price: number;
-  check_in: string;
-  check_out: string;
+  checkOutDate: string;
+  checkInDate: string;
+  checkInTime: string;
+  checkOutTime: string;
   capacity: number;
-  capacity_max: number;
+  capacityMax: number;
+  accommodationType: string;
 }
 
 export interface ReservationData {
@@ -41,7 +50,7 @@ const encodeReservationData = (
     {
       key: "label",
       label: "객실",
-      value: reservation.room_info.room_name
+      value: reservation.room_info.roomName
     },
     {
       key: "price",
@@ -60,8 +69,9 @@ const encodeTotalPrice = (reservations: Reservation[]) => {
 };
 
 const encodeReservationName = (reservations: Reservation[]): string => {
-  const reservationName = reservations[0]?.reservation_name || "N/A";
-  return reservationName;
+  const reservationName =
+    reservations[0].guest_name || reservations[0].reservation_user_name;
+  return reservationName!;
 };
 
 export const useCompletedPayment = (
