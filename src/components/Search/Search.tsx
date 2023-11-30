@@ -26,7 +26,11 @@ import ChooseRegionModal from "../ChooseRegionModal/ChooseRegionModal";
 import ChooseDateModal from "../ChooseDateModal/ChooseDateModal";
 import { useSearchList } from "@hooks/useSearchList";
 import { checkInAndOutDateState } from "@recoil/checkInAndOutDate";
-import { districtState, categoryState } from "@recoil/searchStates";
+import {
+  districtState,
+  categoryState,
+  isRefetchedState
+} from "@recoil/searchStates";
 import { useSetRecoilState } from "recoil";
 
 const Search = ({ keyword, category, region }: SearchProps) => {
@@ -59,6 +63,7 @@ const Search = ({ keyword, category, region }: SearchProps) => {
   const setCheckInAndOutDateState = useSetRecoilState(checkInAndOutDateState);
   const setDistrictState = useSetRecoilState(districtState);
   const setCategoryState = useSetRecoilState(categoryState);
+  const setIsRefetched = useSetRecoilState(isRefetchedState);
 
   const { refetch } = useSearchList(
     accommodationName,
@@ -139,6 +144,7 @@ const Search = ({ keyword, category, region }: SearchProps) => {
   };
 
   const handleSearchClick = () => {
+    setIsRefetched(true);
     refetch();
   };
 
