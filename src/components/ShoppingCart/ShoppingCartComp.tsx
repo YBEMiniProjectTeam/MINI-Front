@@ -10,7 +10,6 @@ import {
 
 import { Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import { Accommodation } from "./ShoppinCart.types";
 
 export const ShoppingCartComp = (): JSX.Element => {
@@ -33,9 +32,7 @@ export const ShoppingCartComp = (): JSX.Element => {
       setAccessToken(access);
       fetchData(access);
     } else {
-      Swal.fire("잘못된 접근입니다.").then(() => {
-        navigate(-1);
-      });
+      navigate("/notFound");
     }
   }, [accessToken, navigate]);
 

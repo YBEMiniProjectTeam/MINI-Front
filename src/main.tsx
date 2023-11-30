@@ -10,6 +10,7 @@ import initMockAPI from "@mocks/index";
 import { Suspense } from "react";
 import { RecoilRoot } from "recoil";
 import Fonts from "@theme/Fonts.tsx";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient();
 
@@ -24,7 +25,7 @@ deferRender().then(() => {
   ReactDOM.createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={true} />
-
+      <Toaster />
       <ChakraProvider theme={theme}>
         <Fonts />
         <CookiesProvider>

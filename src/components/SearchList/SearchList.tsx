@@ -13,7 +13,6 @@ import { checkInAndOutDateState } from "@recoil/checkInAndOutDate";
 import { districtState, categoryState } from "@recoil/searchStates";
 import { useRecoilValue } from "recoil";
 import { usePostWish, useDeleteWish } from "@hooks/useWishMutation";
-import Swal from "sweetalert2";
 
 const SearchList = ({ keyword }: SearchListProps) => {
   const navigate = useNavigate();
@@ -67,12 +66,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
 
   const handleLikeClick = (index: number, accommodationId: number) => {
     if (!accessTokenCookie) {
-      Swal.fire({
-        icon: "error",
-        text: "로그인이 필요한 서비스입니다.",
-        footer: '<a href="/login">로그인하러 가기</a>'
-      });
-      return;
+      navigate("/notLogin");
     }
     const updatedSearchList = [...searchList];
 
