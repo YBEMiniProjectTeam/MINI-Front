@@ -33,7 +33,11 @@ export const ShoppingCartList = (props: CartListProps): JSX.Element => {
                 </div>
 
                 <div>
-                  <img src={room.accommodationThumbnailUrl} alt="이미지" />
+                  <img
+                    src={room.accommodationThumbnailUrl}
+                    loading="lazy"
+                    alt="이미지"
+                  />
                 </div>
                 <div>
                   <span>2023-11-24</span>
