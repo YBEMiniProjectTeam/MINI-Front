@@ -59,8 +59,8 @@ export const AccommodationGridView = () => {
       <styled.GridViewWrapper>
         <MainViewTitleWrapper>
           <MainViewTitle>
-            <Title>제주도</Title>
-            <Description>나랑 귤 따러 가지 않을래? 🍊</Description>
+            <Title>상큼한 제주</Title>
+            <Description>제철 귤 따러 제주로 떠나보세요! 🍊</Description>
           </MainViewTitle>
         </MainViewTitleWrapper>
         <styled.Border />
