@@ -10,8 +10,8 @@ const theme = extendTheme(
       })
     },
     fonts: {
-      heading: `'Pretendard-Regular', sans-serif`,
-      body: `'Pretendard-Regular', sans-serif`
+      heading: `'Pretendard', sans-serif`,
+      body: `'Pretendard', sans-serif`
     }
   },
   withDefaultColorScheme({
