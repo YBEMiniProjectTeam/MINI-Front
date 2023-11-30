@@ -10,6 +10,7 @@ import { formatPrice } from "@utils/priceFormatter";
 import { Button } from '@chakra-ui/react'
 import { useNavigateToResultPage } from "@/hooks/useNavigateToResultPage";
 import { useNavigateToDetailPage } from "@/hooks/useNavigateToDetailPage";
+import { sliceAccommodationName } from "@/utils/sliceAccommodationName";
 
 export const AccommodationSingleView = () => {
   const { navigateToResultPage } = useNavigateToResultPage();
@@ -39,13 +40,13 @@ export const AccommodationSingleView = () => {
   };
 
   const { data, error } = useSearchList(
-    null,
-    null,
-    null,
-    null,
+    '',
+    '',
+    '2023-11-30',
+    '2023-12-01',
     '호텔',
-    4,
-    10
+    36,
+    50
   );
 
   if (error) {
@@ -78,7 +79,7 @@ export const AccommodationSingleView = () => {
             <styled.Title>호캉스</styled.Title>
             <styled.Description>지친 이번주, 호캉스는 어떠세요?</styled.Description>
           </styled.MainViewTitle>
-          <styled.MoreButtonWrapper onClick={() => navigateToResultPage('hotel', '')}>
+          <styled.MoreButtonWrapper onClick={() => navigateToResultPage('호텔', '')}>
             <Button
               color="#666666"
               background="white"
@@ -105,7 +106,7 @@ export const AccommodationSingleView = () => {
               {data?.accommodations?.[currentSlide].region} | {printCategory(data?.accommodations?.[currentSlide].type)}
             </styled.InformationRegion>
             <styled.InformationName>
-              {data?.accommodations?.[currentSlide].name}
+              {sliceAccommodationName(data?.accommodations?.[currentSlide].name)}
             </styled.InformationName>
             <div>
               <styled.InformationPrice>

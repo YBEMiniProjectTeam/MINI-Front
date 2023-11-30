@@ -2,7 +2,7 @@ import * as styled from "./AccommodationGridView.styles";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { MainViewTitleWrapper, MainViewTitle, Title, Description } from "../AccommodationSingleView/AccommodationSingleView.styles";
 import { AccommodationGridItem } from "./AccommodationGridItem";
-import { Suspense, startTransition, useState } from "react";
+import { Suspense, startTransition, useEffect, useState } from "react";
 import { useSearchList } from "@/hooks/useSearchList";
 import { Accommodation } from "./AccommodationGridView.types";
 import { printCategory } from "@/utils/printCategory";
@@ -11,7 +11,7 @@ import { useNavigateToResultPage } from "@/hooks/useNavigateToResultPage";
 
 export const AccommodationGridView = () => {
   const { navigateToResultPage } = useNavigateToResultPage();
-  const [activeTab, setActiveTab] = useState('pension'); 
+  const [activeTab, setActiveTab] = useState('펜션'); 
   
   const handleTabClick = (tab: string) => {
     startTransition(() => { 
@@ -19,19 +19,25 @@ export const AccommodationGridView = () => {
     });
   };
 
-  const { data, error } = useSearchList(
-    '제주', 
-    null,
-    null,
-    null,
+  const { data, error, refetch } = useSearchList(
+    '',
+    '서귀포시', 
+    '2023-11-30',
+    '2023-12-01',
     activeTab, // TODO: 쿼리 스트링 수정되면 데이터 잘 바뀌는지 확인
-    0,
-    4
+    2,
+    25
   );
 
   if (error) {
     console.error("[ERROR] ", error.message);
   }
+
+  // console.log(data);
+
+  useEffect(() => {
+    refetch();
+  }, [activeTab])
 
   return (
     <Suspense
@@ -56,15 +62,15 @@ export const AccommodationGridView = () => {
       <styled.CategoryTapWrapper>
         <styled.CategoryTapContainer>
           <styled.CategoryTap>
-            <styled.CategoryTapItem onClick={() => handleTabClick('pension')}>
-              <styled.TabItem $isActive={activeTab === 'pension'} onClick={() => handleTabClick('pension')}>
-                {activeTab === 'pension' && <styled.ActivedBar />}
+            <styled.CategoryTapItem onClick={() => handleTabClick('펜션')}>
+              <styled.TabItem $isActive={activeTab === '펜션'} onClick={() => handleTabClick('펜션')}>
+                {activeTab === '펜션' && <styled.ActivedBar />}
                 펜션
               </styled.TabItem>
             </styled.CategoryTapItem>
-            <styled.CategoryTapItem onClick={() => handleTabClick('hotel')}>
-              <styled.TabItem $isActive={activeTab === 'hotel'}>
-                {activeTab === 'hotel' && <styled.ActivedBar />}
+            <styled.CategoryTapItem onClick={() => handleTabClick('호텔')}>
+              <styled.TabItem $isActive={activeTab === '호텔'}>
+                {activeTab === '호텔' && <styled.ActivedBar />}
                 호텔
               </styled.TabItem>
             </styled.CategoryTapItem>
@@ -84,7 +90,7 @@ export const AccommodationGridView = () => {
           />
         ))}
       </styled.GridWrapper>
-      <styled.MoreButtonWrapper onClick={() => navigateToResultPage(activeTab, 'jeju')}>
+      <styled.MoreButtonWrapper onClick={() => navigateToResultPage(activeTab, '서귀포시')}>
         <Button
           color="#666666"
           bg="white"
