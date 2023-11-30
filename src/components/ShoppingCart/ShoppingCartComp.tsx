@@ -14,6 +14,7 @@ import { useDeleteCart } from "@hooks/cart/useDeleteCartMutation";
 
 import { useQuantityCart } from "@hooks/cart/useQuantityCartMutation";
 
+import { formatPrice } from "./../../utils/priceFormatter";
 export const ShoppingCartComp = (): JSX.Element => {
   const [price, setPrice] = useState(0);
 
@@ -183,7 +184,7 @@ export const ShoppingCartComp = (): JSX.Element => {
             <span className="colorGray">상품 금액</span>
           </div>
           <div>
-            <span className="colorGray">{price}</span>
+            <span className="colorGray">{formatPrice(price)}</span>
           </div>
         </div>
         <div className="roomPrice expectedPayment">
@@ -191,7 +192,7 @@ export const ShoppingCartComp = (): JSX.Element => {
             <span>결제 예상 금액</span>
           </div>
           <div>
-            <span>{price}</span>
+            <span>{formatPrice(price)}</span>
           </div>
         </div>
 
