@@ -6,50 +6,40 @@ import theme from "./theme/index";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { CookiesProvider } from "react-cookie";
-import initMockAPI from "@mocks/index";
 import { Suspense } from "react";
 import { RecoilRoot } from "recoil";
 
 const queryClient = new QueryClient();
 
-async function deferRender() {
-  if (!import.meta.env.DEV) {
-    return;
-  }
-  await initMockAPI();
-}
-
-deferRender().then(() => {
-  ReactDOM.createRoot(document.getElementById("root")!).render(
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={true} />
-      <ChakraProvider theme={theme}>
-        <CookiesProvider>
-          <Suspense
-            fallback={
-              <Box
-                width="100vw"
-                height="100vh"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Spinner
-                  thickness="4px"
-                  speed="0.65s"
-                  emptyColor="gray.200"
-                  size="xl"
-                />
-              </Box>
-            }
-          >
-            <RecoilRoot>
-              <GlobalStyles />
-              <App />
-            </RecoilRoot>
-          </Suspense>
-        </CookiesProvider>
-      </ChakraProvider>
-    </QueryClientProvider>
-  );
-});
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <QueryClientProvider client={queryClient}>
+    <ReactQueryDevtools initialIsOpen={true} />
+    <ChakraProvider theme={theme}>
+      <CookiesProvider>
+        <Suspense
+          fallback={
+            <Box
+              width="100vw"
+              height="100vh"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Spinner
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="gray.200"
+                size="xl"
+              />
+            </Box>
+          }
+        >
+          <RecoilRoot>
+            <GlobalStyles />
+            <App />
+          </RecoilRoot>
+        </Suspense>
+      </CookiesProvider>
+    </ChakraProvider>
+  </QueryClientProvider>
+);
