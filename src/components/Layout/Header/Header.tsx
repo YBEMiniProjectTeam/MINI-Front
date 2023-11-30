@@ -88,9 +88,6 @@ export const Header = (): JSX.Element => {
                       <Link to="/shoppingCart">
                         <li>장바구니</li>
                       </Link>
-                      <div onClick={handleClickLogoutButton}>
-                        <li>로그아웃</li>
-                      </div>
                       <Link to="/" onClick={handleClickLogoutButton}>
                         <li>로그아웃</li>
                       </Link>

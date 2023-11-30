@@ -45,13 +45,17 @@ export const ShoppingCartComp = (): JSX.Element => {
     if (data) {
       data.data.map((hotel: Accommodation) => {
         hotel.room_infos.map((room: RoomInfo) => {
-          totalPrice += room.quantity * room.price;
+          cartIdList.map((cartId) => {
+            if (room.cartId == cartId) {
+              totalPrice += room.quantity * room.price;
+            }
+          });
         });
       });
     }
 
     setPrice(totalPrice);
-  }, [data]);
+  }, [data, cartIdList]);
 
   const handleCheckAllRooms = (): void => {
     const newArr: number[] = [];
