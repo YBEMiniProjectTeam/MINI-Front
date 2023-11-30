@@ -12,7 +12,7 @@ export interface Reservation {
 }
 
 export interface RoomInfo {
-  quantity?: number;
+  quantity: number;
   accommodationThumbnailUrl?: string;
   roomName: string;
   price: number;
@@ -59,11 +59,13 @@ const encodeReservationData = (
     }
   ]);
 };
-
 const encodeTotalPrice = (reservations: Reservation[]) => {
   const totalPrice = reservations.reduce((total, reservation) => {
-    return total + reservation.room_info.price;
+    console.log(reservation.room_info.quantity);
+    return total + reservation.room_info.price * reservation.room_info.quantity;
   }, 0);
+
+  console.log("Total Price:", totalPrice);
 
   return totalPrice;
 };

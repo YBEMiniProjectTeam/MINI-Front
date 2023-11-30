@@ -40,8 +40,8 @@ export const Payment = () => {
     <styles.Container>
       <FormProvider {...methods}>
         <Card>
-          <Text fontSize="lg" fontWeight={700}>
-            예약하기
+          <Text fontSize="25px" fontWeight={700} padding="0.5rem 1rem 1rem">
+            결제하기
           </Text>
           {dummyData.map((accommodation, index) =>
             accommodation.room_infos.map((room, roomIndex) => (
