@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 
 import { HeaderInput } from "./HeaderInput";
 import { useRecoilState } from "recoil";
-import { loginUrlState } from "@recoil/loginUrl";
+import { loginUrlState, loginUrlSearchState } from "@recoil/loginUrl";
 import { useLogoutMutation } from "@hooks/login/useLoginMutation";
 
 export const Header = (): JSX.Element => {
@@ -16,7 +16,9 @@ export const Header = (): JSX.Element => {
 
   const [accessToken, setAccessToken] = useState<string | undefined>();
 
-  const [_, setLoginUrl] = useRecoilState(loginUrlState);
+  const [, setLoginUrl] = useRecoilState(loginUrlState);
+
+  const [, setLoginSearchUrl] = useRecoilState(loginUrlSearchState);
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -31,10 +33,11 @@ export const Header = (): JSX.Element => {
     if (accesstkoen) {
       setAccessToken(accesstkoen);
     }
-  }, [location.pathname, accessToken]);
+  }, [location.pathname, location.search, accessToken]);
 
   const handleClickLogin = (): void => {
     setLoginUrl(location.pathname);
+    setLoginSearchUrl(location.search);
   };
   const { mutate: logoutMutate } = useLogoutMutation();
 
