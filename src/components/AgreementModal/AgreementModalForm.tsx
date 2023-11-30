@@ -1,7 +1,7 @@
 import * as S from "./AgreementModalStyles";
 import { Checkbox, Button } from "@chakra-ui/react";
 import { useState, useRef } from "react";
-import Swal from "sweetalert2";
+import { toast } from "react-hot-toast";
 
 export const AgreementModalForm = (props: {
   setIsShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -26,11 +26,7 @@ export const AgreementModalForm = (props: {
       props.setIsShowModal(false);
       props.setIsAgreement(true);
     } else {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "약관에 동의해주세요"
-      });
+      toast.error("약관에 동의해주세요.");
     }
   };
   return (

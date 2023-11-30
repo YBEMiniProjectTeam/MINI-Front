@@ -6,9 +6,11 @@ import { WishListButtonProps } from "./WishListButton.types";
 import { Box } from "@chakra-ui/react";
 import { GoHeart } from "react-icons/go";
 import { GoHeartFill } from "react-icons/go";
-import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const WishListButton = ({ id, wish }: WishListButtonProps): JSX.Element => {
+  const navigate = useNavigate();
+
   const [isWish, setIsWish] = useState(wish);
   const { accessTokenCookie, headers } = getAuthLocalStorage();
   const { mutate: postWish } = usePostWish();
@@ -16,12 +18,7 @@ const WishListButton = ({ id, wish }: WishListButtonProps): JSX.Element => {
 
   const handleWishButton = (accommodationId: number) => {
     if (!accessTokenCookie) {
-      Swal.fire({
-        icon: "error",
-        text: "로그인이 필요한 서비스입니다.",
-        footer: '<a href="/login">로그인하러 가기</a>'
-      });
-      return;
+      navigate("/notLogin");
     }
     if (isWish) {
       deleteWish({ accommodationId, headers });

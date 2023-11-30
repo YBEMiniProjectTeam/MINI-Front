@@ -13,6 +13,7 @@ import { ReservationDetails } from "@pages/reservationDetails/ReservationDetails
 import { WishList } from "@pages/wishList/WishList";
 import Layout from "@components/Layout/Layout";
 import { NotFound } from "@pages/notFound/NotFound";
+import { NotLogin } from "@pages/notLogin/notLogin";
 
 const router = createBrowserRouter([
   {
@@ -33,7 +34,9 @@ const router = createBrowserRouter([
         path: "reservations/:reservationNumber",
         element: <ReservationDetails />
       },
-      { path: "wishList", element: <WishList /> }
+      { path: "wishList", element: <WishList /> },
+      { path: "notLogin", element: <NotLogin /> },
+      { path: "notFound", element: <NotFound /> }
     ]
   },
   { path: "*", element: <NotFound /> }

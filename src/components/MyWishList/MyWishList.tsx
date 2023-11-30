@@ -8,7 +8,7 @@ import { FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
 import { useDeleteWish } from "@hooks/useWishMutation";
-import Swal from "sweetalert2";
+import { toast } from "react-hot-toast";
 
 const MyWishList = () => {
   const navigate = useNavigate();
@@ -23,12 +23,7 @@ const MyWishList = () => {
   const { accessTokenCookie, headers } = getAuthLocalStorage();
 
   if (!accessTokenCookie) {
-    Swal.fire({
-      icon: "error",
-      text: "로그인이 필요한 서비스입니다.",
-      footer: '<a href="/login">로그인하러 가기</a>'
-    });
-    return;
+    navigate("/notLogin");
   }
 
   const { mutate: deleteWish } = useDeleteWish();

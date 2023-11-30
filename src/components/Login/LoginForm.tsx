@@ -4,15 +4,17 @@ import { FormControl, FormHelperText, Input, Button } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import type { Login } from "./Login.types";
 import { LoginApi } from "@api/login/LoginApi";
-import Swal from "sweetalert2";
 import { useCookies } from "react-cookie";
+// import Swal from "sweetalert2";
+import { toast } from "react-hot-toast";
 
 export const LoginForm = (): JSX.Element => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isEmailText, setIsEmailText] = useState(false);
   const [isPasswordText, setIsPasswordText] = useState(false);
-  const navigate = useNavigate();
 
   const [cookies] = useCookies(["access-token"]);
 
@@ -28,13 +30,14 @@ export const LoginForm = (): JSX.Element => {
     //   });
     // }
     if (localStorage.getItem("access-token")) {
-      Swal.fire({
-        icon: "error",
-        title: "잘못된 요청입니다.",
-        text: "로그인이 된 상태면 해당 페이지에 들어갈 수 없습니다."
-      }).then(() => {
-        navigate(-1);
-      });
+      // Swal.fire({
+      //   icon: "error",
+      //   title: "잘못된 요청입니다.",
+      //   text: "로그인이 된 상태면 해당 페이지에 들어갈 수 없습니다."
+      // }).then(() => {
+      //   navigate(-1);
+      // });
+      navigate("/");
     }
   }, [cookies, navigate]);
 
@@ -74,17 +77,9 @@ export const LoginForm = (): JSX.Element => {
       localStorage.setItem("access-token", data.data.accessToken);
       navigate("/");
     } else if (data.statusCode === 400) {
-      Swal.fire({
-        icon: "error",
-        title: "로그인에 실패했습니다.",
-        text: "아이디나 비밀번호가 잘못되었습니다."
-      });
+      toast.error("아이디나 비밀번호가 잘못되었습니다.");
     } else if (data.statusCode === 500) {
-      Swal.fire({
-        icon: "error",
-        title: "서버에러.",
-        text: "잠시후 다시 입력해주세요!"
-      });
+      toast.error("잠시후 다시 입력해주세요!");
     }
   };
   return (

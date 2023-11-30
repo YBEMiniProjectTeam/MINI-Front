@@ -11,7 +11,6 @@ import {
 import { useCookies } from "react-cookie";
 import { Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import { Accommodation } from "./ShoppinCart.types";
 
 // const initialData: Accommodation[] = [
@@ -89,9 +88,7 @@ export const ShoppingCartComp = (): JSX.Element => {
     if (cookies["access-token"]) {
       setAccessToken(cookies["access-token"]);
     } else {
-      Swal.fire("잘못된 접근입니다.").then(() => {
-        navigate(-1);
-      });
+      navigate("/notFound");
     }
   }, [cookies]);
 
