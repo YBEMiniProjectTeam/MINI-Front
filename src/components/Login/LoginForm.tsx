@@ -7,6 +7,8 @@ import { LoginApi } from "@api/login/LoginApi";
 import { useCookies } from "react-cookie";
 // import Swal from "sweetalert2";
 import { toast } from "react-hot-toast";
+import { useRecoilState } from "recoil";
+import { loginUrlState } from "@recoil/loginUrl";
 
 export const LoginForm = (): JSX.Element => {
   const navigate = useNavigate();
@@ -18,25 +20,10 @@ export const LoginForm = (): JSX.Element => {
 
   const [cookies] = useCookies(["access-token"]);
 
+  const [loginUrl] = useRecoilState(loginUrlState);
+
   useEffect(() => {
-    // 테스트를 위한 주석
-    // if (cookies["access-token"]) {
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "잘못된 요청입니다.",
-    //     text: "로그인이 된 상태면 해당 페이지에 들어갈 수 없습니다."
-    //   }).then(() => {
-    //     navigate(-1);
-    //   });
-    // }
     if (localStorage.getItem("access-token")) {
-      // Swal.fire({
-      //   icon: "error",
-      //   title: "잘못된 요청입니다.",
-      //   text: "로그인이 된 상태면 해당 페이지에 들어갈 수 없습니다."
-      // }).then(() => {
-      //   navigate(-1);
-      // });
       navigate("/");
     }
   }, [cookies, navigate]);
@@ -75,7 +62,7 @@ export const LoginForm = (): JSX.Element => {
 
     if (data.statusCode === 200) {
       localStorage.setItem("access-token", data.data.accessToken);
-      navigate("/");
+      navigate(loginUrl);
     } else if (data.statusCode === 400) {
       toast.error("아이디나 비밀번호가 잘못되었습니다.");
     } else if (data.statusCode === 500) {

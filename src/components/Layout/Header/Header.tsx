@@ -3,7 +3,8 @@ import * as S from "./Header.styles";
 import { Link, useLocation } from "react-router-dom";
 
 import { HeaderInput } from "./HeaderInput";
-// import { useCookies } from "react-cookie";
+import { useRecoilState } from "recoil";
+import { loginUrlState } from "@recoil/loginUrl";
 
 export const Header = (): JSX.Element => {
   const [isSubMenuVisible, setSubMenuVisible] = useState(false);
@@ -14,14 +15,7 @@ export const Header = (): JSX.Element => {
 
   const [accessToken, setAccessToken] = useState<string | undefined>();
 
-  // 쿠키값 조회 부분 주석처리.
-  // const [cookies, , removeCookie] = useCookies(["access-token"]);
-
-  // const handleClickLogoutButton = (): void => {
-  //   if (cookies["access-token"]) {
-  //     removeCookie("access-token");
-  //   }
-  // };
+  const [_, setLoginUrl] = useRecoilState(loginUrlState);
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -32,14 +26,16 @@ export const Header = (): JSX.Element => {
       setIsShowInput(true);
     }
 
-    // setAccessToken(cookies["access-token"]); 임시 주석
     const accesstkoen = localStorage.getItem("access-token");
     if (accesstkoen) {
       setAccessToken(accesstkoen);
     }
   }, [location.pathname, accessToken]);
 
-  // 임시 테스트용 함수
+  const handleClickLogin = (): void => {
+    setLoginUrl(location.pathname);
+  };
+
   const handleClickLogoutButton = (): void => {
     if (accessToken) {
       localStorage.removeItem("access-token");
@@ -57,7 +53,7 @@ export const Header = (): JSX.Element => {
 
         <div className="menuContainer">
           {accessToken ? null : (
-            <Link to={"/login"}>
+            <Link to={"/login"} onClick={handleClickLogin}>
               <div className="menuWrap">로그인/회원가입</div>
             </Link>
           )}

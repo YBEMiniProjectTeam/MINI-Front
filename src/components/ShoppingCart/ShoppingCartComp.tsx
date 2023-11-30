@@ -11,7 +11,7 @@ import {
 import { Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { Accommodation } from "./ShoppinCart.types";
-
+import { toast } from "react-hot-toast";
 export const ShoppingCartComp = (): JSX.Element => {
   const [data, setData] = useState<Accommodation[]>([]);
 
@@ -19,7 +19,6 @@ export const ShoppingCartComp = (): JSX.Element => {
 
   const [isCheckAllBox, setIsCheckAllBox] = useState(false);
 
-  // const [cookies] = useCookies(["access-token"]);
   const [accessToken, setAccessToken] = useState<string>("");
   const [cartIdList, setCartIdList] = useState<number[]>([]);
 
@@ -124,7 +123,7 @@ export const ShoppingCartComp = (): JSX.Element => {
         .join("&");
       navigate(`/orders?${queryString}`);
     } else {
-      Swal.fire("장바구니에 물건을 담아주세요");
+      toast.error("장바구니에 물건을 담아주세요!");
     }
   };
 
