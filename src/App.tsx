@@ -13,7 +13,7 @@ import { ReservationDetails } from "@pages/reservationDetails/ReservationDetails
 import { WishList } from "@pages/wishList/WishList";
 import Layout from "@components/Layout/Layout";
 import { NotFound } from "@pages/notFound/NotFound";
-import { NotLogin } from "@pages/notLogin/notLogin";
+import { NotLogin } from "@pages/notLogin/NotLogin";
 
 const router = createBrowserRouter([
   {
