@@ -60,7 +60,7 @@ const Search = ({ keyword, category, region }: SearchProps) => {
   const setDistrictState = useSetRecoilState(districtState);
   const setCategoryState = useSetRecoilState(categoryState);
 
-  const { refetch } = useSearchList(
+  const { data, refetch } = useSearchList(
     accommodationName,
     selectedDistrict,
     startDate,
@@ -101,6 +101,10 @@ const Search = ({ keyword, category, region }: SearchProps) => {
 
     setCheckInAndOutDateState(newCheckInAndOutDate);
   }, [startDate, endDate]);
+
+  useEffect(() => {
+    setIsRefetched(true);
+  }, [data]);
 
   // if (category) {
   //   switch (category) {
