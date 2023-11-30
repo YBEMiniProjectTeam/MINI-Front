@@ -14,31 +14,31 @@ export const MainCategoryMenu = () => {
           icon={<AllIcon />} 
           size="2.3rem" 
           title="모든 숙소" 
-          category="all"
+          category=""
         />
         <MainCategoryMenuItem 
           icon={<HotelIcon />} 
           size="1.9rem" 
           title="호텔"
-          category="hotel"
+          category="호텔"
         />
         <MainCategoryMenuItem 
           icon={<ResortIcon />} 
           size="1.9rem" 
           title="리조트"
-          category="resort"
+          category="리조트"
         />
         <MainCategoryMenuItem 
           icon={<MotelIcon />} 
           size="2.4rem" 
           title="모텔" 
-          category="motel"
+          category="모텔"
         />
         <MainCategoryMenuItem 
           icon={<PensionIcon />} 
           size="2.2rem" 
           title="펜션" 
-          category="pension"
+          category="펜션"
         />
       </styled.CategoryMenuWrapper>
     </styled.CategoryWrapper>
