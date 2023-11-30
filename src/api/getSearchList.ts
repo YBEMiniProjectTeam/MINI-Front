@@ -10,7 +10,6 @@ export const getSearchList = async (
   pageNum: number,
   pageSize: number
 ) => {
-  // const GET_SEARCH_LIST_URL = `${API_BASE_URL}/accommodations?keyword=${accomodationName}&district=${selectedDistrict}&start_date=${startDate}&end_date=${endDate}&category=${category}&page_num=${pageNum}&page_size=${pageSize}`;
 
   let url = `${API_BASE_URL}/accommodations?`;
 
@@ -27,8 +26,6 @@ export const getSearchList = async (
 
   url += `page_num=${pageNum}&page_size=${pageSize}`
 
-  // console.log(url);
-  
   const response = await axios.get(url);
 
   return response.data.data;

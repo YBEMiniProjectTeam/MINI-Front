@@ -111,34 +111,6 @@ const Search = ({ keyword, category, region }: SearchProps) => {
     setIsRefetched(true);
   }, [data]);
 
-  // if (category) {
-  //   switch (category) {
-  //     case "hotel":
-  //       category = "호텔";
-  //       break;
-  //     case "resort":
-  //       category = "리조트";
-  //       break;
-  //     case "motel":
-  //       category = "모텔";
-  //       break;
-  //     case "pension":
-  //       category = "펜션";
-  //       break;
-  //     case "all":
-  //       category = "";
-  //       break;
-  //   }
-  // }
-
-  // if (region) {
-  //   switch (region) {
-  //     case "jeju":
-  //       region = "제주시";
-  //       break;
-  //   }
-  // }
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAccommodationName(e.target.value);
   };
