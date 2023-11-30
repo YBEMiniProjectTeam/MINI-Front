@@ -4,7 +4,6 @@ import { Register } from "@pages/register/Register";
 import { Login } from "@pages/login/Login";
 import { SearchResult } from "@pages/searchResult/SearchResult";
 import { ProductDetail } from "@pages/productDetail/ProductDetail";
-import { RoomDetail } from "@pages/roomDetail/RoomDetail.tsx";
 import { Payment } from "@pages/payment/Payment";
 import CompletePayment from "@pages/completePayment/CompletePayment.tsx";
 import { ShoppingCart } from "@pages/shoppingCart/ShoppingCart";
@@ -25,7 +24,6 @@ const router = createBrowserRouter([
       { path: "login", element: <Login /> },
       { path: "searchResult", element: <SearchResult /> },
       { path: "products", element: <ProductDetail /> },
-      { path: "rooms/:roomId", element: <RoomDetail /> },
       { path: "orders", element: <Payment /> },
       { path: "reservationComplete", element: <CompletePayment /> },
       { path: "shoppingCart", element: <ShoppingCart /> },

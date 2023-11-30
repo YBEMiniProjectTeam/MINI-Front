@@ -49,7 +49,7 @@ export const Payment = () => {
                 key={`${index}-${roomIndex}`}
                 hotelName={accommodation.accommodation_name}
               >
-                <RoomInfo key={room.cartId} roomInfo={room} />
+                <RoomInfo key={`${index}-${room.cartId}`} roomInfo={room} />
               </ReservationInfo>
             ))
           )}
