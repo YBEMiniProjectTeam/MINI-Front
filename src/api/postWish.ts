@@ -8,5 +8,7 @@ export const postWish = async (
 ): Promise<ResponseType> => {
   const POST_LIKE_URL = `${API_BASE_URL}/accommodations/${accommodationId}/wish`;
 
-  return await axios.post(POST_LIKE_URL, headers);
+  console.log(headers);
+
+  return await axios.post(POST_LIKE_URL, {}, { headers } );
 };

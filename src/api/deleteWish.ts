@@ -8,5 +8,8 @@ export const deleteWish = async (
 ): Promise<ResponseType> => {
   const POST_LIKE_URL = `${API_BASE_URL}/accommodations/${accommodationId}/wish`;
 
-  return await axios.delete(POST_LIKE_URL, headers);
+  return await axios.delete(POST_LIKE_URL, { 
+    headers,
+    data: {}
+  });
 };
