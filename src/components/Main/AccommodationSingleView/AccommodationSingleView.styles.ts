@@ -47,6 +47,8 @@ export const SwiperContainer = styled.div`
   z-index: 1;
   display: flex;
   align-items: center;
+  width: 768px;
+  height: 486px;
 `;
 
 export const SwiperWrapper = styled.div`
@@ -86,11 +88,32 @@ export const RightArrowButtonWrapper = styled(ArrowButtonWrapper)`
 
 export const StyledSlider = styled(Slider)`
   max-width: 768px; 
+  height: 486px;
 
   .slick-prev::before,
   .slick-next::before {
     opacity: 0;
     display: none;
+  }
+
+  .slick-list {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    margin: 0;
+    max-height: 975px;
+  }
+  
+  .slick-track {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+    max-height: 975px;
+  }
+
+  .slick-slide {
+    float: left;
   }
 `;
 

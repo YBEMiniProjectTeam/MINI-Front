@@ -87,7 +87,7 @@ const ChooseDetail = ({
           </Box>
         </Flex>
       </Box>
-      {rooms &&
+      {rooms ? (
         rooms.map((room: RoomTypes, index: number) => (
           <ChooseRoom
             key={index}
@@ -95,7 +95,21 @@ const ChooseDetail = ({
             checkInDate={checkInDate}
             checkOutDate={checkOutDate}
           />
-        ))}
+        ))
+      ) : (
+        <Flex
+          w="100%"
+          h="100px"
+          marginTop="30px"
+          justifyContent="center"
+          alignItems="center"
+          color="#7F7F7F"
+          fontSize="20px"
+          fontWeight={600}
+        >
+          해당하는 객실이 없습니다.
+        </Flex>
+      )}
     </>
   );
 };

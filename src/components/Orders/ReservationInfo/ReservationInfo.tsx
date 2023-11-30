@@ -1,18 +1,28 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import type { ReservationInfoProps } from "./ReservationInfo.types";
 import * as styles from "./ReservationInfo.styles";
 
-const ReservationInfo = ({ hotelName, children }: ReservationInfoProps) => {
+const ReservationInfo = ({
+  hotelName,
+  accommodationType,
+  children
+}: ReservationInfoProps) => {
   return (
     <>
-      <Box padding="1.5rem 1rem 0.8rem">
-        <Flex flexDir="column" alignItems="flex-start">
-          <Box fontSize="lg" fontWeight={700} lineHeight="1">
-            {hotelName}
-          </Box>
-          {children}
-        </Flex>
-      </Box>
+      <Flex flexDir="column" alignItems="flex-start">
+        <Text
+          display="inline-block"
+          color="#bf4673"
+          fontSize="12px"
+          fontWeight={600}
+        >
+          {accommodationType || "정보없음"}
+        </Text>
+        <Box fontSize="lg" fontWeight={700} lineHeight="1">
+          {hotelName}
+        </Box>
+        {children}
+      </Flex>
       <styles.Divider />
     </>
   );

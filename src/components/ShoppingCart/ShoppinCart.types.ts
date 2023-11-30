@@ -23,7 +23,6 @@ export interface CartListProps {
   data: Accommodation;
   isCheckAllBox: boolean;
 
-  setData: React.Dispatch<React.SetStateAction<Accommodation[]>>;
   cartIdList: number[];
 
   handleCheckRoom: (cartId: number) => void;

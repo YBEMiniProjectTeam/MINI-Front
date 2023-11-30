@@ -26,7 +26,7 @@ export const AccommodationSingleView = () => {
     centerMode: true,
     centerPadding: "28px",
     slidesToScroll: 1,
-    beforeChange: (current: number, next: number) => setCurrentSlide(next),
+    beforeChange: (_: number, next: number) => setCurrentSlide(next),
     nextArrow: (
       <styled.RightArrowButtonWrapper>
         <IoIosArrowForward color="#4D4D4D" size="2rem" />

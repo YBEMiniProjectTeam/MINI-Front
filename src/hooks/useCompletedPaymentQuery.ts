@@ -12,7 +12,7 @@ export interface Reservation {
 }
 
 export interface RoomInfo {
-  quantity?: number;
+  quantity: number;
   accommodationThumbnailUrl?: string;
   roomName: string;
   price: number;
@@ -50,7 +50,7 @@ const encodeReservationData = (
     {
       key: "label",
       label: "객실",
-      value: reservation.room_info.roomName
+      value: `${reservation.room_info.roomName} ${reservation.room_info.quantity}개`
     },
     {
       key: "price",
@@ -59,10 +59,9 @@ const encodeReservationData = (
     }
   ]);
 };
-
 const encodeTotalPrice = (reservations: Reservation[]) => {
   const totalPrice = reservations.reduce((total, reservation) => {
-    return total + reservation.room_info.price;
+    return total + reservation.room_info.price * reservation.room_info.quantity;
   }, 0);
 
   return totalPrice;

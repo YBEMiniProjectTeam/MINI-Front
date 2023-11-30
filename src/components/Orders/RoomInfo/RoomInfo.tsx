@@ -5,7 +5,8 @@ import {
   HStack,
   Icon,
   Grid,
-  GridItem
+  GridItem,
+  Image
 } from "@chakra-ui/react";
 import { calculateNights } from "@utils/calculateNights";
 import { BsPerson } from "react-icons/bs";
@@ -21,7 +22,12 @@ const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
   const checkOutTime =
     roomInfo.checkOut?.split(" ")[1] || roomInfo.checkOutTime;
 
-  const nights = calculateNights(checkInDate!, checkOutDate!);
+  const nights = calculateNights({
+    checkInDate,
+    checkOutDate,
+    checkInTime,
+    checkOutTime
+  });
 
   return (
     <Box width="full">
@@ -70,10 +76,10 @@ const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
                   padding="0.1rem 0.5rem"
                   borderRadius="5px"
                 >
-                  {nights}박
+                  {nights}
                 </Box>
                 <Text fontSize="lg" fontWeight="bold">
-                  {roomInfo.price.toLocaleString()}원
+                  {(roomInfo.price * roomInfo.quantity).toLocaleString()}원
                 </Text>
               </Flex>
             )}

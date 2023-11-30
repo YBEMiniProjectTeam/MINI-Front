@@ -8,6 +8,8 @@ import { FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
 import { useDeleteWish } from "@hooks/useWishMutation";
+import { sliceAccommodationName } from "@utils/sliceAccommodationName";
+import { formatPrice } from "@utils/priceFormatter";
 
 const MyWishList = () => {
   const navigate = useNavigate();
@@ -54,8 +56,6 @@ const MyWishList = () => {
 
     setWishList(updatedWishList);
 
-    // post 요청 필요
-
     deleteWish({ accommodationId, headers });
   };
 
@@ -89,6 +89,11 @@ const MyWishList = () => {
         </styles.SpinnerWrapper>
       }
     >
+      {wishList?.length === 0 ? (
+        <Text textAlign="center" mt="1rem">
+          위시리스트가 없습니다.
+        </Text>
+      ) : null}
       {wishList?.map((accomodation, index) => (
         <Box
           key={index}
@@ -126,12 +131,13 @@ const MyWishList = () => {
             {accomodation.type !== "NOT_CLASSIFIED" && (
               <Tag
                 size="md"
-                variant="outline"
+                variant="solid"
                 color="white"
                 position="absolute"
                 bottom="1rem"
                 left="1rem"
                 userSelect="none"
+                backgroundColor="rgba(0, 0, 0, 0.5)"
               >
                 {accomodation.type}
               </Tag>
@@ -155,7 +161,7 @@ const MyWishList = () => {
               lineHeight="21px"
               fontWeight="700"
             >
-              {accomodation.name}
+              {sliceAccommodationName(accomodation.name)}
             </Box>
 
             <Box
@@ -176,7 +182,7 @@ const MyWishList = () => {
                 mr="0.3rem"
               >
                 {accomodation.min_price !== 0
-                  ? accomodation.min_price
+                  ? formatPrice(accomodation.min_price)
                   : "정보 없음"}
               </Text>
               <Text>{accomodation.min_price !== 0 ? "원" : ""}</Text>

@@ -14,6 +14,7 @@ interface RoomInfo {
   capacity: number;
   capacityMax: number;
   discount?: number;
+  accommodationType?: string;
 }
 
 interface Accommodation {
@@ -39,7 +40,7 @@ const encodeData = (data: Accommodation[]): PaymentData[][] => {
 
   data.forEach((accommodation) => {
     accommodation.room_infos.forEach((roomInfo) => {
-      totalPrice += roomInfo.price;
+      totalPrice += roomInfo.price * roomInfo.quantity;
       totalDiscount += roomInfo.discount || 0;
     });
   });

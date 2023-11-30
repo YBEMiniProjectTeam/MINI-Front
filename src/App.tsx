@@ -1,11 +1,9 @@
-import { Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Main } from "@pages/main/Main";
 import { Register } from "@pages/register/Register";
 import { Login } from "@pages/login/Login";
 import { SearchResult } from "@pages/searchResult/SearchResult";
 import { ProductDetail } from "@pages/productDetail/ProductDetail";
-import { RoomDetail } from "@pages/roomDetail/RoomDetail.tsx";
 import { Payment } from "@pages/payment/Payment";
 import CompletePayment from "@pages/completePayment/CompletePayment.tsx";
 import { ShoppingCart } from "@pages/shoppingCart/ShoppingCart";
@@ -15,7 +13,6 @@ import { WishList } from "@pages/wishList/WishList";
 import Layout from "@components/Layout/Layout";
 import { NotFound } from "@pages/notFound/NotFound";
 import { NotLogin } from "@pages/notLogin/NotLogin";
-import { ErrorBoundary } from "@components/ErrorBoundary/ErrorBoundary";
 
 const router = createBrowserRouter([
   {
@@ -27,24 +24,7 @@ const router = createBrowserRouter([
       { path: "login", element: <Login /> },
       { path: "searchResult", element: <SearchResult /> },
       { path: "products", element: <ProductDetail /> },
-      { path: "rooms/:roomId", element: <RoomDetail /> },
-      {
-        path: "orders",
-        element: (
-          <ErrorBoundary
-            fallback={({ error }) => {
-              console.log(error);
-              if (error?.response.status) {
-                return <p>404 오류입니다.</p>;
-              } else if (error) {
-                return <p>500 오류에요!</p>;
-              }
-            }}
-          >
-            <Payment />
-          </ErrorBoundary>
-        )
-      },
+      { path: "orders", element: <Payment /> },
       { path: "reservationComplete", element: <CompletePayment /> },
       { path: "shoppingCart", element: <ShoppingCart /> },
       { path: "reservations", element: <Reservations /> },

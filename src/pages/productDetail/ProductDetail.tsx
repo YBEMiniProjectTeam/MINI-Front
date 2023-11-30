@@ -5,6 +5,7 @@ import ChooseDetail from "@components/ProductDetail/ChooseDetail/ChooseDetail";
 import Map from "@components/ProductDetail/Map/Map";
 import { useSearchParams } from "react-router-dom";
 import { useAccomodationQuery } from "@hooks/useAccomodationQuery";
+import { sliceAccommodationName } from "@utils/sliceAccommodationName";
 import { Spinner, Flex, Box, Divider, Text } from "@chakra-ui/react";
 import { IoLocationOutline } from "react-icons/io5";
 import { IoCarOutline } from "react-icons/io5";
@@ -54,7 +55,7 @@ export const ProductDetail: React.FC = () => {
           <Box>
             {type !== "NOT_CLASSIFIED" && <Box fontSize="14px">{type}</Box>}
             <Box fontSize="30px" fontWeight={700}>
-              {name}
+              {sliceAccommodationName(name)}
             </Box>
           </Box>
           <WishListButton id={id} wish={isWish} />

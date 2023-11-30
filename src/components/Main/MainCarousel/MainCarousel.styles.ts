@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Slider from "react-slick";
 
 export const CarouselOuter = styled.div`
   padding: 0px 24px;
@@ -17,10 +18,27 @@ export const SwiperContainer = styled.div`
   overflow: hidden;
   padding: 0;
   z-index: 1;
+  width: 720px;
+  height: 288px;
 `;
 
 export const SwiperWrapper = styled.div`
   position: relative;
+`;
+
+export const StyledSlider = styled(Slider)`
+  width: 720px;
+  height: 288px;
+
+  .slick-prev::before,
+  .slick-next::before {
+    opacity: 0;
+    display: none;
+  }
+
+  .slick-slide {
+    float: left;
+  }
 `;
 
 export const CarouselItem = styled.img`

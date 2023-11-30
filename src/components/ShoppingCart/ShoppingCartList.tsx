@@ -1,6 +1,7 @@
 import { Checkbox } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 import { CartListProps } from "./ShoppinCart.types";
+import { formatPrice } from "./../../utils/priceFormatter";
 
 export const ShoppingCartList = (props: CartListProps): JSX.Element => {
   return (
@@ -81,7 +82,7 @@ export const ShoppingCartList = (props: CartListProps): JSX.Element => {
                   <span>
                     숙박{" "}
                     <span className="bold">
-                      {(room.quantity * room.price).toLocaleString()}원
+                      {formatPrice(room.quantity * room.price)}원
                     </span>
                   </span>
 
