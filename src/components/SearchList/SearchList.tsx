@@ -7,7 +7,7 @@ import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa";
 import { useSearchList } from "@hooks/useSearchList";
 import { useNavigate } from "react-router-dom";
-import { convertDateFormat4 } from "@/utils/convertDateFormat4";
+import { convertDateFormat4 } from "@utils/convertDateFormat4";
 import { debounce } from "lodash";
 import { checkInAndOutDateState } from "@recoil/checkInAndOutDate";
 import { districtState, categoryState } from "@recoil/searchStates";

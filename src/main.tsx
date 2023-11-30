@@ -6,7 +6,6 @@ import theme from "./theme/index";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { CookiesProvider } from "react-cookie";
-import initMockAPI from "@mocks/index";
 import { Suspense } from "react";
 import { RecoilRoot } from "recoil";
 import Fonts from "@theme/Fonts.tsx";

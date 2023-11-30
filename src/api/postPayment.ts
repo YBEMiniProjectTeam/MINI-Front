@@ -1,10 +1,10 @@
 import axios from "axios";
-import { API_BASE_URL } from "@api/config.ts";
+import { API_BASE_URL } from "@api/config";
 
 export interface PaymentInfoProps {
   headers: { [key: string]: string };
-  cartIds: number[];
-  reservationName: string;
+  cart_ids: number[];
+  reservation_name: string;
 }
 
 export interface ResponseType {
@@ -14,14 +14,14 @@ export interface ResponseType {
 }
 
 export const postPayment = async ({
-  cartIds,
-  reservationName,
+  cart_ids,
+  reservation_name,
   headers
 }: PaymentInfoProps): Promise<ResponseType> => {
-  const API_URL = `/api/carts/orders/payments`;
+  const API_URL = `${API_BASE_URL}/carts/orders/payments`;
   const response = await axios.post(
     API_URL,
-    { cartIds, reservationName },
+    { cart_ids, reservation_name },
     { headers }
   );
   return response.data;

@@ -14,8 +14,8 @@ import type {
   Region,
   District
 } from "./ChooseRegionModal.types";
-import { useRegionList } from "@/hooks/useRegionList";
-import { useDistrictList } from "@/hooks/useDistrictList";
+import { useRegionList } from "@hooks/useRegionList";
+import { useDistrictList } from "@hooks/useDistrictList";
 
 const ChooseRegionModal = ({
   isOpen,

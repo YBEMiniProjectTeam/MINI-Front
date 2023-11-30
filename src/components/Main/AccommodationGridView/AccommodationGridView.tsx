@@ -1,20 +1,25 @@
 import * as styled from "./AccommodationGridView.styles";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { MainViewTitleWrapper, MainViewTitle, Title, Description } from "../AccommodationSingleView/AccommodationSingleView.styles";
+import {
+  MainViewTitleWrapper,
+  MainViewTitle,
+  Title,
+  Description
+} from "../AccommodationSingleView/AccommodationSingleView.styles";
 import { AccommodationGridItem } from "./AccommodationGridItem";
 import { Suspense, startTransition, useEffect, useState } from "react";
-import { useSearchList } from "@/hooks/useSearchList";
+import { useSearchList } from "@hooks/useSearchList";
 import { Accommodation } from "./AccommodationGridView.types";
-import { printCategory } from "@/utils/printCategory";
+import { printCategory } from "@utils/printCategory";
 import { Button, Spinner } from "@chakra-ui/react";
-import { useNavigateToResultPage } from "@/hooks/useNavigateToResultPage";
+import { useNavigateToResultPage } from "@hooks/useNavigateToResultPage";
 
 export const AccommodationGridView = () => {
   const { navigateToResultPage } = useNavigateToResultPage();
   const [activeTab, setActiveTab] = useState('펜션'); 
   
   const handleTabClick = (tab: string) => {
-    startTransition(() => { 
+    startTransition(() => {
       setActiveTab(tab);
     });
   };
@@ -42,13 +47,13 @@ export const AccommodationGridView = () => {
   return (
     <Suspense
       fallback={
-          <Spinner
-            thickness="2px"
-            speed="0.65s"
-            emptyColor="gray.200"
-            color="#db074a"
-            size="md"
-          />
+        <Spinner
+          thickness="2px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="#db074a"
+          size="md"
+        />
       }
     >
     <styled.GridViewWrapper>
@@ -100,10 +105,19 @@ export const AccommodationGridView = () => {
           _hover={{ bg: 'rgba(0, 0, 0, 0.05);' }}
           rightIcon={<ArrowForwardIcon/>}    
         >
-          모두 보기
-        </Button>
-      </styled.MoreButtonWrapper>
-    </styled.GridViewWrapper>
+          <Button
+            color="#666666"
+            bg="white"
+            border="1px solid #DCDCDD;"
+            w="100%"
+            h="44px;"
+            _hover={{ bg: "rgba(0, 0, 0, 0.05);" }}
+            rightIcon={<ArrowForwardIcon />}
+          >
+            모두 보기
+          </Button>
+        </styled.MoreButtonWrapper>
+      </styled.GridViewWrapper>
     </Suspense>
   );
 };

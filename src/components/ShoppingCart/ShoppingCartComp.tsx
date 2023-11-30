@@ -6,7 +6,7 @@ import {
   ShoppingCartApi,
   DeleteCartApi,
   QuantityCartApi
-} from "@/api/shoppingCart/shoppingCartApi";
+} from "@api/shoppingCart/shoppingCartApi";
 
 import { Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
