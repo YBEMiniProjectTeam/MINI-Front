@@ -19,6 +19,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { usePostWish, useDeleteWish } from "@hooks/useWishMutation";
 import { sliceAccommodationName } from "@utils/sliceAccommodationName";
 import { formatPrice } from "@utils/priceFormatter";
+import { toast } from "react-hot-toast";
 
 const SearchList = ({ keyword }: SearchListProps) => {
   const navigate = useNavigate();
@@ -75,12 +76,11 @@ const SearchList = ({ keyword }: SearchListProps) => {
     setSearchList(() => [...data.accommodations]);
     setTotalPage(data.total_pages);
     setIsLoadingMore(false);
-    setIsRefetched(false);
   }, [isRefetched]);
 
   const handleLikeClick = (index: number, accommodationId: number) => {
     if (!accessTokenCookie) {
-      navigate("/notLogin");
+      toast.error("로그인이 필요한 서비스입니다.");
     }
     const updatedSearchList = [...searchList];
 

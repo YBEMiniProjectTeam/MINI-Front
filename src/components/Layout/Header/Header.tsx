@@ -52,7 +52,7 @@ export const Header = (): JSX.Element => {
     <S.Header>
       <S.HeaderContainer>
         <Link to="/">
-          <div className="Title">Daily Hotel</div>
+          <div className="Title">NINE STAY</div>
         </Link>
         {isShowInput ? <HeaderInput /> : null}
 
@@ -76,7 +76,7 @@ export const Header = (): JSX.Element => {
               >
                 <div className="relative">
                   <div className="menuWrap">
-                    <span>마이데일리</span>
+                    <span>마이스테이</span>
                   </div>
                   <div
                     className={isSubMenuVisible ? "subMenu visible" : "subMenu"}

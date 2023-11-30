@@ -6,11 +6,9 @@ import { WishListButtonProps } from "./WishListButton.types";
 import { Box } from "@chakra-ui/react";
 import { GoHeart } from "react-icons/go";
 import { GoHeartFill } from "react-icons/go";
-import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const WishListButton = ({ id, wish }: WishListButtonProps): JSX.Element => {
-  const navigate = useNavigate();
-
   const [isWish, setIsWish] = useState(wish);
   const { accessTokenCookie, headers } = getAuthLocalStorage();
   const { mutate: postWish } = usePostWish();
@@ -18,7 +16,8 @@ const WishListButton = ({ id, wish }: WishListButtonProps): JSX.Element => {
 
   const handleWishButton = (accommodationId: number) => {
     if (!accessTokenCookie) {
-      navigate("/notLogin");
+      toast.error("로그인이 필요한 서비스입니다.");
+      return;
     }
     if (isWish) {
       deleteWish({ accommodationId, headers });

@@ -47,6 +47,8 @@ export const SwiperContainer = styled.div`
   z-index: 1;
   display: flex;
   align-items: center;
+  width: 768px;
+  height: 486px;
 `;
 
 export const SwiperWrapper = styled.div`

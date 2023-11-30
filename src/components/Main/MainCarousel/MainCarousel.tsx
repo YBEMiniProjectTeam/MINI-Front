@@ -1,6 +1,5 @@
 import { useState } from "react";
 import * as styled from './MainCarousel.styles';
-import Slider from "react-slick";
 import img1 from "@assets/image/main_carousel1.png";
 import img2 from "@assets/image/main_carousel2.png";
 
@@ -27,18 +26,16 @@ export const MainCarousel = () => {
     <styled.CarouselOuter>
       <styled.CarouselWrapper>
         <styled.SwiperContainer>
-          <styled.SwiperWrapper>
-            <Slider {...settings}>
-              {imageUrls.map((imageUrl, index) => (
-                <styled.CarouselItem key={index} src={imageUrl} />
-              ))}
-            </Slider>
-            <styled.SwiperPagination>
-              <styled.SwiperPaginationTxt><strong>{currentIndex + 1}</strong></styled.SwiperPaginationTxt>
-              <styled.SwiperPaginationTxt> | </styled.SwiperPaginationTxt>
-              <styled.SwiperPaginationTxt>{imageUrls.length}</styled.SwiperPaginationTxt>
-            </styled.SwiperPagination>
-          </styled.SwiperWrapper>
+          <styled.StyledSlider {...settings}>
+            {imageUrls.map((imageUrl, index) => (
+              <styled.CarouselItem key={index} src={imageUrl} />
+            ))}
+          </styled.StyledSlider>
+          <styled.SwiperPagination>
+            <styled.SwiperPaginationTxt><strong>{currentIndex + 1}</strong></styled.SwiperPaginationTxt>
+            <styled.SwiperPaginationTxt> | </styled.SwiperPaginationTxt>
+            <styled.SwiperPaginationTxt>{imageUrls.length}</styled.SwiperPaginationTxt>
+          </styled.SwiperPagination>
         </styled.SwiperContainer>
       </styled.CarouselWrapper>
     </styled.CarouselOuter>

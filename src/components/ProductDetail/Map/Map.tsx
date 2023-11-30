@@ -24,6 +24,7 @@ const Map = ({ lat, lng }: MapProps) => {
         map: map,
         position: position
       });
+      console.log(marker);
     };
 
     initMap();
