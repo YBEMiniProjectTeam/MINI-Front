@@ -81,6 +81,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
   const handleLikeClick = (index: number, accommodationId: number) => {
     if (!accessTokenCookie) {
       toast.error("로그인이 필요한 서비스입니다.");
+      return;
     }
     const updatedSearchList = [...searchList];
 
@@ -91,7 +92,6 @@ const SearchList = ({ keyword }: SearchListProps) => {
 
     setSearchList(updatedSearchList);
 
-    // post 요청 필요
     if (updatedSearchList[index].isWish === true) {
       postWish({ accommodationId, headers });
     } else {
