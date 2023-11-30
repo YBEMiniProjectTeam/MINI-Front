@@ -24,7 +24,7 @@ const PaymentOptionsForm = () => {
             {PAYMENT_OPTIONS.map((option) => (
               <styles.StyledItem
                 key={option.value}
-                isChecked={SELECT_OPTION === option.value}
+                $isChecked={SELECT_OPTION === option.value}
               >
                 <styles.Label>
                   {option.icon && (

@@ -17,9 +17,9 @@ interface RoomInfo {
 }
 
 interface Accommodation {
-  accommodationName: string;
+  accommodation_name: string;
   address: string;
-  roomInfos: RoomInfo[];
+  room_infos: RoomInfo[];
 }
 
 interface PaymentResponse {
@@ -38,7 +38,7 @@ const encodeData = (data: Accommodation[]): PaymentData[][] => {
   let totalDiscount = 0;
 
   data.forEach((accommodation) => {
-    accommodation.roomInfos.forEach((roomInfo) => {
+    accommodation.room_infos.forEach((roomInfo) => {
       totalPrice += roomInfo.price;
       totalDiscount += roomInfo.discount || 0;
     });

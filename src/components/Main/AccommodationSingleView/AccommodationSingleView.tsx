@@ -2,15 +2,15 @@ import { Suspense, useState } from "react";
 import * as styled from "./AccommodationSingleView.styles";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
-import { useSearchList } from "@/hooks/useSearchList";
+import { useSearchList } from "@hooks/useSearchList";
 import { Spinner } from "@chakra-ui/react";
 import { Accommodation } from "../AccommodationGridView/AccommodationGridView.types";
-import { printCategory } from "@/utils/printCategory";
+import { printCategory } from "@utils/printCategory";
 import { formatPrice } from "@utils/priceFormatter";
 import { Button } from "@chakra-ui/react";
-import { useNavigateToResultPage } from "@/hooks/useNavigateToResultPage";
-import { useNavigateToDetailPage } from "@/hooks/useNavigateToDetailPage";
-import { sliceAccommodationName } from "@/utils/sliceAccommodationName";
+import { useNavigateToResultPage } from "@hooks/useNavigateToResultPage";
+import { useNavigateToDetailPage } from "@hooks/useNavigateToDetailPage";
+import { sliceAccommodationName } from "@utils/sliceAccommodationName";
 
 export const AccommodationSingleView = () => {
   const { navigateToResultPage } = useNavigateToResultPage();

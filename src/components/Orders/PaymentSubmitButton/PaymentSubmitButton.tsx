@@ -24,8 +24,11 @@ const PaymentSubmitButton = ({
 
     // FIXME: 에러 핸들링 필요
     if (!reservationName) return;
-
-    sendPayment({ reservationName, cartIds, headers });
+    sendPayment({
+      reservation_name: reservationName,
+      cart_ids: cartIds,
+      headers
+    });
   };
 
   return (

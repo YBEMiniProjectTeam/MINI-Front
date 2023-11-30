@@ -16,9 +16,9 @@ export const StyledRadio = styled(Radio)`
   align-items: center;
 `;
 
-export const StyledItem = styled.div<{ isChecked?: boolean }>`
-  background-color: ${(props) =>
-    props.isChecked ? "rgb(252, 247, 248)" : "transparent"};
+export const StyledItem = styled.div<{ $isChecked?: boolean }>`
+  background-color: ${({ $isChecked }) =>
+    $isChecked ? "rgb(252, 247, 248)" : "transparent"};
   border-radius: 5px;
   padding: 0.9rem 1.2rem;
   display: flex;

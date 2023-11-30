@@ -4,7 +4,7 @@ import WishListButton from "@components/ProductDetail/WishListButton/WishListBut
 import ChooseDetail from "@components/ProductDetail/ChooseDetail/ChooseDetail";
 import Map from "@components/ProductDetail/Map/Map";
 import { useSearchParams } from "react-router-dom";
-import { useAccomodationQuery } from "@/hooks/useAccomodationQuery";
+import { useAccomodationQuery } from "@hooks/useAccomodationQuery";
 import { Spinner, Flex, Box, Divider, Text } from "@chakra-ui/react";
 import { IoLocationOutline } from "react-icons/io5";
 import { IoCarOutline } from "react-icons/io5";

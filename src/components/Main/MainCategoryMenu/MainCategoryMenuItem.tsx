@@ -1,7 +1,7 @@
 import React from "react";
 import * as styled from "./MainCategoryMenu.styles";
 import type { MainCategoryMenuItemProps } from "./MainCategoryMenu.types";
-import { useNavigateToResultPage } from "@/hooks/useNavigateToResultPage";
+import { useNavigateToResultPage } from "@hooks/useNavigateToResultPage";
 
 export const MainCategoryMenuItem: React.FC<MainCategoryMenuItemProps> = ({
   icon,
@@ -13,9 +13,7 @@ export const MainCategoryMenuItem: React.FC<MainCategoryMenuItemProps> = ({
   const { navigateToResultPage } = useNavigateToResultPage();
 
   return (
-    <styled.CategoryMenuItem
-      onClick={() => navigateToResultPage(category, '')}
-    >
+    <styled.CategoryMenuItem onClick={() => navigateToResultPage(category, "")}>
       <styled.MenuIcon>
         {React.cloneElement(icon, { size, color: iconColor })}
       </styled.MenuIcon>

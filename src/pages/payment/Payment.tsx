@@ -41,10 +41,10 @@ export const Payment = () => {
       <FormProvider {...methods}>
         <Card>
           {dummyData.map((accommodation, index) =>
-            accommodation.roomInfos.map((room, roomIndex) => (
+            accommodation.room_infos.map((room, roomIndex) => (
               <ReservationInfo
                 key={`${index}-${roomIndex}`}
-                hotelName={accommodation.accommodationName}
+                hotelName={accommodation.accommodation_name}
               >
                 <RoomInfo key={room.cartId} roomInfo={room} />
               </ReservationInfo>
@@ -59,8 +59,8 @@ export const Payment = () => {
           </Collapse>
         </Card>
         <Card label="결제 정보">
-          {reservationData.map((group) => (
-            <PaymentInfo data={group} />
+          {reservationData.map((group, index) => (
+            <PaymentInfo key={index} data={group} />
           ))}
         </Card>
         <Card label="결제 수단">

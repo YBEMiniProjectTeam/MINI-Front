@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import getRoomList from "@/api/accomodation/getRoomList";
+import getRoomList from "@api/accomodation/getRoomList";
 
 export const useRoomListQuery = (
   startDate: string,
