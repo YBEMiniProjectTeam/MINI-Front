@@ -1,65 +1,42 @@
 {
-  "statusCode": 200,
-  "message": "success",
+  "status_code": 200,
+  "message": "SUCCESS",
   "data": [
     {
-      "userInfo": {
-        "name": "마먀",
-        "email": "email@example.com"
-      },
-      "reservation": [
-        {
-          "accommodationName": "조선 호텔",
-          "address": "서울시 동대문구",
-          "roomInfos": [
-            {
-              "cartId": 1,
-              "quantity": 2,
-              "roomName": "스위트룸 (객실명)",
-              "accommodationThumbnailUrl": "숙소 썸네일 Image URL",
-              "price": 50000,
-              "checkInDate": "2023-11-11",
-              "checkOutDate": "2023-11-15",
-              "checkInTime": "15:00",
-              "checkOutTime": "11:00",
-              "capacity": 2,
-              "capacityMax": 4
-            },
-            {
-              "cartId": 2,
-              "quantity": 2,
-              "roomName": "럭셔리룸 (객실명)",
-              "accommodationThumbnailUrl": "숙소 썸네일 Image URL",
-              "price": 4800,
-              "checkInDate": "2023-11-11",
-              "checkOutDate": "2023-11-15",
-              "checkInTime": "15:00",
-              "checkOutTime": "11:00",
-              "capacity": 2,
-              "capacityMax": 4
-            }
-          ]
-        },
-        {
-          "accommodationName": "북조선 호텔",
-          "address": "북한 어딘가에",
-          "roomInfos": [
-            {
-              "cartId": 3,
-              "quantity": 2,
-              "roomName": "베리스위트룸 (객실명)",
-              "accommodationThumbnailUrl": "숙소 썸네일 Image URL",
-              "price": 5500,
-              "checkInDate": "2023-11-11",
-              "checkOutDate": "2023-11-15",
-              "checkInTime": "15:00",
-              "checkOutTime": "11:00",
-              "capacity": 2,
-              "capacityMax": 4
-            }
-          ]
-        }
-      ]
+      "reservation_name": "예약자명",
+      "accommodation_name": "신라 호텔",
+      "room_info": {
+        "room_name": "스탠다드룸",
+        "price": 1000,
+        "check_in": "2023-12-13 16:00",
+        "check_out": "2023-12-18 11:00",
+        "capacity": 4,
+        "capacity_max": 6
+      }
+    },
+    {
+      "reservation_name": "예약자명",
+      "accommodation_name": "신라 호텔",
+      "room_info": {
+        "room_name": "스탠다드룸",
+        "price": 1000,
+        "check_in": "2023-12-13 16:00",
+        "check_out": "2023-12-14 11:00",
+        "capacity": 4,
+        "capacity_max": 6
+      }
+    },
+    {
+      "reservation_name": "예약자명",
+      "accommodation_name": "조선 호텔",
+      "room_info": {
+        "room_name": "스위트룸",
+        "price": 500000,
+        "check_in": "2023-12-13 15:00",
+        "check_out": "2023-12-14 12:00",
+        "capacity": 2,
+        "capacity_max": 4
+      }
     }
   ]
 }

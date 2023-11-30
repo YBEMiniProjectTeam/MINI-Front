@@ -23,13 +23,17 @@ interface Accommodation {
 }
 
 interface PaymentResponse {
-  reservationData: { label: string; value: number }[];
+  reservationData: PaymentData[][];
   rawData: Accommodation[];
 }
 
-const encodeReservationData = (
-  data: Accommodation[]
-): { label: string; value: number }[] => {
+export interface PaymentData {
+  key: "label" | "total";
+  label: string;
+  value: number;
+}
+
+const encodeData = (data: Accommodation[]): PaymentData[][] => {
   let totalPrice = 0;
   let totalDiscount = 0;
 
@@ -41,8 +45,11 @@ const encodeReservationData = (
   });
 
   return [
-    { label: "총 상품 금액", value: totalPrice },
-    { label: "총 할인 금액", value: totalDiscount }
+    [
+      { key: "label", label: "총 상품 금액", value: totalPrice },
+      { key: "label", label: "총 할인 금액", value: totalDiscount },
+      { key: "total", label: "총 결제 금액", value: totalPrice }
+    ]
   ];
 };
 
@@ -60,7 +67,7 @@ export const usePayment = (
     queryFn: async () => await getPaymentInfo(cartIds, headers),
     select: (accommodations: Accommodation[]): PaymentResponse => {
       return {
-        reservationData: encodeReservationData(accommodations),
+        reservationData: encodeData(accommodations),
         rawData: accommodations
       };
     }

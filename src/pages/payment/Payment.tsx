@@ -12,7 +12,7 @@ import PaymentInfo from "@components/Orders/PaymentInfo/PaymentInfo";
 import Card from "@components/Card/Card";
 import TermsAgreementForm from "@components/Orders/TermsAgreementForm/TermsAgreementForm.tsx";
 import PaymentSubmitButton from "@components/Orders/PaymentSubmitButton/PaymentSubmitButton";
-import AccommodationInfo from "@components/Orders/ReservationInfo/AccommodationInfo/AccommodationInfo";
+import RoomInfo from "@components/Orders/RoomInfo/RoomInfo";
 import DiffUserCheckbox from "@components/Orders/DiffUserCheckbox/DiffUserCheckbox";
 import PaymentOptionsForm from "@components/Orders/PaymentOptionsForm/PaymentOptionsForm";
 import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
@@ -34,24 +34,22 @@ export const Payment = () => {
 
   const dummyData = paymentData.rawData;
   const reservationData = paymentData.reservationData;
+  const totalPrice = reservationData[0][0].value;
 
   return (
     <styles.Container>
       <FormProvider {...methods}>
         <Card>
-          {dummyData.map((accommodation) => (
-            <>
-              {accommodation.roomInfos.map((roomInfo) => (
-                <ReservationInfo key={roomInfo.roomName} roomInfo={roomInfo}>
-                  <AccommodationInfo
-                    key={roomInfo.roomName}
-                    hotelName={accommodation.accommodationName}
-                    roomInfo={roomInfo}
-                  />
-                </ReservationInfo>
-              ))}
-            </>
-          ))}
+          {dummyData.map((accommodation, index) =>
+            accommodation.roomInfos.map((room, roomIndex) => (
+              <ReservationInfo
+                key={`${index}-${roomIndex}`}
+                hotelName={accommodation.accommodationName}
+              >
+                <RoomInfo key={room.cartId} roomInfo={room} />
+              </ReservationInfo>
+            ))
+          )}
         </Card>
         <Card label="예약자 정보">
           <UserInfoForm userData={userData} />
@@ -60,8 +58,10 @@ export const Payment = () => {
             {isDiffUser && <DiffUserInfoForm />}
           </Collapse>
         </Card>
-        <Card label="결제 금액">
-          <PaymentInfo data={reservationData} />
+        <Card label="결제 정보">
+          {reservationData.map((group) => (
+            <PaymentInfo data={group} />
+          ))}
         </Card>
         <Card label="결제 수단">
           <PaymentOptionsForm />
@@ -70,7 +70,7 @@ export const Payment = () => {
           <TermsAgreementForm />
         </Card>
         <PaymentSubmitButton
-          totalPrice={reservationData[0].value}
+          totalPrice={totalPrice}
           cartIds={cartIds}
           userData={userData}
         />

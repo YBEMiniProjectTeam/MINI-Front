@@ -1,6 +1,7 @@
+import { useSendPaymentMutation } from "@hooks/useSendPaymentMutation.ts";
+import { getAuthLocalStorage } from "@utils/getAuthLocalStorage.ts";
 import { useFormContext } from "react-hook-form";
 import CustomForm from "@components/CustomForm/CustomForm";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import type { PaymentSubmitButtonProps } from "./PaymentSubmitButton.types";
 
 const PaymentSubmitButton = ({
@@ -13,21 +14,18 @@ const PaymentSubmitButton = ({
     formState: { isValid },
     getValues
   } = useFormContext();
-  const navigate = useNavigate();
 
-  const onSubmit = () => {
+  const { mutate: sendPayment } = useSendPaymentMutation();
+  const { headers } = getAuthLocalStorage();
+
+  const onSubmit = (formData: { name?: string }) => {
     const isDifferentUser = getValues("isDiffUser");
+    const reservationName = isDifferentUser ? formData.name : userData!.name;
 
-    const combinedData = {
-      ...{ userData, cartIds },
-      ...{ isDifferentUser, cartIds }
-    };
+    // FIXME: 에러 핸들링 필요
+    if (!reservationName) return;
 
-    const queryString = cartIds
-      .map((id) => `cartId=${encodeURIComponent(id)}`)
-      .join("&");
-
-    navigate(`/complete?${queryString}`);
+    sendPayment({ reservationName, cartIds, headers });
   };
 
   return (

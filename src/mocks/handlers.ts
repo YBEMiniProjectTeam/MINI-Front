@@ -1,6 +1,7 @@
 import { http, HttpResponse } from "msw";
 import dummyPaymentData from "./data/dummyPaymentData.json";
 import dummyMemberinfoData from "./data/dummyMemberInfoData.json";
+import dummyCompletedPaymentData from "./data/dummyCompletedPaymentData.json";
 
 export const handlers = [
   http.post(`/api/carts/orders/reservations`, () => {
@@ -8,5 +9,11 @@ export const handlers = [
   }),
   http.get(`/api/member-info`, () => {
     return HttpResponse.json(dummyMemberinfoData);
+  }),
+  http.post(`api/carts/orders/payments`, () => {
+    return HttpResponse.json({ statusCode: 200, message: "SUCCESS" });
+  }),
+  http.get(`/api/carts/orders/complete`, () => {
+    return HttpResponse.json(dummyCompletedPaymentData);
   })
 ];
