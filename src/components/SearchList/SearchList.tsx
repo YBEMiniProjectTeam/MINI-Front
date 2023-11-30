@@ -10,8 +10,12 @@ import { useNavigate } from "react-router-dom";
 import { convertDateFormat4 } from "@utils/convertDateFormat4";
 import { debounce } from "lodash";
 import { checkInAndOutDateState } from "@recoil/checkInAndOutDate";
-import { districtState, categoryState } from "@recoil/searchStates";
-import { useRecoilValue } from "recoil";
+import {
+  districtState,
+  categoryState,
+  isRefetchedState
+} from "@recoil/searchStates";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { usePostWish, useDeleteWish } from "@hooks/useWishMutation";
 import { sliceAccommodationName } from "@utils/sliceAccommodationName";
 
@@ -21,6 +25,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
   const { startDate, endDate } = useRecoilValue(checkInAndOutDateState);
   const selectedDistrict = useRecoilValue(districtState);
   const selectedCategory = useRecoilValue(categoryState);
+  const [isRefetched, setIsRefetched] = useRecoilState(isRefetchedState);
 
   const [searchList, setSearchList] = useState<Accommodation[]>([]);
   const [page, setPage] = useState(1);
@@ -58,12 +63,19 @@ const SearchList = ({ keyword }: SearchListProps) => {
 
   useEffect(() => {
     setSearchList((prevSearchList) => [
-      // ...prevSearchList,
+      ...prevSearchList,
       ...data.accommodations
     ]);
     setTotalPage(data.total_pages);
     setIsLoadingMore(false);
-  }, [data]);
+  }, [page]);
+
+  useEffect(() => {
+    setSearchList(() => [...data.accommodations]);
+    setTotalPage(data.total_pages);
+    setIsLoadingMore(false);
+    setIsRefetched(false);
+  }, [isRefetched]);
 
   const handleLikeClick = (index: number, accommodationId: number) => {
     if (!accessTokenCookie) {
