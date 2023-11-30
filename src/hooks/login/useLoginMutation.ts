@@ -2,7 +2,7 @@ import { LoginApi, LogoutApi } from "@api/login/LoginApi";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { loginUrlState } from "@recoil/loginUrl";
+import { loginUrlState, loginUrlSearchState } from "@recoil/loginUrl";
 
 interface login {
   statusCode: number;
@@ -21,13 +21,14 @@ interface loginProps {
 export const useLoginMutation = () => {
   const navigate = useNavigate();
   const [loginUrl] = useRecoilState(loginUrlState);
+  const [loginUrlSearch] = useRecoilState(loginUrlSearchState);
   return useMutation<login, Error, loginProps>({
     mutationFn: ({ email, pwd }: loginProps) => LoginApi({ email, pwd }),
     onSuccess: (res) => {
       console.log(res);
       if (res.statusCode === 200) {
         localStorage.setItem("access-token", res.data?.accessToken as string);
-        navigate(loginUrl);
+        navigate(loginUrl + loginUrlSearch);
       }
     },
     onError: (err) => {
