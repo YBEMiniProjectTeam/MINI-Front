@@ -3,7 +3,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
 import { useUserInfo } from "@hooks/useUserInfoQuery";
 import { usePayment } from "@hooks/usePaymentQuery";
-import { Collapse, Text } from "@chakra-ui/react";
+import { Box, Collapse, Text } from "@chakra-ui/react";
 import * as styles from "./Payment.styles";
 import DiffUserInfoForm from "@components/Orders/DiffUserInfoForm/DiffUserInfoForm.tsx";
 import ReservationInfo from "@components/Orders/ReservationInfo/ReservationInfo";
@@ -39,10 +39,12 @@ export const Payment = () => {
   return (
     <styles.Container>
       <FormProvider {...methods}>
-        <Card>
-          <Text fontSize="lg" fontWeight={700}>
+        <Box padding="1.5rem 0 0.5rem" bgColor="white">
+          <Text fontSize="24px" fontWeight="700">
             예약하기
           </Text>
+        </Box>
+        <Card>
           {dummyData.map((accommodation, index) =>
             accommodation.room_infos.map((room, roomIndex) => (
               <ReservationInfo

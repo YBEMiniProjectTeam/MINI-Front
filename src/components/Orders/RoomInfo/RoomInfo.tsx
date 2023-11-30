@@ -21,8 +21,6 @@ const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
   const checkOutTime =
     roomInfo.checkOut?.split(" ")[1] || roomInfo.checkOutTime;
 
-  console.log(checkInDate);
-
   const nights = calculateNights(checkInDate!, checkOutDate!);
 
   return (
@@ -35,19 +33,23 @@ const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
           <Text fontSize="sm" color="gray.500">
             체크인
           </Text>
-          <Text fontSize="md" fontWeight="bold">
+          <Text fontSize="md" fontWeight="500">
             {checkInDate}
           </Text>
-          <Text fontSize="lg">{checkInTime}</Text>
+          <Text fontSize="lg" fontWeight="bold">
+            {checkInTime}
+          </Text>
         </GridItem>
         <GridItem>
           <Text fontSize="sm" color="gray.500">
             체크아웃
           </Text>
-          <Text fontSize="md" fontWeight="bold">
+          <Text fontSize="md" fontWeight="500">
             {checkOutDate}
           </Text>
-          <Text fontSize="lg">{checkOutTime}</Text>
+          <Text fontSize="lg" fontWeight="bold">
+            {checkOutTime}
+          </Text>
         </GridItem>
         <GridItem colSpan={2}>
           <HStack justifyContent="space-between" width="full">
@@ -57,7 +59,7 @@ const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
                 기준 {roomInfo.capacity}명 / 최대 {roomInfo.capacityMax}명
               </Text>
             </HStack>
-            {roomInfo.roomName && (
+            {roomInfo.checkInDate && ( // 결제페이지 & 결제완료페이지 조건부 렌더링
               <Flex alignItems="center" gap="8px">
                 <Box
                   display="inline-block"
