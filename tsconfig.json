@@ -17,7 +17,6 @@
       "@utils/*": ["utils/*"],
       "@theme/*": ["theme/*"],
       "@components/*": ["components/*"],
-      "@mocks/*": ["mocks/*"]
     },
 
     /* Bundler mode */

@@ -14,14 +14,7 @@ import { RoomInfoProps } from "./RoomInfo.types";
 const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
   if (!roomInfo) return null;
 
-  const checkInDate = roomInfo.check_in?.split(" ")[0] || roomInfo.checkInDate;
-  const checkInTime = roomInfo.check_in?.split(" ")[1] || roomInfo.checkInTime;
-  const checkOutDate =
-    roomInfo.check_out?.split(" ")[0] || roomInfo.checkOutDate;
-  const checkOutTime =
-    roomInfo.check_out?.split(" ")[1] || roomInfo.checkOutTime;
-
-  const nights = calculateNights(checkInDate!, checkOutDate!);
+  const nights = calculateNights(roomInfo.checkInDate!, roomInfo.checkOutDate!);
 
   return (
     <Box width="full">
@@ -34,26 +27,25 @@ const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
             체크인
           </Text>
           <Text fontSize="md" fontWeight="bold">
-            {checkInDate}
+            {roomInfo.checkInDate}
           </Text>
-          <Text fontSize="lg">{checkInTime}</Text>
+          <Text fontSize="lg">{roomInfo.checkInTime}</Text>
         </GridItem>
         <GridItem>
           <Text fontSize="sm" color="gray.500">
             체크아웃
           </Text>
           <Text fontSize="md" fontWeight="bold">
-            {checkOutDate}
+            {roomInfo.checkOutDate}
           </Text>
-          <Text fontSize="lg">{checkOutTime}</Text>
+          <Text fontSize="lg">{roomInfo.checkOutTime}</Text>
         </GridItem>
         <GridItem colSpan={2}>
           <HStack justifyContent="space-between" width="full">
             <HStack spacing="1" alignItems="center">
               <Icon as={BsPerson} />
               <Text fontSize="sm">
-                기준 {roomInfo.capacity}명 / 최대{" "}
-                {roomInfo.capacityMax || roomInfo.capacity_max}명
+                기준 {roomInfo.capacity}명 / 최대 {roomInfo.capacityMax}명
               </Text>
             </HStack>
             {roomInfo.roomName && (
