@@ -1,7 +1,7 @@
 export interface DisclosureProps {
   isOpen: boolean;
   onClose: () => void;
-  setSelectedDate: React.Dispatch<React.SetStateAction<string[] | null>>;
+  setSelectedDate: React.Dispatch<React.SetStateAction<string[]>>;
   isFromSearchResult: boolean;
   personCount?: number;
   setPersonCount?: React.Dispatch<React.SetStateAction<number>>;

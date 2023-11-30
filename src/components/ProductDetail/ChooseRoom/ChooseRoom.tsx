@@ -9,11 +9,12 @@ import { IoBedOutline } from "react-icons/io5";
 import { BsPerson } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
+import { convertDateFormat5 } from "@utils/convertDateFormat5";
 
 const ChooseRoom = ({
   room,
-  checkInDate,
-  checkOutDate
+  startDate,
+  endDate
 }: ChooseRoomProps): JSX.Element => {
   const { accessTokenCookie, headers } = getAuthLocalStorage();
   const { mutate: postCart } = usePostCart();
@@ -29,6 +30,9 @@ const ChooseRoom = ({
     stock_quantity,
     description
   } = room;
+
+  const checkInDate = convertDateFormat5(startDate);
+  const checkOutDate = convertDateFormat5(endDate);
 
   const body = {
     room_id: id,

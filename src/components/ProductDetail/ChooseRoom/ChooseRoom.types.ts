@@ -22,8 +22,8 @@ export interface ChooseRoomProps {
       tv: boolean;
     };
   };
-  checkInDate: string;
-  checkOutDate: string;
+  startDate: string;
+  endDate: string;
 }
 
 export interface ResponseType {
