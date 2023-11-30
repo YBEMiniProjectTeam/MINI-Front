@@ -126,7 +126,7 @@ export const ShoppingCartComp = (): JSX.Element => {
         .sort()
         .map((cartId) => `cartId=${cartId}`)
         .join("&");
-      navigate(`/orders/${queryString}`);
+      navigate(`/orders?${queryString}`);
     } else {
       Swal.fire("장바구니에 물건을 담아주세요");
     }
@@ -134,22 +134,23 @@ export const ShoppingCartComp = (): JSX.Element => {
 
   return (
     <styles.ShoppingCartContainer>
-      <h3>장바구니</h3>
-      <div className="selectCheckWrap WrapStyle">
-        <div>
-          <Checkbox
-            onChange={() => {
-              handleCheckAllRooms();
-            }}
-          >
-            전체 선택
-          </Checkbox>
-        </div>
-        <div>
-          <button onClick={handleSelectDelete}>선택 삭제</button>
+      <div className="WrapStyle">
+        <div className="title">장바구니</div>
+        <div className="selectCheckWrap">
+          <div>
+            <Checkbox
+              onChange={() => {
+                handleCheckAllRooms();
+              }}
+            >
+              전체 선택
+            </Checkbox>
+          </div>
+          <div>
+            <button onClick={handleSelectDelete}>선택 삭제</button>
+          </div>
         </div>
       </div>
-
       {data.length > 0 ? (
         data.map((hotel, hotelIndex) => (
           <ShoppingCartList
@@ -168,7 +169,6 @@ export const ShoppingCartComp = (): JSX.Element => {
           장바구니에 아무것도 담겨져 있지 않습니다.
         </div>
       )}
-
       <div className="WrapStyle">
         <h3>예약 상품</h3>
         <div className="roomPrice">

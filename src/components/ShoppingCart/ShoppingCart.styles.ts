@@ -1,15 +1,22 @@
 import styled from "styled-components";
 
 export const ShoppingCartContainer = styled.div`
-  padding: 32px 0px;
+  padding-bottom: 32px;
   background-color: #f8f8f9;
 
   h3 {
     font-size: 24px;
     font-weight: 700;
+
     margin-bottom: 16px;
   }
+  .title {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.5;
 
+    margin-bottom: 32px;
+  }
   .colorGray {
     color: gray;
   }
@@ -22,10 +29,8 @@ export const ShoppingCartContainer = styled.div`
   .WrapStyle {
     background-color: #fff;
 
-    margin: 0px 16px 16px;
-
     padding: 16px;
-
+    margin-top: 16px;
     Label span:nth-of-type(1) {
       border: 1px solid black;
     }
