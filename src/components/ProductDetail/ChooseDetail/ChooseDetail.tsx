@@ -13,10 +13,7 @@ const ChooseDetail = ({
   startDate,
   endDate
 }: ChooseDetailTypes): JSX.Element => {
-  const [selectedDate, setSelectedDate] = useState<string[]>([
-    startDate,
-    endDate
-  ]);
+  const [selectedDate, setSelectedDate] = useState<any>([startDate, endDate]);
   const [guestNum, setGuestNum] = useState<number>(2);
 
   const {

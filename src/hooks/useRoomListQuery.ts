@@ -3,8 +3,8 @@ import getRoomList from "@api/accomodation/getRoomList";
 
 export const useRoomListQuery = (
   id: number,
-  checkInDate: string,
-  checkOutDate: string,
+  checkInDate: string | null,
+  checkOutDate: string | null,
   guestNum: number
 ) => {
   return useSuspenseQuery({

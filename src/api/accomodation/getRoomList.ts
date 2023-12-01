@@ -4,8 +4,8 @@ import { convertDateFormat5 } from "@utils/convertDateFormat5";
 
 const getRoomList = async (
   id: number,
-  checkInDate: string,
-  checkOutDate: string,
+  checkInDate: string | null,
+  checkOutDate: string | null,
   guestNum: number
 ) => {
   const startDate = convertDateFormat5(checkInDate);
