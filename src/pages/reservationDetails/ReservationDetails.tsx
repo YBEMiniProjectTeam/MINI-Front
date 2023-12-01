@@ -1,4 +1,4 @@
-import { getAuthCookie } from "@utils/getAuthCookie";
+import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
 import { usePaymentDetailsQuery } from "@hooks/useReservationsQuery";
 import { Image, Flex, Box, Divider } from "@chakra-ui/react";
 import { useSearchParams } from "react-router-dom";
@@ -9,7 +9,7 @@ export const ReservationDetails = (): JSX.Element => {
   const id = Number(searchParams.get("id"));
   const thumbnail = searchParams.get("image");
 
-  const { headers } = getAuthCookie();
+  const { headers } = getAuthLocalStorage();
   const { data } = usePaymentDetailsQuery(id, { headers });
   const {
     accommodation_name,

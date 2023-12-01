@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getAuthCookie } from "@utils/getAuthCookie";
+import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
 import { usePostWish } from "@hooks/useWishMutation";
 import { useDeleteWish } from "@hooks/useWishMutation";
 import { WishListButtonProps } from "./WishListButton.types";
@@ -10,7 +10,7 @@ import { toast } from "react-hot-toast";
 
 const WishListButton = ({ id, wish }: WishListButtonProps): JSX.Element => {
   const [isWish, setIsWish] = useState(wish);
-  const { accessTokenCookie, headers } = getAuthCookie();
+  const { accessTokenCookie, headers } = getAuthLocalStorage();
   const { mutate: postWish } = usePostWish();
   const { mutate: deleteWish } = useDeleteWish();
 

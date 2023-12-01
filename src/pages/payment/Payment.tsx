@@ -15,7 +15,7 @@ import PaymentSubmitButton from "@components/Orders/PaymentSubmitButton/PaymentS
 import RoomInfo from "@components/Orders/RoomInfo/RoomInfo";
 import DiffUserCheckbox from "@components/Orders/DiffUserCheckbox/DiffUserCheckbox";
 import PaymentOptionsForm from "@components/Orders/PaymentOptionsForm/PaymentOptionsForm";
-import { getAuthCookie } from "@utils/getAuthCookie";
+import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
 
 export const Payment = () => {
   const methods = useForm({
@@ -27,7 +27,7 @@ export const Payment = () => {
   const [searchParams] = useSearchParams();
   const cartIds = searchParams.getAll("cartId").map(Number);
 
-  const { headers } = getAuthCookie();
+  const { headers } = getAuthLocalStorage();
 
   const { data: paymentData } = usePayment(cartIds, headers);
   const { data: userData } = useUserInfo(headers);

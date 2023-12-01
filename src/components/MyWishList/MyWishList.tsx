@@ -1,4 +1,4 @@
-import { getAuthCookie } from "@utils/getAuthCookie.ts";
+import { getAuthLocalStorage } from "@utils/getAuthLocalStorage.ts";
 import { useEffect, useState, Suspense } from "react";
 import * as styles from "./MyWishList.styles";
 import { Accommodation } from "@components/SearchList/SearchList.types";
@@ -19,7 +19,7 @@ const MyWishList = () => {
   const [totalPage, setTotalPage] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  const { accessTokenCookie, headers } = getAuthCookie();
+  const { accessTokenCookie, headers } = getAuthLocalStorage();
 
   if (!accessTokenCookie) {
     navigate("/notLogin");

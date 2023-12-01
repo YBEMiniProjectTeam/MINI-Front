@@ -1,13 +1,13 @@
 import { Flex, Box, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { DataType } from "./Reservations.types";
-import { getAuthCookie } from "@utils/getAuthCookie";
+import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
 import { useReservationsQuery } from "@hooks/useReservationsQuery";
 import ReservationList from "../../components/Reservations/ReservationList";
 
 export const Reservations = (): JSX.Element => {
   const navigate = useNavigate();
-  const { headers } = getAuthCookie();
+  const { headers } = getAuthLocalStorage();
   const { data } = useReservationsQuery({ headers });
   console.log(`reservation data: ${data}`);
   const handleHomeButton = () => {
