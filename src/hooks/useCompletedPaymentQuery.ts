@@ -55,7 +55,7 @@ const encodeReservationData = (
     {
       key: "price",
       label: "결제 금액",
-      value: reservation.room_info.price
+      value: reservation.room_info.price * reservation.room_info.quantity
     }
   ]);
 };
