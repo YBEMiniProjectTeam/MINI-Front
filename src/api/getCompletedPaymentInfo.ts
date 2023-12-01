@@ -12,6 +12,5 @@ export const getCompletedPaymentInfo = async ({
 }: PaymentInfoProps) => {
   const API_URL = `${API_BASE_URL}/carts/orders/payments?count=${count}`;
   const response = await axios.get(API_URL, { headers });
-  console.log(response);
   return response.data.data;
 };

@@ -1,9 +1,7 @@
 import * as styles from "./ShoppingCart.styles";
-import { Checkbox } from "@chakra-ui/react";
+import { Button, Checkbox, Flex, Text } from "@chakra-ui/react";
 import { ShoppingCartList } from "./ShoppingCartList";
 import { useEffect, useState } from "react";
-
-import { Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { Accommodation, RoomInfo } from "./ShoppinCart.types";
 import { toast } from "react-hot-toast";
@@ -144,8 +142,10 @@ export const ShoppingCartComp = (): JSX.Element => {
   return (
     <styles.ShoppingCartContainer>
       <div className="WrapStyle">
-        <div className="title">장바구니</div>
-        <div className="selectCheckWrap">
+        <Text fontSize="24px" fontWeight="700">
+          장바구니
+        </Text>
+        <Flex padding="1rem 0" justifyContent="space-between">
           <div>
             <Checkbox
               onChange={() => {
@@ -158,7 +158,7 @@ export const ShoppingCartComp = (): JSX.Element => {
           <div>
             <button onClick={handleSelectDelete}>선택 삭제</button>
           </div>
-        </div>
+        </Flex>
       </div>
       {data.data.length > 0 ? (
         data.data.map((hotel: Accommodation, hotelIndex: number) => (

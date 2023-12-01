@@ -16,7 +16,8 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Box
+  Box,
+  Image
 } from "@chakra-ui/react";
 
 const CompletePayment = () => {
@@ -33,14 +34,14 @@ const CompletePayment = () => {
 
   const { data } = useCompletedPayment(orderId!, headers);
 
-  const dummyData = data.rawData;
+  const rawData = data.rawData;
   const reservationName = data.reservationName;
   const totalPrice = data.totalPrice;
   const reservationData = data.reservationData;
 
   return (
     <styles.Container>
-      <Card>
+      <Card key="1">
         <styles.SuccessInfoWrapper>
           <Lottie
             animationData={successCheckLottie}
@@ -49,32 +50,33 @@ const CompletePayment = () => {
           />
           {reservationName}님의 <br /> 결제가 완료되었습니다!
         </styles.SuccessInfoWrapper>
-        <Box padding="0 1rem">
-          <Box
-            display="inline-block"
-            bg="#D63F8B"
-            color="#fff"
-            fontSize="13px"
-            fontWeight={600}
-            padding="2px 5px"
-            borderRadius="5px"
-          >
-            예약 완료
-          </Box>
-        </Box>
-        {dummyData.map((accommodation, index) => (
-          <ReservationInfo
-            key={`${index}-${accommodation.room_info}`}
-            hotelName={accommodation.accommodation_name}
-          >
-            <RoomInfo
-              key={`${index}-${accommodation.room_info.roomName}`}
-              roomInfo={accommodation.room_info}
+        {rawData.map((accommodation, index) => (
+          <styles.CardContainer>
+            <Image
+              src={accommodation.accommodation_thumbnail_url}
+              w="130px"
+              h="130px"
+              objectFit="cover"
+              loading="lazy"
+              borderRadius="5px"
+              marginRight="1rem"
             />
-          </ReservationInfo>
+            <Box width="100%">
+              <ReservationInfo
+                key={`${index}-${accommodation.room_info}`}
+                hotelName={accommodation.accommodation_name}
+                accommodationType={accommodation.accommodation_type}
+              >
+                <RoomInfo
+                  key={`${index}-${accommodation.room_info.roomName}`}
+                  roomInfo={accommodation.room_info}
+                />
+              </ReservationInfo>
+            </Box>
+          </styles.CardContainer>
         ))}
       </Card>
-      <Card label="결제 정보">
+      <Card label="결제 정보" key="2">
         <Accordion allowToggle>
           <AccordionItem>
             <TotalPaymentInfo totalPrice={totalPrice}>

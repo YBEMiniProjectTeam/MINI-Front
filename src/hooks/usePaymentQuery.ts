@@ -14,6 +14,7 @@ interface RoomInfo {
   capacity: number;
   capacityMax: number;
   discount?: number;
+  accommodationType?: string;
 }
 
 interface Accommodation {

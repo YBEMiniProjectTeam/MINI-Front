@@ -11,5 +11,6 @@ export interface RoomInfoProps {
     capacity: number;
     capacityMax: number;
     quantity: number;
+    accommodationType?: string;
   };
 }
