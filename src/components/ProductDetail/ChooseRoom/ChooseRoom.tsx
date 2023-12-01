@@ -1,6 +1,6 @@
 import { ChooseRoomProps } from "./ChooseRoom.types";
 import FacilitiesModal from "../FacilitiesModal/FacilitiesModal";
-import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
+import { getAuthCookie } from "@utils/getAuthCookie";
 import { usePostCart } from "@hooks/useCartMutation";
 import { usePostPayment } from "@hooks/usePaymentMutation";
 import { formatPrice } from "@utils/priceFormatter";
@@ -16,7 +16,7 @@ const ChooseRoom = ({
   startDate,
   endDate
 }: ChooseRoomProps): JSX.Element => {
-  const { accessTokenCookie, headers } = getAuthLocalStorage();
+  const { accessTokenCookie, headers } = getAuthCookie();
   const { mutate: postCart } = usePostCart();
   const { mutate: postPayment } = usePostPayment();
   const { isOpen, onOpen, onClose } = useDisclosure();

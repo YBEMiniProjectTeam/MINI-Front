@@ -13,7 +13,7 @@ import { Accommodation } from "./AccommodationGridView.types";
 import { printCategory } from "@utils/printCategory";
 import { Button, Spinner } from "@chakra-ui/react";
 import { useNavigateToResultPage } from "@hooks/useNavigateToResultPage";
-import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
+import { getAuthCookie } from "@utils/getAuthCookie";
 
 export const AccommodationGridView = () => {
   const { navigateToResultPage } = useNavigateToResultPage();
@@ -25,7 +25,7 @@ export const AccommodationGridView = () => {
     });
   };
 
-  const { headers } = getAuthLocalStorage();
+  const { headers } = getAuthCookie();
 
   const { data, error, refetch } = useSearchList(
     "",

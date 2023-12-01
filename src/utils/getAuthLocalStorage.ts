@@ -1,4 +1,4 @@
-export const getAuthLocalStorage = () => {
+export const getAuthCookie = () => {
   const accessTokenCookie = localStorage.getItem("access-token");
 
   const headers = {

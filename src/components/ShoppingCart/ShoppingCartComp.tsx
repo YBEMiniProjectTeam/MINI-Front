@@ -7,7 +7,7 @@ import { Accommodation, RoomInfo } from "./ShoppinCart.types";
 import { toast } from "react-hot-toast";
 import { useShoppingCartList } from "@hooks/cart/useShoppingCartList";
 
-import { getAuthLocalStorage } from "./../../utils/getAuthLocalStorage";
+import { getAuthCookie } from "./../../utils/getAuthCookie";
 import { useDeleteCart } from "@hooks/cart/useDeleteCartMutation";
 
 import { useQuantityCart } from "@hooks/cart/useQuantityCartMutation";
@@ -23,7 +23,7 @@ export const ShoppingCartComp = (): JSX.Element => {
 
   const navigate = useNavigate();
 
-  const { accessTokenCookie } = getAuthLocalStorage();
+  const { accessTokenCookie } = getAuthCookie();
 
   const { data, refetch } = useShoppingCartList(accessTokenCookie as string);
 

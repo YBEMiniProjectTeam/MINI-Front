@@ -1,4 +1,4 @@
-import { getAuthLocalStorage } from "@utils/getAuthLocalStorage.ts";
+import { getAuthCookie } from "@utils/getAuthCookie.ts";
 import { useEffect, useState, Suspense } from "react";
 import * as styles from "./SearchList.styles";
 import { Accommodation, SearchListProps } from "./SearchList.types";
@@ -34,7 +34,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
   const [totalPage, setTotalPage] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  const { accessTokenCookie, headers } = getAuthLocalStorage();
+  const { accessTokenCookie, headers } = getAuthCookie();
 
   const { data, error, refetch } = useSearchList(
     keyword,

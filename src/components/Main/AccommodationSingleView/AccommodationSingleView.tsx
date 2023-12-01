@@ -11,7 +11,7 @@ import { Button } from "@chakra-ui/react";
 import { useNavigateToResultPage } from "@hooks/useNavigateToResultPage";
 import { useNavigateToDetailPage } from "@hooks/useNavigateToDetailPage";
 import { sliceAccommodationName } from "@utils/sliceAccommodationName";
-import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
+import { getAuthCookie } from "@utils/getAuthCookie";
 
 export const AccommodationSingleView = () => {
   const { navigateToResultPage } = useNavigateToResultPage();
@@ -40,7 +40,7 @@ export const AccommodationSingleView = () => {
     )
   };
 
-  const { headers } = getAuthLocalStorage();
+  const { headers } = getAuthCookie();
 
   const { data, error } = useSearchList(
     "",

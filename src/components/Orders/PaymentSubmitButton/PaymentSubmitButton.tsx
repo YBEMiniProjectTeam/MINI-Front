@@ -1,5 +1,5 @@
 import { useSendPaymentMutation } from "@hooks/useSendPaymentMutation.ts";
-import { getAuthLocalStorage } from "@utils/getAuthLocalStorage.ts";
+import { getAuthCookie } from "@utils/getAuthCookie.ts";
 import { useFormContext } from "react-hook-form";
 import CustomForm from "@components/CustomForm/CustomForm";
 import type { PaymentSubmitButtonProps } from "./PaymentSubmitButton.types";
@@ -16,7 +16,7 @@ const PaymentSubmitButton = ({
   } = useFormContext();
 
   const { mutate: sendPayment } = useSendPaymentMutation();
-  const { headers } = getAuthLocalStorage();
+  const { headers } = getAuthCookie();
 
   const onSubmit = (formData: { name?: string; email?: string }) => {
     const isDifferentUser = getValues("isDiffUser");
