@@ -5,8 +5,7 @@ import {
   HStack,
   Icon,
   Grid,
-  GridItem,
-  Image
+  GridItem
 } from "@chakra-ui/react";
 import { calculateNights } from "@utils/calculateNights";
 import { BsPerson } from "react-icons/bs";
