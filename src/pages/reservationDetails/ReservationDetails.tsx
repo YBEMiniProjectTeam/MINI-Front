@@ -1,11 +1,33 @@
-import { Image, Flex, Box, Divider, Button } from "@chakra-ui/react";
-import { RxDoubleArrowRight } from "react-icons/rx";
+import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
+import { usePaymentDetailsQuery } from "@hooks/useReservationsQuery";
+import { Image, Flex, Box, Divider } from "@chakra-ui/react";
+import { useSearchParams } from "react-router-dom";
+import { formatPrice } from "@utils/priceFormatter";
 
 export const ReservationDetails = (): JSX.Element => {
+  const [searchParams] = useSearchParams();
+  const id = Number(searchParams.get("id"));
+  const thumbnail = searchParams.get("image");
+
+  const { headers } = getAuthLocalStorage();
+  const { data } = usePaymentDetailsQuery(id, { headers });
+  const {
+    accommodation_name,
+    check_in,
+    check_out,
+    guest_email,
+    guest_name,
+    price,
+    reservation_no,
+    reservation_user_email,
+    reservation_user_name,
+    room_name
+  } = data;
+
   return (
     <>
       <Image
-        src="https://bit.ly/2Z4KKcF"
+        src={thumbnail as string}
         objectFit="cover"
         w="100%"
         h="200px"
@@ -23,20 +45,20 @@ export const ReservationDetails = (): JSX.Element => {
             left: "54px"
           }}
         >
-          예약번호
+          예약 번호
         </Box>
-        <Box fontSize="14px">15519267</Box>
+        <Box fontSize="14px">{reservation_no}</Box>
       </Flex>
       <Flex justifyContent="space-between" alignItems="center">
         <Box fontSize="30px" fontWeight={700}>
-          해비치 호텔&리조트
+          {accommodation_name}
         </Box>
-        <Box as="button">
+        {/* <Box as="button">
           <RxDoubleArrowRight size="25px" />
-        </Box>
+        </Box> */}
       </Flex>
       <Box color="#7F7F7F" fontSize="20px" fontWeight={600}>
-        슈페리어 트윈 빌리지
+        {room_name}
       </Box>
       <Divider margin="30px 0" borderColor="#D9D9D9" />
       <Flex justifyContent="space-evenly" alignItems="center">
@@ -45,10 +67,7 @@ export const ReservationDetails = (): JSX.Element => {
             체크인
           </Box>
           <Box fontSize="18px" fontWeight={500}>
-            2023.12.21 (목)
-          </Box>
-          <Box fontSize="22px" fontWeight={800}>
-            17:00
+            {check_in}
           </Box>
         </Flex>
         <Box
@@ -67,10 +86,7 @@ export const ReservationDetails = (): JSX.Element => {
             체크아웃
           </Box>
           <Box fontSize="18px" fontWeight={500}>
-            2023.12.22 (금)
-          </Box>
-          <Box fontSize="22px" fontWeight={800}>
-            14:00
+            {check_out}
           </Box>
         </Flex>
       </Flex>
@@ -84,14 +100,14 @@ export const ReservationDetails = (): JSX.Element => {
             이름
           </Box>
           <Box fontSize="18px" fontWeight={500}>
-            한은지
+            {reservation_user_name}
           </Box>
         </Flex>
         <Flex justifyContent="space-between">
           <Box color="#7F7F7F" fontSize="18px" fontWeight={500}>
             이메일
           </Box>
-          <Box fontSize="18px">abcd@gmail.com</Box>
+          <Box fontSize="18px">{reservation_user_email}</Box>
         </Flex>
       </Flex>
       <Divider margin="30px 0" borderColor="#D9D9D9" />
@@ -104,14 +120,14 @@ export const ReservationDetails = (): JSX.Element => {
             이름
           </Box>
           <Box fontSize="18px" fontWeight={500}>
-            홍길동
+            {guest_name || reservation_user_name}
           </Box>
         </Flex>
         <Flex justifyContent="space-between">
           <Box color="#7F7F7F" fontSize="18px" fontWeight={500}>
             이메일
           </Box>
-          <Box fontSize="18px">abcd@gmail.com</Box>
+          <Box fontSize="18px">{guest_email || reservation_user_email}</Box>
         </Flex>
       </Flex>
       <Divider margin="30px 0" borderColor="#D9D9D9" />
@@ -121,28 +137,13 @@ export const ReservationDetails = (): JSX.Element => {
         </Box>
         <Flex justifyContent="space-between">
           <Box color="#7F7F7F" fontSize="18px" fontWeight={500}>
-            상품 금액
-          </Box>
-          <Box fontSize="18px">30,000원</Box>
-        </Flex>
-        <Flex justifyContent="space-between">
-          <Box color="#7F7F7F" fontSize="18px" fontWeight={500}>
-            할인 금액
-          </Box>
-          <Box fontSize="18px">-3,000원</Box>
-        </Flex>
-        <Flex justifyContent="space-between">
-          <Box color="#7F7F7F" fontSize="18px" fontWeight={500}>
             총 결제 금액
           </Box>
           <Box fontSize="20px" fontWeight={700}>
-            27,000원
+            {formatPrice(price)}원
           </Box>
         </Flex>
       </Flex>
-      <Button w="100%" size="md" marginTop="20px">
-        예약 취소하기
-      </Button>
     </>
   );
 };
