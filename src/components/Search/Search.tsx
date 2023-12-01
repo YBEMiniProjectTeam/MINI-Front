@@ -116,6 +116,10 @@ const Search = ({ keyword, category, region }: SearchProps) => {
     setIsRefetched(true);
   }, [data]);
 
+  useEffect(() => {
+    refetch();
+  }, [isRefetched]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAccommodationName(e.target.value);
   };
@@ -128,8 +132,8 @@ const Search = ({ keyword, category, region }: SearchProps) => {
     let newRefetchState = isRefetched;
     newRefetchState = !newRefetchState;
 
-    setIsRefetched(newRefetchState);
     refetch();
+    setIsRefetched(newRefetchState);
   };
 
   return (
