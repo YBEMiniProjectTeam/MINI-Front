@@ -68,7 +68,7 @@ export const Header = (): JSX.Element => {
 
           {accessToken ? (
             <>
-              <Link to={"/reservationDetails"}>
+              <Link to={"/reservations"}>
                 <div className="menuWrap">예약/구매 내역</div>
               </Link>
 

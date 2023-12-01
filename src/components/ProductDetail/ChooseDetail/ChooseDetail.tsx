@@ -7,18 +7,17 @@ import { Box, Flex, useDisclosure } from "@chakra-ui/react";
 import { CiCalendar } from "react-icons/ci";
 import { BsPeople } from "react-icons/bs";
 import { convertDateFormat } from "@utils/convertDateFormat";
-import { convertDateFormat5 } from "@utils/convertDateFormat5";
 
 const ChooseDetail = ({
   id,
   startDate,
   endDate
 }: ChooseDetailTypes): JSX.Element => {
-  const [selectedDate, setSelectedDate] = useState<string[] | null>([]);
+  const [selectedDate, setSelectedDate] = useState<string[]>([
+    startDate,
+    endDate
+  ]);
   const [guestNum, setGuestNum] = useState<number>(2);
-
-  const checkInDate = convertDateFormat5(startDate) as string;
-  const checkOutDate = convertDateFormat5(startDate) as string;
 
   const {
     isOpen: isOpenChooseDateModal,
@@ -28,8 +27,8 @@ const ChooseDetail = ({
 
   const { data: rooms, refetch } = useRoomListQuery(
     id,
-    checkInDate,
-    checkOutDate,
+    selectedDate[0],
+    selectedDate[1],
     guestNum
   );
 
@@ -64,7 +63,7 @@ const ChooseDetail = ({
             onClick={onOpenChooseDateModal}
           >
             <CiCalendar />
-            {selectedDate &&
+            {startDate &&
               `${convertDateFormat(selectedDate[0])} - ${convertDateFormat(
                 selectedDate[1]
               )}`}
@@ -87,13 +86,13 @@ const ChooseDetail = ({
           </Box>
         </Flex>
       </Box>
-      {rooms ? (
+      {Array.isArray(rooms) && rooms.length > 0 ? (
         rooms.map((room: RoomTypes, index: number) => (
           <ChooseRoom
             key={index}
             room={room}
-            checkInDate={checkInDate}
-            checkOutDate={checkOutDate}
+            startDate={selectedDate[0]}
+            endDate={selectedDate[1]}
           />
         ))
       ) : (

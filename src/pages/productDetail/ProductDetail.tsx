@@ -27,6 +27,11 @@ export const ProductDetail: React.FC = () => {
       ? new Date(endDateParam)
       : new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
 
+  // const [selectedDate, setSelectedDate] = useState<string[]>([
+  //   startDate.toString(),
+  //   endDate.toString()
+  // ]);
+
   const { data } = useAccomodationQuery(id);
 
   const {
