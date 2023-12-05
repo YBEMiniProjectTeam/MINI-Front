@@ -7,7 +7,7 @@ import { useRecoilState } from "recoil";
 import { loginUrlState, loginUrlSearchState } from "@recoil/loginUrl";
 import { useLogoutMutation } from "@hooks/login/useLoginMutation";
 
-export const Header = (): JSX.Element => {
+export const Header = () => {
   const [isSubMenuVisible, setSubMenuVisible] = useState(false);
 
   const [isShowInput, setIsShowInput] = useState(true);
@@ -23,11 +23,8 @@ export const Header = (): JSX.Element => {
   useEffect(() => {
     const currentPath = location.pathname;
 
-    if (currentPath.includes("searchResult")) {
-      setIsShowInput(false);
-    } else {
-      setIsShowInput(true);
-    }
+    const displayInput = !currentPath.includes("searchResult");
+    setIsShowInput(displayInput);
 
     const accesstkoen = localStorage.getItem("access-token");
     if (accesstkoen) {
@@ -35,66 +32,74 @@ export const Header = (): JSX.Element => {
     }
   }, [location.pathname, location.search, accessToken]);
 
-  const handleClickLogin = (): void => {
+  const handleClickLogin = () => {
     setLoginUrl(location.pathname);
     setLoginSearchUrl(location.search);
   };
   const { mutate: logoutMutate } = useLogoutMutation();
 
   const handleClickLogoutButton = async (): Promise<void> => {
-    if (accessToken) {
-      await logoutMutate({
-        accessToken
-      });
-      localStorage.removeItem("access-token");
-      setAccessToken("");
+    if (!accessToken) {
+      return;
     }
+
+    await logoutMutate({
+      accessToken
+    });
+    localStorage.removeItem("access-token");
+    setAccessToken("");
   };
 
   return (
     <S.Header>
       <S.HeaderContainer>
         <Link to="/">
-          <div className="Title">NINE STAY</div>
+          <div className="header-title">NINE STAY</div>
         </Link>
         {isShowInput ? <HeaderInput /> : null}
 
-        <div className="menuContainer">
+        <div className="menu-container">
           {accessToken ? null : (
             <Link to={"/login"} onClick={handleClickLogin}>
-              <div className="menuWrap">로그인/회원가입</div>
+              <div className="menu-wrap">로그인/회원가입</div>
             </Link>
           )}
 
           {accessToken ? (
             <>
               <Link to={"/reservations"}>
-                <div className="menuWrap">예약/구매 내역</div>
+                <div className="menu-wrap">예약/구매 내역</div>
               </Link>
 
               <div
-                className="userMenu"
+                className="user-menu"
                 onMouseEnter={() => setSubMenuVisible(true)}
                 onMouseLeave={() => setSubMenuVisible(false)}
               >
                 <div className="relative">
-                  <div className="menuWrap">
+                  <div className="menu-wrap">
                     <span>마이스테이</span>
                   </div>
                   <div
-                    className={isSubMenuVisible ? "subMenu visible" : "subMenu"}
+                    className={
+                      isSubMenuVisible
+                        ? "sub-menu sub-menu--visible"
+                        : "sub-menu"
+                    }
                   >
-                    <ul>
-                      <Link to="/wishList">
-                        <li>위시리스트</li>
-                      </Link>
-                      <Link to="/shoppingCart">
-                        <li>장바구니</li>
-                      </Link>
-                      <Link to="/" onClick={handleClickLogoutButton}>
-                        <li>로그아웃</li>
-                      </Link>
-                    </ul>
+                    <nav>
+                      <ul>
+                        <Link to="/wishList">
+                          <li>위시리스트</li>
+                        </Link>
+                        <Link to="/shoppingCart">
+                          <li>장바구니</li>
+                        </Link>
+                        <Link to="/" onClick={handleClickLogoutButton}>
+                          <li>로그아웃</li>
+                        </Link>
+                      </ul>
+                    </nav>
                   </div>
                 </div>
               </div>
