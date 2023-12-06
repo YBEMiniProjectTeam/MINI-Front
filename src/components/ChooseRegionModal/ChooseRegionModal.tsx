@@ -27,12 +27,12 @@ const ChooseRegionModal = ({
   const [regionList, setRegionList] = useState<Region[]>([]);
   const [districtList, setDistrictList] = useState<District[]>([]);
 
-  const regionData = useRegionList().data;
-  const regionError = useRegionList().error;
-
-  const districtData = useDistrictList(selectedRegion).data;
-  const districtError = useDistrictList(selectedRegion).error;
-  const districtRefetch = useDistrictList(selectedRegion).refetch;
+  const { data: regionData, error: regionError } = useRegionList();
+  const {
+    data: districtData,
+    error: districtError,
+    refetch: districtRefetch
+  } = useDistrictList(selectedRegion);
 
   if (regionError) {
     console.error("An error has occurred:", regionError.message);
