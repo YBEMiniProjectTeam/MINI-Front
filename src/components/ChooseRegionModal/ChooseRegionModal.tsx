@@ -67,59 +67,53 @@ const ChooseRegionModal = ({
   };
 
   return (
-    <>
-      <Modal
-        closeOnOverlayClick={false}
-        isOpen={isOpen}
-        onClose={onClose}
-        isCentered
-        motionPreset="slideInBottom"
-        scrollBehavior="inside"
-        size="xl"
-      >
-        <ModalOverlay />
-        <ModalContent maxW="720px" maxH="600px" overflow="auto">
-          <ModalHeader
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            지역 선택
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <Tabs isFitted variant="line">
-              <TabList>
-                <Tab>지역명</Tab>
-              </TabList>
-            </Tabs>
-            <styles.SideTabs>
-              <styles.SideTabList>
-                {regionList?.map((region) => (
-                  <styles.SideTab
-                    key={region.id}
-                    onClick={() => handleRegionSelect(region.id)}
-                    $isSelected={selectedRegion === region.id}
-                  >
-                    {region.name}
-                  </styles.SideTab>
-                ))}
-              </styles.SideTabList>
-              <styles.DistrictList>
-                {districtList?.map((district) => (
-                  <styles.District
-                    key={district.id}
-                    onClick={() => handleDistrictSelect(district.name)}
-                  >
-                    {district.name}
-                  </styles.District>
-                ))}
-              </styles.DistrictList>
-            </styles.SideTabs>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    </>
+    <Modal
+      closeOnOverlayClick={false}
+      isOpen={isOpen}
+      onClose={onClose}
+      isCentered
+      motionPreset="slideInBottom"
+      scrollBehavior="inside"
+      size="xl"
+    >
+      <ModalOverlay />
+      <ModalContent maxW="720px" maxH="600px" overflow="auto">
+        <ModalHeader display="flex" justifyContent="center" alignItems="center">
+          지역 선택
+        </ModalHeader>
+        <ModalCloseButton />
+        <ModalBody pb={6}>
+          <Tabs isFitted variant="line">
+            <TabList>
+              <Tab>지역명</Tab>
+            </TabList>
+          </Tabs>
+          <styles.SideTabs>
+            <styles.SideTabList>
+              {regionList?.map((region) => (
+                <styles.SideTab
+                  key={region.id}
+                  onClick={() => handleRegionSelect(region.id)}
+                  $isSelected={selectedRegion === region.id}
+                >
+                  {region.name}
+                </styles.SideTab>
+              ))}
+            </styles.SideTabList>
+            <styles.DistrictList>
+              {districtList?.map((district) => (
+                <styles.District
+                  key={district.id}
+                  onClick={() => handleDistrictSelect(district.name)}
+                >
+                  {district.name}
+                </styles.District>
+              ))}
+            </styles.DistrictList>
+          </styles.SideTabs>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
   );
 };
 
