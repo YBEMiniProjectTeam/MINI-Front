@@ -85,24 +85,14 @@ const SearchList = ({ keyword }: SearchListProps) => {
       toast.error("로그인이 필요한 서비스입니다.");
       return;
     }
-    // const updatedSearchList = [...searchList];
 
-    // console.log(updatedSearchList);
-
-    // updatedSearchList[index] = {
-    //   ...updatedSearchList[index],
-    //   isWish: !updatedSearchList[index].isWish
-    // };
-
-    // setSearchList(updatedSearchList);
-
-    if (searchList[index].isWish === false) {
-      await postWish({ accommodationId, headers });
-      searchList[index].isWish = true;
-      refetch();
-    } else {
+    if (searchList[index].isWish) {
       await deleteWish({ accommodationId, headers });
       searchList[index].isWish = false;
+      refetch();
+    } else {
+      await postWish({ accommodationId, headers });
+      searchList[index].isWish = true;
       refetch();
     }
   };
