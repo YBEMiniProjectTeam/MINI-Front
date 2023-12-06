@@ -130,21 +130,21 @@ const ChooseDateModal = ({
         >
           일정
           <styles.HeaderScheduleWrapper>
-            <styles.HeaderScheduleLeft>
+            <styles.HeaderSchedule>
               <styles.CheckInText>체크인</styles.CheckInText>
               <styles.Date>
                 {convertDateFormat(dateRange[0]?.toLocaleDateString())}
               </styles.Date>
-            </styles.HeaderScheduleLeft>
+            </styles.HeaderSchedule>
             <styles.HeaderScheduleMid>
               <Icon as={RxDoubleArrowRight} width="100%" />
             </styles.HeaderScheduleMid>
-            <styles.HeaderScheduleRight>
+            <styles.HeaderSchedule>
               <styles.CheckOutText>체크아웃</styles.CheckOutText>
               <styles.Date>
                 {convertDateFormat(dateRange[1]?.toLocaleDateString())}
               </styles.Date>
-            </styles.HeaderScheduleRight>
+            </styles.HeaderSchedule>
           </styles.HeaderScheduleWrapper>
         </ModalHeader>
         <ModalCloseButton />
