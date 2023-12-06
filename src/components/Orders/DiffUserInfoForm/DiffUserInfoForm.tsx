@@ -1,6 +1,6 @@
 import * as styles from "./DiffUserInfoForm.styles";
 import { useFormContext } from "react-hook-form";
-import CustomForm from "@components/CustomForm/CustomForm";
+import CustomInput from "@components/CustomForm/CustomInput";
 
 const DiffUserInfoForm = () => {
   const { control } = useFormContext();
@@ -10,7 +10,7 @@ const DiffUserInfoForm = () => {
       <styles.StyledLabel as="legend">
         투숙자 정보 <span>(필수 입력 사항)</span>
       </styles.StyledLabel>
-      <CustomForm.Input
+      <CustomInput
         control={control}
         name="name"
         label="투숙자명"
@@ -20,7 +20,7 @@ const DiffUserInfoForm = () => {
         variant="flushed"
         rules={{ required: "이름을 입력해주세요." }}
       />
-      <CustomForm.Input
+      <CustomInput
         control={control}
         name="email"
         label="이메일"

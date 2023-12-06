@@ -1,7 +1,7 @@
 import { useSendPaymentMutation } from "@hooks/useSendPaymentMutation.ts";
 import { getAuthLocalStorage } from "@utils/getAuthLocalStorage.ts";
 import { useFormContext } from "react-hook-form";
-import CustomForm from "@components/CustomForm/CustomForm";
+import CustomButton from "@components/CustomForm/CustomButton";
 import type { PaymentSubmitButtonProps } from "./PaymentSubmitButton.types";
 
 const PaymentSubmitButton = ({
@@ -33,7 +33,7 @@ const PaymentSubmitButton = ({
   };
 
   return (
-    <CustomForm.Button
+    <CustomButton
       width="100%"
       type="submit"
       onClick={handleSubmit(onSubmit)}
@@ -41,7 +41,7 @@ const PaymentSubmitButton = ({
       colorScheme={isValid ? "pink" : "grey"}
     >
       {totalPrice.toLocaleString()}원 결제하기
-    </CustomForm.Button>
+    </CustomButton>
   );
 };
 

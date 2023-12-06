@@ -7,7 +7,7 @@ import Card from "@components/Card/Card";
 import ReservationInfo from "@components/Orders/ReservationInfo/ReservationInfo";
 import PaymentInfo from "@components/Orders/PaymentInfo/PaymentInfo";
 import { useCompletedPayment } from "@hooks/useCompletedPaymentQuery";
-import CustomForm from "@components/CustomForm/CustomForm.tsx";
+import CustomButton from "@components/CustomForm/CustomButton";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import successCheckLottie from "@assets/lottie/success_check.json";
 import {
@@ -94,9 +94,9 @@ const CompletePayment = () => {
           </AccordionItem>
         </Accordion>
       </Card>
-      <CustomForm.Button width="100%" onClick={handleNavigate}>
+      <CustomButton width="100%" onClick={handleNavigate}>
         예약 확인
-      </CustomForm.Button>
+      </CustomButton>
     </styles.Container>
   );
 };
