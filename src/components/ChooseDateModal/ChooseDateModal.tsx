@@ -88,7 +88,7 @@ const ChooseDateModal = ({
     >
       <ModalOverlay />
       <ModalContent maxW="720px" maxH="700px" overflow="auto">
-        {!isFromSearchResult ? (
+        {isFromSearchResult ? null : (
           <ModalHeader
             display="flex"
             justifyContent="space-between"
@@ -122,7 +122,7 @@ const ChooseDateModal = ({
               />
             </styles.HeaderPersonWrapper>
           </ModalHeader>
-        ) : null}
+        )}
 
         <ModalHeader
           display="flex"
