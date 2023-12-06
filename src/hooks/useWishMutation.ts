@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { postWish } from "@api/postWish";
 import { deleteWish } from "@api/deleteWish";
-import { ResponseType } from "@components/SearchList/SearchList.types";
+import { SearchListResponse } from "@components/SearchList/SearchList.types";
 import { toast } from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
 interface LikeProps {
@@ -12,7 +12,7 @@ interface LikeProps {
 export const usePostWish = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<ResponseType, Error, LikeProps>({
+  return useMutation<SearchListResponse, Error, LikeProps>({
     mutationFn: ({ accommodationId, headers }: LikeProps) =>
       postWish(accommodationId, headers),
     onSuccess: () => {
@@ -28,7 +28,7 @@ export const usePostWish = () => {
 export const useDeleteWish = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<ResponseType, Error, LikeProps>({
+  return useMutation<SearchListResponse, Error, LikeProps>({
     mutationFn: ({ accommodationId, headers }: LikeProps) =>
       deleteWish(accommodationId, headers),
     onSuccess: () => {

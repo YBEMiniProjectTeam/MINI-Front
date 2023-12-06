@@ -24,7 +24,7 @@ export interface SearchListProps {
   keyword: string | null;
 }
 
-export interface ResponseType {
+export interface SearchListResponse {
   statusCode: number;
   message: string;
 }
