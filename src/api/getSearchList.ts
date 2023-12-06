@@ -11,21 +11,17 @@ export const getSearchList = async (
   pageSize: number,
   headers?: { [key: string]: string }
 ) => {
+  const queryParams = new URLSearchParams({
+    ...(accomodationName && { keyword: accomodationName }),
+    ...(selectedDistrict && { district: selectedDistrict }),
+    ...(startDate && { start_date: startDate }),
+    ...(endDate && { end_date: endDate }),
+    ...(category && { category: category }),
+    page_num: String(pageNum),
+    page_size: String(pageSize),
+  });
 
-  let url = `${API_BASE_URL}/accommodations?`;
-
-  if (accomodationName)
-    url += `keyword=${accomodationName}&`;
-  if (selectedDistrict)
-    url += `district=${selectedDistrict}&`;
-  if (startDate)
-    url += `start_date=${startDate}&`;
-  if (endDate)
-    url += `end_date=${endDate}&`;
-  if (category)
-    url += `category=${category}&`;
-
-  url += `page_num=${pageNum}&page_size=${pageSize}`;
+  const url = `${API_BASE_URL}/accommodations?${queryParams.toString()}`;
 
   const response = await axios.get(url, { headers });
 
