@@ -38,7 +38,8 @@ const ChooseDateModal = ({
 
   const handleDateChange: CalendarProps["onChange"] = (value) => {
     if (Array.isArray(value)) {
-      setDateRange([value[0], value[1] || null]);
+      const [startDate, endDate] = value;
+      setDateRange([startDate, endDate || null]);
     } else {
       setDateRange([value, null]);
     }
