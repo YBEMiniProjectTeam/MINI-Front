@@ -57,7 +57,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
 
   // 모듈화
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     document.documentElement.scrollTop = 0;
 
     return () => {
