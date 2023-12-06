@@ -32,8 +32,11 @@ const ChooseDateModal = ({
     null,
     null
   ]);
-  // 타입지정 아무리해도 안돼서 any로 해놨음
-  const handleDateChange = (value: any) => {
+
+  // Calendar 컴포넌트의 property 타입
+  type CalendarProps = Parameters<typeof Calendar>[0];
+
+  const handleDateChange: CalendarProps["onChange"] = (value) => {
     if (Array.isArray(value)) {
       setDateRange([value[0], value[1] || null]);
     } else {
