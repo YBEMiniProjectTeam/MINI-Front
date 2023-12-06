@@ -67,10 +67,8 @@ const ChooseDateModal = ({
   const tileDisabled = ({ date }: { date: Date }) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const twoDaysAgo = new Date();
-    twoDaysAgo.setDate(today.getDate());
-    twoDaysAgo.setHours(0, 0, 0, 0);
-    return date < twoDaysAgo;
+
+    return date < today;
   };
 
   const handleClick = () => {
