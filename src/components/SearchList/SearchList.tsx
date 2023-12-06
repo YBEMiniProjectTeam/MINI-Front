@@ -80,6 +80,11 @@ const SearchList = ({ keyword }: SearchListProps) => {
     setIsLoadingMore(false);
   }, [isRefetched]);
 
+  const toggleLike = (index: number, accomodations: Accommodation[]) => {
+    accomodations[index].isWish = !accomodations[index].isWish;
+    refetch();
+  };
+
   const handleLikeClick = async (index: number, accommodationId: number) => {
     if (!accessTokenCookie) {
       toast.error("로그인이 필요한 서비스입니다.");
@@ -88,12 +93,10 @@ const SearchList = ({ keyword }: SearchListProps) => {
 
     if (searchList[index].isWish) {
       await deleteWish({ accommodationId, headers });
-      searchList[index].isWish = false;
-      refetch();
+      toggleLike(index, searchList);
     } else {
       await postWish({ accommodationId, headers });
-      searchList[index].isWish = true;
-      refetch();
+      toggleLike(index, searchList);
     }
   };
 
