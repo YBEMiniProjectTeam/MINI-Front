@@ -4,9 +4,11 @@ import { deleteWish } from "@api/deleteWish";
 import { SearchListResponse } from "@components/SearchList/SearchList.types";
 import { toast } from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
+import { Nullable } from "@/types/nullable";
+import { AxiosRequestConfig } from "axios";
 interface LikeProps {
-  accommodationId: number | null;
-  headers: { [key: string]: string };
+  accommodationId: Nullable<number>;
+  headers: AxiosRequestConfig['headers'];
 }
 
 export const usePostWish = () => {

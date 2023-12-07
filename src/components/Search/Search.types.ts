@@ -1,5 +1,7 @@
+import { Nullable } from "@/types/nullable";
+
 export interface SearchProps {
-  keyword: string | null;
-  category: string | null;
-  region: string | null;
+  keyword: Nullable<string>;
+  category: Nullable<string>;
+  region: Nullable<string>;
 }

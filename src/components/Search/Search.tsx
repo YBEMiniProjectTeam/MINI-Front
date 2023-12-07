@@ -33,6 +33,7 @@ import {
 } from "@recoil/searchStates";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
+import { Nullable } from "@/types/nullable";
 
 const Search = ({ keyword, category, region }: SearchProps) => {
   const {
@@ -50,12 +51,12 @@ const Search = ({ keyword, category, region }: SearchProps) => {
   const [selectedDistrict, setSelectedDistrict] = useState<string>(
     region ? region : ""
   );
-  const [selectedDate, setSelectedDate] = useState<string[] | null>([]);
+  const [selectedDate, setSelectedDate] = useState<Nullable<string[]>>([]);
   const [accommodationName, setAccommodationName] = useState<string>(
     keyword ? keyword : ""
   );
-  const [startDate, setStartDate] = useState<string | null>("");
-  const [endDate, setEndDate] = useState<string | null>("");
+  const [startDate, setStartDate] = useState<Nullable<string>>("");
+  const [endDate, setEndDate] = useState<Nullable<string>>("");
   const [selectedCategory, setSelectedCategory] = useState<string>(
     category ? category : ""
   );

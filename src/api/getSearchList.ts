@@ -1,15 +1,17 @@
 import axios from "axios";
 import { API_BASE_URL } from "./config";
+import { Nullable } from "@/types/nullable";
+import { AxiosRequestConfig } from "axios";
 
 export const getSearchList = async (
-  accomodationName: string | null,
-  selectedDistrict: string | null,
-  startDate: string | null,
-  endDate: string | null,
-  category: string | null,
+  accomodationName: Nullable<string>,
+  selectedDistrict: Nullable<string>,
+  startDate: Nullable<string>,
+  endDate: Nullable<string>,
+  category: Nullable<string>,
   pageNum: number,
   pageSize: number,
-  headers?: { [key: string]: string }
+  headers?: AxiosRequestConfig['headers']
 ) => {
   const queryParams = new URLSearchParams({
     ...(accomodationName && { keyword: accomodationName }),

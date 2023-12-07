@@ -1,7 +1,9 @@
+import { Nullable } from "@/types/nullable";
+
 export interface DisclosureProps {
   isOpen: boolean;
   onClose: () => void;
-  setSelectedDate: React.Dispatch<React.SetStateAction<string[] | null>>;
+  setSelectedDate: React.Dispatch<React.SetStateAction<Nullable<string[]>>>;
   isFromSearchResult: boolean;
   personCount?: number;
   setPersonCount?: React.Dispatch<React.SetStateAction<number>>;
@@ -9,6 +11,6 @@ export interface DisclosureProps {
 }
 
 export interface DateRange {
-  startDate: Date | null;
-  endDate: Date | null;
+  startDate: Nullable<Date>;
+  endDate: Nullable<Date>;
 }

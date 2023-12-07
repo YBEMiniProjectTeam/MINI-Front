@@ -7,6 +7,8 @@ export interface Accommodation {
   isWish: boolean;
 }
 
+import { Nullable } from "@/types/nullable";
+
 export interface ApiResponse {
   status: string;
   data: {
@@ -21,7 +23,7 @@ export interface ApiResponse {
 }
 
 export interface SearchListProps {
-  keyword: string | null;
+  keyword: Nullable<string>;
 }
 
 export interface SearchListResponse {

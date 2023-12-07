@@ -18,6 +18,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { convertDateFormat } from "@utils/convertDateFormat";
 import moment from "moment";
+import { Nullable } from "@/types/nullable";
 
 const ChooseDateModal = ({
   isOpen,
@@ -28,7 +29,7 @@ const ChooseDateModal = ({
   setPersonCount,
   refetch
 }: DisclosureProps) => {
-  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
+  const [dateRange, setDateRange] = useState<[Nullable<Date>, Nullable<Date>]>([
     null,
     null
   ]);

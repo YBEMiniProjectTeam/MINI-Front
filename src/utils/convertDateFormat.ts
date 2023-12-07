@@ -1,5 +1,8 @@
 // 2023. 11. 24. -> 11.24 (목)
-export function convertDateFormat(inputDate?: string): string | null {
+
+import { Nullable } from "@/types/nullable";
+
+export function convertDateFormat(inputDate?: string): Nullable<string> {
   if (!inputDate) {
     return null;
   }
