@@ -9,7 +9,7 @@ import { IoBedOutline } from "react-icons/io5";
 import { BsPerson } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
-import { convertDateFormat5 } from "@utils/convertDateFormat5";
+import format from "date-fns/format";
 
 const ChooseRoom = ({
   room,
@@ -31,8 +31,8 @@ const ChooseRoom = ({
     description
   } = room;
 
-  const checkInDate = convertDateFormat5(startDate);
-  const checkOutDate = convertDateFormat5(endDate);
+  const checkInDate = format(new Date(startDate), "yyyy-MM-dd");
+  const checkOutDate = format(new Date(endDate), "yyyy-MM-dd");
 
   const body = {
     room_id: id,

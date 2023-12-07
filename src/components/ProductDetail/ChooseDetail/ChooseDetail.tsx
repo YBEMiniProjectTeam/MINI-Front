@@ -6,7 +6,8 @@ import { ChooseDetailTypes, RoomTypes } from "./ChooseDetail.types";
 import { Box, Flex, useDisclosure } from "@chakra-ui/react";
 import { CiCalendar } from "react-icons/ci";
 import { BsPeople } from "react-icons/bs";
-import { convertDateFormat } from "@utils/convertDateFormat";
+import { format } from "date-fns";
+import { ko } from "date-fns/locale";
 
 const ChooseDetail = ({
   id,
@@ -64,9 +65,11 @@ const ChooseDetail = ({
           >
             <CiCalendar />
             {startDate &&
-              `${convertDateFormat(selectedDate[0])} - ${convertDateFormat(
-                selectedDate[1]
-              )}`}
+              `${format(new Date(selectedDate[0]), "MM.dd (EEEEE)", {
+                locale: ko
+              })} - ${format(new Date(selectedDate[0]), "MM.dd (EEEEE)", {
+                locale: ko
+              })}`}
           </Box>
           <Box
             as="button"
