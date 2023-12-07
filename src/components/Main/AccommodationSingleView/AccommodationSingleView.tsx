@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import * as styled from "./AccommodationSingleView.styles";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
@@ -18,38 +18,46 @@ export const AccommodationSingleView = () => {
   const { navigateToDetailPage } = useNavigateToDetailPage();
   const [currentSlide, setCurrentSlide] = useState<number>(0);
 
-  const settings = {
-    dots: false,
-    infinite: false,
-    arrows: true,
-    speed: 500,
-    slidesToShow: 1,
-    centerMode: true,
-    centerPadding: "28px",
-    slidesToScroll: 1,
-    beforeChange: (_: number, next: number) => setCurrentSlide(next),
-    nextArrow: (
-      <styled.RightArrowButtonWrapper>
-        <IoIosArrowForward color="#4D4D4D" size="2rem" />
-      </styled.RightArrowButtonWrapper>
-    ),
-    prevArrow: (
-      <styled.LeftArrowButtonWrapper>
-        <IoIosArrowBack color="#4D4D4D" size="2rem" />
-      </styled.LeftArrowButtonWrapper>
-    )
-  };
+  const settings = useMemo(
+    () => ({
+      dots: false,
+      infinite: false,
+      arrows: true,
+      speed: 500,
+      slidesToShow: 1,
+      centerMode: true,
+      centerPadding: "28px",
+      slidesToScroll: 1,
+      beforeChange: (_: number, next: number) => setCurrentSlide(next),
+      nextArrow: (
+        <styled.RightArrowButtonWrapper>
+          <IoIosArrowForward color="#4D4D4D" size="2rem" />
+        </styled.RightArrowButtonWrapper>
+      ),
+      prevArrow: (
+        <styled.LeftArrowButtonWrapper>
+          <IoIosArrowBack color="#4D4D4D" size="2rem" />
+        </styled.LeftArrowButtonWrapper>
+      ),
+    }), []);
 
   const { headers } = getAuthLocalStorage();
+
+  // 메인 페이지 싱글 뷰에 보여줄 호텔 데이터
+  const accommodationData = {
+    category: "호텔",
+    pageNumber: 60,
+    dataSize: 7,
+  }
 
   const { data, error } = useSearchList(
     "",
     "",
     "",
     "",
-    "호텔",
-    60,
-    7,
+    accommodationData.category,
+    accommodationData.pageNumber,
+    accommodationData.dataSize,
     null,
     headers
   );
@@ -100,7 +108,7 @@ export const AccommodationSingleView = () => {
           <styled.StyledSlider {...settings}>
             {data?.accommodations?.map((item: Accommodation, index: number) => (
               <styled.SwiperItem
-                key={index}
+                key={item.id}
                 onClick={() => navigateToDetailPage(item.id)}
               >
                 <img
