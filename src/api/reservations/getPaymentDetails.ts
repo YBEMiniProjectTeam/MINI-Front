@@ -6,8 +6,8 @@ const getPaymentDetails = async (
   id: number,
   { headers }: GetPaymentDetailsProps
 ) => {
-  const GET_PAYMENT_DETAILS_URL = `${API_BASE_URL}/payments/${id}`;
-  const response = await axios.get(GET_PAYMENT_DETAILS_URL, { headers });
+  const getPaymentDetailsUrl = `${API_BASE_URL}/payments/${id}`;
+  const response = await axios.get(getPaymentDetailsUrl, { headers });
 
   return response.data.data;
 };

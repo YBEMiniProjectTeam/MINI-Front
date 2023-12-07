@@ -11,8 +11,8 @@ const getRoomList = async (
   const startDate = convertDateFormat5(checkInDate);
   const endDate = convertDateFormat5(checkOutDate);
 
-  const GET_ROOM_LIST_URL = `${API_BASE_URL}/accommodations/${id}/rooms?start_date=${startDate}&end_date=${endDate}&guest_num=${guestNum}`;
-  const response = await axios.get(GET_ROOM_LIST_URL);
+  const getRoomListUrl = `${API_BASE_URL}/accommodations/${id}/rooms?start_date=${startDate}&end_date=${endDate}&guest_num=${guestNum}`;
+  const response = await axios.get(getRoomListUrl);
 
   return response.data.data.rooms;
 };

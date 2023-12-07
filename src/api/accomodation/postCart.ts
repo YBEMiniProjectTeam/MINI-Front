@@ -9,8 +9,8 @@ const postCart = async ({
   body,
   headers
 }: PostCartProps): Promise<ResponseType> => {
-  const API_URL = `${API_BASE_URL}/carts`;
-  return await axios.post(API_URL, body, { headers });
+  const postCartUrl = `${API_BASE_URL}/carts`;
+  return await axios.post(postCartUrl, body, { headers });
 };
 
 export default postCart;
