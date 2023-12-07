@@ -129,7 +129,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
             thickness="2px"
             speed="0.65s"
             emptyColor="gray.200"
-            color="#db074a"
+            color="pink"
             size="md"
           />
         </styles.SpinnerWrapper>
@@ -258,7 +258,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
             thickness="2px"
             speed="0.65s"
             emptyColor="gray.200"
-            color="#db074a"
+            color="pink"
             size="md"
           />
         </styles.SpinnerWrapper>

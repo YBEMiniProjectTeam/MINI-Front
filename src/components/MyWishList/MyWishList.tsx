@@ -82,7 +82,7 @@ const MyWishList = () => {
             thickness="2px"
             speed="0.65s"
             emptyColor="gray.200"
-            color="#db074a"
+            color="pink"
             size="md"
           />
         </styles.SpinnerWrapper>
@@ -196,7 +196,7 @@ const MyWishList = () => {
             thickness="2px"
             speed="0.65s"
             emptyColor="gray.200"
-            color="#db074a"
+            color="pink"
             size="md"
           />
         </styles.SpinnerWrapper>

@@ -103,7 +103,7 @@ const ChooseDateModal = ({
                 backgroundColor="white"
                 width="2rem"
                 height="2rem"
-                color={personCount === 1 ? "gray" : "#db074a"}
+                color={personCount === 1 ? "gray" : "pink"}
                 opacity={personCount === 1 ? "0.5" : "1"}
                 onClick={handleMinusClick}
                 isDisabled={personCount === 1}
@@ -116,7 +116,7 @@ const ChooseDateModal = ({
                 backgroundColor="white"
                 width="2rem"
                 height="2rem"
-                color="#db074a"
+                color="pink"
                 onClick={handlePlusClick}
                 userSelect="none"
                 _hover={{ cursor: "pointer" }}
