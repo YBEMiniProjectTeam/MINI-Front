@@ -11,8 +11,9 @@ import { Button } from "@chakra-ui/react";
 import { useNavigateToResultPage } from "@hooks/useNavigateToResultPage";
 import { useNavigateToDetailPage } from "@hooks/useNavigateToDetailPage";
 import { sliceAccommodationName } from "@utils/sliceAccommodationName";
-import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
+// import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
 import { SlickButtonFixProps } from "./AccommodationSingleView.types";
+import { useCookies } from "react-cookie";
 
 const SlickButtonFix = ({currentSlide, slideCount, children, ...props}: SlickButtonFixProps) => (
   <span {...props}>{children}</span>
@@ -22,6 +23,14 @@ export const AccommodationSingleView = () => {
   const { navigateToResultPage } = useNavigateToResultPage();
   const { navigateToDetailPage } = useNavigateToDetailPage();
   const [currentSlide, setCurrentSlide] = useState<number>(0);
+  
+  // const { headers } = getAuthLocalStorage();
+  const [cookies, ] = useCookies(["access-token"]);
+  const CookiesAccessToken = cookies["access-token"];
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${CookiesAccessToken}`
+  };
 
   const settings = useMemo(
     () => ({
@@ -49,8 +58,6 @@ export const AccommodationSingleView = () => {
         </SlickButtonFix>
       ),
     }), []);
-
-  const { headers } = getAuthLocalStorage();
 
   // 메인 페이지 싱글 뷰에 보여줄 호텔 데이터
   const accommodationData = {
