@@ -2,11 +2,11 @@ import { Checkbox } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/react";
 import { CartListProps } from "./ShoppinCart.types";
 import { formatPrice } from "./../../utils/priceFormatter";
-
+import { MdCancel } from "react-icons/md";
 export const ShoppingCartList = (props: CartListProps): JSX.Element => {
   return (
     <>
-      {props.data.room_infos.length ? (
+      {props.data && props.data.room_infos.length ? (
         <div className="cartInfoContainer WrapStyle">
           <div className="titleWrap">
             <h3>{props.data.accommodation_name}</h3>
@@ -19,7 +19,7 @@ export const ShoppingCartList = (props: CartListProps): JSX.Element => {
                 className="roomDeleteButton"
                 onClick={() => props.handleClickRoomDelete(room.cartId)}
               >
-                X
+                <MdCancel />
               </button>
               <div className="dataList">
                 <div>
@@ -37,7 +37,7 @@ export const ShoppingCartList = (props: CartListProps): JSX.Element => {
                   <img
                     src={room.accommodationThumbnailUrl}
                     loading="lazy"
-                    alt="이미지"
+                    alt="호텔 이미지"
                   />
                 </div>
                 <div>
@@ -80,9 +80,9 @@ export const ShoppingCartList = (props: CartListProps): JSX.Element => {
                   </Button>
                   <br />
                   <span>
-                    숙박{" "}
-                    <span className="bold">
-                      {formatPrice(room.quantity * room.price)}원
+                    숙박
+                    <span>
+                      <b>{formatPrice(room.quantity * room.price)}원</b>
                     </span>
                   </span>
 

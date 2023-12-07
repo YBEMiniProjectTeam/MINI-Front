@@ -114,8 +114,4 @@ export const ShoppingCartContainer = styled.div`
   .reservationButton {
     width: 100%;
   }
-
-  .bold {
-    font-weight: 700;
-  }
 `;
