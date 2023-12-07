@@ -1,6 +1,6 @@
 import axios from "axios";
-import { convertDateFormat5 } from "@utils/convertDateFormat5";
 import { RoomListProps } from "@components/ProductDetail/ChooseDetail/ChooseDetail.types";
+import format from "date-fns/format";
 
 const getRoomList = async ({
   id,
@@ -8,8 +8,8 @@ const getRoomList = async ({
   checkOutDate,
   guestCnt
 }: RoomListProps) => {
-  const startDate = convertDateFormat5(checkInDate);
-  const endDate = convertDateFormat5(checkOutDate);
+  const startDate = format(new Date(checkInDate), "yyyy-MM-dd");
+  const endDate = format(new Date(checkOutDate), "yyyy-MM-dd");
 
   const response = await axios.get(
     `https://api.anti-bias.kr/api/accommodations/${id}/rooms`,
