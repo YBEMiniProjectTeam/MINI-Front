@@ -80,7 +80,7 @@ export const AccommodationGridView = ({ region, title, description, cottagePageN
               <styled.CategoryTapItem onClick={() => handleTabClick(categoryTab.cottage)}>
                 <styled.TabItem
                   role="tab"
-                  aia-selected={activeTab === categoryTab.cottage}
+                  $aia-selected={`${activeTab === categoryTab.cottage}`}
                   $isActive={activeTab === categoryTab.cottage}
                 >
                   {activeTab === categoryTab.cottage && <styled.ActivedBar />}
@@ -90,7 +90,7 @@ export const AccommodationGridView = ({ region, title, description, cottagePageN
               <styled.CategoryTapItem onClick={() => handleTabClick(categoryTab.hotel)}>
                 <styled.TabItem 
                 role="tab"
-                aia-selected={activeTab === categoryTab.hotel}
+                $aia-selected={`${activeTab === categoryTab.hotel}`}
                 $isActive={activeTab === categoryTab.hotel}
                 >
                   {activeTab === categoryTab.hotel && <styled.ActivedBar />}

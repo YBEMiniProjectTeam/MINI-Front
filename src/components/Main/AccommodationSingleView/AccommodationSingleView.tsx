@@ -12,6 +12,11 @@ import { useNavigateToResultPage } from "@hooks/useNavigateToResultPage";
 import { useNavigateToDetailPage } from "@hooks/useNavigateToDetailPage";
 import { sliceAccommodationName } from "@utils/sliceAccommodationName";
 import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
+import { SlickButtonFixProps } from "./AccommodationSingleView.types";
+
+const SlickButtonFix = ({currentSlide, slideCount, children, ...props}: SlickButtonFixProps) => (
+  <span {...props}>{children}</span>
+);
 
 export const AccommodationSingleView = () => {
   const { navigateToResultPage } = useNavigateToResultPage();
@@ -30,14 +35,18 @@ export const AccommodationSingleView = () => {
       slidesToScroll: 1,
       beforeChange: (_: number, next: number) => setCurrentSlide(next),
       nextArrow: (
-        <styled.RightArrowButtonWrapper>
-          <IoIosArrowForward color="#4D4D4D" size="2rem" />
-        </styled.RightArrowButtonWrapper>
+        <SlickButtonFix>
+          <styled.RightArrowButtonWrapper>
+            <IoIosArrowForward color="#4D4D4D" size="2rem" />
+          </styled.RightArrowButtonWrapper>
+        </SlickButtonFix>
       ),
       prevArrow: (
-        <styled.LeftArrowButtonWrapper>
-          <IoIosArrowBack color="#4D4D4D" size="2rem" />
-        </styled.LeftArrowButtonWrapper>
+        <SlickButtonFix>
+          <styled.LeftArrowButtonWrapper>
+            <IoIosArrowBack color="#4D4D4D" size="2rem" />
+          </styled.LeftArrowButtonWrapper>
+        </SlickButtonFix>
       ),
     }), []);
 
