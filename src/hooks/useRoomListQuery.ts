@@ -6,11 +6,11 @@ const useRoomListQuery = ({
   id,
   checkInDate,
   checkOutDate,
-  guestNum
+  guestCnt
 }: RoomListProps) => {
   return useSuspenseQuery({
     queryKey: ["roomList", checkInDate, checkOutDate],
-    queryFn: () => getRoomList({ id, checkInDate, checkOutDate, guestNum })
+    queryFn: () => getRoomList({ id, checkInDate, checkOutDate, guestCnt })
   });
 };
 

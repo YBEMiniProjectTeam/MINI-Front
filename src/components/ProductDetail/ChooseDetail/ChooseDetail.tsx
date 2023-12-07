@@ -17,7 +17,7 @@ const ChooseDetail = ({
     startDate,
     endDate
   ]);
-  const [guestNum, setGuestNum] = useState<number>(2);
+  const [guestCnt, setguestCnt] = useState<number>(2);
 
   const {
     isOpen: isOpenChooseDateModal,
@@ -29,7 +29,7 @@ const ChooseDetail = ({
     id,
     checkInDate: selectedDate[0],
     checkOutDate: selectedDate[1],
-    guestNum
+    guestCnt
   });
 
   useEffect(() => {
@@ -43,8 +43,8 @@ const ChooseDetail = ({
         onClose={onCloseChooseDateModal}
         setSelectedDate={setSelectedDate}
         isFromSearchResult={false}
-        personCount={guestNum}
-        setPersonCount={setGuestNum}
+        personCount={guestCnt}
+        setPersonCount={setguestCnt}
         refetch={refetch}
       />
       <Box marginTop="10px">
@@ -82,7 +82,7 @@ const ChooseDetail = ({
             onClick={onOpenChooseDateModal}
           >
             <BsPeople />
-            {guestNum}명
+            {guestCnt}명
           </Box>
         </Flex>
       </Box>

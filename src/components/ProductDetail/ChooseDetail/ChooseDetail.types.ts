@@ -32,5 +32,5 @@ export interface RoomListProps {
   id: number;
   checkInDate: string;
   checkOutDate: string;
-  guestNum: number;
+  guestCnt: number;
 }

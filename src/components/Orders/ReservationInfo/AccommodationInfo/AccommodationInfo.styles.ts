@@ -36,7 +36,7 @@ export const BedType = styled.div`
   }
 `;
 
-export const GuestNum = styled.div`
+export const guestCnt = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

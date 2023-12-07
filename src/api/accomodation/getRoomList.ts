@@ -6,7 +6,7 @@ const getRoomList = async ({
   id,
   checkInDate,
   checkOutDate,
-  guestNum
+  guestCnt
 }: RoomListProps) => {
   const startDate = convertDateFormat5(checkInDate);
   const endDate = convertDateFormat5(checkOutDate);
@@ -14,7 +14,7 @@ const getRoomList = async ({
   const response = await axios.get(
     `https://api.anti-bias.kr/api/accommodations/${id}/rooms`,
     {
-      params: { start_date: startDate, end_date: endDate, guest_num: guestNum }
+      params: { start_date: startDate, end_date: endDate, guest_num: guestCnt }
     }
   );
 
