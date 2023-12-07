@@ -3,26 +3,20 @@ import { useNavigate } from "react-router-dom";
 
 import { RegisterApi } from "@api/register/RegisterApi";
 import { User } from "@components/Register/Register.types";
-
-interface register {
-  statusCode: number;
-  message: string;
-  data?: {
-    id: string;
-    email: string;
-    name: string;
-    birthday?: string;
-  };
-  successful?: boolean;
+import { ApiResponseBase } from "@api/ApiResponse.type";
+interface Register {
+  id: string;
+  email: string;
+  name: string;
+  birthday?: string;
 }
 
 export const useRegister = () => {
   const navigate = useNavigate();
-  return useMutation<register, Error, User>({
+  return useMutation<ApiResponseBase<Register>, Error, User>({
     mutationFn: ({ email, pwd, name, birthday }: User) =>
       RegisterApi({ email, pwd, name, birthday }),
-    onSuccess: (res) => {
-      console.log(res);
+    onSuccess: () => {
       navigate("/login");
     },
     onError: (err) => {
