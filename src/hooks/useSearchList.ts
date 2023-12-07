@@ -11,11 +11,10 @@ export const useSearchList = (
   category: Nullable<string>,
   pageNum: number,
   pageSize: number,
-  isRefetched: Nullable<boolean>,
-  headers?: AxiosRequestConfig['headers']
+  headers?: AxiosRequestConfig["headers"]
 ) => {
   return useSuspenseQuery({
-    queryKey: ["searchList", pageNum, pageSize, headers, isRefetched],
+    queryKey: ["searchList", pageNum, pageSize, headers],
     queryFn: () =>
       getSearchList(
         accomodationName,

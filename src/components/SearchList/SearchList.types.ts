@@ -24,6 +24,10 @@ export interface ApiResponse {
 
 export interface SearchListProps {
   keyword: Nullable<string>;
+  district: Nullable<string>;
+  start_date: Nullable<string>;
+  end_date: Nullable<string>;
+  category: Nullable<string>;
 }
 
 export interface SearchListResponse {

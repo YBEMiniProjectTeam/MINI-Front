@@ -9,30 +9,29 @@ import { useSearchList } from "@hooks/useSearchList";
 import { useNavigate } from "react-router-dom";
 import { convertDateFormat4 } from "@utils/convertDateFormat4";
 import { debounce } from "lodash";
-import { checkInAndOutDateState } from "@recoil/checkInAndOutDate";
-import {
-  districtState,
-  categoryState,
-  isRefetchedState
-} from "@recoil/searchStates";
-import { useRecoilValue } from "recoil";
 import { usePostWish, useDeleteWish } from "@hooks/useWishMutation";
 import { sliceAccommodationName } from "@utils/sliceAccommodationName";
 import { formatPrice } from "@utils/priceFormatter";
 import { toast } from "react-hot-toast";
+import { Nullable } from "@/types/nullable";
 
-const SearchList = ({ keyword }: SearchListProps) => {
+const SearchList = ({
+  keyword,
+  district,
+  start_date,
+  end_date,
+  category
+}: SearchListProps) => {
   const navigate = useNavigate();
-
-  const { startDate, endDate } = useRecoilValue(checkInAndOutDateState);
-  const selectedDistrict = useRecoilValue(districtState);
-  const selectedCategory = useRecoilValue(categoryState);
-  const isRefetched = useRecoilValue(isRefetchedState);
 
   const [searchList, setSearchList] = useState<Accommodation[]>([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [selectedDistrict] = useState<string>(district ? district : "");
+  const [startDate] = useState<Nullable<string>>(start_date ? start_date : "");
+  const [endDate] = useState<Nullable<string>>(end_date ? end_date : "");
+  const [selectedCategory] = useState<string>(category ? category : "");
 
   const { accessTokenCookie, headers } = getAuthLocalStorage();
 
@@ -44,7 +43,6 @@ const SearchList = ({ keyword }: SearchListProps) => {
     selectedCategory,
     page,
     10,
-    isRefetched,
     headers
   );
 
@@ -72,13 +70,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
     ]);
     setTotalPage(data.total_pages);
     setIsLoadingMore(false);
-  }, [page]);
-
-  useEffect(() => {
-    setSearchList(() => [...data.accommodations]);
-    setTotalPage(data.total_pages);
-    setIsLoadingMore(false);
-  }, [isRefetched]);
+  }, [data]);
 
   const toggleLike = (index: number, accomodations: Accommodation[]) => {
     accomodations[index].isWish = !accomodations[index].isWish;
