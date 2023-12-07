@@ -18,12 +18,12 @@ export const ProductDetail: React.FC = () => {
   const endDateParam = searchParams.get("endDate");
 
   const startDate =
-    startDateParam !== null && startDateParam !== "null"
+    startDateParam != null && startDateParam != "null"
       ? new Date(startDateParam)
       : new Date();
 
   const endDate =
-    endDateParam !== null && endDateParam !== "null"
+    endDateParam != null && endDateParam != "null"
       ? new Date(endDateParam)
       : new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
 
