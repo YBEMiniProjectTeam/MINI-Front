@@ -4,7 +4,7 @@ import WishListButton from "@components/ProductDetail/WishListButton/WishListBut
 import ChooseDetail from "@components/ProductDetail/ChooseDetail/ChooseDetail";
 import Map from "@components/ProductDetail/Map/Map";
 import { useSearchParams } from "react-router-dom";
-import { useAccomodationQuery } from "@hooks/useAccomodationQuery";
+import useAccomodationQuery from "@hooks/useAccomodationQuery";
 import { sliceAccommodationName } from "@utils/sliceAccommodationName";
 import { Spinner, Flex, Box, Divider, Text } from "@chakra-ui/react";
 import { IoLocationOutline } from "react-icons/io5";
@@ -26,11 +26,6 @@ export const ProductDetail: React.FC = () => {
     endDateParam !== null && endDateParam !== "null"
       ? new Date(endDateParam)
       : new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
-
-  // const [selectedDate, setSelectedDate] = useState<string[]>([
-  //   startDate.toString(),
-  //   endDate.toString()
-  // ]);
 
   const { data } = useAccomodationQuery(id);
 

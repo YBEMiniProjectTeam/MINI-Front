@@ -5,10 +5,12 @@ import {
   PostCartProps
 } from "@components/ProductDetail/ChooseRoom/ChooseRoom.types";
 
-export const postCart = async ({
+const postCart = async ({
   body,
   headers
 }: PostCartProps): Promise<ResponseType> => {
   const API_URL = `${API_BASE_URL}/carts`;
   return await axios.post(API_URL, body, { headers });
 };
+
+export default postCart;

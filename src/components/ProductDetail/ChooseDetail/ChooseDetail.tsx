@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useRoomListQuery } from "@hooks/useRoomListQuery";
+import useRoomListQuery from "@hooks/useRoomListQuery";
 import ChooseRoom from "../ChooseRoom/ChooseRoom";
 import ChooseDateModal from "@components/ChooseDateModal/ChooseDateModal";
 import { ChooseDetailTypes, RoomTypes } from "./ChooseDetail.types";

@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import getAccomodationInfo from "@api/accomodation/getAccomodationInfo";
 
-export const useAccomodationQuery = (id: number) => {
+const useAccomodationQuery = (id: number) => {
   return useSuspenseQuery({
     queryKey: ["accomodationInfo", id],
     queryFn: () => getAccomodationInfo(id),
@@ -39,3 +39,5 @@ export const useAccomodationQuery = (id: number) => {
     }
   });
 };
+
+export default useAccomodationQuery;

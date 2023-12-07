@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import getRoomList from "@api/accomodation/getRoomList";
 
-export const useRoomListQuery = (
+const useRoomListQuery = (
   id: number,
   checkInDate: string,
   checkOutDate: string,
@@ -12,3 +12,5 @@ export const useRoomListQuery = (
     queryFn: () => getRoomList(id, checkInDate, checkOutDate, guestNum)
   });
 };
+
+export default useRoomListQuery;
