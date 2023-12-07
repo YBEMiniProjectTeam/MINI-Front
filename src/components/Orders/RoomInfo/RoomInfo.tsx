@@ -84,7 +84,7 @@ const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
                   {(roomInfo.price * roomInfo.quantity).toLocaleString()}원
                 </Text>
                 <Tooltip
-                  label={`${roomInfo.price.toLocaleString()} * ${
+                  label={`${roomInfo.price.toLocaleString()}원 x ${
                     roomInfo.quantity
                   }개`}
                   closeOnClick={false}

@@ -22,10 +22,10 @@ const Payment = () => {
     mode: "onChange"
   });
 
-  const [isDiffUser, setIsDiffUser] = useState(false);
-
   const [searchParams] = useSearchParams();
   const cartIds = searchParams.getAll("cartId").map(Number);
+
+  const [isDiffUser, setIsDiffUser] = useState(false);
 
   const { headers } = getAuthLocalStorage();
 
