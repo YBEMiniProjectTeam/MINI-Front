@@ -72,6 +72,12 @@ const SearchList = ({
     setIsLoadingMore(false);
   }, [data]);
 
+  useEffect(() => {
+    if (page >= 1) {
+      refetch();
+    }
+  }, [page]);
+
   const toggleLike = (index: number, accomodations: Accommodation[]) => {
     accomodations[index].isWish = !accomodations[index].isWish;
     refetch();
@@ -100,7 +106,6 @@ const SearchList = ({
       if (page < totalPage) {
         setPage((prevPage) => prevPage + 1);
         setIsLoadingMore(true);
-        refetch();
       }
     }
   }, 200);

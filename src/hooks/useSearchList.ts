@@ -14,7 +14,7 @@ export const useSearchList = (
   headers?: AxiosRequestConfig["headers"]
 ) => {
   return useSuspenseQuery({
-    queryKey: ["searchList", pageNum, pageSize, headers],
+    queryKey: ["searchList", pageSize, headers],
     queryFn: () =>
       getSearchList(
         accomodationName,
