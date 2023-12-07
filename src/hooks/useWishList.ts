@@ -1,10 +1,9 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getWishList } from "@api/getWishList";
-import { AxiosRequestConfig } from "axios";
 
-export const useWishList = (headers: AxiosRequestConfig['headers']) => {
+export const useWishList = () => {
   return useSuspenseQuery({
-    queryKey: ["wishList", headers],
-    queryFn: () => getWishList(headers)
+    queryKey: ["wishList"],
+    queryFn: () => getWishList()
   });
 };

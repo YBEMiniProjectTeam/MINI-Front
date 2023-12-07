@@ -1,13 +1,9 @@
-import axios from "axios";
-import { API_BASE_URL } from "./config";
-import { AxiosRequestConfig } from "axios";
+import axiosInstance from "@api/axiosInstance";
 
-export const getWishList = async (
-  headers: AxiosRequestConfig['headers']
-) => {
-  const GET_WISH_LIST_URL = `${API_BASE_URL}/wishes`;
+export const getWishList = async () => {
+  const getWishListURL = `/wishes`;
 
-  const response = await axios.get(GET_WISH_LIST_URL, { headers });
+  const response = await axiosInstance.get(getWishListURL);
 
   return response.data.data;
 };

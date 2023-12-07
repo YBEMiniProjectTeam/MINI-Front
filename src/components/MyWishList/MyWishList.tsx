@@ -15,13 +15,13 @@ const MyWishList = () => {
 
   const [wishList, setWishList] = useState<Accommodation[]>([]);
 
-  const { accessTokenCookie, headers } = getAuthLocalStorage();
+  const { accessTokenCookie } = getAuthLocalStorage();
 
   if (!accessTokenCookie) {
     navigate("/notLogin");
   }
 
-  const { data, error, refetch } = useWishList(headers);
+  const { data, error, refetch } = useWishList();
   const { mutate: deleteWish } = useDeleteWish();
 
   if (error) {
@@ -33,7 +33,7 @@ const MyWishList = () => {
   }, [data]);
 
   const handleLikeClick = async (accommodationId: number) => {
-    await deleteWish({ accommodationId, headers });
+    await deleteWish({ accommodationId });
     refetch();
   };
 

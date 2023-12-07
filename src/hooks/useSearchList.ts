@@ -1,7 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getSearchList } from "@api/getSearchList";
 import { Nullable } from "@/types/nullable";
-import { AxiosRequestConfig } from "axios";
 
 export const useSearchList = (
   accomodationName: Nullable<string>,
@@ -10,11 +9,10 @@ export const useSearchList = (
   endDate: Nullable<string>,
   category: Nullable<string>,
   pageNum: number,
-  pageSize: number,
-  headers?: AxiosRequestConfig["headers"]
+  pageSize: number
 ) => {
   return useSuspenseQuery({
-    queryKey: ["searchList", pageSize, headers],
+    queryKey: ["searchList", pageSize],
     queryFn: () =>
       getSearchList(
         accomodationName,
@@ -23,8 +21,7 @@ export const useSearchList = (
         endDate,
         category,
         pageNum,
-        pageSize,
-        headers
+        pageSize
       )
   });
 };

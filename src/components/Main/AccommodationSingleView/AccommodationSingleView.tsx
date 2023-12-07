@@ -40,19 +40,7 @@ export const AccommodationSingleView = () => {
     )
   };
 
-  const { headers } = getAuthLocalStorage();
-
-  const { data, error } = useSearchList(
-    "",
-    "",
-    "",
-    "",
-    "호텔",
-    60,
-    7,
-    null,
-    headers
-  );
+  const { data, error } = useSearchList("", "", "", "", "호텔", 60, 7);
 
   if (error) {
     console.error("[ERROR] ", error.message);

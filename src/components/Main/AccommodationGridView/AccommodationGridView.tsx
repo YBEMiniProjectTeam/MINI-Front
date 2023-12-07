@@ -13,7 +13,6 @@ import { Accommodation } from "./AccommodationGridView.types";
 import { printCategory } from "@utils/printCategory";
 import { Button, Spinner } from "@chakra-ui/react";
 import { useNavigateToResultPage } from "@hooks/useNavigateToResultPage";
-import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
 
 export const AccommodationGridView = () => {
   const { navigateToResultPage } = useNavigateToResultPage();
@@ -25,8 +24,6 @@ export const AccommodationGridView = () => {
     });
   };
 
-  const { headers } = getAuthLocalStorage();
-
   const { data, error, refetch } = useSearchList(
     "",
     "서귀포시",
@@ -34,9 +31,7 @@ export const AccommodationGridView = () => {
     "",
     activeTab,
     activeTab === "펜션" ? 2 : 3,
-    4,
-    null,
-    headers
+    4
   );
 
   if (error) {

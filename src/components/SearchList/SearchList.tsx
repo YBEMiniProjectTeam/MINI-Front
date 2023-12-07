@@ -33,7 +33,7 @@ const SearchList = ({
   const [endDate] = useState<Nullable<string>>(end_date ? end_date : "");
   const [selectedCategory] = useState<string>(category ? category : "");
 
-  const { accessTokenCookie, headers } = getAuthLocalStorage();
+  const { accessTokenCookie } = getAuthLocalStorage();
 
   const { data, error, refetch } = useSearchList(
     keyword,
@@ -42,8 +42,7 @@ const SearchList = ({
     endDate,
     selectedCategory,
     page,
-    10,
-    headers
+    10
   );
 
   const { mutate: postWish } = usePostWish();
@@ -90,10 +89,10 @@ const SearchList = ({
     }
 
     if (searchList[index].isWish) {
-      await deleteWish({ accommodationId, headers });
+      await deleteWish({ accommodationId });
       toggleLike(index, searchList);
     } else {
-      await postWish({ accommodationId, headers });
+      await postWish({ accommodationId });
       toggleLike(index, searchList);
     }
   };

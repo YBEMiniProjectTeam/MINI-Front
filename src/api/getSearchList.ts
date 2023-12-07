@@ -1,7 +1,5 @@
-import axios from "axios";
-import { API_BASE_URL } from "./config";
 import { Nullable } from "@/types/nullable";
-import { AxiosRequestConfig } from "axios";
+import axiosInstance from "@api/axiosInstance";
 
 export const getSearchList = async (
   accommodationName: Nullable<string>,
@@ -10,8 +8,7 @@ export const getSearchList = async (
   endDate: Nullable<string>,
   category: Nullable<string>,
   pageNum: number,
-  pageSize: number,
-  headers?: AxiosRequestConfig["headers"]
+  pageSize: number
 ) => {
   const queryParams = new URLSearchParams({
     ...(accommodationName && { keyword: accommodationName }),
@@ -23,9 +20,9 @@ export const getSearchList = async (
     page_size: String(pageSize)
   });
 
-  const url = `${API_BASE_URL}/accommodations?${queryParams.toString()}`;
+  const getSearchListURL = `/accommodations?${queryParams.toString()}`;
 
-  const response = await axios.get(url, { headers });
+  const response = await axiosInstance.get(getSearchListURL);
 
   return response.data.data;
 };
