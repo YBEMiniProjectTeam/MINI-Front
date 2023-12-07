@@ -10,6 +10,7 @@ import { Spinner, Flex, Box, Divider, Text } from "@chakra-ui/react";
 import { IoLocationOutline } from "react-icons/io5";
 import { IoCarOutline } from "react-icons/io5";
 import { PiCookingPot } from "react-icons/pi";
+import { TOTAL_TIME_PER_DAY } from "./ProductDetail.constant";
 
 export const ProductDetail: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -21,11 +22,11 @@ export const ProductDetail: React.FC = () => {
     startDateParam != null && startDateParam != "null"
       ? new Date(startDateParam)
       : new Date();
-
+  console.log(startDate);
   const endDate =
     endDateParam != null && endDateParam != "null"
       ? new Date(endDateParam)
-      : new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+      : new Date(startDate.getTime() + TOTAL_TIME_PER_DAY);
 
   const { data } = useAccomodationQuery(id);
 
