@@ -41,7 +41,7 @@ const CompletePayment = () => {
 
   return (
     <styles.Container>
-      <Card key="1">
+      <Card>
         <styles.SuccessInfoWrapper>
           <Lottie
             animationData={successCheckLottie}
@@ -51,7 +51,7 @@ const CompletePayment = () => {
           {reservationName}님의 <br /> 결제가 완료되었습니다!
         </styles.SuccessInfoWrapper>
         {rawData.map((accommodation, index) => (
-          <styles.CardContainer>
+          <styles.CardContainer key={index}>
             <Image
               src={accommodation.accommodation_thumbnail_url}
               w="130px"
@@ -61,7 +61,7 @@ const CompletePayment = () => {
               borderRadius="5px"
               marginRight="1rem"
             />
-            <Box width="100%">
+            <Box width="100%" key={index}>
               <ReservationInfo
                 key={`${index}-${accommodation.room_info}`}
                 hotelName={accommodation.accommodation_name}
@@ -76,7 +76,7 @@ const CompletePayment = () => {
           </styles.CardContainer>
         ))}
       </Card>
-      <Card label="결제 정보" key="2">
+      <Card label="결제 정보">
         <Accordion allowToggle>
           <AccordionItem>
             <TotalPaymentInfo totalPrice={totalPrice}>
