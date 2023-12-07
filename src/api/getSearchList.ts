@@ -27,7 +27,5 @@ export const getSearchList = async (
 
   const response = await axios.get(url, { headers });
 
-  console.log(response.data.data);
-
   return response.data.data;
 };

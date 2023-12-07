@@ -8,7 +8,7 @@ import { Nullable } from "@/types/nullable";
 import { AxiosRequestConfig } from "axios";
 interface LikeProps {
   accommodationId: Nullable<number>;
-  headers: AxiosRequestConfig['headers'];
+  headers: AxiosRequestConfig["headers"];
 }
 
 export const usePostWish = () => {
@@ -19,7 +19,7 @@ export const usePostWish = () => {
       postWish(accommodationId, headers),
     onSuccess: () => {
       toast.success("위시리스트에 추가되었습니다.");
-      queryClient.invalidateQueries({ queryKey: ["searchList"] });
+      queryClient.invalidateQueries({ queryKey: ["wishList"] });
     },
     onError: (err) => {
       console.log(err);
@@ -34,8 +34,8 @@ export const useDeleteWish = () => {
     mutationFn: ({ accommodationId, headers }: LikeProps) =>
       deleteWish(accommodationId, headers),
     onSuccess: () => {
-      toast.success("위시리스트에서 삭제되었습니다.");      
-      queryClient.invalidateQueries({ queryKey: ["searchList"] });
+      toast.success("위시리스트에서 삭제되었습니다.");
+      queryClient.invalidateQueries({ queryKey: ["wishList"] });
     },
     onError: (err) => {
       console.log(err);
