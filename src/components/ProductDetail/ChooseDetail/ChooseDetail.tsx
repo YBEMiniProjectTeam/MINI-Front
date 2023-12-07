@@ -25,12 +25,12 @@ const ChooseDetail = ({
     onClose: onCloseChooseDateModal
   } = useDisclosure();
 
-  const { data: rooms, refetch } = useRoomListQuery(
+  const { data: rooms, refetch } = useRoomListQuery({
     id,
-    selectedDate[0],
-    selectedDate[1],
+    checkInDate: selectedDate[0],
+    checkOutDate: selectedDate[1],
     guestNum
-  );
+  });
 
   useEffect(() => {
     setSelectedDate([startDate, endDate]);

@@ -1,12 +1,13 @@
 import axios from "axios";
 import { convertDateFormat5 } from "@utils/convertDateFormat5";
+import { RoomListProps } from "@components/ProductDetail/ChooseDetail/ChooseDetail.types";
 
-const getRoomList = async (
-  id: number,
-  checkInDate: string,
-  checkOutDate: string,
-  guestNum: number
-) => {
+const getRoomList = async ({
+  id,
+  checkInDate,
+  checkOutDate,
+  guestNum
+}: RoomListProps) => {
   const startDate = convertDateFormat5(checkInDate);
   const endDate = convertDateFormat5(checkOutDate);
 
