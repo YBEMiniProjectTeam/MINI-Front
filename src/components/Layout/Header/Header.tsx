@@ -1,41 +1,54 @@
 import { useEffect, useState } from "react";
-import * as S from "./Header.styles";
+import * as styles from "./Header.styles";
 import { Link, useLocation } from "react-router-dom";
-
 import { HeaderInput } from "./HeaderInput";
 import { useRecoilState } from "recoil";
 import { loginUrlState, loginUrlSearchState } from "@recoil/loginUrl";
 import { useLogoutMutation } from "@hooks/login/useLoginMutation";
+import { useCookies } from "react-cookie";
+import { getMemberInfo } from "@api/getMemberInfo";
 
 export const Header = () => {
   const [isSubMenuVisible, setSubMenuVisible] = useState(false);
-
   const [isShowInput, setIsShowInput] = useState(true);
+  const [accessToken, setAccessToken] = useState<string | undefined>();
+  const [, setLoginUrl] = useRecoilState(loginUrlState);
+  const [, setLoginSearchUrl] = useRecoilState(loginUrlSearchState);
 
   const location = useLocation();
 
-  const [accessToken, setAccessToken] = useState<string | undefined>();
-
-  const [, setLoginUrl] = useRecoilState(loginUrlState);
-
-  const [, setLoginSearchUrl] = useRecoilState(loginUrlSearchState);
+  const [cookies, removeCookie] = useCookies(["access-token"]);
 
   useEffect(() => {
     const currentPath = location.pathname;
 
     const displayInput = !currentPath.includes("searchResult");
-    setIsShowInput(displayInput);
 
-    const accesstkoen = localStorage.getItem("access-token");
-    if (accesstkoen) {
-      setAccessToken(accesstkoen);
+    setIsShowInput(displayInput);
+  }, [location.pathname, location.search]);
+
+  useEffect(() => {
+    const CookiesAccessToken = cookies["access-token"];
+
+    // 토큰값 유효한지 검사
+    if (!CookiesAccessToken) {
+      return;
+    } else {
+      getMemberInfo(CookiesAccessToken).then((data) => {
+        if (data.statusCode === 200) {
+          setAccessToken(CookiesAccessToken);
+        } else {
+          removeCookie("access-token", { path: "/" });
+        }
+      });
     }
-  }, [location.pathname, location.search, accessToken]);
+  }, [cookies["access-token"]]);
 
   const handleClickLogin = () => {
     setLoginUrl(location.pathname);
     setLoginSearchUrl(location.search);
   };
+
   const { mutate: logoutMutate } = useLogoutMutation();
 
   const handleClickLogoutButton = async (): Promise<void> => {
@@ -46,13 +59,15 @@ export const Header = () => {
     await logoutMutate({
       accessToken
     });
+
     localStorage.removeItem("access-token");
+
     setAccessToken("");
   };
 
   return (
-    <S.Header>
-      <S.HeaderContainer>
+    <styles.Header>
+      <styles.HeaderContainer>
         <Link to="/">
           <div className="header-title">NINE STAY</div>
         </Link>
@@ -106,7 +121,7 @@ export const Header = () => {
             </>
           ) : null}
         </div>
-      </S.HeaderContainer>
-    </S.Header>
+      </styles.HeaderContainer>
+    </styles.Header>
   );
 };
