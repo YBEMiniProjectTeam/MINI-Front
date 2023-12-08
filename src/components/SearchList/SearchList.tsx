@@ -72,7 +72,7 @@ const SearchList = ({
   }, [data]);
 
   useEffect(() => {
-    if (page >= 1) {
+    if (page > 1) {
       refetch();
     }
   }, [page]);
