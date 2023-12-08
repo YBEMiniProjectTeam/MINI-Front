@@ -7,13 +7,13 @@ import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa";
 import { useSearchList } from "@hooks/useSearchList";
 import { useNavigate } from "react-router-dom";
-import { convertDateFormat4 } from "@utils/convertDateFormat4";
 import { debounce } from "lodash";
 import { usePostWish, useDeleteWish } from "@hooks/useWishMutation";
 import { sliceAccommodationName } from "@utils/sliceAccommodationName";
 import { formatPrice } from "@utils/priceFormatter";
 import { toast } from "react-hot-toast";
 import { Nullable } from "@/types/nullable";
+import { format, parseISO } from "date-fns";
 
 const SearchList = ({
   keyword,
@@ -110,11 +110,16 @@ const SearchList = ({
   }, 200);
 
   const handleAccomodationClick = (id: number) => {
-    navigate(
-      `/products?id=${id}&startDate=${convertDateFormat4(
-        startDate
-      )}&endDate=${convertDateFormat4(endDate)}`
-    );
+    if (startDate && endDate) {
+      navigate(
+        `/products?id=${id}&startDate=${format(
+          parseISO(startDate),
+          "MM/dd/yyyy"
+        )}&endDate=${format(parseISO(endDate), "MM/dd/yyyy")}`
+      );
+    } else {
+      navigate(`/products?id=${id}`);
+    }
   };
 
   return (

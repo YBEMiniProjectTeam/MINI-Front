@@ -20,11 +20,10 @@ import { IoLocationOutline } from "react-icons/io5";
 import { CiCalendar } from "react-icons/ci";
 import { SearchIcon } from "@chakra-ui/icons";
 import { truncateText } from "@utils/truncateText";
-import { convertDateFormat2 } from "@utils/convertDateFormat2";
-import { convertDateFormat3 } from "@utils/convertDateFormat3";
 import ChooseRegionModal from "../ChooseRegionModal/ChooseRegionModal";
 import ChooseDateModal from "../ChooseDateModal/ChooseDateModal";
 import { Nullable } from "@/types/nullable";
+import { format, parse, parseISO } from "date-fns";
 
 const Search = ({
   keyword,
@@ -75,9 +74,23 @@ const Search = ({
   }, []);
 
   useEffect(() => {
-    if (selectedDate && selectedDate.length > 1) {
-      setStartDate(convertDateFormat3(selectedDate[0]));
-      setEndDate(convertDateFormat3(selectedDate[1]));
+    if (
+      selectedDate &&
+      selectedDate.length > 1 &&
+      selectedDate[0] &&
+      selectedDate[1]
+    ) {
+      const newStartDate = selectedDate[0].replace(/\s+/g, "");
+      const newEndDate = selectedDate[1].replace(/\s+/g, "");
+
+      const parsedStartDate = parse(newStartDate, "yyyy.MM.dd.", new Date());
+      const parsedEndDate = parse(newEndDate, "yyyy.MM.dd.", new Date());
+
+      const formattedStartDate = format(parsedStartDate, "yyyy-MM-dd");
+      const formattedEndDate = format(parsedEndDate, "yyyy-MM-dd");
+
+      setStartDate(formattedStartDate);
+      setEndDate(formattedEndDate);
     }
   }, [selectedDate]);
 
@@ -180,14 +193,30 @@ const Search = ({
                 <AccordionButton>
                   <Box as="span" flex="1" textAlign="left">
                     <Icon as={CiCalendar} mr="1rem" />
-                    {selectedDate && selectedDate?.length > 1 && selectedDate[0]
-                      ? `${convertDateFormat2(
-                          selectedDate[0]
-                        )} - ${convertDateFormat2(selectedDate[1])}`
+                    {selectedDate &&
+                    selectedDate?.length > 1 &&
+                    selectedDate[0] &&
+                    selectedDate[1]
+                      ? `${format(
+                          parse(
+                            selectedDate[0].replace(/\s+/g, ""),
+                            "yyyy.MM.dd.",
+                            new Date()
+                          ),
+                          "MM.dd"
+                        )} - ${format(
+                          parse(
+                            selectedDate[1].replace(/\s+/g, ""),
+                            "yyyy.MM.dd.",
+                            new Date()
+                          ),
+                          "MM.dd"
+                        )}`
                       : start_date && end_date
-                        ? `${convertDateFormat2(
-                            start_date
-                          )} - ${convertDateFormat2(end_date)}`
+                        ? `${format(parseISO(start_date), "MM.dd")} - ${format(
+                            parseISO(end_date),
+                            "MM.dd"
+                          )}`
                         : "날짜 선택"}
                   </Box>
                   <AccordionIcon />
