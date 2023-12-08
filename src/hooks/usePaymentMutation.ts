@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { postPayment } from "@api/accomodation/postPayment";
+import postPayment from "@api/accomodation/postPayment";
 import {
   ResponseType,
   PostPaymentProps

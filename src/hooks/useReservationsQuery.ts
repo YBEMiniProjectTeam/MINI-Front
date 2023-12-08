@@ -4,7 +4,7 @@ import getPaymentDetails from "@api/reservations/getPaymentDetails";
 import { GetReservationsProps } from "@pages/reservations/Reservations.types";
 import { GetPaymentDetailsProps } from "@components/Reservations/ReservationList.types";
 
-export const useReservationsQuery = ({ headers }: GetReservationsProps) => {
+const useReservationsQuery = ({ headers }: GetReservationsProps) => {
   return useSuspenseQuery({
     queryKey: ["reservations"],
     queryFn: () => getReservations({ headers })
@@ -20,3 +20,5 @@ export const usePaymentDetailsQuery = (
     queryFn: () => getPaymentDetails(id, { headers })
   });
 };
+
+export default useReservationsQuery;

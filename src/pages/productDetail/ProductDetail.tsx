@@ -4,12 +4,14 @@ import WishListButton from "@components/ProductDetail/WishListButton/WishListBut
 import ChooseDetail from "@components/ProductDetail/ChooseDetail/ChooseDetail";
 import Map from "@components/ProductDetail/Map/Map";
 import { useSearchParams } from "react-router-dom";
-import { useAccomodationQuery } from "@hooks/useAccomodationQuery";
+import useAccomodationQuery from "@hooks/useAccomodationQuery";
 import { sliceAccommodationName } from "@utils/sliceAccommodationName";
-import { Spinner, Flex, Box, Divider, Text } from "@chakra-ui/react";
+import { Spinner, Flex, Box, Divider } from "@chakra-ui/react";
 import { IoLocationOutline } from "react-icons/io5";
 import { IoCarOutline } from "react-icons/io5";
 import { PiCookingPot } from "react-icons/pi";
+import { TOTAL_TIME_PER_DAY } from "./ProductDetail.constant";
+import isPrintable from "@utils/isPrintable";
 
 export const ProductDetail: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -18,19 +20,14 @@ export const ProductDetail: React.FC = () => {
   const endDateParam = searchParams.get("endDate");
 
   const startDate =
-    startDateParam !== null && startDateParam !== "null"
+    startDateParam != null && startDateParam != "null"
       ? new Date(startDateParam)
       : new Date();
 
   const endDate =
-    endDateParam !== null && endDateParam !== "null"
+    endDateParam != null && endDateParam != "null"
       ? new Date(endDateParam)
-      : new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
-
-  // const [selectedDate, setSelectedDate] = useState<string[]>([
-  //   startDate.toString(),
-  //   endDate.toString()
-  // ]);
+      : new Date(startDate.getTime() + TOTAL_TIME_PER_DAY);
 
   const { data } = useAccomodationQuery(id);
 
@@ -85,15 +82,7 @@ export const ProductDetail: React.FC = () => {
           endDate={endDate.toString()}
         />
         <Divider margin="40px 0" borderColor="#D9D9D9" />
-        <Box fontSize="26px" fontWeight={700} marginBottom="8px">
-          숙소 설명
-        </Box>
-        {desc !== "." && (
-          <Text fontSize="16px" marginBottom="3px" lineHeight={1.7}>
-            {desc}
-          </Text>
-        )}
-        <Divider margin="40px 0" borderColor="#D9D9D9" />
+        {isPrintable({ title: "숙소 설명", content: desc })}
         <Box fontSize="26px" fontWeight={700} marginBottom="10px">
           숙소 정보
         </Box>
@@ -108,15 +97,7 @@ export const ProductDetail: React.FC = () => {
           </Flex>
         </Flex>
         <Divider margin="40px 0" borderColor="#D9D9D9" />
-        <Box fontSize="26px" fontWeight={700} marginBottom="8px">
-          부대시설
-        </Box>
-        {others !== "." && (
-          <Text fontSize="16px" marginBottom="3px" lineHeight={1.7}>
-            {others}
-          </Text>
-        )}
-        <Divider margin="40px 0" borderColor="#D9D9D9" />
+        {isPrintable({ title: "부대시설", content: others })}
         <Flex flexDir="column" alignItems="flex-start" gap="5px">
           <Box fontSize="26px" fontWeight={700}>
             숙소 위치

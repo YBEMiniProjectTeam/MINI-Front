@@ -2,7 +2,7 @@ import { Flex, Box, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { DataType } from "./Reservations.types";
 import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
-import { useReservationsQuery } from "@hooks/useReservationsQuery";
+import useReservationsQuery from "@hooks/useReservationsQuery";
 import ReservationList from "../../components/Reservations/ReservationList";
 
 export const Reservations = (): JSX.Element => {
