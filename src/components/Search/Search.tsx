@@ -52,7 +52,7 @@ const Search = ({
   const [selectedDistrict, setSelectedDistrict] = useState<string>(
     district ? district : ""
   );
-  const [selectedDate, setSelectedDate] = useState<Nullable<string[]>>([]);
+  const [selectedDate, setSelectedDate] = useState<string[]>([]);
 
   const [startDate, setStartDate] = useState<Nullable<string>>(
     start_date ? start_date : ""
