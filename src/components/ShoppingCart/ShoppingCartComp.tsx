@@ -3,19 +3,17 @@ import { Button, Checkbox, Flex, Text } from "@chakra-ui/react";
 import { ShoppingCartList } from "./ShoppingCartList";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Accommodation, RoomInfo } from "./ShoppinCart.types";
 import { toast } from "react-hot-toast";
 import { useShoppingCartList } from "@hooks/cart/useShoppingCartList";
-
-import { getAuthLocalStorage } from "./../../utils/getAuthLocalStorage";
 import { useDeleteCart } from "@hooks/cart/useDeleteCartMutation";
 
 import { useQuantityCart } from "@hooks/cart/useQuantityCartMutation";
+import { formatPrice } from "@utils/priceFormatter";
+import { useCookies } from "react-cookie";
+import { RoomInfo, Accommodation } from "./ShoppinCart.types";
 
-import { formatPrice } from "./../../utils/priceFormatter";
 export const ShoppingCartComp = (): JSX.Element => {
   const [price, setPrice] = useState(0);
-
   const [isCheckAllBox, setIsCheckAllBox] = useState(false);
 
   const [accessToken, setAccessToken] = useState<string>("");
@@ -23,47 +21,51 @@ export const ShoppingCartComp = (): JSX.Element => {
 
   const navigate = useNavigate();
 
-  const { accessTokenCookie } = getAuthLocalStorage();
+  const [cookies] = useCookies(["access-token"]);
 
-  const { data, refetch } = useShoppingCartList(accessTokenCookie as string);
+  const { data, refetch } = useShoppingCartList(cookies["access-token"]);
 
   useEffect(() => {
-    const access = localStorage.getItem("access-token");
-
-    if (access) {
-      setAccessToken(access);
+    if (cookies["access-token"]) {
+      setAccessToken(cookies["access-token"]);
       refetch();
     } else {
       navigate("/notFound");
     }
-  }, [accessToken, navigate]);
+  }, [cookies["access-token"]]);
 
   useEffect(() => {
-    let totalPrice = 0;
-
-    if (data) {
-      data.data.map((hotel: Accommodation) => {
-        hotel.room_infos.map((room: RoomInfo) => {
-          cartIdList.map((cartId) => {
-            if (room.cartId == cartId) {
-              totalPrice += room.quantity * room.price;
+    const totalPrice = data
+      ? data.data.reduce((acc: number, hotel: Accommodation) => {
+          hotel.room_infos.forEach((room) => {
+            if (cartIdList.includes(room.cartId)) {
+              acc += room.quantity * room.price;
             }
           });
-        });
-      });
-    }
+          return acc;
+        }, 0)
+      : 0;
 
     setPrice(totalPrice);
   }, [data, cartIdList]);
 
+  useEffect(() => {
+    if (data?.data) {
+      const newCartIdList = data.data.flatMap((hotel: Accommodation) =>
+        hotel.room_infos.map((room: RoomInfo) => room.cartId)
+      );
+
+      setCartIdList(newCartIdList);
+    }
+  }, [data]);
+
   const handleCheckAllRooms = (): void => {
     const newArr: number[] = [];
+
     if (!isCheckAllBox) {
-      data.data.map((hotel: Accommodation) => {
-        hotel.room_infos.map((room: RoomInfo) => {
-          newArr.push(room.cartId);
-        });
-      });
+      data.data.flatMap((hotel: Accommodation) =>
+        hotel.room_infos.forEach((room: RoomInfo) => newArr.push(room.cartId))
+      );
     }
 
     setCartIdList(newArr);
@@ -109,7 +111,10 @@ export const ShoppingCartComp = (): JSX.Element => {
     }
   };
 
-  const handleClickQuantity = async (sign: string, cartId: number) => {
+  const handleClickQuantity = async (
+    sign: "increase" | "decrease",
+    cartId: number
+  ) => {
     if (sign === "increase") {
       await quantityCart({
         accessToken: accessToken,
@@ -130,7 +135,7 @@ export const ShoppingCartComp = (): JSX.Element => {
   const handleClickReservation = () => {
     if (cartIdList.length > 0) {
       const queryString = cartIdList
-        .sort()
+        .sort((a, b) => a - b)
         .map((cartId) => `cartId=${cartId}`)
         .join("&");
       navigate(`/orders?${queryString}`);

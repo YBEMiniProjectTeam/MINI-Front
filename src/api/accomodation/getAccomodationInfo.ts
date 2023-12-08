@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const getAccomodationInfo = async (id: number) => {
-  const GET_ACCOMODAION_INFO_URL = `https://api.anti-bias.kr/api/accommodations/${id}`;
-  const response = await axios.get(GET_ACCOMODAION_INFO_URL);
+  const getAccommodationInfoUrl = `https://api.anti-bias.kr/api/accommodations/${id}`;
+  const response = await axios.get(getAccommodationInfoUrl);
 
   return response.data.data;
 };

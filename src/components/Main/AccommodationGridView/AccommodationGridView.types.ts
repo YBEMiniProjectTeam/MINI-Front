@@ -15,3 +15,12 @@ export type Accommodation = {
   min_price: number;
   isWish: boolean;
 };
+
+export type RegionProps = {
+  region: string;
+  title: string;
+  description: string;
+  cottagePageNumber: number,
+  hotelPageNumber: number,
+  dataSize: number,
+};

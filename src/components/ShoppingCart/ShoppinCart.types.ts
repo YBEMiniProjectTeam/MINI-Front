@@ -27,5 +27,8 @@ export interface CartListProps {
 
   handleCheckRoom: (cartId: number) => void;
   handleClickRoomDelete: (CartId: number) => void;
-  handleClickQuantity: (sign: string, cartId: number) => Promise<void>;
+  handleClickQuantity: (
+    sign: "increase" | "decrease",
+    cartId: number
+  ) => Promise<void>;
 }

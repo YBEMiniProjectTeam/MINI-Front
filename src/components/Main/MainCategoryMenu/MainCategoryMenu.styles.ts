@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const CategoryWrapper = styled.div`
+export const CategoryWrapper = styled.nav`
   padding: 0px 24px;
   display: flex;
   flex-direction: column;
@@ -8,7 +8,7 @@ export const CategoryWrapper = styled.div`
   padding: 0px 24px;
 `;
 
-export const CategoryMenuWrapper = styled.div`  
+export const CategoryMenuWrapper = styled.ul`  
   height: 82px;
   display: flex;
   justify-content: space-around;
@@ -16,7 +16,7 @@ export const CategoryMenuWrapper = styled.div`
   margin: 8px 0px;
 `;
 
-export const CategoryMenuItem = styled.div`
+export const CategoryMenuItem = styled.li`
   width: 100%;
   position: relative;
   display: flex;
