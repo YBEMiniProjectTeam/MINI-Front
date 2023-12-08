@@ -60,7 +60,7 @@ export const Header = () => {
       accessToken
     });
 
-    localStorage.removeItem("access-token");
+    removeCookie("access-token", { path: "/" });
 
     setAccessToken("");
   };
