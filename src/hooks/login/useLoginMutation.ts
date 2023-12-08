@@ -25,7 +25,6 @@ export const useLoginMutation = () => {
     mutationFn: ({ email, pwd }: loginProps) => LoginApi({ email, pwd }),
     onSuccess: (res) => {
       if (res.data && res.statusCode === 200) {
-        console.log(res);
         navigate(loginUrl + loginUrlSearch);
       }
     },
