@@ -4,8 +4,10 @@ import { FormControl, FormHelperText, Input, Button } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import type { Login } from "./Login.types";
 import { useLoginMutation } from "@hooks/login/useLoginMutation";
+import { useCookies } from "react-cookie";
+import toast from "react-hot-toast";
 
-export const LoginForm = (): JSX.Element => {
+export const LoginForm = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -15,51 +17,42 @@ export const LoginForm = (): JSX.Element => {
 
   const { mutate: loginMutate } = useLoginMutation();
 
+  const [cookies] = useCookies(["access-token"]);
+
   useEffect(() => {
-    if (localStorage.getItem("access-token")) {
+    const CookiesAccessToken = cookies["access-token"];
+    if (CookiesAccessToken) {
+      toast("이미 로그인이 되어있습니다.");
       navigate("/");
     }
   }, []);
 
-  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.currentTarget.value);
     setIsEmailText(e.currentTarget.value === "");
   };
 
-  const handleChangePassword = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ): void => {
+  const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.currentTarget.value);
     setIsPasswordText(e.currentTarget.value === "");
   };
 
-  const handleKeyDownPassword = (
-    e: React.KeyboardEvent<HTMLInputElement>
-  ): void => {
-    if (e.key === "Enter") {
-      loginRequest();
-    }
-  };
-
-  const handleClickLoginButton = (
-    e: React.MouseEvent<HTMLButtonElement>
-  ): void => {
+  const handleSubmitLoginButton = (e: React.FormEvent) => {
     e.preventDefault();
     loginRequest();
   };
 
-  const loginRequest = async (): Promise<void> => {
+  const loginRequest = async () => {
     const login: Login = {
       email: email,
       pwd: password
     };
 
-    const data = await loginMutate(login);
-    console.log(data);
+    await loginMutate(login);
   };
   return (
     <S.LoginFormContainer>
-      <form>
+      <form onSubmit={handleSubmitLoginButton}>
         <h3>로그인</h3>
         <FormControl>
           <Input
@@ -83,7 +76,6 @@ export const LoginForm = (): JSX.Element => {
             value={password}
             onChange={handleChangePassword}
             autoComplete="new-password"
-            onKeyDown={handleKeyDownPassword}
           />
           {isPasswordText ? (
             <FormHelperText className="errorText">
@@ -92,7 +84,7 @@ export const LoginForm = (): JSX.Element => {
           ) : null}
         </FormControl>
 
-        <Button onClick={handleClickLoginButton}>로그인</Button>
+        <Button type="submit">로그인</Button>
         <div className="flex">
           <div className="flexItem">
             <Link to="/register">
