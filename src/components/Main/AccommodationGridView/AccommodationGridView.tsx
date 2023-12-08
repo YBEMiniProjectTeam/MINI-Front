@@ -9,15 +9,30 @@ import {
 import { AccommodationGridItem } from "./AccommodationGridItem";
 import { Suspense, startTransition, useEffect, useState } from "react";
 import { useSearchList } from "@hooks/useSearchList";
-import { Accommodation } from "./AccommodationGridView.types";
+import { Accommodation, RegionProps } from "./AccommodationGridView.types";
 import { printCategory } from "@utils/printCategory";
 import { Button, Spinner } from "@chakra-ui/react";
 import { useNavigateToResultPage } from "@hooks/useNavigateToResultPage";
-import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
+// import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
+import { useCookies } from "react-cookie";
 
-export const AccommodationGridView = () => {
+export const AccommodationGridView = ({ region, title, description, cottagePageNumber, hotelPageNumber, dataSize }: RegionProps) => {
+  const categoryTab = {
+    cottage: "펜션",
+    hotel: "호텔",
+  };
   const { navigateToResultPage } = useNavigateToResultPage();
-  const [activeTab, setActiveTab] = useState("펜션");
+  const [activeTab, setActiveTab] = useState(categoryTab.cottage);
+
+  // const { headers } = getAuthLocalStorage();
+  const [cookies, ] = useCookies(["access-token"]);
+  const CookiesAccessToken = cookies["access-token"];
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${CookiesAccessToken}`
+  };
+
+  console.log(headers);
 
   const handleTabClick = (tab: string) => {
     startTransition(() => {
@@ -25,16 +40,14 @@ export const AccommodationGridView = () => {
     });
   };
 
-  const { headers } = getAuthLocalStorage();
-
   const { data, error, refetch } = useSearchList(
     "",
-    "서귀포시",
+    region,
     "",
     "",
     activeTab,
-    activeTab === "펜션" ? 2 : 3,
-    4,
+    activeTab === categoryTab.cottage ? cottagePageNumber : hotelPageNumber,
+    dataSize,
     null,
     headers
   );
@@ -44,7 +57,7 @@ export const AccommodationGridView = () => {
   }
 
   // console.log(data);
-
+  
   useEffect(() => {
     refetch();
   }, [activeTab]);
@@ -64,26 +77,31 @@ export const AccommodationGridView = () => {
       <styled.GridViewWrapper>
         <MainViewTitleWrapper>
           <MainViewTitle>
-            <Title>상큼한 제주</Title>
-            <Description>제철 귤 따러 제주로 떠나보세요! 🍊</Description>
+            <Title>{title}</Title>
+            <Description>{description}</Description>
           </MainViewTitle>
         </MainViewTitleWrapper>
         <styled.Border />
         <styled.CategoryTapWrapper>
           <styled.CategoryTapContainer>
             <styled.CategoryTap>
-              <styled.CategoryTapItem onClick={() => handleTabClick("펜션")}>
+              <styled.CategoryTapItem onClick={() => handleTabClick(categoryTab.cottage)}>
                 <styled.TabItem
-                  $isActive={activeTab === "펜션"}
-                  onClick={() => handleTabClick("펜션")}
+                  role="tab"
+                  $aia-selected={`${activeTab === categoryTab.cottage}`}
+                  $isActive={activeTab === categoryTab.cottage}
                 >
-                  {activeTab === "펜션" && <styled.ActivedBar />}
+                  {activeTab === categoryTab.cottage && <styled.ActivedBar />}
                   펜션
                 </styled.TabItem>
               </styled.CategoryTapItem>
-              <styled.CategoryTapItem onClick={() => handleTabClick("호텔")}>
-                <styled.TabItem $isActive={activeTab === "호텔"}>
-                  {activeTab === "호텔" && <styled.ActivedBar />}
+              <styled.CategoryTapItem onClick={() => handleTabClick(categoryTab.hotel)}>
+                <styled.TabItem 
+                role="tab"
+                $aia-selected={`${activeTab === categoryTab.hotel}`}
+                $isActive={activeTab === categoryTab.hotel}
+                >
+                  {activeTab === categoryTab.hotel && <styled.ActivedBar />}
                   호텔
                 </styled.TabItem>
               </styled.CategoryTapItem>
@@ -93,9 +111,9 @@ export const AccommodationGridView = () => {
         <styled.Border />
         <styled.GridWrapper>
           {data?.accommodations?.map(
-            (accommodation: Accommodation, index: number) => (
+            (accommodation: Accommodation) => (
               <AccommodationGridItem
-                key={index}
+                key={accommodation.id}
                 id={accommodation.id}
                 imageUrl={accommodation.thumbnail}
                 summary={`${accommodation.region} | ${printCategory(
@@ -108,7 +126,7 @@ export const AccommodationGridView = () => {
           )}
         </styled.GridWrapper>
         <styled.MoreButtonWrapper
-          onClick={() => navigateToResultPage(activeTab, "서귀포시")}
+          onClick={() => navigateToResultPage(activeTab, region)}
         >
           <Button
             color="#666666"

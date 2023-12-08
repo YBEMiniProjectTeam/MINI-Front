@@ -1,22 +1,14 @@
 export const printCategory = (type: string) => {
-  let category = '';
-
   switch (type) {
   case 'HOTEL':
-    category = '호텔';
-    break;
+    return '호텔';
   case 'RESORT':
-    category = '리조트';
-    break;
+    return '리조트';
   case 'MOTEL':
-    category = '모텔';
-    break;
+    return '모텔';
   case 'PENSION':
-    category = '펜션';
-    break;
+    return '펜션';
   default:
-    category = '';
+    return '';
   }
-
-  return category;
 };
