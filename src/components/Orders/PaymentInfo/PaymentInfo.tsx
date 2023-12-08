@@ -11,12 +11,12 @@ const PaymentInfo = ({ data }: PaymentInfoProps) => {
   const totalPaymentLabel =
     totalPaymentItem?.key === "total" ? "총 결제 금액" : "결제 금액";
 
-  const itemsToRender =
+  const items =
     data?.filter((item) => item.key !== "total" && item.key !== "price") || [];
 
   return (
     <styles.PaymentContainer>
-      {itemsToRender.map((item, index) => (
+      {items.map((item, index) => (
         <styles.PaymentWrapperRow key={index}>
           <styles.PaymentLabel>{item.label}</styles.PaymentLabel>
           <styles.PaymentItem>

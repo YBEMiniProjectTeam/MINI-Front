@@ -17,15 +17,15 @@ import DiffUserCheckbox from "@components/Orders/DiffUserCheckbox/DiffUserCheckb
 import PaymentOptionsForm from "@components/Orders/PaymentOptionsForm/PaymentOptionsForm";
 import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
 
-export const Payment = () => {
+const Payment = () => {
   const methods = useForm({
     mode: "onChange"
   });
 
-  const [isDiffUser, setIsDiffUser] = useState(false);
-
   const [searchParams] = useSearchParams();
   const cartIds = searchParams.getAll("cartId").map(Number);
+
+  const [isDiffUser, setIsDiffUser] = useState(false);
 
   const { headers } = getAuthLocalStorage();
 
@@ -39,13 +39,13 @@ export const Payment = () => {
   return (
     <styles.Container>
       <FormProvider {...methods}>
-        <Card key={1}>
+        <Card>
           <Text fontSize="25px" fontWeight={700} padding="0.5rem 1rem 1rem">
             결제하기
           </Text>
-          {rawData.map((accommodation, index) =>
-            accommodation.room_infos.map((room, roomIndex) => (
-              <styles.CardContainer>
+          {rawData.map((accommodation) =>
+            accommodation.room_infos.map((room) => (
+              <styles.CardContainer key={room.cartId}>
                 <Image
                   src={room.accommodationThumbnailUrl}
                   w="130px"
@@ -57,33 +57,32 @@ export const Payment = () => {
                 />
                 <Box width="100%">
                   <ReservationInfo
-                    key={`${index}-${roomIndex}`}
                     hotelName={accommodation.accommodation_name}
                     accommodationType={room.accommodationType}
                   >
-                    <RoomInfo key={`${index}-${room.cartId}`} roomInfo={room} />
+                    <RoomInfo roomInfo={room} />
                   </ReservationInfo>
                 </Box>
               </styles.CardContainer>
             ))
           )}
         </Card>
-        <Card label="예약자 정보" key={2}>
+        <Card label="예약자 정보">
           <UserInfoForm userData={userData} />
           <DiffUserCheckbox setIsDiffUser={setIsDiffUser} />
           <Collapse in={isDiffUser} animateOpacity>
             {isDiffUser && <DiffUserInfoForm />}
           </Collapse>
         </Card>
-        <Card label="결제 정보" key={3}>
+        <Card label="결제 정보">
           {reservationData.map((group, index) => (
             <PaymentInfo key={index} data={group} />
           ))}
         </Card>
-        <Card label="결제 수단" key={4}>
+        <Card label="결제 수단">
           <PaymentOptionsForm />
         </Card>
-        <Card key={5}>
+        <Card>
           <TermsAgreementForm />
         </Card>
         <PaymentSubmitButton
@@ -95,3 +94,5 @@ export const Payment = () => {
     </styles.Container>
   );
 };
+
+export default Payment;
