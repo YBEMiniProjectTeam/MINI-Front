@@ -13,7 +13,6 @@ import { Accommodation, RegionProps } from "./AccommodationGridView.types";
 import { printCategory } from "@utils/printCategory";
 import { Button, Spinner } from "@chakra-ui/react";
 import { useNavigateToResultPage } from "@hooks/useNavigateToResultPage";
-// import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
 import { useCookies } from "react-cookie";
 
 export const AccommodationGridView = ({ region, title, description, cottagePageNumber, hotelPageNumber, dataSize }: RegionProps) => {
@@ -48,15 +47,11 @@ export const AccommodationGridView = ({ region, title, description, cottagePageN
     activeTab,
     activeTab === categoryTab.cottage ? cottagePageNumber : hotelPageNumber,
     dataSize,
-    null,
-    headers
   );
 
   if (error) {
     console.error("[ERROR] ", error.message);
   }
-
-  // console.log(data);
   
   useEffect(() => {
     refetch();

@@ -6,7 +6,6 @@ import { useWishList } from "@hooks/useWishList";
 import { Box, Image, Icon, Tag, Text, Spinner } from "@chakra-ui/react";
 import { FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { debounce } from "lodash";
 import { useDeleteWish } from "@hooks/useWishMutation";
 import { sliceAccommodationName } from "@utils/sliceAccommodationName";
 import { formatPrice } from "@utils/priceFormatter";
@@ -15,17 +14,14 @@ const MyWishList = () => {
   const navigate = useNavigate();
 
   const [wishList, setWishList] = useState<Accommodation[]>([]);
-  const [page, setPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(1);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  const { accessTokenCookie, headers } = getAuthLocalStorage();
+  const { accessTokenCookie } = getAuthLocalStorage();
 
   if (!accessTokenCookie) {
     navigate("/notLogin");
   }
 
-  const { data, error, refetch } = useWishList(headers);
+  const { data, error, refetch } = useWishList();
   const { mutate: deleteWish } = useDeleteWish();
 
   if (error) {
@@ -33,42 +29,13 @@ const MyWishList = () => {
   }
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    document.documentElement.scrollTop = 0;
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [totalPage]);
-
-  useEffect(() => {
-    setWishList((prevWishList) => [...prevWishList, ...data]);
-    setTotalPage(data.total_pages);
-    setIsLoadingMore(false);
+    setWishList(data);
   }, [data]);
 
-  const handleLikeClick = (index: number, accommodationId: number) => {
-    const updatedWishList = wishList.filter((item, i) => {
-      i !== index;
-      console.log(item);
-    });
-
-    setWishList(updatedWishList);
-
-    deleteWish({ accommodationId, headers });
+  const handleLikeClick = async (accommodationId: number) => {
+    await deleteWish({ accommodationId });
+    refetch();
   };
-
-  const handleScroll = debounce(() => {
-    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-
-    if (scrollTop + clientHeight >= scrollHeight - 50) {
-      if (page < totalPage) {
-        setPage((prevPage) => prevPage + 1);
-        setIsLoadingMore(true);
-        refetch();
-      }
-    }
-  }, 200);
 
   const handleAccomodationClick = (id: number) => {
     navigate(`/products?id=${id}`);
@@ -82,7 +49,7 @@ const MyWishList = () => {
             thickness="2px"
             speed="0.65s"
             emptyColor="gray.200"
-            color="#db074a"
+            color="pink"
             size="md"
           />
         </styles.SpinnerWrapper>
@@ -125,7 +92,7 @@ const MyWishList = () => {
               height="1.5rem"
               color="red"
               cursor="pointer"
-              onClick={() => handleLikeClick(index, accomodation.id)}
+              onClick={() => handleLikeClick(accomodation.id)}
             />
             {accomodation.type !== "NOT_CLASSIFIED" && (
               <Tag
@@ -189,18 +156,6 @@ const MyWishList = () => {
           </Box>
         </Box>
       ))}
-
-      {isLoadingMore ? (
-        <styles.SpinnerWrapper>
-          <Spinner
-            thickness="2px"
-            speed="0.65s"
-            emptyColor="gray.200"
-            color="#db074a"
-            size="md"
-          />
-        </styles.SpinnerWrapper>
-      ) : null}
     </Suspense>
   );
 };

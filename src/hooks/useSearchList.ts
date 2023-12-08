@@ -1,19 +1,18 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getSearchList } from "@api/getSearchList";
+import { Nullable } from "@/types/nullable";
 
 export const useSearchList = (
-  accomodationName: string | null,
-  selectedDistrict: string | null,
-  startDate: string | null,
-  endDate: string | null,
-  category: string | null,
+  accomodationName: Nullable<string>,
+  selectedDistrict: Nullable<string>,
+  startDate: Nullable<string>,
+  endDate: Nullable<string>,
+  category: Nullable<string>,
   pageNum: number,
-  pageSize: number,
-  isRefetched: boolean | null,
-  headers?: { [key: string]: string }
+  pageSize: number
 ) => {
   return useSuspenseQuery({
-    queryKey: ["searchList", pageNum, pageSize, headers, isRefetched],
+    queryKey: ["searchList", pageSize],
     queryFn: () =>
       getSearchList(
         accomodationName,
@@ -22,8 +21,7 @@ export const useSearchList = (
         endDate,
         category,
         pageNum,
-        pageSize,
-        headers
+        pageSize
       )
   });
 };

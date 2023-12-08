@@ -9,32 +9,31 @@ import { useSearchList } from "@hooks/useSearchList";
 import { useNavigate } from "react-router-dom";
 import { convertDateFormat4 } from "@utils/convertDateFormat4";
 import { debounce } from "lodash";
-import { checkInAndOutDateState } from "@recoil/checkInAndOutDate";
-import {
-  districtState,
-  categoryState,
-  isRefetchedState
-} from "@recoil/searchStates";
-import { useRecoilValue } from "recoil";
 import { usePostWish, useDeleteWish } from "@hooks/useWishMutation";
 import { sliceAccommodationName } from "@utils/sliceAccommodationName";
 import { formatPrice } from "@utils/priceFormatter";
 import { toast } from "react-hot-toast";
+import { Nullable } from "@/types/nullable";
 
-const SearchList = ({ keyword }: SearchListProps) => {
+const SearchList = ({
+  keyword,
+  district,
+  start_date,
+  end_date,
+  category
+}: SearchListProps) => {
   const navigate = useNavigate();
-
-  const { startDate, endDate } = useRecoilValue(checkInAndOutDateState);
-  const selectedDistrict = useRecoilValue(districtState);
-  const selectedCategory = useRecoilValue(categoryState);
-  const isRefetched = useRecoilValue(isRefetchedState);
 
   const [searchList, setSearchList] = useState<Accommodation[]>([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [selectedDistrict] = useState<string>(district ? district : "");
+  const [startDate] = useState<Nullable<string>>(start_date ? start_date : "");
+  const [endDate] = useState<Nullable<string>>(end_date ? end_date : "");
+  const [selectedCategory] = useState<string>(category ? category : "");
 
-  const { accessTokenCookie, headers } = getAuthLocalStorage();
+  const { accessTokenCookie } = getAuthLocalStorage();
 
   const { data, error, refetch } = useSearchList(
     keyword,
@@ -43,9 +42,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
     endDate,
     selectedCategory,
     page,
-    10,
-    isRefetched,
-    headers
+    10
   );
 
   const { mutate: postWish } = usePostWish();
@@ -57,7 +54,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
 
   // 모듈화
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     document.documentElement.scrollTop = 0;
 
     return () => {
@@ -72,38 +69,31 @@ const SearchList = ({ keyword }: SearchListProps) => {
     ]);
     setTotalPage(data.total_pages);
     setIsLoadingMore(false);
-  }, [page]);
+  }, [data]);
 
   useEffect(() => {
-    setSearchList(() => [...data.accommodations]);
-    setTotalPage(data.total_pages);
-    setIsLoadingMore(false);
-  }, [isRefetched]);
+    if (page >= 1) {
+      refetch();
+    }
+  }, [page]);
+
+  const toggleLike = (index: number, accomodations: Accommodation[]) => {
+    accomodations[index].isWish = !accomodations[index].isWish;
+    refetch();
+  };
 
   const handleLikeClick = async (index: number, accommodationId: number) => {
     if (!accessTokenCookie) {
       toast.error("로그인이 필요한 서비스입니다.");
       return;
     }
-    // const updatedSearchList = [...searchList];
 
-    // console.log(updatedSearchList);
-
-    // updatedSearchList[index] = {
-    //   ...updatedSearchList[index],
-    //   isWish: !updatedSearchList[index].isWish
-    // };
-
-    // setSearchList(updatedSearchList);
-
-    if (searchList[index].isWish === false) {
-      await postWish({ accommodationId, headers });
-      searchList[index].isWish = true;
-      refetch();
+    if (searchList[index].isWish) {
+      await deleteWish({ accommodationId });
+      toggleLike(index, searchList);
     } else {
-      await deleteWish({ accommodationId, headers });
-      searchList[index].isWish = false;
-      refetch();
+      await postWish({ accommodationId });
+      toggleLike(index, searchList);
     }
   };
 
@@ -115,7 +105,6 @@ const SearchList = ({ keyword }: SearchListProps) => {
       if (page < totalPage) {
         setPage((prevPage) => prevPage + 1);
         setIsLoadingMore(true);
-        refetch();
       }
     }
   }, 200);
@@ -136,7 +125,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
             thickness="2px"
             speed="0.65s"
             emptyColor="gray.200"
-            color="#db074a"
+            color="pink"
             size="md"
           />
         </styles.SpinnerWrapper>
@@ -265,7 +254,7 @@ const SearchList = ({ keyword }: SearchListProps) => {
             thickness="2px"
             speed="0.65s"
             emptyColor="gray.200"
-            color="#db074a"
+            color="pink"
             size="md"
           />
         </styles.SpinnerWrapper>

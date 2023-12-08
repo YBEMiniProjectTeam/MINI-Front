@@ -6,14 +6,10 @@ export const HeaderScheduleWrapper = styled.div`
     justify-content: space-between;
 `;
 
-export const HeaderSchedule = `
+export const HeaderSchedule = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-end;  
-`;
-
-export const HeaderScheduleLeft = styled.div`
-    ${HeaderSchedule}
 `;
 
 export const Text = `
@@ -39,10 +35,6 @@ export const Date = styled.span`
 
 export const HeaderScheduleMid = styled.div`
     width: 52px;
-`;
-
-export const HeaderScheduleRight = styled.div`
-    ${HeaderSchedule}
 `;
 
 export const CheckOutText = styled.span`
