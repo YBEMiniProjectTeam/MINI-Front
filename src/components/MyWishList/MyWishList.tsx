@@ -19,14 +19,13 @@ const MyWishList = () => {
   const [totalPage, setTotalPage] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  const { data, error, refetch } = useWishList(page, 10);
-
   const { accessTokenCookie, headers } = getAuthLocalStorage();
 
   if (!accessTokenCookie) {
     navigate("/notLogin");
   }
 
+  const { data, error, refetch } = useWishList(headers);
   const { mutate: deleteWish } = useDeleteWish();
 
   if (error) {
@@ -43,7 +42,7 @@ const MyWishList = () => {
   }, [totalPage]);
 
   useEffect(() => {
-    setWishList((prevWishList) => [...prevWishList, ...data.accommodations]);
+    setWishList((prevWishList) => [...prevWishList, ...data]);
     setTotalPage(data.total_pages);
     setIsLoadingMore(false);
   }, [data]);

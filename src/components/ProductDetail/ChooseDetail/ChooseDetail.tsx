@@ -18,6 +18,7 @@ const ChooseDetail = ({
     startDate,
     endDate
   ]);
+  console.log(endDate);
   const [guestCnt, setguestCnt] = useState<number>(2);
 
   const {
@@ -67,7 +68,7 @@ const ChooseDetail = ({
             {startDate &&
               `${format(new Date(selectedDate[0]), "MM.dd (EEEEE)", {
                 locale: ko
-              })} - ${format(new Date(selectedDate[0]), "MM.dd (EEEEE)", {
+              })} - ${format(new Date(selectedDate[1]), "MM.dd (EEEEE)", {
                 locale: ko
               })}`}
           </Box>

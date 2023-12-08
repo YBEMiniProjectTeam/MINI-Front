@@ -20,7 +20,7 @@ const TotalPaymentInfo = ({ totalPrice, children }: TotalPaymentInfoProps) => {
           <span>총 결제 금액</span>
           {children}
         </styles.Label>
-        <styles.TotalPaymentPrice>{TotalPayment}</styles.TotalPaymentPrice>
+        <styles.TotalPaymentPrice>{TotalPayment}원</styles.TotalPaymentPrice>
       </styles.TotalPaymentPriceWrapper>
     </styles.PaymentContainer>
   );

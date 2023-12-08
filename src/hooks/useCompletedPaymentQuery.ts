@@ -50,22 +50,19 @@ const encodeReservationData = (
     {
       key: "label",
       label: "객실",
-      value: reservation.room_info.roomName
+      value: `${reservation.room_info.roomName} ${reservation.room_info.quantity}개`
     },
     {
       key: "price",
       label: "결제 금액",
-      value: reservation.room_info.price
+      value: reservation.room_info.price * reservation.room_info.quantity
     }
   ]);
 };
 const encodeTotalPrice = (reservations: Reservation[]) => {
   const totalPrice = reservations.reduce((total, reservation) => {
-    console.log(reservation.room_info.quantity);
     return total + reservation.room_info.price * reservation.room_info.quantity;
   }, 0);
-
-  console.log("Total Price:", totalPrice);
 
   return totalPrice;
 };

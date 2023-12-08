@@ -11,6 +11,7 @@ import { Button } from "@chakra-ui/react";
 import { useNavigateToResultPage } from "@hooks/useNavigateToResultPage";
 import { useNavigateToDetailPage } from "@hooks/useNavigateToDetailPage";
 import { sliceAccommodationName } from "@utils/sliceAccommodationName";
+import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
 
 export const AccommodationSingleView = () => {
   const { navigateToResultPage } = useNavigateToResultPage();
@@ -39,6 +40,8 @@ export const AccommodationSingleView = () => {
     )
   };
 
+  const { headers } = getAuthLocalStorage();
+
   const { data, error } = useSearchList(
     "",
     "",
@@ -46,7 +49,9 @@ export const AccommodationSingleView = () => {
     "",
     "호텔",
     60,
-    7
+    7,
+    null,
+    headers
   );
 
   if (error) {
@@ -73,7 +78,9 @@ export const AccommodationSingleView = () => {
         <styled.MainViewTitleWrapper>
           <styled.MainViewTitle>
             <styled.Title>힐링 호캉스 타임</styled.Title>
-            <styled.Description>지친 이번주, 호캉스는 어떠세요? 🌿</styled.Description>
+            <styled.Description>
+              지친 이번주, 호캉스는 어떠세요? 🌿
+            </styled.Description>
           </styled.MainViewTitle>
           <styled.MoreButtonWrapper
             onClick={() => navigateToResultPage("호텔", "")}

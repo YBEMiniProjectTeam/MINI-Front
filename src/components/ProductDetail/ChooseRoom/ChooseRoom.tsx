@@ -45,7 +45,7 @@ const ChooseRoom = ({
       alert("로그인이 필요한 서비스입니다!");
       return;
     }
-    postCart({ body, headers });
+    postCart({ body, headers } as any);
   };
 
   const handlePayButton = () => {
@@ -53,7 +53,7 @@ const ChooseRoom = ({
       alert("로그인이 필요한 서비스입니다!");
       return;
     }
-    postPayment({ body, headers });
+    postPayment({ body, headers } as any);
   };
 
   return (

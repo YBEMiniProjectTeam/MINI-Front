@@ -18,14 +18,15 @@ const PaymentSubmitButton = ({
   const { mutate: sendPayment } = useSendPaymentMutation();
   const { headers } = getAuthLocalStorage();
 
-  const onSubmit = (formData: { name?: string }) => {
+  const onSubmit = (formData: { name?: string; email?: string }) => {
     const isDifferentUser = getValues("isDiffUser");
     const reservationName = isDifferentUser ? formData.name : userData!.name;
+    const reservationEmail = isDifferentUser ? formData.email : userData!.email;
 
-    // FIXME: 에러 핸들링 필요
-    if (!reservationName) return;
+    if (!reservationName || !reservationEmail) return;
     sendPayment({
-      reservation_name: reservationName,
+      guest_name: reservationName,
+      guest_email: reservationEmail,
       cart_ids: cartIds,
       headers
     });

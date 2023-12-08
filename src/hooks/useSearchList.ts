@@ -8,10 +8,12 @@ export const useSearchList = (
   endDate: string | null,
   category: string | null,
   pageNum: number,
-  pageSize: number
+  pageSize: number,
+  isRefetched: boolean | null,
+  headers?: { [key: string]: string }
 ) => {
   return useSuspenseQuery({
-    queryKey: ["searchList", pageNum, pageSize],
+    queryKey: ["searchList", pageNum, pageSize, headers, isRefetched],
     queryFn: () =>
       getSearchList(
         accomodationName,
@@ -20,7 +22,8 @@ export const useSearchList = (
         endDate,
         category,
         pageNum,
-        pageSize
+        pageSize,
+        headers
       )
   });
 };
