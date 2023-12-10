@@ -1,49 +1,34 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getPaymentInfo } from "@api/getPaymentInfo";
-
-interface RoomInfo {
-  cartId: number;
-  quantity: number;
-  roomName: string;
-  accommodationThumbnailUrl: string;
-  price: number;
-  checkInDate: string;
-  checkOutDate: string;
-  checkInTime: string;
-  checkOutTime: string;
-  capacity: number;
-  capacityMax: number;
-  discount?: number;
-  accommodationType?: string;
-}
-
-interface Accommodation {
-  accommodation_name: string;
-  address: string;
-  room_infos: RoomInfo[];
-}
+import type { Accommodation } from "@/types/paymet";
 
 interface PaymentResponse {
   reservationData: PaymentData[][];
   rawData: Accommodation[];
 }
 
-export interface PaymentData {
+interface PaymentData {
   key: "label" | "total";
   label: string;
   value: number;
 }
 
-const encodeData = (data: Accommodation[]): PaymentData[][] => {
-  let totalPrice = 0;
-  let totalDiscount = 0;
+const calculateTotal = (
+  data: Accommodation[]
+): { totalPrice: number; totalDiscount: number } => {
+  return data.reduce(
+    ({ totalPrice, totalDiscount }, accommodation) => {
+      accommodation.room_infos.forEach((roomInfo) => {
+        totalPrice += roomInfo.price * roomInfo.quantity;
+      });
+      return { totalPrice, totalDiscount };
+    },
+    { totalPrice: 0, totalDiscount: 0 }
+  );
+};
 
-  data.forEach((accommodation) => {
-    accommodation.room_infos.forEach((roomInfo) => {
-      totalPrice += roomInfo.price * roomInfo.quantity;
-      totalDiscount += roomInfo.discount || 0;
-    });
-  });
+const encodeData = (data: Accommodation[]): PaymentData[][] => {
+  const { totalPrice, totalDiscount } = calculateTotal(data);
 
   return [
     [
@@ -54,18 +39,10 @@ const encodeData = (data: Accommodation[]): PaymentData[][] => {
   ];
 };
 
-export const usePayment = (
-  cartIds: number[],
-  headers: { [key: string]: string }
-) => {
-  return useSuspenseQuery<
-    Accommodation[],
-    Error,
-    PaymentResponse,
-    [string, number[]]
-  >({
+export const usePayment = (cartIds: number[]) => {
+  return useSuspenseQuery<Accommodation[], Error, PaymentResponse>({
     queryKey: ["payment", cartIds],
-    queryFn: async () => await getPaymentInfo(cartIds, headers),
+    queryFn: async () => await getPaymentInfo(cartIds),
     select: (accommodations: Accommodation[]): PaymentResponse => {
       return {
         reservationData: encodeData(accommodations),
