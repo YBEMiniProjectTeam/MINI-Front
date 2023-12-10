@@ -1,8 +1,6 @@
-import { Suspense, lazy } from "react";
+import { lazy } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ErrorBoundary from "@components/AsyncWrapper/ErrorBoundary";
-import ErrorFallback from "@components/AsyncWrapper/ErrorFallback";
-import { useQueryErrorResetBoundary } from "@tanstack/react-query";
+import AsyncWrapper from "@components/AsyncWrapper";
 import Layout from "@components/Layout/Layout";
 import NotFound from "@pages/notFound/NotFound";
 import NotLogin from "@pages/notLogin/NotLogin";
@@ -30,89 +28,95 @@ const router = createBrowserRouter([
       {
         index: true,
         element: (
-          <Suspense fallback={<div>로딩중...</div>}>
+          <AsyncWrapper key="main" fallback={<div>로딩중...</div>}>
             <Main />
-          </Suspense>
+          </AsyncWrapper>
         )
       },
       {
         path: "register",
         element: (
-          <Suspense fallback={<div>로딩중...</div>}>
+          <AsyncWrapper key="register" fallback={<div>로딩중...</div>}>
             <Register />
-          </Suspense>
+          </AsyncWrapper>
         )
       },
       {
         path: "login",
         element: (
-          <Suspense fallback={<div>로딩중...</div>}>
+          <AsyncWrapper key="login" fallback={<div>로딩중...</div>}>
             <Login />
-          </Suspense>
+          </AsyncWrapper>
         )
       },
       {
         path: "searchResult",
         element: (
-          <Suspense fallback={<div>로딩중...</div>}>
+          <AsyncWrapper key="searchResult" fallback={<div>로딩중...</div>}>
             <SearchResult />
-          </Suspense>
+          </AsyncWrapper>
         )
       },
       {
         path: "products",
         element: (
-          <Suspense fallback={<div>로딩중...</div>}>
+          <AsyncWrapper key="products" fallback={<div>로딩중...</div>}>
             <ProductDetail />
-          </Suspense>
+          </AsyncWrapper>
         )
       },
       {
         path: "orders",
         element: (
-          <Suspense fallback={<div>로딩중...</div>}>
+          <AsyncWrapper key="orders" fallback={<div>로딩중...</div>}>
             <Payment />
-          </Suspense>
+          </AsyncWrapper>
         )
       },
       {
         path: "reservationComplete",
         element: (
-          <Suspense fallback={<div>로딩중...</div>}>
+          <AsyncWrapper
+            key="reservationComplete"
+            fallback={<div>로딩중...</div>}
+          >
             <CompletePayment />
-          </Suspense>
+          </AsyncWrapper>
         )
       },
       {
         path: "shoppingCart",
         element: (
-          <Suspense fallback={<div>로딩중...</div>}>
+          <AsyncWrapper key="shoppingCart" fallback={<div>로딩중...</div>}>
             <ShoppingCart />
-          </Suspense>
+          </AsyncWrapper>
         )
       },
       {
         path: "reservations",
         element: (
-          <Suspense fallback={<div>로딩중...</div>}>
+          <AsyncWrapper key="reservations" fallback={<div>로딩중...</div>}>
             <Reservations />
-          </Suspense>
+          </AsyncWrapper>
         )
       },
       {
         path: "reservationDetails",
         element: (
-          <Suspense fallback={<div>로딩중...</div>}>
+          <AsyncWrapper
+            key="reservationDetails"
+            fallback={<div>로딩중...</div>}
+          >
             <ReservationDetails />
-          </Suspense>
+          </AsyncWrapper>
         )
       },
       {
         path: "wishList",
         element: (
-          <Suspense fallback={<div>로딩중...</div>}>
+          <AsyncWrapper key="wishList" fallback={<div>로딩중...</div>}>
             <WishList />
-          </Suspense>
+          </AsyncWrapper>
         )
       },
       { path: "notLogin", element: <NotLogin /> },
@@ -123,12 +127,7 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  const { reset } = useQueryErrorResetBoundary();
-  return (
-    <ErrorBoundary fallback={ErrorFallback} onReset={reset}>
-      <RouterProvider router={router} />
-    </ErrorBoundary>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;
