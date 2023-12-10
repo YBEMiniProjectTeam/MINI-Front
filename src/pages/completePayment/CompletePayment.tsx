@@ -1,6 +1,5 @@
 import RoomInfo from "@components/Orders/RoomInfo/RoomInfo";
 import TotalPaymentInfo from "@components/Orders/TotalPaymentInfo/TotalPaymentInfo";
-import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
 import Lottie from "lottie-react";
 import * as styles from "./CompletePayment.styles";
 import Card from "@components/Card/Card";
@@ -22,7 +21,6 @@ import {
 
 const CompletePayment = () => {
   const navigate = useNavigate();
-  const { headers } = getAuthLocalStorage();
 
   const handleNavigate = () => {
     navigate(`/reservations?Status=oncoming`);
@@ -32,12 +30,8 @@ const CompletePayment = () => {
   const orderIdString = searchParams.get("orderId");
   const orderId = orderIdString ? Number(orderIdString) : null;
 
-  const { data } = useCompletedPayment(orderId!, headers);
-
-  const rawData = data.rawData;
-  const reservationName = data.reservationName;
-  const totalPrice = data.totalPrice;
-  const reservationData = data.reservationData;
+  const { data } = useCompletedPayment(orderId!);
+  const { rawData, reservationName, totalPrice, reservationData } = data;
 
   return (
     <styles.Container>
