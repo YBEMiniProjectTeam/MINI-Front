@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_BASE_URL } from "@api/config";
 import { Login } from "@components/Login/Login.types";
-import { ApiResponseBase } from "@api/ApiResponse.type";
+import { ApiResponseBase } from "@api/ApiResponse.types.ts";
 
 interface LoginType {
   accessToken: string;

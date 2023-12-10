@@ -1,11 +1,8 @@
-import axios from "axios";
-import { API_BASE_URL } from "@api/config.ts";
+import axiosInstance from "@api/axiosInstance";
 
-export const getPaymentInfo = async (
-  cart_ids: number[],
-  headers: { [key: string]: string }
-) => {
-  const API_URL = `${API_BASE_URL}/carts/orders/reservations`;
-  const response = await axios.post(API_URL, { cart_ids }, { headers });
+export const getPaymentInfo = async (cart_ids: number[]) => {
+  const response = await axiosInstance.post("/carts/orders/reservations", {
+    cart_ids
+  });
   return response.data.data;
 };
