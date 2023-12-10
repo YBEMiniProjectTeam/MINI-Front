@@ -1,4 +1,5 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { getUserInfo } from "@api/getUserInfo.ts";
+import { useSuspenseQueries } from "@tanstack/react-query";
 import { getPaymentInfo } from "@api/getPaymentInfo";
 import type { Accommodation } from "@/types/paymet";
 
@@ -39,15 +40,23 @@ const encodeData = (data: Accommodation[]): PaymentData[][] => {
   ];
 };
 
-export const usePayment = (cartIds: number[]) => {
-  return useSuspenseQuery<Accommodation[], Error, PaymentResponse>({
-    queryKey: ["payment", cartIds],
-    queryFn: async () => await getPaymentInfo(cartIds),
-    select: (accommodations: Accommodation[]): PaymentResponse => {
-      return {
-        reservationData: encodeData(accommodations),
-        rawData: accommodations
-      };
-    }
+export const usePaymentQueries = (cartIds: number[]) => {
+  return useSuspenseQueries({
+    queries: [
+      {
+        queryKey: ["payment", cartIds],
+        queryFn: async () => await getPaymentInfo(cartIds),
+        select: (accommodations: Accommodation[]): PaymentResponse => {
+          return {
+            reservationData: encodeData(accommodations),
+            rawData: accommodations
+          };
+        }
+      },
+      {
+        queryKey: ["userInfo"],
+        queryFn: () => getUserInfo()
+      }
+    ]
   });
 };

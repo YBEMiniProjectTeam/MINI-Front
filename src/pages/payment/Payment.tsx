@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
-import { useUserInfo } from "@hooks/useUserInfoQuery";
-import { usePayment } from "@hooks/usePaymentQuery";
+import { usePaymentQueries } from "@hooks/usePaymentQueries.ts";
 import { Box, Collapse, Image, Text } from "@chakra-ui/react";
 import * as styles from "./Payment.styles";
 import DiffUserInfoForm from "@components/Orders/DiffUserInfoForm/DiffUserInfoForm.tsx";
@@ -15,7 +14,6 @@ import PaymentSubmitButton from "@components/Orders/PaymentSubmitButton/PaymentS
 import RoomInfo from "@components/Orders/RoomInfo/RoomInfo";
 import DiffUserCheckbox from "@components/Orders/DiffUserCheckbox/DiffUserCheckbox";
 import PaymentOptionsForm from "@components/Orders/PaymentOptionsForm/PaymentOptionsForm";
-import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
 
 const Payment = () => {
   const methods = useForm({
@@ -27,13 +25,11 @@ const Payment = () => {
 
   const [isDiffUser, setIsDiffUser] = useState(false);
 
-  const { headers } = getAuthLocalStorage();
+  const [paymentResult, userInfoResult] = usePaymentQueries(cartIds);
+  const paymentData = paymentResult.data;
+  const userData = userInfoResult.data;
 
-  const { data: paymentData } = usePayment(cartIds, headers);
-  const { data: userData } = useUserInfo(headers);
-
-  const rawData = paymentData.rawData;
-  const reservationData = paymentData.reservationData;
+  const { rawData, reservationData } = paymentData;
   const totalPrice = reservationData[0][0].value;
 
   return (

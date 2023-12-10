@@ -2,7 +2,7 @@ import { ComponentType, ReactNode } from "react";
 import { AxiosError } from "axios";
 
 export interface AsyncWrapperProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export type ErrorBoundaryState = {
