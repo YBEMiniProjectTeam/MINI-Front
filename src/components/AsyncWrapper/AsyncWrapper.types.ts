@@ -3,6 +3,7 @@ import { AxiosError } from "axios";
 
 export interface AsyncWrapperProps {
   children: ReactNode;
+  fallback: ReactNode;
 }
 
 export type ErrorBoundaryState = {
