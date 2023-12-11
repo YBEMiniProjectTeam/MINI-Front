@@ -6,7 +6,7 @@ import { useRecoilState } from "recoil";
 import { loginUrlState, loginUrlSearchState } from "@recoil/loginUrl";
 import { useLogoutMutation } from "@hooks/login/useLoginMutation";
 import { useCookies } from "react-cookie";
-// import { getMemberInfo } from "@api/getMemberInfo";
+import { getMemberInfo } from "@api/getMemberInfo";
 
 export const Header = () => {
   const [isSubMenuVisible, setSubMenuVisible] = useState(false);
@@ -28,19 +28,20 @@ export const Header = () => {
   }, [location.pathname, location.search]);
 
   useEffect(() => {
-    // const CookiesAccessToken = cookies["access-token"];
-    // // 토큰값 유효한지 검사
-    // if (!CookiesAccessToken) {
-    //   return;
-    // } else {
-    //   getMemberInfo(CookiesAccessToken).then((data) => {
-    //     if (data.statusCode === 200) {
-    //       setAccessToken(CookiesAccessToken);
-    //     } else {
-    //       removeCookie("access-token", { path: "/" });
-    //     }
-    //   });
-    // }
+    const CookiesAccessToken = cookies["access-token"];
+
+    // 토큰값 유효한지 검사
+    if (!CookiesAccessToken) {
+      return;
+    } else {
+      getMemberInfo(CookiesAccessToken).then((data) => {
+        if (data.statusCode === 200) {
+          setAccessToken(CookiesAccessToken);
+        } else {
+          removeCookie("access-token", { path: "/" });
+        }
+      });
+    }
   }, [cookies["access-token"]]);
 
   const handleClickLogin = () => {
