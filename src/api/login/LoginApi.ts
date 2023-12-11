@@ -12,7 +12,7 @@ export const LoginApi = async (
   const API_URL = `${API_BASE_URL}/login`;
   const headers = {
     "Content-Type": "application/json",
-    withCredentials: false
+    withCredentials: true
   };
   const response = await axios.post(API_URL, login, { headers });
 
