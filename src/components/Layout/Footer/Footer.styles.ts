@@ -1,12 +1,9 @@
 import styled from "styled-components";
 
 export const FooterContainer = styled.footer`
-  width: inherit;
-
+  width: 100%;
   padding: 16px 20px;
-
   margin: 16px auto;
-
   background-color: #f8f8f9;
   color: #ababab;
 
