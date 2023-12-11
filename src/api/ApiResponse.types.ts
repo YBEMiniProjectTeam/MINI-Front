@@ -4,3 +4,8 @@ export type ApiResponseBase<T> = {
   data?: T;
   successful?: boolean;
 };
+
+export interface ResponseType {
+  statusCode: number;
+  message: string;
+}

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { RegisterApi } from "@api/register/RegisterApi";
 import { User } from "@components/Register/Register.types";
-import { ApiResponseBase } from "@api/ApiResponse.type";
+import { ApiResponseBase } from "@api/ApiResponse.types";
 interface Register {
   id: string;
   email: string;

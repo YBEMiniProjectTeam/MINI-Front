@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_BASE_URL } from "@api/config";
 import { User } from "@components/Register/Register.types";
-import { ApiResponseBase } from "@api/ApiResponse.type";
+import { ApiResponseBase } from "@api/ApiResponse.types.ts";
 interface RegisterReturnType {
   id: string;
   email: string;

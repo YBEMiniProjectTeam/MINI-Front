@@ -1,29 +1,6 @@
 import { getCompletedPaymentInfo } from "@api/getCompletedPaymentInfo.ts";
 import { useSuspenseQuery } from "@tanstack/react-query";
-
-export interface Reservation {
-  reservation_user_name?: string;
-  reservation_user_email?: string;
-  guest_name: string;
-  accommodation_name: string;
-  accommodation_type: string;
-  room_info: RoomInfo;
-  accommodation_thumbnail_url: string;
-}
-
-export interface RoomInfo {
-  quantity: number;
-  accommodationThumbnailUrl?: string;
-  roomName: string;
-  price: number;
-  checkOutDate: string;
-  checkInDate: string;
-  checkInTime: string;
-  checkOutTime: string;
-  capacity: number;
-  capacityMax: number;
-  accommodationType: string;
-}
+import type { Reservation } from "@/types/completedPayment";
 
 export interface ReservationData {
   key: "label" | "price";
@@ -59,27 +36,22 @@ const encodeReservationData = (
     }
   ]);
 };
-const encodeTotalPrice = (reservations: Reservation[]) => {
-  const totalPrice = reservations.reduce((total, reservation) => {
+
+const encodeTotalPrice = (reservations: Reservation[]): number => {
+  return reservations.reduce((total, reservation) => {
     return total + reservation.room_info.price * reservation.room_info.quantity;
   }, 0);
-
-  return totalPrice;
 };
 
 const encodeReservationName = (reservations: Reservation[]): string => {
-  const reservationName =
-    reservations[0].guest_name || reservations[0].reservation_user_name;
-  return reservationName!;
+  return (reservations[0].guest_name ||
+    reservations[0].reservation_user_name) as string;
 };
 
-export const useCompletedPayment = (
-  count: number,
-  headers: { [key: string]: string }
-) => {
+export const useCompletedPayment = (count: number) => {
   return useSuspenseQuery<Reservation[], Error, CompletePaymentResponse>({
     queryKey: ["completedPayment"],
-    queryFn: async () => await getCompletedPaymentInfo({ count, headers }),
+    queryFn: async () => await getCompletedPaymentInfo(count),
     select: (reservations: Reservation[]): CompletePaymentResponse => {
       return {
         reservationData: encodeReservationData(reservations),

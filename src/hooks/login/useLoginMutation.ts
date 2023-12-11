@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { loginUrlState, loginUrlSearchState } from "@recoil/loginUrl";
 
-import { ApiResponseBase } from "@api/ApiResponse.type";
+import { ApiResponseBase } from "@api/ApiResponse.types.ts";
 import { useCookies } from "react-cookie";
 
 interface LoginType {

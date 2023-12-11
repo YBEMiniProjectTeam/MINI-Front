@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAuthLocalStorage } from "@utils/getAuthLocalStorage.ts";
+import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
 
 const { headers } = getAuthLocalStorage();
 
