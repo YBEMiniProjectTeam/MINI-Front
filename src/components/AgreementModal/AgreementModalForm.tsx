@@ -6,7 +6,7 @@ import { toast } from "react-hot-toast";
 export const AgreementModalForm = (props: {
   setIsShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   setIsAgreement: React.Dispatch<React.SetStateAction<boolean>>;
-}): JSX.Element => {
+}) => {
   const [isCheckAgreement, setIsCheckAgreement] = useState(false);
 
   const backgroundContainerRef = useRef<HTMLInputElement>(null);
