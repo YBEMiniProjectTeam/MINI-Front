@@ -4,13 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { loginUrlState, loginUrlSearchState } from "@recoil/loginUrl";
 
-interface login {
-  statusCode: number;
-  message: string;
-  data?: {
-    accessToken: string;
-  };
-  successful?: boolean;
+import { ApiResponseBase } from "@api/ApiResponse.types.ts";
+import { useCookies } from "react-cookie";
+
+interface LoginType {
+  accessToken: string;
 }
 
 interface loginProps {
@@ -22,12 +20,11 @@ export const useLoginMutation = () => {
   const navigate = useNavigate();
   const [loginUrl] = useRecoilState(loginUrlState);
   const [loginUrlSearch] = useRecoilState(loginUrlSearchState);
-  return useMutation<login, Error, loginProps>({
+
+  return useMutation<ApiResponseBase<LoginType>, Error, loginProps>({
     mutationFn: ({ email, pwd }: loginProps) => LoginApi({ email, pwd }),
     onSuccess: (res) => {
-      console.log(res);
-      if (res.statusCode === 200) {
-        localStorage.setItem("access-token", res.data?.accessToken as string);
+      if (res.data && res.statusCode === 200) {
         navigate(loginUrl + loginUrlSearch);
       }
     },
@@ -42,10 +39,12 @@ interface logoutProps {
 }
 
 export const useLogoutMutation = () => {
-  return useMutation<login, Error, logoutProps>({
+  const [_, removeCookie] = useCookies(["access-token"]);
+
+  return useMutation<ApiResponseBase<undefined>, Error, logoutProps>({
     mutationFn: ({ accessToken }: logoutProps) => LogoutApi(accessToken),
-    onSuccess: (res) => {
-      console.log(res);
+    onSuccess: () => {
+      removeCookie("access-token", { path: "/" });
     },
     onError: (err) => {
       console.log(err);

@@ -1,33 +1,28 @@
-import axios from "axios";
-import { API_BASE_URL } from "./config";
+import { Nullable } from "@/types/nullable";
+import axiosInstance from "@api/axiosInstance";
 
 export const getSearchList = async (
-  accomodationName: string | null,
-  selectedDistrict: string | null,
-  startDate: string | null,
-  endDate: string | null,
-  category: string | null,
+  accommodationName: Nullable<string>,
+  selectedDistrict: Nullable<string>,
+  startDate: Nullable<string>,
+  endDate: Nullable<string>,
+  category: Nullable<string>,
   pageNum: number,
-  pageSize: number,
-  headers?: { [key: string]: string }
+  pageSize: number
 ) => {
+  const queryParams = new URLSearchParams({
+    ...(accommodationName && { keyword: accommodationName }),
+    ...(selectedDistrict && { district: selectedDistrict }),
+    ...(startDate && { start_date: startDate }),
+    ...(endDate && { end_date: endDate }),
+    ...(category && { category: category }),
+    page_num: String(pageNum),
+    page_size: String(pageSize)
+  });
 
-  let url = `${API_BASE_URL}/accommodations?`;
+  const getSearchListURL = `/accommodations?${queryParams.toString()}`;
 
-  if (accomodationName)
-    url += `keyword=${accomodationName}&`;
-  if (selectedDistrict)
-    url += `district=${selectedDistrict}&`;
-  if (startDate)
-    url += `start_date=${startDate}&`;
-  if (endDate)
-    url += `end_date=${endDate}&`;
-  if (category)
-    url += `category=${category}&`;
-
-  url += `page_num=${pageNum}&page_size=${pageSize}`;
-
-  const response = await axios.get(url, { headers });
+  const response = await axiosInstance.get(getSearchListURL);
 
   return response.data.data;
 };

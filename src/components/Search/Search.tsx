@@ -20,21 +20,18 @@ import { IoLocationOutline } from "react-icons/io5";
 import { CiCalendar } from "react-icons/ci";
 import { SearchIcon } from "@chakra-ui/icons";
 import { truncateText } from "@utils/truncateText";
-import { convertDateFormat2 } from "@utils/convertDateFormat2";
-import { convertDateFormat3 } from "@utils/convertDateFormat3";
 import ChooseRegionModal from "../ChooseRegionModal/ChooseRegionModal";
 import ChooseDateModal from "../ChooseDateModal/ChooseDateModal";
-import { useSearchList } from "@hooks/useSearchList";
-import { checkInAndOutDateState } from "@recoil/checkInAndOutDate";
-import {
-  districtState,
-  categoryState,
-  isRefetchedState
-} from "@recoil/searchStates";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
+import { Nullable } from "@/types/nullable";
+import { format, parse, parseISO } from "date-fns";
 
-const Search = ({ keyword, category, region }: SearchProps) => {
+const Search = ({
+  keyword,
+  district,
+  start_date,
+  end_date,
+  category
+}: SearchProps) => {
   const {
     isOpen: isOpenChooseRegionModal,
     onOpen: onOpenChooseRegionModal,
@@ -47,78 +44,60 @@ const Search = ({ keyword, category, region }: SearchProps) => {
     onClose: onCloseChooseDateModal
   } = useDisclosure();
 
-  const [selectedDistrict, setSelectedDistrict] = useState<string>(
-    region ? region : ""
-  );
-  const [selectedDate, setSelectedDate] = useState<string[] | null>([]);
   const [accommodationName, setAccommodationName] = useState<string>(
     keyword ? keyword : ""
   );
-  const [startDate, setStartDate] = useState<string | null>("");
-  const [endDate, setEndDate] = useState<string | null>("");
+
+  const [selectedDistrict, setSelectedDistrict] = useState<string>(
+    district ? district : ""
+  );
+  const [selectedDate, setSelectedDate] = useState<string[]>([]);
+
+  const [startDate, setStartDate] = useState<Nullable<string>>(
+    start_date ? start_date : ""
+  );
+  const [endDate, setEndDate] = useState<Nullable<string>>(
+    end_date ? end_date : ""
+  );
   const [selectedCategory, setSelectedCategory] = useState<string>(
     category ? category : ""
   );
   const [isFromSearchResult, setIsFromSearchResult] = useState<boolean>(false);
-
-  const setCheckInAndOutDateState = useSetRecoilState(checkInAndOutDateState);
-  const setDistrictState = useSetRecoilState(districtState);
-  const setCategoryState = useSetRecoilState(categoryState);
-  const [isRefetched, setIsRefetched] = useRecoilState(isRefetchedState);
-
-  const { headers } = getAuthLocalStorage();
-
-  const { data, refetch } = useSearchList(
-    accommodationName,
-    selectedDistrict,
-    startDate,
-    endDate,
-    selectedCategory,
-    1,
-    10,
-    isRefetched,
-    headers
-  );
 
   useEffect(() => {
     setIsFromSearchResult(true);
   }, []);
 
   useEffect(() => {
-    const newCategory = category ? category : "";
-    setSelectedCategory(newCategory);
-    setCategoryState(newCategory);
-  }, []);
-
-  useEffect(() => {
-    const newDistrict = region ? region : "";
+    const newDistrict = district ? district : "";
     setSelectedDistrict(newDistrict);
-    setDistrictState(newDistrict);
   }, []);
 
   useEffect(() => {
-    if (selectedDate && selectedDate.length > 1) {
-      setStartDate(convertDateFormat3(selectedDate[0]));
-      setEndDate(convertDateFormat3(selectedDate[1]));
+    if (
+      selectedDate &&
+      selectedDate.length > 1 &&
+      selectedDate[0] &&
+      selectedDate[1]
+    ) {
+      const newStartDate = selectedDate[0].replace(/\s+/g, "");
+      const newEndDate = selectedDate[1].replace(/\s+/g, "");
+
+      const parsedStartDate = parse(newStartDate, "yyyy.MM.dd.", new Date());
+      const parsedEndDate = parse(newEndDate, "yyyy.MM.dd.", new Date());
+
+      const formattedStartDate = format(parsedStartDate, "yyyy-MM-dd");
+      const formattedEndDate = format(parsedEndDate, "yyyy-MM-dd");
+
+      setStartDate(formattedStartDate);
+      setEndDate(formattedEndDate);
     }
   }, [selectedDate]);
 
   useEffect(() => {
-    const newCheckInAndOutDate = {
-      startDate,
-      endDate
-    };
-
-    setCheckInAndOutDateState(newCheckInAndOutDate);
-  }, [startDate, endDate]);
-
-  useEffect(() => {
-    setIsRefetched(true);
-  }, [data]);
-
-  useEffect(() => {
-    refetch();
-  }, [isRefetched]);
+    const newCategory = category ? category : "";
+    setSelectedCategory(newCategory);
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAccommodationName(e.target.value);
@@ -129,11 +108,22 @@ const Search = ({ keyword, category, region }: SearchProps) => {
   };
 
   const handleSearchClick = () => {
-    let newRefetchState = isRefetched;
-    newRefetchState = !newRefetchState;
+    const queryParams = new URLSearchParams({
+      ...(accommodationName && { keyword: accommodationName }),
+      ...(selectedDistrict && { district: selectedDistrict }),
+      ...(startDate && { start_date: startDate }),
+      ...(endDate && { end_date: endDate }),
+      ...(selectedCategory && { category: selectedCategory }),
+      page_num: "1",
+      page_size: "10"
+    });
 
-    refetch();
-    setIsRefetched(newRefetchState);
+    if (!startDate && start_date && !endDate && end_date) {
+      queryParams.set("start_date", start_date);
+      queryParams.set("end_date", end_date);
+    }
+
+    window.location.href = `/searchResult?${queryParams.toString()}`;
   };
 
   return (
@@ -203,11 +193,28 @@ const Search = ({ keyword, category, region }: SearchProps) => {
                 <AccordionButton>
                   <Box as="span" flex="1" textAlign="left">
                     <Icon as={CiCalendar} mr="1rem" />
-                    {selectedDate && selectedDate?.length > 1 && selectedDate[0]
-                      ? `${convertDateFormat2(
-                          selectedDate[0]
-                        )} - ${convertDateFormat2(selectedDate[1])}`
-                      : "날짜 선택"}
+                    {selectedDate && selectedDate[0] && selectedDate[1]
+                      ? `${format(
+                          parse(
+                            selectedDate[0].replace(/\s+/g, ""),
+                            "yyyy.MM.dd.",
+                            new Date()
+                          ),
+                          "MM.dd"
+                        )} - ${format(
+                          parse(
+                            selectedDate[1].replace(/\s+/g, ""),
+                            "yyyy.MM.dd.",
+                            new Date()
+                          ),
+                          "MM.dd"
+                        )}`
+                      : start_date && end_date
+                        ? `${format(parseISO(start_date), "MM.dd")} - ${format(
+                            parseISO(end_date),
+                            "MM.dd"
+                          )}`
+                        : "날짜 선택"}
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>

@@ -2,10 +2,10 @@ import { Flex, Box, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { DataType } from "./Reservations.types";
 import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
-import { useReservationsQuery } from "@hooks/useReservationsQuery";
-import ReservationList from "../../components/Reservations/ReservationList";
+import useReservationsQuery from "@hooks/useReservationsQuery";
+import ReservationList from "@components/Reservations/ReservationList";
 
-export const Reservations = (): JSX.Element => {
+const Reservations = () => {
   const navigate = useNavigate();
   const { headers } = getAuthLocalStorage();
   const { data } = useReservationsQuery({ headers });
@@ -46,3 +46,5 @@ export const Reservations = (): JSX.Element => {
     return <ReservationList key={index} data={data} />;
   });
 };
+
+export default Reservations;

@@ -22,53 +22,19 @@ export const HeaderContainer = styled.div`
 
   background-color: #fff;
 
-  .Title {
+  .header-title {
     font-size: 24px;
     font-weight: 700;
   }
-  .inputContainer {
-    position: relative;
-    margin: 0px 32px;
 
-    Input[type="text"] {
-      width: 518px;
-      height: 44px;
-
-      border: 1px solid rgba(0, 0, 0, 0.15);
-      border-radius: 6px;
-
-      padding: 10px 16px;
-
-      font-size: 16px;
-      color: rgba(0, 0, 0, 0.92);
-    }
-    input[type="text"]:focus {
-      outline: none;
-
-      border: 1px solid black;
-    }
-
-    .deleteButton {
-      position: absolute;
-      right: 64px;
-      bottom: 10px;
-    }
-    .searchButton {
-      position: absolute;
-      right: 16px;
-      bottom: 10px;
-    }
-  }
-  .menuContainer {
+  .menu-container {
     height: inherit;
 
     display: flex;
     align-items: center;
     gap: 16px;
-    * {
-      font-size: 16px;
-    }
-    .menuWrap {
+
+    .menu-wrap {
       position: relative;
 
       border-radius: 8px;
@@ -77,17 +43,17 @@ export const HeaderContainer = styled.div`
 
       cursor: pointer;
     }
-    .menuWrap:hover {
+    .menu-wrap:hover {
       background-color: rgba(0, 0, 0, 0.05);
     }
-    .userMenu {
+    .user-menu {
       height: inherit;
       display: flex;
       align-items: center;
       .relative {
         position: relative;
       }
-      .subMenu {
+      .sub-menu {
         width: 200px;
 
         position: absolute;
@@ -110,9 +76,44 @@ export const HeaderContainer = styled.div`
           background-color: rgba(0, 0, 0, 0.05);
         }
       }
-      .visible {
+      .sub-menu--visible {
         visibility: visible;
       }
+    }
+  }
+`;
+export const InputContainer = styled.form`
+  .input-container {
+    position: relative;
+    margin: 0px 32px;
+
+    input[type="text"] {
+      width: 518px;
+      height: 44px;
+
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 6px;
+
+      padding: 10px 16px;
+
+      font-size: 16px;
+      color: rgba(0, 0, 0, 0.92);
+    }
+    input[type="text"]:focus {
+      outline: none;
+
+      border: 1px solid black;
+    }
+
+    .delete-button {
+      position: absolute;
+      right: 64px;
+      bottom: 10px;
+    }
+    .search-button {
+      position: absolute;
+      right: 16px;
+      bottom: 10px;
     }
   }
 `;

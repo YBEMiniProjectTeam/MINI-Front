@@ -10,7 +10,7 @@ import { toast } from "react-hot-toast";
 
 const WishListButton = ({ id, wish }: WishListButtonProps): JSX.Element => {
   const [isWish, setIsWish] = useState(wish);
-  const { accessTokenCookie, headers } = getAuthLocalStorage();
+  const { accessTokenCookie } = getAuthLocalStorage();
   const { mutate: postWish } = usePostWish();
   const { mutate: deleteWish } = useDeleteWish();
 
@@ -20,9 +20,9 @@ const WishListButton = ({ id, wish }: WishListButtonProps): JSX.Element => {
       return;
     }
     if (isWish) {
-      deleteWish({ accommodationId, headers });
+      deleteWish({ accommodationId });
     } else {
-      postWish({ accommodationId, headers });
+      postWish({ accommodationId });
     }
     setIsWish((prevState) => !prevState);
   };

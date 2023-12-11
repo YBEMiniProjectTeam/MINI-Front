@@ -1,14 +1,11 @@
-import axios from "axios";
-import { API_BASE_URL } from "./config";
-import { ResponseType } from "@components/SearchList/SearchList.types";
+import { SearchListResponse } from "@components/SearchList/SearchList.types";
+import { Nullable } from "@/types/nullable";
+import axiosInstance from "@api/axiosInstance";
 
 export const postWish = async (
-  accommodationId: number | null,
-  headers: { [key: string]: string }
-): Promise<ResponseType> => {
-  const POST_LIKE_URL = `${API_BASE_URL}/accommodations/${accommodationId}/wish`;
+  accommodationId: Nullable<number>
+): Promise<SearchListResponse> => {
+  const postLikeURL = `/accommodations/${accommodationId}/wish`;
 
-  console.log(headers);
-
-  return await axios.post(POST_LIKE_URL, {}, { headers } );
+  return await axiosInstance.post(postLikeURL);
 };

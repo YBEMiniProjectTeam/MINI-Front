@@ -7,6 +7,7 @@ export const ShoppingCartApi = async (accessToken: string) => {
     "Content-Type": "application/json",
     Authorization: `Bearer ${accessToken}`
   };
+
   const response = await axios.get(API_URL, { headers });
 
   return response.data;

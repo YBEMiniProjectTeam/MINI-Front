@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { getToday, getTomorrow } from "@utils/getTodayTomorrow";
-import { convertDateFormat4 } from "@utils/convertDateFormat4";
+import { format, parseISO } from "date-fns";
 
 export const useNavigateToDetailPage = () => {
   const navigate = useNavigate();
 
   // defualt date
-  const today = convertDateFormat4(getToday());
-  const tomorrow = convertDateFormat4(getTomorrow());
+  const today = format(parseISO(getToday()), "MM/dd/yyyy");
+  const tomorrow = format(parseISO(getTomorrow()), "MM/dd/yyyy");
 
   const navigateToDetailPage = (id: number) => {
     navigate(`/products?id=${id}&startDate=${today}&endDate=${tomorrow}`);

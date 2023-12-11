@@ -36,7 +36,10 @@ export const RegisterForm = (): JSX.Element => {
   const [cookies] = useCookies(["access-token"]);
 
   useEffect(() => {
-    if (localStorage.getItem("access-token")) {
+    const CookiesAccessToken = cookies["access-token"];
+
+    if (CookiesAccessToken) {
+      toast("이미 로그인이 되어있습니다.");
       navigate("/");
     }
   }, [cookies, navigate]);

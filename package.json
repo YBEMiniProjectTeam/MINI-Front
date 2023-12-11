@@ -17,6 +17,7 @@
     "@tanstack/react-query": "^5.8.4",
     "@tanstack/react-query-devtools": "^5.8.4",
     "axios": "^1.6.2",
+    "date-fns": "^2.30.0",
     "framer-motion": "^10.16.5",
     "lodash": "^4.17.21",
     "lottie-react": "^2.4.0",
@@ -35,7 +36,9 @@
     "sweetalert2": "^11.10.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.40.1",
     "@types/google.maps": "^3.54.9",
+    "@types/node": "^20.10.4",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@types/react-slick": "^0.23.12",
@@ -43,6 +46,7 @@
     "@typescript-eslint/parser": "^6.10.0",
     "@vitejs/plugin-react": "^4.0.0",
     "eslint": "^8.53.0",
+    "eslint-plugin-html": "^7.1.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.4",
     "prettier": "^3.1.0",

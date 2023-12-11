@@ -27,3 +27,10 @@ export interface RoomTypes {
     tv: boolean;
   };
 }
+
+export interface RoomListProps {
+  id: number;
+  checkInDate: string;
+  checkOutDate: string;
+  guestCnt: number;
+}

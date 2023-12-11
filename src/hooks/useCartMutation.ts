@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { postCart } from "@api/accomodation/postCart";
+import postCart from "@api/accomodation/postCart";
 import {
   ResponseType,
   PostCartProps

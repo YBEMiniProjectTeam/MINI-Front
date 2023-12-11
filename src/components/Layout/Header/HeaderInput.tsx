@@ -1,48 +1,49 @@
 import { useState } from "react";
 import { BsSearch, BsFillXCircleFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import * as styles from "./Header.styles";
 
-export const HeaderInput = (): JSX.Element => {
+export const HeaderInput = () => {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState("");
 
-  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.currentTarget.value);
   };
 
-  const handleClickValueResetButton = (): void => {
+  const handleClickValueResetButton = () => {
     setInputValue("");
   };
 
-  const handleClickSearchButton = (): void => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
     navigate(`/searchResult?keyword=${inputValue}`);
   };
-  const handleKeyDownEnter = (
-    e: React.KeyboardEvent<HTMLInputElement>
-  ): void => {
-    if (e.key === "Enter") {
-      navigate(`/searchResult?keyword=${inputValue}`);
-    }
-  };
   return (
-    <div className="inputContainer">
-      <input
-        type="text"
-        placeholder="지역이나 숙소, 레저를 검색해보세요."
-        onChange={handleChangeInput}
-        value={inputValue}
-        onKeyDown={handleKeyDownEnter}
-      ></input>
+    <styles.InputContainer onSubmit={handleSubmit}>
+      <div className="input-container">
+        <input
+          type="text"
+          placeholder="지역이나 숙소, 레저를 검색해보세요."
+          onChange={handleChangeInput}
+          value={inputValue}
+        ></input>
 
-      {inputValue !== "" ? (
-        <button className="deleteButton" onClick={handleClickValueResetButton}>
-          <BsFillXCircleFill size="24"></BsFillXCircleFill>
+        {inputValue !== "" ? (
+          <button
+            className="delete-button"
+            onClick={handleClickValueResetButton}
+            type="button"
+          >
+            <BsFillXCircleFill size="24"></BsFillXCircleFill>
+          </button>
+        ) : null}
+
+        <button className="search-button" type="submit">
+          <BsSearch size="24"></BsSearch>
         </button>
-      ) : null}
-
-      <button className="searchButton" onClick={handleClickSearchButton}>
-        <BsSearch size="24"></BsSearch>
-      </button>
-    </div>
+      </div>
+    </styles.InputContainer>
   );
 };

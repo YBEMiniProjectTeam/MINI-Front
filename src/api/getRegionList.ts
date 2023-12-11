@@ -1,10 +1,9 @@
-import axios from "axios";
-import { API_BASE_URL } from "./config";
+import axiosInstance from "@api/axiosInstance";
 
 export const getRegionList = async () => {
-  const GET_REGION_LIST_URL = `${API_BASE_URL}/locations/regions`;
+  const getRegionListURL = `/locations/regions`;
 
-  const response = await axios.get(GET_REGION_LIST_URL);
+  const response = await axiosInstance.get(getRegionListURL);
 
   return response.data.data.regions;
 };

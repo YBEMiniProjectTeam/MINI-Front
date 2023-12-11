@@ -9,18 +9,15 @@ export const calculateNights = ({
   checkInTime: string | undefined;
   checkOutTime: string | undefined;
 }) => {
-  const checkInDateTime = new Date(`${checkInDate} ${checkInTime}`).getTime();
-  const checkOutDateTime = new Date(
-    `${checkOutDate} ${checkOutTime}`
-  ).getTime();
+  const checkInDateTime = new Date(`${checkInDate} ${checkInTime}`);
+  const checkOutDateTime = new Date(`${checkOutDate} ${checkOutTime}`);
 
-  const timeDiff = checkOutDateTime - checkInDateTime;
-
+  const timeDiff = checkOutDateTime.getTime() - checkInDateTime.getTime();
   const hours = timeDiff / (1000 * 60 * 60);
   const days = Math.floor(hours / 24);
 
-  if (days >= 1) {
-    return `${days}박`;
+  if (checkInDate !== checkOutDate) {
+    return `${Math.max(days, 1)}박`;
   } else {
     const remainingHours = Math.floor(hours);
     return `${remainingHours}시간`;

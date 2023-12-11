@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const FooterContainer = styled.div`
+export const FooterContainer = styled.footer`
   width: inherit;
 
   padding: 16px 20px;
@@ -20,7 +20,7 @@ export const FooterContainer = styled.div`
     font-size: 12px;
     line-height: 1.5;
   }
-  .copyrightContainer {
+  .copyright-container {
     margin-top: 16px;
     padding: 16px;
 

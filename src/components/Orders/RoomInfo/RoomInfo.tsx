@@ -5,11 +5,14 @@ import {
   HStack,
   Icon,
   Grid,
-  GridItem
+  GridItem,
+  Tooltip
 } from "@chakra-ui/react";
 import { calculateNights } from "@utils/calculateNights";
 import { BsPerson } from "react-icons/bs";
 import { RoomInfoProps } from "./RoomInfo.types";
+import * as styles from "./RoomInfo.styles";
+import { CiCircleInfo } from "react-icons/ci";
 
 const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
   if (!roomInfo) return null;
@@ -80,6 +83,25 @@ const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
                 <Text fontSize="lg" fontWeight="bold">
                   {(roomInfo.price * roomInfo.quantity).toLocaleString()}원
                 </Text>
+                <Tooltip
+                  label={`${roomInfo.price.toLocaleString()}원 x ${
+                    roomInfo.quantity
+                  }개`}
+                  closeOnClick={false}
+                  placement="top-end"
+                  fontSize="sm"
+                  padding="0.5rem 0.9rem"
+                  marginBottom="5px"
+                  borderRadius="5px"
+                  bg="gray.100"
+                  color="gray.500"
+                  arrowSize={15}
+                  hasArrow
+                >
+                  <styles.InfoButton>
+                    <CiCircleInfo />
+                  </styles.InfoButton>
+                </Tooltip>
               </Flex>
             )}
           </HStack>

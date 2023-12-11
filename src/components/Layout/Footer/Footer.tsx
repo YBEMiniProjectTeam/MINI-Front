@@ -1,8 +1,8 @@
-import * as S from "./Footer.styles.ts";
+import * as styles from "./Footer.styles.ts";
 
-export const Footer = (): JSX.Element => {
+export const Footer = () => {
   return (
-    <S.FooterContainer>
+    <styles.FooterContainer>
       <h3>NINE STAY</h3>
       <span>패스트캠퍼스 프론트엔드/백엔드 개발부트캠프_미니프로젝트</span>
       <br />
@@ -14,7 +14,7 @@ export const Footer = (): JSX.Element => {
       <br />
       <span>저희 프젝인원들 수고하셨어요.</span>
 
-      <div className="copyrightContainer">
+      <div className="copyright-container">
         <p>
           <a href="https://github.com/YBEMiniProjectTeam">
             해당 GitHub 바로가기
@@ -25,6 +25,6 @@ export const Footer = (): JSX.Element => {
           <a href="https://fastcampus.co.kr/">패스트캠퍼스 바로가기</a>
         </p>
       </div>
-    </S.FooterContainer>
+    </styles.FooterContainer>
   );
 };

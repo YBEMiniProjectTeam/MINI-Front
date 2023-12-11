@@ -1,10 +1,6 @@
-import axios from "axios";
-import { API_BASE_URL } from "@api/config.ts";
+import axiosInstance from "@api/axiosInstance";
 
-export const getUserInfo = async (headers: { [key: string]: string }) => {
-  const API_URL = `${API_BASE_URL}/member-info`;
-  const response = await axios.get(API_URL, {
-    headers: { "Content-Type": "application/json", ...headers }
-  });
+export const getUserInfo = async () => {
+  const response = await axiosInstance.get("/member-info");
   return response.data.data;
 };

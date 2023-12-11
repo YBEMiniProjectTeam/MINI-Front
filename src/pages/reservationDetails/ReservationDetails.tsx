@@ -4,7 +4,7 @@ import { Image, Flex, Box, Divider } from "@chakra-ui/react";
 import { useSearchParams } from "react-router-dom";
 import { formatPrice } from "@utils/priceFormatter";
 
-export const ReservationDetails = (): JSX.Element => {
+const ReservationDetails = () => {
   const [searchParams] = useSearchParams();
   const id = Number(searchParams.get("id"));
   const thumbnail = searchParams.get("image");
@@ -147,3 +147,5 @@ export const ReservationDetails = (): JSX.Element => {
     </>
   );
 };
+
+export default ReservationDetails;

@@ -1,20 +1,25 @@
 import { useState, useEffect } from "react";
-import { useRoomListQuery } from "@hooks/useRoomListQuery";
+import useRoomListQuery from "@hooks/useRoomListQuery";
 import ChooseRoom from "../ChooseRoom/ChooseRoom";
 import ChooseDateModal from "@components/ChooseDateModal/ChooseDateModal";
 import { ChooseDetailTypes, RoomTypes } from "./ChooseDetail.types";
 import { Box, Flex, useDisclosure } from "@chakra-ui/react";
 import { CiCalendar } from "react-icons/ci";
 import { BsPeople } from "react-icons/bs";
-import { convertDateFormat } from "@utils/convertDateFormat";
+import { format } from "date-fns";
+import { ko } from "date-fns/locale";
 
 const ChooseDetail = ({
   id,
   startDate,
   endDate
 }: ChooseDetailTypes): JSX.Element => {
-  const [selectedDate, setSelectedDate] = useState<any>([startDate, endDate]);
-  const [guestNum, setGuestNum] = useState<number>(2);
+  const [selectedDate, setSelectedDate] = useState<string[]>([
+    startDate,
+    endDate
+  ]);
+  console.log(endDate);
+  const [guestCnt, setguestCnt] = useState<number>(2);
 
   const {
     isOpen: isOpenChooseDateModal,
@@ -22,12 +27,12 @@ const ChooseDetail = ({
     onClose: onCloseChooseDateModal
   } = useDisclosure();
 
-  const { data: rooms, refetch } = useRoomListQuery(
+  const { data: rooms, refetch } = useRoomListQuery({
     id,
-    selectedDate[0],
-    selectedDate[1],
-    guestNum
-  );
+    checkInDate: selectedDate[0],
+    checkOutDate: selectedDate[1],
+    guestCnt
+  });
 
   useEffect(() => {
     setSelectedDate([startDate, endDate]);
@@ -40,8 +45,8 @@ const ChooseDetail = ({
         onClose={onCloseChooseDateModal}
         setSelectedDate={setSelectedDate}
         isFromSearchResult={false}
-        personCount={guestNum}
-        setPersonCount={setGuestNum}
+        personCount={guestCnt}
+        setPersonCount={setguestCnt}
         refetch={refetch}
       />
       <Box marginTop="10px">
@@ -61,9 +66,11 @@ const ChooseDetail = ({
           >
             <CiCalendar />
             {startDate &&
-              `${convertDateFormat(selectedDate[0])} - ${convertDateFormat(
-                selectedDate[1]
-              )}`}
+              `${format(new Date(selectedDate[0]), "MM.dd (EEEEE)", {
+                locale: ko
+              })} - ${format(new Date(selectedDate[1]), "MM.dd (EEEEE)", {
+                locale: ko
+              })}`}
           </Box>
           <Box
             as="button"
@@ -79,7 +86,7 @@ const ChooseDetail = ({
             onClick={onOpenChooseDateModal}
           >
             <BsPeople />
-            {guestNum}명
+            {guestCnt}명
           </Box>
         </Flex>
       </Box>

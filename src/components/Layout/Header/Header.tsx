@@ -1,107 +1,127 @@
 import { useEffect, useState } from "react";
-import * as S from "./Header.styles";
+import * as styles from "./Header.styles";
 import { Link, useLocation } from "react-router-dom";
-
 import { HeaderInput } from "./HeaderInput";
 import { useRecoilState } from "recoil";
 import { loginUrlState, loginUrlSearchState } from "@recoil/loginUrl";
 import { useLogoutMutation } from "@hooks/login/useLoginMutation";
+import { useCookies } from "react-cookie";
+import { getMemberInfo } from "@api/getMemberInfo";
 
-export const Header = (): JSX.Element => {
+export const Header = () => {
   const [isSubMenuVisible, setSubMenuVisible] = useState(false);
-
   const [isShowInput, setIsShowInput] = useState(true);
+  const [accessToken, setAccessToken] = useState<string | undefined>();
+  const [, setLoginUrl] = useRecoilState(loginUrlState);
+  const [, setLoginSearchUrl] = useRecoilState(loginUrlSearchState);
 
   const location = useLocation();
 
-  const [accessToken, setAccessToken] = useState<string | undefined>();
-
-  const [, setLoginUrl] = useRecoilState(loginUrlState);
-
-  const [, setLoginSearchUrl] = useRecoilState(loginUrlSearchState);
+  const [cookies, removeCookie] = useCookies(["access-token"]);
 
   useEffect(() => {
     const currentPath = location.pathname;
 
-    if (currentPath.includes("searchResult")) {
-      setIsShowInput(false);
+    const displayInput = !currentPath.includes("searchResult");
+
+    setIsShowInput(displayInput);
+  }, [location.pathname, location.search]);
+
+  useEffect(() => {
+    const CookiesAccessToken = cookies["access-token"];
+
+    // 토큰값 유효한지 검사
+    if (!CookiesAccessToken) {
+      return;
     } else {
-      setIsShowInput(true);
+      getMemberInfo(CookiesAccessToken).then((data) => {
+        if (data.statusCode === 200) {
+          setAccessToken(CookiesAccessToken);
+        } else {
+          removeCookie("access-token", { path: "/" });
+        }
+      });
     }
+  }, [cookies["access-token"]]);
 
-    const accesstkoen = localStorage.getItem("access-token");
-    if (accesstkoen) {
-      setAccessToken(accesstkoen);
-    }
-  }, [location.pathname, location.search, accessToken]);
-
-  const handleClickLogin = (): void => {
+  const handleClickLogin = () => {
     setLoginUrl(location.pathname);
     setLoginSearchUrl(location.search);
   };
+
   const { mutate: logoutMutate } = useLogoutMutation();
 
   const handleClickLogoutButton = async (): Promise<void> => {
-    if (accessToken) {
-      await logoutMutate({
-        accessToken
-      });
-      localStorage.removeItem("access-token");
-      setAccessToken("");
+    if (!accessToken) {
+      return;
     }
+
+    await logoutMutate({
+      accessToken
+    });
+
+    removeCookie("access-token", { path: "/" });
+
+    setAccessToken("");
   };
 
   return (
-    <S.Header>
-      <S.HeaderContainer>
+    <styles.Header>
+      <styles.HeaderContainer>
         <Link to="/">
-          <div className="Title">NINE STAY</div>
+          <div className="header-title">NINE STAY</div>
         </Link>
         {isShowInput ? <HeaderInput /> : null}
 
-        <div className="menuContainer">
+        <div className="menu-container">
           {accessToken ? null : (
             <Link to={"/login"} onClick={handleClickLogin}>
-              <div className="menuWrap">로그인/회원가입</div>
+              <div className="menu-wrap">로그인/회원가입</div>
             </Link>
           )}
 
           {accessToken ? (
             <>
               <Link to={"/reservations"}>
-                <div className="menuWrap">예약/구매 내역</div>
+                <div className="menu-wrap">예약/구매 내역</div>
               </Link>
 
               <div
-                className="userMenu"
+                className="user-menu"
                 onMouseEnter={() => setSubMenuVisible(true)}
                 onMouseLeave={() => setSubMenuVisible(false)}
               >
                 <div className="relative">
-                  <div className="menuWrap">
+                  <div className="menu-wrap">
                     <span>마이스테이</span>
                   </div>
                   <div
-                    className={isSubMenuVisible ? "subMenu visible" : "subMenu"}
+                    className={
+                      isSubMenuVisible
+                        ? "sub-menu sub-menu--visible"
+                        : "sub-menu"
+                    }
                   >
-                    <ul>
-                      <Link to="/wishList">
-                        <li>위시리스트</li>
-                      </Link>
-                      <Link to="/shoppingCart">
-                        <li>장바구니</li>
-                      </Link>
-                      <Link to="/" onClick={handleClickLogoutButton}>
-                        <li>로그아웃</li>
-                      </Link>
-                    </ul>
+                    <nav>
+                      <ul>
+                        <Link to="/wishList">
+                          <li>위시리스트</li>
+                        </Link>
+                        <Link to="/shoppingCart">
+                          <li>장바구니</li>
+                        </Link>
+                        <Link to="/" onClick={handleClickLogoutButton}>
+                          <li>로그아웃</li>
+                        </Link>
+                      </ul>
+                    </nav>
                   </div>
                 </div>
               </div>
             </>
           ) : null}
         </div>
-      </S.HeaderContainer>
-    </S.Header>
+      </styles.HeaderContainer>
+    </styles.Header>
   );
 };

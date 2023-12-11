@@ -1,7 +1,7 @@
 import { Flex, Box, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
-export const NotLogin = (): JSX.Element => {
+const NotLogin = (): JSX.Element => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -27,3 +27,5 @@ export const NotLogin = (): JSX.Element => {
     </>
   );
 };
+
+export default NotLogin;

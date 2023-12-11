@@ -16,8 +16,10 @@ import { CiCircleMinus } from "react-icons/ci";
 import { CiCirclePlus } from "react-icons/ci";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { convertDateFormat } from "@utils/convertDateFormat";
 import moment from "moment";
+import { Nullable } from "@/types/nullable";
+import { format } from "date-fns";
+import { ko } from "date-fns/locale";
 
 const ChooseDateModal = ({
   isOpen,
@@ -28,14 +30,18 @@ const ChooseDateModal = ({
   setPersonCount,
   refetch
 }: DisclosureProps) => {
-  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([
+  const [dateRange, setDateRange] = useState<[Nullable<Date>, Nullable<Date>]>([
     null,
     null
   ]);
-  // 타입지정 아무리해도 안돼서 any로 해놨음
-  const handleDateChange = (value: any) => {
+
+  // Calendar 컴포넌트의 property 타입
+  type CalendarProps = Parameters<typeof Calendar>[0];
+
+  const handleDateChange: CalendarProps["onChange"] = (value) => {
     if (Array.isArray(value)) {
-      setDateRange([value[0], value[1] || null]);
+      const [startDate, endDate] = value;
+      setDateRange([startDate, endDate || null]);
     } else {
       setDateRange([value, null]);
     }
@@ -63,10 +69,8 @@ const ChooseDateModal = ({
   const tileDisabled = ({ date }: { date: Date }) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const twoDaysAgo = new Date();
-    twoDaysAgo.setDate(today.getDate());
-    twoDaysAgo.setHours(0, 0, 0, 0);
-    return date < twoDaysAgo;
+
+    return date < today;
   };
 
   const handleClick = () => {
@@ -86,7 +90,7 @@ const ChooseDateModal = ({
     >
       <ModalOverlay />
       <ModalContent maxW="720px" maxH="700px" overflow="auto">
-        {!isFromSearchResult ? (
+        {isFromSearchResult ? null : (
           <ModalHeader
             display="flex"
             justifyContent="space-between"
@@ -100,7 +104,7 @@ const ChooseDateModal = ({
                 backgroundColor="white"
                 width="2rem"
                 height="2rem"
-                color={personCount === 1 ? "gray" : "#db074a"}
+                color={personCount === 1 ? "gray" : "pink"}
                 opacity={personCount === 1 ? "0.5" : "1"}
                 onClick={handleMinusClick}
                 isDisabled={personCount === 1}
@@ -113,14 +117,14 @@ const ChooseDateModal = ({
                 backgroundColor="white"
                 width="2rem"
                 height="2rem"
-                color="#db074a"
+                color="pink"
                 onClick={handlePlusClick}
                 userSelect="none"
                 _hover={{ cursor: "pointer" }}
               />
             </styles.HeaderPersonWrapper>
           </ModalHeader>
-        ) : null}
+        )}
 
         <ModalHeader
           display="flex"
@@ -130,21 +134,27 @@ const ChooseDateModal = ({
         >
           일정
           <styles.HeaderScheduleWrapper>
-            <styles.HeaderScheduleLeft>
+            <styles.HeaderSchedule>
               <styles.CheckInText>체크인</styles.CheckInText>
               <styles.Date>
-                {convertDateFormat(dateRange[0]?.toLocaleDateString())}
+                {dateRange[0] &&
+                  format(dateRange[0], "MM.dd (E)", {
+                    locale: ko
+                  })}
               </styles.Date>
-            </styles.HeaderScheduleLeft>
+            </styles.HeaderSchedule>
             <styles.HeaderScheduleMid>
               <Icon as={RxDoubleArrowRight} width="100%" />
             </styles.HeaderScheduleMid>
-            <styles.HeaderScheduleRight>
+            <styles.HeaderSchedule>
               <styles.CheckOutText>체크아웃</styles.CheckOutText>
               <styles.Date>
-                {convertDateFormat(dateRange[1]?.toLocaleDateString())}
+                {dateRange[1] &&
+                  format(dateRange[1], "MM.dd (E)", {
+                    locale: ko
+                  })}
               </styles.Date>
-            </styles.HeaderScheduleRight>
+            </styles.HeaderSchedule>
           </styles.HeaderScheduleWrapper>
         </ModalHeader>
         <ModalCloseButton />
