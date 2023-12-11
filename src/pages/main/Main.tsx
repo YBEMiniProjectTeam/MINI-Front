@@ -4,7 +4,7 @@ import { MainCategoryMenu } from "@components/Main/MainCategoryMenu/MainCategory
 import { AccommodationSingleView } from "@components/Main/AccommodationSingleView/AccommodationSingleView";
 import { AccommodationGridView } from "@components/Main/AccommodationGridView/AccommodationGridView";
 
-export const Main = () => {
+const Main = () => {
   // 메인 페이지 그리드 뷰에 보여줄 지역에 해당되는 데이터
   const accommodationData = {
     region: "서귀포시",
@@ -12,31 +12,33 @@ export const Main = () => {
     description: "제철 귤 따러 제주로 떠나보세요! 🍊",
     cottagePageNumber: 2,
     hotelPageNumber: 3,
-    dataSize: 4,
-  }
+    dataSize: 4
+  };
 
   return (
     <styled.PageContainer>
       <styled.PageWrapper>
-        <styled.shortHeightDiv/>
-        <styled.shortHeightDiv/>
+        <styled.shortHeightDiv />
+        <styled.shortHeightDiv />
         <MainCarousel />
-        <styled.heightDiv/>
+        <styled.heightDiv />
         <MainCategoryMenu />
-        <styled.shortHeightDiv/>
-        <AccommodationSingleView/>
-        <styled.shortHeightDiv/>
+        <styled.shortHeightDiv />
+        <AccommodationSingleView />
+        <styled.shortHeightDiv />
         <AccommodationGridView
-          region={accommodationData.region}  
+          region={accommodationData.region}
           title={accommodationData.title}
           description={accommodationData.description}
           cottagePageNumber={accommodationData.cottagePageNumber}
           hotelPageNumber={accommodationData.hotelPageNumber}
           dataSize={accommodationData.dataSize}
         />
-        <styled.shortHeightDiv/>
-        <styled.shortHeightDiv/>
-      </styled.PageWrapper> 
+        <styled.shortHeightDiv />
+        <styled.shortHeightDiv />
+      </styled.PageWrapper>
     </styled.PageContainer>
   );
 };
+
+export default Main;

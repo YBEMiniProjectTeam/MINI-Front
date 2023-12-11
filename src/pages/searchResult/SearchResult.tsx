@@ -3,7 +3,7 @@ import Search from "@components/Search/Search";
 import SearchList from "@components/SearchList/SearchList";
 import { useSearchParams } from "react-router-dom";
 
-export const SearchResult = () => {
+const SearchResult = () => {
   const [searchParams] = useSearchParams();
   const keyword = searchParams?.get("keyword");
   const district = searchParams?.get("district");
@@ -30,3 +30,5 @@ export const SearchResult = () => {
     </styles.SearchContainer>
   );
 };
+
+export default SearchResult;

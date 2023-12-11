@@ -13,7 +13,7 @@ import { PiCookingPot } from "react-icons/pi";
 import { TOTAL_TIME_PER_DAY } from "./ProductDetail.constant";
 import isPrintable from "@utils/isPrintable";
 
-export const ProductDetail: React.FC = () => {
+const ProductDetail: React.FC = () => {
   const [searchParams] = useSearchParams();
   const id = Number(searchParams.get("id"));
   const startDateParam = searchParams.get("startDate");
@@ -119,3 +119,5 @@ export const ProductDetail: React.FC = () => {
     </Suspense>
   );
 };
+
+export default ProductDetail;

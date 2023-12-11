@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import type { FallbackProps } from "./AsyncWrapper.types";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 
-function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
+const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
   const navigate = useNavigate();
   const { title, content } = getErrorMessage(error);
   const isNotAuthorized =
@@ -35,6 +35,6 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
       </Flex>
     </Box>
   );
-}
+};
 
 export default ErrorFallback;
