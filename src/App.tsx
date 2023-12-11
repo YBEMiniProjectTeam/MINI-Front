@@ -1,12 +1,15 @@
+import SuspenseFallback from "@components/AsyncWrapper/SuspenseFallback.tsx";
 import { lazy } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AsyncWrapper from "@components/AsyncWrapper";
+import DeferredComponent from "@components/AsyncWrapper/DeferredComponent";
 import Layout from "@components/Layout/Layout";
 import NotFound from "@pages/notFound/NotFound";
 import NotLogin from "@pages/notLogin/NotLogin";
+import Login from "@pages/login/Login";
+import Register from "@pages/register/Register";
+
 const Main = lazy(() => import("@pages/main/Main"));
-const Register = lazy(() => import("@pages/register/Register"));
-const Login = lazy(() => import("@pages/login/Login"));
 const SearchResult = lazy(() => import("@pages/searchResult/SearchResult"));
 const ProductDetail = lazy(() => import("@pages/productDetail/ProductDetail"));
 const Payment = lazy(() => import("@pages/payment/Payment"));
@@ -28,7 +31,14 @@ const router = createBrowserRouter([
       {
         index: true,
         element: (
-          <AsyncWrapper key="main" fallback={<div>로딩중...</div>}>
+          <AsyncWrapper
+            key="main"
+            fallback={
+              <DeferredComponent>
+                <SuspenseFallback />
+              </DeferredComponent>
+            }
+          >
             <Main />
           </AsyncWrapper>
         )
@@ -36,7 +46,14 @@ const router = createBrowserRouter([
       {
         path: "register",
         element: (
-          <AsyncWrapper key="register" fallback={<div>로딩중...</div>}>
+          <AsyncWrapper
+            key="register"
+            fallback={
+              <DeferredComponent>
+                <SuspenseFallback />
+              </DeferredComponent>
+            }
+          >
             <Register />
           </AsyncWrapper>
         )
@@ -44,7 +61,14 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: (
-          <AsyncWrapper key="login" fallback={<div>로딩중...</div>}>
+          <AsyncWrapper
+            key="login"
+            fallback={
+              <DeferredComponent>
+                <SuspenseFallback />
+              </DeferredComponent>
+            }
+          >
             <Login />
           </AsyncWrapper>
         )
@@ -52,7 +76,14 @@ const router = createBrowserRouter([
       {
         path: "searchResult",
         element: (
-          <AsyncWrapper key="searchResult" fallback={<div>로딩중...</div>}>
+          <AsyncWrapper
+            key="searchResult"
+            fallback={
+              <DeferredComponent>
+                <SuspenseFallback />
+              </DeferredComponent>
+            }
+          >
             <SearchResult />
           </AsyncWrapper>
         )
@@ -60,7 +91,14 @@ const router = createBrowserRouter([
       {
         path: "products",
         element: (
-          <AsyncWrapper key="products" fallback={<div>로딩중...</div>}>
+          <AsyncWrapper
+            key="products"
+            fallback={
+              <DeferredComponent>
+                <SuspenseFallback />
+              </DeferredComponent>
+            }
+          >
             <ProductDetail />
           </AsyncWrapper>
         )
@@ -68,7 +106,14 @@ const router = createBrowserRouter([
       {
         path: "orders",
         element: (
-          <AsyncWrapper key="orders" fallback={<div>로딩중...</div>}>
+          <AsyncWrapper
+            key="orders"
+            fallback={
+              <DeferredComponent>
+                <SuspenseFallback />
+              </DeferredComponent>
+            }
+          >
             <Payment />
           </AsyncWrapper>
         )
@@ -78,7 +123,11 @@ const router = createBrowserRouter([
         element: (
           <AsyncWrapper
             key="reservationComplete"
-            fallback={<div>로딩중...</div>}
+            fallback={
+              <DeferredComponent>
+                <SuspenseFallback />
+              </DeferredComponent>
+            }
           >
             <CompletePayment />
           </AsyncWrapper>
@@ -87,7 +136,14 @@ const router = createBrowserRouter([
       {
         path: "shoppingCart",
         element: (
-          <AsyncWrapper key="shoppingCart" fallback={<div>로딩중...</div>}>
+          <AsyncWrapper
+            key="shoppingCart"
+            fallback={
+              <DeferredComponent>
+                <SuspenseFallback />
+              </DeferredComponent>
+            }
+          >
             <ShoppingCart />
           </AsyncWrapper>
         )
@@ -95,7 +151,14 @@ const router = createBrowserRouter([
       {
         path: "reservations",
         element: (
-          <AsyncWrapper key="reservations" fallback={<div>로딩중...</div>}>
+          <AsyncWrapper
+            key="reservations"
+            fallback={
+              <DeferredComponent>
+                <SuspenseFallback />
+              </DeferredComponent>
+            }
+          >
             <Reservations />
           </AsyncWrapper>
         )
@@ -105,7 +168,11 @@ const router = createBrowserRouter([
         element: (
           <AsyncWrapper
             key="reservationDetails"
-            fallback={<div>로딩중...</div>}
+            fallback={
+              <DeferredComponent>
+                <SuspenseFallback />
+              </DeferredComponent>
+            }
           >
             <ReservationDetails />
           </AsyncWrapper>
@@ -114,7 +181,14 @@ const router = createBrowserRouter([
       {
         path: "wishList",
         element: (
-          <AsyncWrapper key="wishList" fallback={<div>로딩중...</div>}>
+          <AsyncWrapper
+            key="wishList"
+            fallback={
+              <DeferredComponent>
+                <SuspenseFallback />
+              </DeferredComponent>
+            }
+          >
             <WishList />
           </AsyncWrapper>
         )

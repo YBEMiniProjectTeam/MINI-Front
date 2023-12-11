@@ -3,7 +3,7 @@ import { AxiosError } from "axios";
 
 export interface AsyncWrapperProps {
   children: ReactNode;
-  fallback: ReactNode;
+  fallback?: ReactNode;
 }
 
 export type ErrorBoundaryState = {
@@ -21,6 +21,10 @@ export type ErrorBoundaryProps = {
   onReset: () => void;
   children: ReactNode;
 };
+
+export interface DeferredComponentProps {
+  children: ReactNode;
+}
 
 // FIXME: 공통 type로 분리할 것
 export type Error = AxiosError | null;
