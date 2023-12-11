@@ -16,9 +16,10 @@ import { CiCircleMinus } from "react-icons/ci";
 import { CiCirclePlus } from "react-icons/ci";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { convertDateFormat } from "@utils/convertDateFormat";
 import moment from "moment";
 import { Nullable } from "@/types/nullable";
+import { format } from "date-fns";
+import { ko } from "date-fns/locale";
 
 const ChooseDateModal = ({
   isOpen,
@@ -136,7 +137,10 @@ const ChooseDateModal = ({
             <styles.HeaderSchedule>
               <styles.CheckInText>체크인</styles.CheckInText>
               <styles.Date>
-                {convertDateFormat(dateRange[0]?.toLocaleDateString())}
+                {dateRange[0] &&
+                  format(dateRange[0], "MM.dd (E)", {
+                    locale: ko
+                  })}
               </styles.Date>
             </styles.HeaderSchedule>
             <styles.HeaderScheduleMid>
@@ -145,7 +149,10 @@ const ChooseDateModal = ({
             <styles.HeaderSchedule>
               <styles.CheckOutText>체크아웃</styles.CheckOutText>
               <styles.Date>
-                {convertDateFormat(dateRange[1]?.toLocaleDateString())}
+                {dateRange[1] &&
+                  format(dateRange[1], "MM.dd (E)", {
+                    locale: ko
+                  })}
               </styles.Date>
             </styles.HeaderSchedule>
           </styles.HeaderScheduleWrapper>
