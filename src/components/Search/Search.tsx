@@ -193,10 +193,7 @@ const Search = ({
                 <AccordionButton>
                   <Box as="span" flex="1" textAlign="left">
                     <Icon as={CiCalendar} mr="1rem" />
-                    {selectedDate &&
-                    selectedDate?.length > 1 &&
-                    selectedDate[0] &&
-                    selectedDate[1]
+                    {selectedDate && selectedDate[0] && selectedDate[1]
                       ? `${format(
                           parse(
                             selectedDate[0].replace(/\s+/g, ""),
