@@ -8,6 +8,7 @@ import NotFound from "@pages/notFound/NotFound";
 import NotLogin from "@pages/notLogin/NotLogin";
 import Login from "@pages/login/Login";
 import Register from "@pages/register/Register";
+import ProductDetailSkeleton from "@pages/productDetail/ProductDetailSkeleton";
 
 const Main = lazy(() => import("@pages/main/Main"));
 const SearchResult = lazy(() => import("@pages/searchResult/SearchResult"));
@@ -95,7 +96,7 @@ const router = createBrowserRouter([
             key="products"
             fallback={
               <DeferredComponent>
-                <SuspenseFallback />
+                <ProductDetailSkeleton />
               </DeferredComponent>
             }
           >
