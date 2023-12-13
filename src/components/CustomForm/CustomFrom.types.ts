@@ -1,7 +1,6 @@
-import { RadioProps } from "@chakra-ui/react";
 import { Control, FieldValues, RegisterOptions } from "react-hook-form";
 
-interface CustomInputProps {
+export interface CustomInputProps {
   control: Control<FieldValues>;
   name: string;
   label: string;
@@ -13,7 +12,7 @@ interface CustomInputProps {
   variant?: "outline" | "filled" | "flushed" | "unstyled";
 }
 
-interface CustomSelectProps {
+export interface CustomSelectProps {
   control: Control<FieldValues>;
   name: string;
   label: string;
@@ -21,24 +20,24 @@ interface CustomSelectProps {
   rules?: RegisterOptions;
 }
 
-interface CustomCheckboxProps {
+export interface CustomCheckboxProps {
   control?: Control<FieldValues, object>;
   name: string;
   label: string;
-  rules?: object;
+  rules?: RegisterOptions;
 }
 
-interface CustomRadioProps {
+export interface CustomRadioProps {
   control: Control<FieldValues, object>;
   name: string;
   label?: string;
   options: { value: string; label: string }[];
-  rules?: object;
+  rules?: RegisterOptions;
   defaultValue?: string;
   isRequired?: boolean;
 }
 
-interface CustomButtonProps {
+export interface CustomButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
   isLoading?: boolean;
@@ -52,31 +51,3 @@ export interface Option {
   label: string;
   value: string;
 }
-
-interface CustomRadioBoxProps {
-  control: Control<FieldValues>;
-  rules?: RegisterOptions;
-  name: string;
-  label: string;
-  options: Option[];
-  defaultValue?: string;
-  isRequired?: boolean;
-  checkedBgColor: string;
-  checkedBorderColor: string;
-}
-
-interface RadioCardProps extends RadioProps {
-  children: React.ReactNode;
-  checkedBgColor: string;
-  checkedBorderColor: string;
-}
-
-export type {
-  CustomInputProps,
-  CustomSelectProps,
-  CustomCheckboxProps,
-  CustomRadioProps,
-  CustomButtonProps,
-  RadioCardProps,
-  CustomRadioBoxProps
-};
