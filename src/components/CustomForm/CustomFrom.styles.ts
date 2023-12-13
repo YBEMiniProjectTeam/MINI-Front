@@ -28,6 +28,10 @@ export const StyledInput = styled(Input)`
 
 export const StyledFormLabel = styled(FormLabel)``;
 
-export const StyledFormErrorMessage = styled(FormErrorMessage)``;
+export const StyledFormErrorMessage = styled(FormErrorMessage)`
+  justify-content: flex-end;
+`;
 
-export const styledFormHelperText = styled(FormHelperText)``;
+export const styledFormHelperText = styled(FormHelperText)`
+  justify-content: flex-end;
+`;

@@ -44,7 +44,6 @@ const TermsAgreementForm = () => {
               const newCheckedItems = [...checkedItems];
               newCheckedItems[index] = e.target.checked;
               setCheckedItems(newCheckedItems);
-
               const allChecked = newCheckedItems.every(Boolean);
               setValue("termsAgreement", allChecked, { shouldValidate: true });
             }}

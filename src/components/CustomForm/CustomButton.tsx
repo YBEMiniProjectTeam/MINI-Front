@@ -6,7 +6,7 @@ const CustomButton = ({
   onClick,
   isLoading = false,
   type = "button",
-  colorScheme = "pink",
+  colorScheme = "primary",
   width,
   disabled
 }: CustomButtonProps) => {

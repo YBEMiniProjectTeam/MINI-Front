@@ -1,3 +1,4 @@
+import theme from "@theme";
 import styled from "styled-components";
 import { Radio, RadioGroup } from "@chakra-ui/react";
 
@@ -6,12 +7,8 @@ export const Container = styled.div`
 `;
 
 export const StyledRadioGroup = styled(RadioGroup)`
-  border: 1px solid rgb(240, 240, 240);
+  border: 1px solid ${theme.colors.primary[100]};
   padding: 1.2rem;
-
-  .css-h7h9pp {
-    color: #e2e8f0 !important;
-  }
 `;
 
 export const StyledRadio = styled(Radio)`
@@ -22,7 +19,7 @@ export const StyledRadio = styled(Radio)`
 
 export const StyledItem = styled.div<{ $isChecked?: boolean }>`
   background-color: ${({ $isChecked }) =>
-    $isChecked ? "rgb(252, 247, 248)" : "transparent"};
+    $isChecked ? `${theme.colors.primary[100]}` : "transparent"};
   border-radius: 5px;
   padding: 0.9rem 1.2rem;
   display: flex;
