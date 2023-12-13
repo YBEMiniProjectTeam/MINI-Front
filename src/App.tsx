@@ -8,6 +8,8 @@ import NotFound from "@pages/notFound/NotFound";
 import NotLogin from "@pages/notLogin/NotLogin";
 import Login from "@pages/login/Login";
 import Register from "@pages/register/Register";
+import { MainSkeleton } from "@components/Main/MainSkeleton/MainSkeleton";
+import { SearchResultSkeleton } from "@components/SearchResultSkeleton/SearchResultSkeleton";
 
 const Main = lazy(() => import("@pages/main/Main"));
 const SearchResult = lazy(() => import("@pages/searchResult/SearchResult"));
@@ -35,7 +37,7 @@ const router = createBrowserRouter([
             key="main"
             fallback={
               <DeferredComponent>
-                <SuspenseFallback />
+                <MainSkeleton />
               </DeferredComponent>
             }
           >
@@ -80,7 +82,7 @@ const router = createBrowserRouter([
             key="searchResult"
             fallback={
               <DeferredComponent>
-                <SuspenseFallback />
+                <SearchResultSkeleton />
               </DeferredComponent>
             }
           >
