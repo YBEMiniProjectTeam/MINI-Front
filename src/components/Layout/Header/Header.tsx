@@ -61,9 +61,7 @@ export const Header = () => {
       return;
     }
 
-    await logoutMutate({
-      accessToken
-    });
+    await logoutMutate();
 
     // 로컬스토리지 삭제
     window.localStorage.removeItem("access-token");

@@ -38,15 +38,11 @@ export const useLoginMutation = () => {
   });
 };
 
-interface logoutProps {
-  accessToken: string;
-}
-
 export const useLogoutMutation = () => {
   const [_, removeCookie] = useCookies(["access-token"]);
 
-  return useMutation<ApiResponseBase<undefined>, Error, logoutProps>({
-    mutationFn: ({ accessToken }: logoutProps) => LogoutApi(accessToken),
+  return useMutation<ApiResponseBase<undefined>, Error>({
+    mutationFn: () => LogoutApi(),
     onSuccess: () => {
       removeCookie("access-token", { path: "/" });
     },
