@@ -45,8 +45,8 @@ const SearchList = ({
     10
   );
 
-  const { mutate: postWish, isError: isPostWishError } = usePostWish();
-  const { mutate: deleteWish, isError: isDeleteWishError } = useDeleteWish();
+  const { mutate: postWish } = usePostWish();
+  const { mutate: deleteWish } = useDeleteWish();
 
   if (error) {
     console.error("An error has occurred:", error.message);
@@ -77,20 +77,6 @@ const SearchList = ({
     }
   }, [page]);
 
-  useEffect(() => {
-    if (isPostWishError) {
-      toast.error("위시리스트 추가에 실패했습니다.");
-      location.reload();
-    }
-  }, [isPostWishError]);
-
-  useEffect(() => {
-    if (isDeleteWishError) {
-      toast.error("위시리스트 삭제에 실패했습니다.");
-      location.reload();
-    }
-  }, [isDeleteWishError]);
-
   const toggleLike = (index: number, accomodations: Accommodation[]) => {
     accomodations[index].isWish = !accomodations[index].isWish;
   };
@@ -101,12 +87,14 @@ const SearchList = ({
       return;
     }
 
+    const onSuccess = () => {
+      toggleLike(index, searchList);
+    };
+
     if (searchList[index].isWish) {
-      await deleteWish({ accommodationId });
-      toggleLike(index, searchList);
+      await deleteWish({ accommodationId }, { onSuccess });
     } else {
-      await postWish({ accommodationId });
-      toggleLike(index, searchList);
+      await postWish({ accommodationId }, { onSuccess });
     }
   };
 
