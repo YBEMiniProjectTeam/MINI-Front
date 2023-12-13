@@ -11,6 +11,7 @@ import Register from "@pages/register/Register";
 import { MainSkeleton } from "@components/Main/MainSkeleton/MainSkeleton";
 import { SearchResultSkeleton } from "@components/SearchResultSkeleton/SearchResultSkeleton";
 import ProductDetailSkeleton from "@pages/productDetail/ProductDetailSkeleton";
+import ReservationsSkeleton from "@pages/reservations/ReservationsSkeleton";
 
 const Main = lazy(() => import("@pages/main/Main"));
 const SearchResult = lazy(() => import("@pages/searchResult/SearchResult"));
@@ -158,7 +159,7 @@ const router = createBrowserRouter([
             key="reservations"
             fallback={
               <DeferredComponent>
-                <SuspenseFallback />
+                <ReservationsSkeleton />
               </DeferredComponent>
             }
           >
