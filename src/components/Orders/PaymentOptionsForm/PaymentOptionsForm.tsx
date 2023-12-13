@@ -1,5 +1,4 @@
 import { useFormContext, Controller } from "react-hook-form";
-import { LabelText } from "./PaymentOptionsForm.styles";
 import * as styles from "./PaymentOptionsForm.styles";
 import { PAYMENT_OPTIONS } from "./PaymentOptionsForm.constant";
 
