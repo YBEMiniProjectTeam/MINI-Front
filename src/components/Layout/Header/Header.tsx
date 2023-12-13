@@ -28,7 +28,9 @@ export const Header = () => {
   }, [location.pathname, location.search]);
 
   useEffect(() => {
-    const CookiesAccessToken = cookies["access-token"];
+    // const CookiesAccessToken = cookies["access-token"];
+    // 로컬스토리지 추가.
+    const CookiesAccessToken = window.localStorage.getItem("access-token");
 
     // 토큰값 유효한지 검사
     if (!CookiesAccessToken) {
@@ -38,6 +40,9 @@ export const Header = () => {
         if (data.statusCode === 200) {
           setAccessToken(CookiesAccessToken);
         } else {
+          // 로컬스토리지 삭제.
+          window.localStorage.removeItem("access-token");
+
           removeCookie("access-token", { path: "/" });
         }
       });
@@ -59,6 +64,9 @@ export const Header = () => {
     await logoutMutate({
       accessToken
     });
+
+    // 로컬스토리지 삭제
+    window.localStorage.removeItem("access-token");
 
     removeCookie("access-token", { path: "/" });
 
