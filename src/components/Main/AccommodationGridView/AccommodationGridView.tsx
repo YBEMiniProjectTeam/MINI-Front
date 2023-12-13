@@ -7,11 +7,11 @@ import {
   Description
 } from "../AccommodationSingleView/AccommodationSingleView.styles";
 import { AccommodationGridItem } from "./AccommodationGridItem";
-import { Suspense, startTransition, useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import { useSearchList } from "@hooks/useSearchList";
 import { Accommodation, RegionProps } from "./AccommodationGridView.types";
 import { printCategory } from "@utils/printCategory";
-import { Button, Spinner } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { useNavigateToResultPage } from "@hooks/useNavigateToResultPage";
 import { useCookies } from "react-cookie";
 
