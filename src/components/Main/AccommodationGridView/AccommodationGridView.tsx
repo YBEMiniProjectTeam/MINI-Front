@@ -15,16 +15,23 @@ import { Button, Spinner } from "@chakra-ui/react";
 import { useNavigateToResultPage } from "@hooks/useNavigateToResultPage";
 import { useCookies } from "react-cookie";
 
-export const AccommodationGridView = ({ region, title, description, cottagePageNumber, hotelPageNumber, dataSize }: RegionProps) => {
+export const AccommodationGridView = ({
+  region,
+  title,
+  description,
+  cottagePageNumber,
+  hotelPageNumber,
+  dataSize
+}: RegionProps) => {
   const categoryTab = {
     cottage: "펜션",
-    hotel: "호텔",
+    hotel: "호텔"
   };
   const { navigateToResultPage } = useNavigateToResultPage();
   const [activeTab, setActiveTab] = useState(categoryTab.cottage);
 
   // const { headers } = getAuthLocalStorage();
-  const [cookies, ] = useCookies(["access-token"]);
+  const [cookies] = useCookies(["access-token"]);
   const CookiesAccessToken = cookies["access-token"];
   const headers = {
     "Content-Type": "application/json",
@@ -46,13 +53,13 @@ export const AccommodationGridView = ({ region, title, description, cottagePageN
     "",
     activeTab,
     activeTab === categoryTab.cottage ? cottagePageNumber : hotelPageNumber,
-    dataSize,
+    dataSize
   );
 
   if (error) {
     console.error("[ERROR] ", error.message);
   }
-  
+
   useEffect(() => {
     refetch();
   }, [activeTab]);
@@ -80,7 +87,9 @@ export const AccommodationGridView = ({ region, title, description, cottagePageN
         <styled.CategoryTapWrapper>
           <styled.CategoryTapContainer>
             <styled.CategoryTap>
-              <styled.CategoryTapItem onClick={() => handleTabClick(categoryTab.cottage)}>
+              <styled.CategoryTapItem
+                onClick={() => handleTabClick(categoryTab.cottage)}
+              >
                 <styled.TabItem
                   role="tab"
                   $aia-selected={`${activeTab === categoryTab.cottage}`}
@@ -90,11 +99,13 @@ export const AccommodationGridView = ({ region, title, description, cottagePageN
                   펜션
                 </styled.TabItem>
               </styled.CategoryTapItem>
-              <styled.CategoryTapItem onClick={() => handleTabClick(categoryTab.hotel)}>
-                <styled.TabItem 
-                role="tab"
-                $aia-selected={`${activeTab === categoryTab.hotel}`}
-                $isActive={activeTab === categoryTab.hotel}
+              <styled.CategoryTapItem
+                onClick={() => handleTabClick(categoryTab.hotel)}
+              >
+                <styled.TabItem
+                  role="tab"
+                  $aia-selected={`${activeTab === categoryTab.hotel}`}
+                  $isActive={activeTab === categoryTab.hotel}
                 >
                   {activeTab === categoryTab.hotel && <styled.ActivedBar />}
                   호텔
@@ -105,20 +116,18 @@ export const AccommodationGridView = ({ region, title, description, cottagePageN
         </styled.CategoryTapWrapper>
         <styled.Border />
         <styled.GridWrapper>
-          {data?.accommodations?.map(
-            (accommodation: Accommodation) => (
-              <AccommodationGridItem
-                key={accommodation.id}
-                id={accommodation.id}
-                imageUrl={accommodation.thumbnail}
-                summary={`${accommodation.region} | ${printCategory(
-                  accommodation.type
-                )}`}
-                name={accommodation.name}
-                price={accommodation.min_price}
-              />
-            )
-          )}
+          {data?.accommodations?.map((accommodation: Accommodation) => (
+            <AccommodationGridItem
+              key={accommodation.id}
+              id={accommodation.id}
+              imageUrl={accommodation.thumbnail}
+              summary={`${accommodation.region} | ${printCategory(
+                accommodation.type
+              )}`}
+              name={accommodation.name}
+              price={accommodation.min_price}
+            />
+          ))}
         </styled.GridWrapper>
         <styled.MoreButtonWrapper
           onClick={() => navigateToResultPage(activeTab, region)}

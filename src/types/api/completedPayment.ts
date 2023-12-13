@@ -1,23 +1,18 @@
-import { Nullable } from "../nullable.ts";
-
 export interface RoomInfo {
   quantity: number;
-  accommodationThumbnailUrl: Nullable<string>;
   roomName: string;
   price: number;
-  checkOutDate: string;
-  checkInDate: string;
-  checkInTime: string;
-  checkOutTime: string;
+  checkIn: string;
+  checkOut: string;
   capacity: number;
   capacityMax: number;
-  accommodationType: string;
 }
 
 export interface Reservation {
-  reservation_user_name: Nullable<string>;
-  reservation_user_email: Nullable<string>;
+  reservation_user_name: string;
+  reservation_user_email: string;
   guest_name: string;
+  guest_email: string;
   accommodation_name: string;
   accommodation_type: string;
   accommodation_thumbnail_url: string;

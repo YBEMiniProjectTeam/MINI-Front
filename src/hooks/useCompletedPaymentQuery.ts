@@ -37,6 +37,26 @@ const encodeReservationData = (
   ]);
 };
 
+const encodeData = (reservations: Reservation[]) => {
+  return reservations.map((reservation) => {
+    const checkInDate = reservation.room_info.checkIn?.split(" ")[0];
+    const checkInTime = reservation.room_info.checkIn?.split(" ")[1];
+    const checkOutDate = reservation.room_info.checkOut?.split(" ")[0];
+    const checkOutTime = reservation.room_info.checkOut?.split(" ")[1];
+
+    return {
+      ...reservation,
+      room_info: {
+        ...reservation.room_info,
+        checkInDate,
+        checkInTime,
+        checkOutDate,
+        checkOutTime
+      }
+    };
+  });
+};
+
 const encodeTotalPrice = (reservations: Reservation[]): number => {
   return reservations.reduce((total, reservation) => {
     return total + reservation.room_info.price * reservation.room_info.quantity;
@@ -57,7 +77,7 @@ export const useCompletedPayment = (count: number) => {
         reservationData: encodeReservationData(reservations),
         totalPrice: encodeTotalPrice(reservations),
         reservationName: encodeReservationName(reservations),
-        rawData: reservations
+        rawData: encodeData(reservations)
       };
     }
   });
