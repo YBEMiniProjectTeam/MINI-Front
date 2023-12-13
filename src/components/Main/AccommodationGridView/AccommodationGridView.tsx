@@ -58,84 +58,72 @@ export const AccommodationGridView = ({ region, title, description, cottagePageN
   }, [activeTab]);
 
   return (
-    <Suspense
-      fallback={
-        <Spinner
-          thickness="2px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="#db074a"
-          size="md"
-        />
-      }
-    >
-      <styled.GridViewWrapper>
-        <MainViewTitleWrapper>
-          <MainViewTitle>
-            <Title>{title}</Title>
-            <Description>{description}</Description>
-          </MainViewTitle>
-        </MainViewTitleWrapper>
-        <styled.Border />
-        <styled.CategoryTapWrapper>
-          <styled.CategoryTapContainer>
-            <styled.CategoryTap>
-              <styled.CategoryTapItem onClick={() => handleTabClick(categoryTab.cottage)}>
-                <styled.TabItem
-                  role="tab"
-                  $aia-selected={`${activeTab === categoryTab.cottage}`}
-                  $isActive={activeTab === categoryTab.cottage}
-                >
-                  {activeTab === categoryTab.cottage && <styled.ActivedBar />}
-                  펜션
-                </styled.TabItem>
-              </styled.CategoryTapItem>
-              <styled.CategoryTapItem onClick={() => handleTabClick(categoryTab.hotel)}>
-                <styled.TabItem 
+    <styled.GridViewWrapper>
+      <MainViewTitleWrapper>
+        <MainViewTitle>
+          <Title>{title}</Title>
+          <Description>{description}</Description>
+        </MainViewTitle>
+      </MainViewTitleWrapper>
+      <styled.Border />
+      <styled.CategoryTapWrapper>
+        <styled.CategoryTapContainer>
+          <styled.CategoryTap>
+            <styled.CategoryTapItem onClick={() => handleTabClick(categoryTab.cottage)}>
+              <styled.TabItem
+                role="tab"
+                $aia-selected={`${activeTab === categoryTab.cottage}`}
+                $isActive={activeTab === categoryTab.cottage}
+              >
+                {activeTab === categoryTab.cottage && <styled.ActivedBar />}
+                펜션
+              </styled.TabItem>
+            </styled.CategoryTapItem>
+            <styled.CategoryTapItem onClick={() => handleTabClick(categoryTab.hotel)}>
+              <styled.TabItem
                 role="tab"
                 $aia-selected={`${activeTab === categoryTab.hotel}`}
                 $isActive={activeTab === categoryTab.hotel}
-                >
-                  {activeTab === categoryTab.hotel && <styled.ActivedBar />}
-                  호텔
-                </styled.TabItem>
-              </styled.CategoryTapItem>
-            </styled.CategoryTap>
-          </styled.CategoryTapContainer>
-        </styled.CategoryTapWrapper>
-        <styled.Border />
-        <styled.GridWrapper>
-          {data?.accommodations?.map(
-            (accommodation: Accommodation) => (
-              <AccommodationGridItem
-                key={accommodation.id}
-                id={accommodation.id}
-                imageUrl={accommodation.thumbnail}
-                summary={`${accommodation.region} | ${printCategory(
-                  accommodation.type
-                )}`}
-                name={accommodation.name}
-                price={accommodation.min_price}
-              />
-            )
-          )}
-        </styled.GridWrapper>
-        <styled.MoreButtonWrapper
-          onClick={() => navigateToResultPage(activeTab, region)}
+              >
+                {activeTab === categoryTab.hotel && <styled.ActivedBar />}
+                호텔
+              </styled.TabItem>
+            </styled.CategoryTapItem>
+          </styled.CategoryTap>
+        </styled.CategoryTapContainer>
+      </styled.CategoryTapWrapper>
+      <styled.Border />
+      <styled.GridWrapper>
+        {data?.accommodations?.map(
+          (accommodation: Accommodation) => (
+            <AccommodationGridItem
+              key={accommodation.id}
+              id={accommodation.id}
+              imageUrl={accommodation.thumbnail}
+              summary={`${accommodation.region} | ${printCategory(
+                accommodation.type
+              )}`}
+              name={accommodation.name}
+              price={accommodation.min_price}
+            />
+          )
+        )}
+      </styled.GridWrapper>
+      <styled.MoreButtonWrapper
+        onClick={() => navigateToResultPage(activeTab, region)}
+      >
+        <Button
+          color="#666666"
+          bg="white"
+          border="1px solid #DCDCDD;"
+          w="100%"
+          h="44px;"
+          _hover={{ bg: "rgba(0, 0, 0, 0.05);" }}
+          rightIcon={<ArrowForwardIcon />}
         >
-          <Button
-            color="#666666"
-            bg="white"
-            border="1px solid #DCDCDD;"
-            w="100%"
-            h="44px;"
-            _hover={{ bg: "rgba(0, 0, 0, 0.05);" }}
-            rightIcon={<ArrowForwardIcon />}
-          >
-            모두 보기
-          </Button>
-        </styled.MoreButtonWrapper>
-      </styled.GridViewWrapper>
-    </Suspense>
+          모두 보기
+        </Button>
+      </styled.MoreButtonWrapper>
+    </styled.GridViewWrapper>
   );
 };
