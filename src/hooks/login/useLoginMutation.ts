@@ -25,6 +25,10 @@ export const useLoginMutation = () => {
     mutationFn: ({ email, pwd }: loginProps) => LoginApi({ email, pwd }),
     onSuccess: (res) => {
       if (res.data && res.statusCode === 200) {
+        // console.log(res.data.accessToken);
+        // 로컬스토리지 임시 추가.
+        window.localStorage.setItem("access-token", res.data.accessToken);
+
         navigate(loginUrl + loginUrlSearch);
       }
     },
