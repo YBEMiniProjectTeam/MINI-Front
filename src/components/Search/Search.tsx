@@ -74,12 +74,7 @@ const Search = ({
   }, []);
 
   useEffect(() => {
-    if (
-      selectedDate &&
-      selectedDate.length > 1 &&
-      selectedDate[0] &&
-      selectedDate[1]
-    ) {
+    if (selectedDate && selectedDate[0] && selectedDate[1]) {
       const newStartDate = selectedDate[0].replace(/\s+/g, "");
       const newEndDate = selectedDate[1].replace(/\s+/g, "");
 
@@ -193,20 +188,12 @@ const Search = ({
                 <AccordionButton>
                   <Box as="span" flex="1" textAlign="left">
                     <Icon as={CiCalendar} mr="1rem" />
-                    {selectedDate && selectedDate[0] && selectedDate[1]
+                    {startDate && endDate
                       ? `${format(
-                          parse(
-                            selectedDate[0].replace(/\s+/g, ""),
-                            "yyyy.MM.dd.",
-                            new Date()
-                          ),
+                          parse(startDate, "yyyy-MM-dd", new Date()),
                           "MM.dd"
                         )} - ${format(
-                          parse(
-                            selectedDate[1].replace(/\s+/g, ""),
-                            "yyyy.MM.dd.",
-                            new Date()
-                          ),
+                          parse(endDate, "yyyy-MM-dd", new Date()),
                           "MM.dd"
                         )}`
                       : start_date && end_date

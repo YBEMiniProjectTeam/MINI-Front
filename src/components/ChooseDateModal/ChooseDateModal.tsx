@@ -41,9 +41,7 @@ const ChooseDateModal = ({
   const handleDateChange: CalendarProps["onChange"] = (value) => {
     if (Array.isArray(value)) {
       const [startDate, endDate] = value;
-      setDateRange([startDate, endDate || null]);
-    } else {
-      setDateRange([value, null]);
+      setDateRange([startDate, endDate]);
     }
   };
 
@@ -61,8 +59,9 @@ const ChooseDateModal = ({
 
   useEffect(() => {
     const formattedDates = dateRange.map((date) =>
-      date ? date.toLocaleDateString() : ""
+      date ? date.toLocaleDateString("ko-KR") : ""
     );
+
     setSelectedDate(formattedDates);
   }, [dateRange]);
 

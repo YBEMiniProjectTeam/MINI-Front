@@ -1,16 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
-    #root {
-    width: 768px;
-    margin: 0 auto;
-    padding-left: 24px;
-    padding-right: 24px;
-    box-sizing: border-box;
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    }
     a{
         text-decoration: none;
         color: inherit;
