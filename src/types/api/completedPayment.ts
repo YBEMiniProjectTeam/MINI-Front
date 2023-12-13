@@ -1,4 +1,4 @@
-import { Nullable } from "./nullable";
+import { Nullable } from "../nullable.ts";
 
 export interface RoomInfo {
   quantity: number;

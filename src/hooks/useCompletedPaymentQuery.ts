@@ -1,6 +1,6 @@
-import { getCompletedPaymentInfo } from "@api/getCompletedPaymentInfo.ts";
+import { getCompletedPaymentInfo } from "@api/getCompletedPaymentInfo";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import type { Reservation } from "@/types/completedPayment";
+import type { Reservation } from "@/types/api/completedPayment";
 
 export interface ReservationData {
   key: "label" | "price";
