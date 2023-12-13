@@ -1,4 +1,6 @@
 import SuspenseFallback from "@components/AsyncWrapper/SuspenseFallback.tsx";
+import Loading from "components/Loading";
+import PaymentSkeleton from "@components/Orders/PaymentSkeleton";
 import { lazy } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AsyncWrapper from "@components/AsyncWrapper";
@@ -112,7 +114,8 @@ const router = createBrowserRouter([
             key="orders"
             fallback={
               <DeferredComponent>
-                <SuspenseFallback />
+                <Loading />
+                <PaymentSkeleton />
               </DeferredComponent>
             }
           >
@@ -127,7 +130,8 @@ const router = createBrowserRouter([
             key="reservationComplete"
             fallback={
               <DeferredComponent>
-                <SuspenseFallback />
+                <Loading />
+                <PaymentSkeleton />
               </DeferredComponent>
             }
           >
