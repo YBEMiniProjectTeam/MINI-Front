@@ -24,7 +24,6 @@ import ChooseRegionModal from "../ChooseRegionModal/ChooseRegionModal";
 import ChooseDateModal from "../ChooseDateModal/ChooseDateModal";
 import { Nullable } from "@/types/nullable";
 import { format, parse, parseISO } from "date-fns";
-import { ko } from "date-fns/locale";
 
 const Search = ({
   keyword,
@@ -79,12 +78,8 @@ const Search = ({
       const newStartDate = selectedDate[0].replace(/\s+/g, "");
       const newEndDate = selectedDate[1].replace(/\s+/g, "");
 
-      const parsedStartDate = parse(newStartDate, "yyyy.MM.dd.", new Date(), {
-        locale: ko
-      });
-      const parsedEndDate = parse(newEndDate, "yyyy.MM.dd.", new Date(), {
-        locale: ko
-      });
+      const parsedStartDate = parse(newStartDate, "yyyy.MM.dd.", new Date());
+      const parsedEndDate = parse(newEndDate, "yyyy.MM.dd.", new Date());
 
       const formattedStartDate = format(parsedStartDate, "yyyy-MM-dd");
       const formattedEndDate = format(parsedEndDate, "yyyy-MM-dd");

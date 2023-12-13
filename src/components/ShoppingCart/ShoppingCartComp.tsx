@@ -26,13 +26,14 @@ export const ShoppingCartComp = (): JSX.Element => {
   const { data, refetch } = useShoppingCartList(cookies["access-token"]);
 
   useEffect(() => {
-    if (cookies["access-token"]) {
-      setAccessToken(cookies["access-token"]);
+    const token = window.localStorage.getItem("access-token");
+    if (token) {
+      setAccessToken(token);
       refetch();
     } else {
       navigate("/notFound");
     }
-  }, [cookies["access-token"]]);
+  }, [window.localStorage.getItem("access-token")]);
 
   useEffect(() => {
     const totalPrice = data

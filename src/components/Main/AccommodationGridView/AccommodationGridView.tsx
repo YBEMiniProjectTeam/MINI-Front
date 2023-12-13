@@ -7,31 +7,24 @@ import {
   Description
 } from "../AccommodationSingleView/AccommodationSingleView.styles";
 import { AccommodationGridItem } from "./AccommodationGridItem";
-import { Suspense, startTransition, useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import { useSearchList } from "@hooks/useSearchList";
 import { Accommodation, RegionProps } from "./AccommodationGridView.types";
 import { printCategory } from "@utils/printCategory";
-import { Button, Spinner } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { useNavigateToResultPage } from "@hooks/useNavigateToResultPage";
 import { useCookies } from "react-cookie";
 
-export const AccommodationGridView = ({
-  region,
-  title,
-  description,
-  cottagePageNumber,
-  hotelPageNumber,
-  dataSize
-}: RegionProps) => {
+export const AccommodationGridView = ({ region, title, description, cottagePageNumber, hotelPageNumber, dataSize }: RegionProps) => {
   const categoryTab = {
     cottage: "펜션",
-    hotel: "호텔"
+    hotel: "호텔",
   };
   const { navigateToResultPage } = useNavigateToResultPage();
   const [activeTab, setActiveTab] = useState(categoryTab.cottage);
 
   // const { headers } = getAuthLocalStorage();
-  const [cookies] = useCookies(["access-token"]);
+  const [cookies, ] = useCookies(["access-token"]);
   const CookiesAccessToken = cookies["access-token"];
   const headers = {
     "Content-Type": "application/json",
@@ -53,70 +46,56 @@ export const AccommodationGridView = ({
     "",
     activeTab,
     activeTab === categoryTab.cottage ? cottagePageNumber : hotelPageNumber,
-    dataSize
+    dataSize,
   );
 
   if (error) {
     console.error("[ERROR] ", error.message);
   }
-
+  
   useEffect(() => {
     refetch();
   }, [activeTab]);
 
   return (
-    <Suspense
-      fallback={
-        <Spinner
-          thickness="2px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="#db074a"
-          size="md"
-        />
-      }
-    >
-      <styled.GridViewWrapper>
-        <MainViewTitleWrapper>
-          <MainViewTitle>
-            <Title>{title}</Title>
-            <Description>{description}</Description>
-          </MainViewTitle>
-        </MainViewTitleWrapper>
-        <styled.Border />
-        <styled.CategoryTapWrapper>
-          <styled.CategoryTapContainer>
-            <styled.CategoryTap>
-              <styled.CategoryTapItem
-                onClick={() => handleTabClick(categoryTab.cottage)}
+    <styled.GridViewWrapper>
+      <MainViewTitleWrapper>
+        <MainViewTitle>
+          <Title>{title}</Title>
+          <Description>{description}</Description>
+        </MainViewTitle>
+      </MainViewTitleWrapper>
+      <styled.Border />
+      <styled.CategoryTapWrapper>
+        <styled.CategoryTapContainer>
+          <styled.CategoryTap>
+            <styled.CategoryTapItem onClick={() => handleTabClick(categoryTab.cottage)}>
+              <styled.TabItem
+                role="tab"
+                $aia-selected={`${activeTab === categoryTab.cottage}`}
+                $isActive={activeTab === categoryTab.cottage}
               >
-                <styled.TabItem
-                  role="tab"
-                  $aia-selected={`${activeTab === categoryTab.cottage}`}
-                  $isActive={activeTab === categoryTab.cottage}
-                >
-                  {activeTab === categoryTab.cottage && <styled.ActivedBar />}
-                  펜션
-                </styled.TabItem>
-              </styled.CategoryTapItem>
-              <styled.CategoryTapItem
-                onClick={() => handleTabClick(categoryTab.hotel)}
+                {activeTab === categoryTab.cottage && <styled.ActivedBar />}
+                펜션
+              </styled.TabItem>
+            </styled.CategoryTapItem>
+            <styled.CategoryTapItem onClick={() => handleTabClick(categoryTab.hotel)}>
+              <styled.TabItem
+                role="tab"
+                $aia-selected={`${activeTab === categoryTab.hotel}`}
+                $isActive={activeTab === categoryTab.hotel}
               >
-                <styled.TabItem
-                  role="tab"
-                  $aia-selected={`${activeTab === categoryTab.hotel}`}
-                  $isActive={activeTab === categoryTab.hotel}
-                >
-                  {activeTab === categoryTab.hotel && <styled.ActivedBar />}
-                  호텔
-                </styled.TabItem>
-              </styled.CategoryTapItem>
-            </styled.CategoryTap>
-          </styled.CategoryTapContainer>
-        </styled.CategoryTapWrapper>
-        <styled.Border />
-        <styled.GridWrapper>
-          {data?.accommodations?.map((accommodation: Accommodation) => (
+                {activeTab === categoryTab.hotel && <styled.ActivedBar />}
+                호텔
+              </styled.TabItem>
+            </styled.CategoryTapItem>
+          </styled.CategoryTap>
+        </styled.CategoryTapContainer>
+      </styled.CategoryTapWrapper>
+      <styled.Border />
+      <styled.GridWrapper>
+        {data?.accommodations?.map(
+          (accommodation: Accommodation) => (
             <AccommodationGridItem
               key={accommodation.id}
               id={accommodation.id}
@@ -127,24 +106,24 @@ export const AccommodationGridView = ({
               name={accommodation.name}
               price={accommodation.min_price}
             />
-          ))}
-        </styled.GridWrapper>
-        <styled.MoreButtonWrapper
-          onClick={() => navigateToResultPage(activeTab, region)}
+          )
+        )}
+      </styled.GridWrapper>
+      <styled.MoreButtonWrapper
+        onClick={() => navigateToResultPage(activeTab, region)}
+      >
+        <Button
+          color="#666666"
+          bg="white"
+          border="1px solid #DCDCDD;"
+          w="100%"
+          h="44px;"
+          _hover={{ bg: "rgba(0, 0, 0, 0.05);" }}
+          rightIcon={<ArrowForwardIcon />}
         >
-          <Button
-            color="#666666"
-            bg="white"
-            border="1px solid #DCDCDD;"
-            w="100%"
-            h="44px;"
-            _hover={{ bg: "rgba(0, 0, 0, 0.05);" }}
-            rightIcon={<ArrowForwardIcon />}
-          >
-            모두 보기
-          </Button>
-        </styled.MoreButtonWrapper>
-      </styled.GridViewWrapper>
-    </Suspense>
+          모두 보기
+        </Button>
+      </styled.MoreButtonWrapper>
+    </styled.GridViewWrapper>
   );
 };
