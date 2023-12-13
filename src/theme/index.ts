@@ -2,23 +2,23 @@ import { extendTheme, withDefaultColorScheme } from "@chakra-ui/react";
 
 const theme = extendTheme(
   {
-    styles: {
-      global: () => ({
-        body: {
-          bg: ""
-        }
-      })
-    },
     fonts: {
       heading: `Pretendard, sans-serif`,
       body: `Pretendard, sans-serif`
     },
     colors: {
       primary: {
-        100: "#fcf7f8",
-        200: "#ffe6ed",
-        500: "#de2e5f",
-        600: "#B1244C"
+        "100": "#fcf7f8",
+        "200": "#ffe6ed",
+        "500": "#de2e5f",
+        "600": "#B1244C"
+      },
+      gray: {
+        "100": "#f8f8f8",
+        "200": "#e6e6e6",
+        "300": "#CCCCCC",
+        "400": "#919191",
+        "500": "#616161"
       },
       border: {
         100: "rgb(240, 240, 240)"
