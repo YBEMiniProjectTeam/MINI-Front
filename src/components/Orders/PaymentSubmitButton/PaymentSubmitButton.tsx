@@ -35,7 +35,7 @@ const PaymentSubmitButton = ({
       type="submit"
       onClick={handleSubmit(onSubmit)}
       disabled={!isValid}
-      colorScheme={isValid ? "pink" : "grey"}
+      colorScheme={isValid ? "primary" : "grey"}
     >
       {totalPrice.toLocaleString()}원 결제하기
     </CustomButton>
