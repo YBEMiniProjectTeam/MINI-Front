@@ -1,4 +1,3 @@
-import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
 import { useGetPaymentDetails } from "@hooks/useReservationsMutation";
 import { useDeleteReservation } from "@hooks/useReservationsMutation";
 import {
@@ -22,8 +21,7 @@ const ReservationDetails = () => {
   const id = Number(searchParams.get("id"));
   const thumbnail = searchParams.get("image");
 
-  const { headers } = getAuthLocalStorage();
-  const { data } = useGetPaymentDetails(id, { headers });
+  const { data } = useGetPaymentDetails(id);
   const {
     accommodation_name,
     check_in,

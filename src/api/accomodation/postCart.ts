@@ -5,11 +5,8 @@ import {
   PostCartProps
 } from "@components/ProductDetail/ChooseRoom/ChooseRoom.types";
 
-const postCart = async ({
-  body,
-  headers
-}: PostCartProps): Promise<ResponseType> => {
-  return await axiosInstance.post(`/carts`, body, { headers });
+const postCart = async ({ body }: PostCartProps): Promise<ResponseType> => {
+  return await axiosInstance.post(`/carts`, body);
 };
 
 export default postCart;

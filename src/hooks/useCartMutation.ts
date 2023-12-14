@@ -8,8 +8,7 @@ import { toast } from "react-hot-toast";
 
 export const usePostCart = () => {
   return useMutation<ResponseType, Error, PostCartProps>({
-    mutationFn: ({ body, headers }: PostCartProps) =>
-      postCart({ body, headers }),
+    mutationFn: ({ body }: PostCartProps) => postCart({ body }),
     onSuccess: () => {
       toast.success("장바구니에 추가되었습니다.");
     },

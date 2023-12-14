@@ -4,24 +4,19 @@ import getReservations from "@api/reservations/getReservations";
 import getPaymentDetails from "@api/reservations/getPaymentDetails";
 import deleteReservation from "@api/reservations/deleteReservation";
 import { ResponseType } from "@pages/reservationDetails/reservationDetails.types";
-import { GetReservationsProps } from "@pages/reservations/Reservations.types";
-import { GetPaymentDetailsProps } from "@components/Reservations/ReservationList.types";
 import { DeleteReservationProps } from "@pages/reservationDetails/reservationDetails.types";
 
-export const useGetReservations = ({ headers }: GetReservationsProps) => {
+export const useGetReservations = () => {
   return useSuspenseQuery({
     queryKey: ["reservations"],
-    queryFn: () => getReservations({ headers })
+    queryFn: () => getReservations()
   });
 };
 
-export const useGetPaymentDetails = (
-  id: number,
-  { headers }: GetPaymentDetailsProps
-) => {
+export const useGetPaymentDetails = (id: number) => {
   return useSuspenseQuery({
     queryKey: ["paymentDetails"],
-    queryFn: () => getPaymentDetails(id, { headers })
+    queryFn: () => getPaymentDetails(id)
   });
 };
 

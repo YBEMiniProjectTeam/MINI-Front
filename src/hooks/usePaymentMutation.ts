@@ -10,8 +10,7 @@ export const usePostPayment = () => {
   const navigate = useNavigate();
 
   return useMutation<ResponseType, Error, PostPaymentProps>({
-    mutationFn: ({ body, headers }: PostPaymentProps) =>
-      postPayment({ body, headers }),
+    mutationFn: ({ body }: PostPaymentProps) => postPayment({ body }),
     onSuccess: (res) => {
       const cartId = res?.data.data[0].room_infos[0].cartId;
       navigate(`/orders?cartId=${cartId}`);

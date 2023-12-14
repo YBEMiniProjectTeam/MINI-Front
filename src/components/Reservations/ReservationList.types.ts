@@ -10,9 +10,3 @@ export interface ReservationListProps {
     thumbnail: string;
   };
 }
-
-export interface GetPaymentDetailsProps {
-  headers: {
-    [key: string]: string;
-  };
-}

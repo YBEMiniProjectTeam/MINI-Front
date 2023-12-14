@@ -10,13 +10,14 @@ import { BsPerson } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
 import format from "date-fns/format";
+import { toast } from "react-hot-toast";
 
 const ChooseRoom = ({
   room,
   startDate,
   endDate
 }: ChooseRoomProps): JSX.Element => {
-  const { accessTokenCookie, headers } = getAuthLocalStorage();
+  const { accessTokenCookie } = getAuthLocalStorage();
   const { mutate: postCart } = usePostCart();
   const { mutate: postPayment } = usePostPayment();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -42,18 +43,18 @@ const ChooseRoom = ({
 
   const handleCartButton = () => {
     if (!accessTokenCookie) {
-      alert("로그인이 필요한 서비스입니다!");
+      toast.error("로그인이 필요한 서비스입니다.");
       return;
     }
-    postCart({ body, headers } as any);
+    postCart({ body });
   };
 
   const handlePayButton = () => {
     if (!accessTokenCookie) {
-      alert("로그인이 필요한 서비스입니다!");
+      toast.error("로그인이 필요한 서비스입니다.");
       return;
     }
-    postPayment({ body, headers } as any);
+    postPayment({ body });
   };
 
   return (

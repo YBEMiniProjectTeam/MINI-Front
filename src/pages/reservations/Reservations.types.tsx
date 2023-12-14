@@ -1,9 +1,3 @@
-export interface GetReservationsProps {
-  headers: {
-    [key: string]: string;
-  };
-}
-
 export interface DataType {
   accommodation_name: string;
   payment_status: string;
