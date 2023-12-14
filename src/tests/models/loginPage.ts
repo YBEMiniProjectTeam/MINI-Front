@@ -15,7 +15,8 @@ export class LoginPage {
     const navigationPromise = this.page.waitForNavigation();
     await this.page.fill('input[id="email"]', email);
     await this.page.fill('input[type="password"]', password);
-    await this.page.click('button[type="submit"]');
+    await this.page.click('button:has-text("로그인")');
+
     await navigationPromise;
   }
 
