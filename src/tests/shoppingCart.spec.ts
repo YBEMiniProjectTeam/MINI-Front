@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("장바구니가 담겨져 있는 경우", async ({ page }) => {
+test("장바구니", async ({ page }) => {
   // 로그인 절차
   await page.goto("http://localhost:5173/login");
 
@@ -9,9 +9,16 @@ test("장바구니가 담겨져 있는 경우", async ({ page }) => {
 
   await page.getByRole("button", { name: "로그인", exact: true }).click();
 
+  await page.waitForTimeout(4000);
+
+  // 장바구니 담기
+  const URL =
+    "http://localhost:5173/products?id=498&startDate=12/15/2023&endDate=12/16/2023";
+  await page.goto(URL);
+  await page.click(".css-f1wnsy", { button: "left", clickCount: 1 });
   await page.waitForTimeout(1000);
 
-  // 장바구니에 담겨져 있는 경우.
+  // 장바구니 페이지.
   await page.goto("http://localhost:5173/shoppingCart");
   await page.waitForTimeout(1000);
   const cartItemText = await page.textContent(".roomListWrap h3");
@@ -40,5 +47,5 @@ test("장바구니가 담겨져 있는 경우", async ({ page }) => {
 
   const isElementVisible = await noneCartList.isVisible();
 
-  expect(isElementVisible).toBeTruthy();
+  expect(isElementVisible).toBe(true);
 });
