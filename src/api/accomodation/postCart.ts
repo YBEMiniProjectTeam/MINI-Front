@@ -1,5 +1,5 @@
-import axios from "axios";
-import { API_BASE_URL } from "../config";
+import axiosInstance from "@api/axiosInstance";
+
 import {
   ResponseType,
   PostCartProps
@@ -9,8 +9,7 @@ const postCart = async ({
   body,
   headers
 }: PostCartProps): Promise<ResponseType> => {
-  const postCartUrl = `${API_BASE_URL}/carts`;
-  return await axios.post(postCartUrl, body, { headers });
+  return await axiosInstance.post(`/carts`, body, { headers });
 };
 
 export default postCart;

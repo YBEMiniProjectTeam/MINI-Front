@@ -1,4 +1,4 @@
 export interface TotalPaymentInfoProps {
   totalPrice: number;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }

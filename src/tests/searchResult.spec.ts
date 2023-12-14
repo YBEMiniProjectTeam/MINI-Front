@@ -54,7 +54,7 @@ test("4. 카테고리로 조회", async ({ page }) => {
 
 test("5. 무한스크롤 동작", async ({ page }) => {
   await page.goto("http://localhost:5173/searchResult");
-  await page.waitForSelector("css=img"); // dom이 로드될 때까지 대기
+  await page.waitForSelector("css=img"); // 이미지가 로드될 때까지 대기
   await page.evaluate(() => {
     window.scrollBy(0, 7000);
   });
@@ -66,7 +66,7 @@ test("5. 무한스크롤 동작", async ({ page }) => {
 });
 
 test("6. 좋아요 추가", async ({ page }) => {
-  await page.goto("http://localhost:5173/searchResult");
+  await page.goto("http://localhost:5173");
   await page.getByText("로그인/회원가입").click();
   await page.getByPlaceholder("이메일").click();
   await page.getByPlaceholder("이메일").fill("qwerty@naver.com");
@@ -75,16 +75,19 @@ test("6. 좋아요 추가", async ({ page }) => {
   await page.getByPlaceholder("비밀번호").fill("1q2w3e4r!");
 
   await page.getByRole("button", { name: "로그인", exact: true }).click();
+  await page.waitForSelector("css=img"); // 이미지가 로드될 때까지 대기
+
+  await page.goto("http://localhost:5173/searchResult");
+  await page.waitForSelector("css=img");
 
   await page.locator(".css-v4qxc").first().click();
 
-  // FIXME: localhost에서 테스트 시 로그인 불가
   const alert = page.getByText("추가");
   await expect(alert).toContainText("추가");
 });
 
 test("7. 좋아요 삭제", async ({ page }) => {
-  await page.goto("http://localhost:5173/searchResult");
+  await page.goto("http://localhost:5173");
   await page.getByText("로그인/회원가입").click();
   await page.getByPlaceholder("이메일").click();
   await page.getByPlaceholder("이메일").fill("qwerty@naver.com");
@@ -93,10 +96,13 @@ test("7. 좋아요 삭제", async ({ page }) => {
   await page.getByPlaceholder("비밀번호").fill("1q2w3e4r!");
 
   await page.getByRole("button", { name: "로그인", exact: true }).click();
+  await page.waitForSelector("css=img"); // 이미지가 로드될 때까지 대기
+
+  await page.goto("http://localhost:5173/searchResult");
+  await page.waitForSelector("css=img");
 
   await page.locator(".css-1l7kv9f").first().click();
 
-  // FIXME: localhost에서 테스트 시 로그인 불가
   const alert = page.getByText("삭제");
   await expect(alert).toContainText("삭제");
 });

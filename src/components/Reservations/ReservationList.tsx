@@ -22,7 +22,7 @@ const ReservationList = ({
     navigate(`/reservationDetails?id=${paymentId}&image=${thumbnail}`);
   };
   return (
-    <Box bg="#F8F8F9" padding="20px">
+    <>
       <Box
         border="1px solid #E7E7E7"
         borderRadius="6px"
@@ -110,7 +110,7 @@ const ReservationList = ({
           />
         </Flex>
       </Box>
-    </Box>
+    </>
   );
 };
 

@@ -5,7 +5,7 @@ import { HeaderInput } from "./HeaderInput";
 import { useRecoilState } from "recoil";
 import { loginUrlState, loginUrlSearchState } from "@recoil/loginUrl";
 import { useLogoutMutation } from "@hooks/login/useLoginMutation";
-import { useCookies } from "react-cookie";
+// import { useCookies } from "react-cookie";
 import { getMemberInfo } from "@api/getMemberInfo";
 
 export const Header = () => {
@@ -17,7 +17,7 @@ export const Header = () => {
 
   const location = useLocation();
 
-  const [cookies, removeCookie] = useCookies(["access-token"]);
+  // const [cookies, removeCookie] = useCookies(["access-token"]);
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -28,7 +28,9 @@ export const Header = () => {
   }, [location.pathname, location.search]);
 
   useEffect(() => {
-    const CookiesAccessToken = cookies["access-token"];
+    // const CookiesAccessToken = cookies["access-token"];
+    // 로컬스토리지 추가.
+    const CookiesAccessToken = window.localStorage.getItem("access-token");
 
     // 토큰값 유효한지 검사
     if (!CookiesAccessToken) {
@@ -38,11 +40,14 @@ export const Header = () => {
         if (data.statusCode === 200) {
           setAccessToken(CookiesAccessToken);
         } else {
-          removeCookie("access-token", { path: "/" });
+          // 로컬스토리지 삭제.
+          window.localStorage.removeItem("access-token");
+
+          // removeCookie("access-token", { path: "/" });
         }
       });
     }
-  }, [cookies["access-token"]]);
+  }, [window.localStorage.getItem("access-token")]);
 
   const handleClickLogin = () => {
     setLoginUrl(location.pathname);
@@ -56,11 +61,12 @@ export const Header = () => {
       return;
     }
 
-    await logoutMutate({
-      accessToken
-    });
+    await logoutMutate();
 
-    removeCookie("access-token", { path: "/" });
+    // 로컬스토리지 삭제
+    window.localStorage.removeItem("access-token");
+
+    // removeCookie("access-token", { path: "/" });
 
     setAccessToken("");
   };
