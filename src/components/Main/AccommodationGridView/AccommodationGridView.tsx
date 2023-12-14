@@ -13,7 +13,6 @@ import { Accommodation, RegionProps } from "./AccommodationGridView.types";
 import { printCategory } from "@utils/printCategory";
 import { Button } from "@chakra-ui/react";
 import { useNavigateToResultPage } from "@hooks/useNavigateToResultPage";
-import { useCookies } from "react-cookie";
 
 export const AccommodationGridView = ({ region, title, description, cottagePageNumber, hotelPageNumber, dataSize }: RegionProps) => {
   const categoryTab = {
@@ -22,16 +21,6 @@ export const AccommodationGridView = ({ region, title, description, cottagePageN
   };
   const { navigateToResultPage } = useNavigateToResultPage();
   const [activeTab, setActiveTab] = useState(categoryTab.cottage);
-
-  // const { headers } = getAuthLocalStorage();
-  const [cookies, ] = useCookies(["access-token"]);
-  const CookiesAccessToken = cookies["access-token"];
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${CookiesAccessToken}`
-  };
-
-  console.log(headers);
 
   const handleTabClick = (tab: string) => {
     startTransition(() => {

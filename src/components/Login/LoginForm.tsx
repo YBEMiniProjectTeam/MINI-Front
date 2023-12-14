@@ -4,7 +4,7 @@ import { FormControl, FormHelperText, Input, Button } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import type { Login } from "./Login.types";
 import { useLoginMutation } from "@hooks/login/useLoginMutation";
-import { useCookies } from "react-cookie";
+// import { useCookies } from "react-cookie";
 import toast from "react-hot-toast";
 
 export const LoginForm = () => {
@@ -17,10 +17,11 @@ export const LoginForm = () => {
 
   const { mutate: loginMutate } = useLoginMutation();
 
-  const [cookies] = useCookies(["access-token"]);
+  // const [cookies] = useCookies(["access-token"]);
 
   useEffect(() => {
-    const CookiesAccessToken = cookies["access-token"];
+    // const CookiesAccessToken = cookies["access-token"];
+    const CookiesAccessToken = window.localStorage.getItem("access-token");
     if (CookiesAccessToken) {
       toast("이미 로그인이 되어있습니다.");
       navigate("/");

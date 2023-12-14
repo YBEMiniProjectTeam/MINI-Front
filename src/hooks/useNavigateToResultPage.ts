@@ -4,12 +4,12 @@ export const useNavigateToResultPage = () => {
   const navigate = useNavigate();
 
   const navigateToResultPage = (category: string, region: string) => {
-    let url = '/searchResult?'
+    let url = '/searchResult?';
 
     if (category)
       url += `category=${category}`;
     if (region)
-      url += `&region=${region}`;
+      url += `&district=${region}`;
 
     navigate(url);
   };

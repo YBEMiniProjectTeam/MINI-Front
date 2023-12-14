@@ -173,7 +173,7 @@ const SearchList = ({
                 right="1.275rem"
                 width="1.5rem"
                 height="1.5rem"
-                color="red"
+                color="primary.500"
                 cursor="pointer"
                 onClick={() => handleLikeClick(index, accomodation.id)}
               />
