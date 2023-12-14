@@ -1,20 +1,33 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { DeferredComponentProps } from "./AsyncWrapper.types";
 
 const DeferredComponent = ({ children }: DeferredComponentProps) => {
-  const [isDeferred, setIsDeferred] = useState(false);
+  const [renderFirstComponent, setRenderFirstComponent] = useState(false);
+  const [renderSecondComponent, setRenderSecondComponent] = useState(false);
+
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setIsDeferred(true);
+    const firstTimeoutId = setTimeout(() => {
+      setRenderFirstComponent(true);
     }, 200);
-    return () => clearTimeout(timeoutId);
+
+    const secondTimeoutId = setTimeout(() => {
+      setRenderSecondComponent(true);
+    }, 400);
+
+    return () => {
+      clearTimeout(firstTimeoutId);
+      clearTimeout(secondTimeoutId);
+    };
   }, []);
 
-  if (!isDeferred) {
-    return null;
-  }
+  const childArray = React.Children.toArray(children);
 
-  return <>{children}</>;
+  return (
+    <>
+      {renderFirstComponent && childArray[0]}
+      {renderSecondComponent && childArray[1]}
+    </>
+  );
 };
 
 export default DeferredComponent;
