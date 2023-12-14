@@ -7,15 +7,19 @@ export class CartPage {
     this.page = page;
   }
 
-  async navigateToShoppingCart(): Promise<void> {
+  async navigateTo(): Promise<void> {
     await this.page.goto("http://localhost:5173/shoppingCart");
+  }
+
+  async waitForPageLoad(): Promise<void> {
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async clickReserveButton(): Promise<void> {
     const reserveButton = this.page.getByRole("button", { name: "예약하기" });
+    console.log("예약하기 버튼 클릭");
     await expect(reserveButton).toBeVisible();
     await reserveButton.click();
-    await this.page.waitForNavigation();
   }
 
   async getCurrentUrl(): Promise<string> {
