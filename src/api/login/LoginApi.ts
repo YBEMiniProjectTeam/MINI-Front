@@ -11,12 +11,11 @@ export const LoginApi = async (
   login: Login
 ): Promise<ApiResponseBase<LoginType>> => {
   const API_URL = `${API_BASE_URL}/login`;
-  // const headers = {
-  //   "Content-Type": "application/json"
-  //   // withCredentials: true
-  // };
-  // const response = await axios.post(API_URL, login, { headers });
-  const response = await axiosInstance.post(API_URL, login);
+  const headers = {
+    "Content-Type": "application/json"
+    // withCredentials: true
+  };
+  const response = await axios.post(API_URL, login, { headers });
 
   return response.data;
 };
