@@ -205,7 +205,7 @@ export const RegisterForm = (): JSX.Element => {
               생년월일 8자리를 입력해주세요.
             </FormHelperText>
           ) : null}
-          <Button type="submit" onClick={handleClickSubmit}>
+          <Button type="submit" id="submit" onClick={handleClickSubmit}>
             회원가입
           </Button>
         </FormControl>

@@ -17,10 +17,11 @@ export const LoginForm = () => {
 
   const { mutate: loginMutate } = useLoginMutation();
 
-  const [cookies] = useCookies(["access-token"]);
+  // const [cookies] = useCookies(["access-token"]);
 
   useEffect(() => {
-    const CookiesAccessToken = cookies["access-token"];
+    // const CookiesAccessToken = cookies["access-token"];
+    const CookiesAccessToken = window.localStorage.getItem("access-token");
     if (CookiesAccessToken) {
       toast("이미 로그인이 되어있습니다.");
       navigate("/");
