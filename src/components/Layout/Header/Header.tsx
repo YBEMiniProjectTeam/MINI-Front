@@ -66,8 +66,6 @@ export const Header = () => {
     // 로컬스토리지 삭제
     window.localStorage.removeItem("access-token");
 
-    // removeCookie("access-token", { path: "/" });
-
     setAccessToken("");
   };
 
