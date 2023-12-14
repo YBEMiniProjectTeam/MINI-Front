@@ -77,8 +77,8 @@ const SearchList = ({
     }
   }, [page]);
 
-  const toggleLike = (index: number, accomodations: Accommodation[]) => {
-    accomodations[index].isWish = !accomodations[index].isWish;
+  const toggleLike = (index: number, accommodations: Accommodation[]) => {
+    accommodations[index].isWish = !accommodations[index].isWish;
   };
 
   const handleLikeClick = async (index: number, accommodationId: number) => {
