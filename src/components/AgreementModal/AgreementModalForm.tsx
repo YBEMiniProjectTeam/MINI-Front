@@ -33,15 +33,18 @@ export const AgreementModalForm = (props: {
     <S.BackgroundContainer
       ref={backgroundContainerRef}
       onClick={handleClickBackgroundContainer}
+      id="modal"
     >
       <S.ModalContainer>
         <div>
           <h3>약관에 동의해주세요.</h3>
-          <Checkbox onChange={handleChangeCheckBox}>
+          <Checkbox id="agreement" onChange={handleChangeCheckBox}>
             만 14세 이상입니까? (필수)
           </Checkbox>
         </div>
-        <Button onClick={handleClickConfirmBtn}>확인</Button>
+        <Button id="agreementBtn" onClick={handleClickConfirmBtn}>
+          확인
+        </Button>
       </S.ModalContainer>
     </S.BackgroundContainer>
   );

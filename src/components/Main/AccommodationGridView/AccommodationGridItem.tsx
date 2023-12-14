@@ -13,13 +13,16 @@ export const AccommodationGridItem: React.FC<GridItemProps> = ({
   const { navigateToDetailPage } = useNavigateToDetailPage();
 
   return (
-    <styled.GridItem onClick={() => navigateToDetailPage(id)}>
+    <styled.GridItem 
+      id="grid-accommodation-item"
+      onClick={() => navigateToDetailPage(id)}
+    >
       <styled.GridItemImageWrapper>
         <styled.GridItemImage src={imageUrl} />
       </styled.GridItemImageWrapper>
       <styled.InformationWrapper>
         <styled.InformationSummary>{summary}</styled.InformationSummary>
-        <styled.InformationName>{name}</styled.InformationName>
+        <styled.InformationName id="grid-accommodation-name">{name}</styled.InformationName>
         <styled.InformationPrice>{formatPrice(price)}</styled.InformationPrice>
         <styled.InformationPriceTxt>원부터</styled.InformationPriceTxt>
       </styled.InformationWrapper>

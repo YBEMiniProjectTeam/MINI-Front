@@ -37,14 +37,14 @@ export const AccommodationSingleView = () => {
       beforeChange: (_: number, next: number) => setCurrentSlide(next),
       nextArrow: (
         <SlickButtonFix>
-          <styled.RightArrowButtonWrapper>
+          <styled.RightArrowButtonWrapper id="next-button">
             <IoIosArrowForward color="#4D4D4D" size="2rem" />
           </styled.RightArrowButtonWrapper>
         </SlickButtonFix>
       ),
       prevArrow: (
         <SlickButtonFix>
-          <styled.LeftArrowButtonWrapper>
+          <styled.LeftArrowButtonWrapper id="prev-button">
             <IoIosArrowBack color="#4D4D4D" size="2rem" />
           </styled.LeftArrowButtonWrapper>
         </SlickButtonFix>
@@ -102,6 +102,7 @@ export const AccommodationSingleView = () => {
           {data?.accommodations?.map((item: Accommodation, index: number) => (
             <styled.SwiperItem
               key={item.id}
+              id="carousel-accommodation-item"
               onClick={() => navigateToDetailPage(item.id)}
             >
               <img
@@ -119,7 +120,7 @@ export const AccommodationSingleView = () => {
             {data?.accommodations?.[currentSlide].region} |{" "}
             {printCategory(data?.accommodations?.[currentSlide].type)}
           </styled.InformationRegion>
-          <styled.InformationName>
+          <styled.InformationName id="carousel-accommodation-name">
             {sliceAccommodationName(
               data?.accommodations?.[currentSlide].name
             )}
