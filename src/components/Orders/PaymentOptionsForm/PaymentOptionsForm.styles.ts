@@ -1,6 +1,6 @@
 import theme from "@theme";
 import styled from "styled-components";
-import { Radio, RadioGroup } from "@chakra-ui/react";
+import { Radio, RadioGroup, Text } from "@chakra-ui/react";
 
 export const Container = styled.div`
   padding: 0 1rem;
@@ -29,10 +29,18 @@ export const StyledItem = styled.div<{ $isChecked?: boolean }>`
 
 export const Label = styled.div`
   display: flex;
+  align-items: center;
 `;
 
-export const Text = styled.span`
+export const LabelText = styled(Text)`
   font-size: 1rem;
+  margin-right: 1rem;
+`;
+
+export const EventText = styled(Text)`
+  font-size: 0.8rem;
+  letter-spacing: -0.1px;
+  color: ${theme.colors.gray[500]};
 `;
 
 export const Icon = styled.img`

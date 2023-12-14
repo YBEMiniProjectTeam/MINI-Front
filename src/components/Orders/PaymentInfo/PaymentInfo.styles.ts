@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import theme from "@theme";
 
 export const PaymentContainer = styled.div`
   padding: 0 1rem;
@@ -9,6 +10,7 @@ export const PaymentWrapperRow = styled.div`
   justify-content: space-between;
   margin-bottom: 0.8rem;
   padding: 0.3rem 0;
+  color: ${theme.colors.gray[500]};
 
   &:last-child {
     margin: 0;

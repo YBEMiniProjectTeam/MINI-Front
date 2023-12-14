@@ -41,10 +41,13 @@ const Reservations = () => {
     );
   }
 
-  return data.map((data: DataType, index: number) => {
-    console.log(`[${index + 1}]`, data);
-    return <ReservationList key={index} data={data} />;
-  });
+  return (
+    <Flex bg="#F8F8F9" padding="20px" flexDirection="column" gap="20px">
+      {data.map((data: DataType, index: number) => {
+        return <ReservationList key={index} data={data} />;
+      })}
+    </Flex>
+  );
 };
 
 export default Reservations;

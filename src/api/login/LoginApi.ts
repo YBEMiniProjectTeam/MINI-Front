@@ -1,7 +1,6 @@
-import axios from "axios";
-import { API_BASE_URL } from "@api/config";
 import { Login } from "@components/Login/Login.types";
 import { ApiResponseBase } from "@api/ApiResponse.types.ts";
+import axiosInstance from "@api/axiosInstance";
 
 interface LoginType {
   accessToken: string;
@@ -9,24 +8,22 @@ interface LoginType {
 export const LoginApi = async (
   login: Login
 ): Promise<ApiResponseBase<LoginType>> => {
-  const API_URL = `${API_BASE_URL}/login`;
-  const headers = {
-    "Content-Type": "application/json"
-    // withCredentials: true
-  };
-  const response = await axios.post(API_URL, login, { headers });
+  const API_URL = `/login`;
+  const response = await axiosInstance.post(API_URL, login);
 
   return response.data;
 };
 
-export const LogoutApi = async (
-  accessToken: string
-): Promise<ApiResponseBase<undefined>> => {
-  const API_URL = `${API_BASE_URL}/logout`;
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${accessToken}`
-  };
-  const response = await axios.post(API_URL, { headers });
+export const LogoutApi = async (): Promise<ApiResponseBase<undefined>> => {
+  const API_URL = `/logout`;
+
+  const response = await axiosInstance.post(API_URL);
   return response.data;
+};
+
+export const getPaymentInfo = async (cart_ids: number[]) => {
+  const response = await axiosInstance.post("/carts/orders/reservations", {
+    cart_ids
+  });
+  return response.data.data;
 };

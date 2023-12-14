@@ -15,20 +15,11 @@ import * as styles from "./RoomInfo.styles";
 import { CiCircleInfo } from "react-icons/ci";
 
 const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
-  if (!roomInfo) return null;
-
-  const checkInDate = roomInfo.checkIn?.split(" ")[0] || roomInfo.checkInDate;
-  const checkInTime = roomInfo.checkIn?.split(" ")[1] || roomInfo.checkInTime;
-  const checkOutDate =
-    roomInfo.checkOut?.split(" ")[0] || roomInfo.checkOutDate;
-  const checkOutTime =
-    roomInfo.checkOut?.split(" ")[1] || roomInfo.checkOutTime;
-
   const nights = calculateNights({
-    checkInDate,
-    checkOutDate,
-    checkInTime,
-    checkOutTime
+    checkInDate: roomInfo.checkInDate,
+    checkOutDate: roomInfo.checkOutDate,
+    checkInTime: roomInfo.checkInTime,
+    checkOutTime: roomInfo.checkOutTime
   });
 
   return (
@@ -42,10 +33,10 @@ const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
             체크인
           </Text>
           <Text fontSize="md" fontWeight="500">
-            {checkInDate}
+            {roomInfo.checkInDate}
           </Text>
           <Text fontSize="lg" fontWeight="bold">
-            {checkInTime}
+            {roomInfo.checkInTime}
           </Text>
         </GridItem>
         <GridItem>
@@ -53,10 +44,10 @@ const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
             체크아웃
           </Text>
           <Text fontSize="md" fontWeight="500">
-            {checkOutDate}
+            {roomInfo.checkOutDate}
           </Text>
           <Text fontSize="lg" fontWeight="bold">
-            {checkOutTime}
+            {roomInfo.checkOutTime}
           </Text>
         </GridItem>
         <GridItem colSpan={2}>
@@ -67,7 +58,7 @@ const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
                 기준 {roomInfo.capacity}명 / 최대 {roomInfo.capacityMax}명
               </Text>
             </HStack>
-            {roomInfo.checkInDate && ( // 결제페이지 & 결제완료페이지 조건부 렌더링
+            {roomInfo.checkInDate && (
               <Flex alignItems="center" gap="8px">
                 <Box
                   display="inline-block"

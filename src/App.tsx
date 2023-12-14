@@ -1,4 +1,6 @@
 import SuspenseFallback from "@components/AsyncWrapper/SuspenseFallback.tsx";
+import Loading from "components/Loading";
+import PaymentSkeleton from "@components/Orders/PaymentSkeleton";
 import { lazy } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AsyncWrapper from "@components/AsyncWrapper";
@@ -10,6 +12,9 @@ import Login from "@pages/login/Login";
 import Register from "@pages/register/Register";
 import { MainSkeleton } from "@components/Main/MainSkeleton/MainSkeleton";
 import { SearchResultSkeleton } from "@components/SearchResultSkeleton/SearchResultSkeleton";
+import ProductDetailSkeleton from "@pages/productDetail/ProductDetailSkeleton";
+import ReservationsSkeleton from "@pages/reservations/ReservationsSkeleton";
+import ReservationDetailsSkeleton from "@pages/reservationDetails/ReservationDetailsSkeleton";
 
 const Main = lazy(() => import("@pages/main/Main"));
 const SearchResult = lazy(() => import("@pages/searchResult/SearchResult"));
@@ -97,7 +102,7 @@ const router = createBrowserRouter([
             key="products"
             fallback={
               <DeferredComponent>
-                <SuspenseFallback />
+                <ProductDetailSkeleton />
               </DeferredComponent>
             }
           >
@@ -112,7 +117,8 @@ const router = createBrowserRouter([
             key="orders"
             fallback={
               <DeferredComponent>
-                <SuspenseFallback />
+                <Loading />
+                <PaymentSkeleton />
               </DeferredComponent>
             }
           >
@@ -127,7 +133,8 @@ const router = createBrowserRouter([
             key="reservationComplete"
             fallback={
               <DeferredComponent>
-                <SuspenseFallback />
+                <Loading />
+                <PaymentSkeleton />
               </DeferredComponent>
             }
           >
@@ -157,7 +164,7 @@ const router = createBrowserRouter([
             key="reservations"
             fallback={
               <DeferredComponent>
-                <SuspenseFallback />
+                <ReservationsSkeleton />
               </DeferredComponent>
             }
           >
@@ -172,7 +179,7 @@ const router = createBrowserRouter([
             key="reservationDetails"
             fallback={
               <DeferredComponent>
-                <SuspenseFallback />
+                <ReservationDetailsSkeleton />
               </DeferredComponent>
             }
           >
