@@ -1,15 +1,13 @@
 import { test as base } from "@playwright/test";
-import { LoginPage } from "../models/loginPage";
-import { LoginRequest } from "../services/loginRequest";
 
 export const test = base.extend({
-  loginPage: async ({ page }, use) => {
-    const loginPage = new LoginPage(page);
-    await use(loginPage);
+  context: async ({ browser, storageState }, use) => {
+    const context = await browser.newContext({ storageState });
+    await use(context);
   },
-  loginRequest: async ({ request }, use) => {
-    const loginRequest = new LoginRequest(request);
-    await use(loginRequest);
+  page: async ({ context }, use) => {
+    const page = await context.newPage();
+    await use(page);
   }
 });
 
