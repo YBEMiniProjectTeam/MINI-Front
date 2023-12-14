@@ -12,7 +12,7 @@ import { Nullable } from "@/types/nullable";
 export interface ApiResponse {
   status: string;
   data: {
-    accomodations: Accommodation[];
+    accommodations: Accommodation[];
     page_num: number;
     total_pages: number;
     page_size: number;
