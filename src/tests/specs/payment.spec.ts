@@ -92,7 +92,6 @@ test.describe("결제 프로세스", () => {
       guest_name: name,
       guest_email: email
     });
-    await paymentPage.waitForNavigation();
   });
 
   test("4. 결제완료 페이지 정보 확인", async ({ page, request }) => {
