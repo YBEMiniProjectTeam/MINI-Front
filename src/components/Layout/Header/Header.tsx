@@ -5,7 +5,7 @@ import { HeaderInput } from "./HeaderInput";
 import { useRecoilState } from "recoil";
 import { loginUrlState, loginUrlSearchState } from "@recoil/loginUrl";
 import { useLogoutMutation } from "@hooks/login/useLoginMutation";
-// import { useCookies } from "react-cookie";
+import { useCookies } from "react-cookie";
 import { getMemberInfo } from "@api/getMemberInfo";
 
 export const Header = () => {
@@ -17,7 +17,7 @@ export const Header = () => {
 
   const location = useLocation();
 
-  // const [cookies, removeCookie] = useCookies(["access-token"]);
+  const [, removeCookie] = useCookies(["access-token"]);
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -43,7 +43,7 @@ export const Header = () => {
           // 로컬스토리지 삭제.
           window.localStorage.removeItem("access-token");
 
-          // removeCookie("access-token", { path: "/" });
+          removeCookie("access-token", { path: "/" });
         }
       });
     }
@@ -66,7 +66,7 @@ export const Header = () => {
     // 로컬스토리지 삭제
     window.localStorage.removeItem("access-token");
 
-    // removeCookie("access-token", { path: "/" });
+    removeCookie("access-token", { path: "/" });
 
     setAccessToken("");
   };
