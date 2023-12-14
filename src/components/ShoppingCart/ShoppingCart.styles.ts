@@ -4,6 +4,20 @@ export const ShoppingCartContainer = styled.div`
   padding-bottom: 32px;
   background-color: #f8f8f9;
 
+  position: relative;
+
+  .DeleteContainer {
+    position: fixed;
+    bottom: 5%;
+    left: 50%;
+
+    border: 4px solid #000;
+    border-radius: 12px;
+    padding: 10px;
+    z-index: 100;
+
+    background-color: white;
+  }
   h3 {
     font-size: 24px;
     font-weight: 700;
@@ -63,6 +77,8 @@ export const ShoppingCartContainer = styled.div`
     }
     .roomListWrap {
       padding: 16px 0px;
+
+      cursor: pointer;
     }
     .dataList {
       display: flex;
