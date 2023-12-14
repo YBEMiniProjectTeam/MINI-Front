@@ -1,7 +1,6 @@
 import { getAuthLocalStorage } from "@utils/getAuthLocalStorage.ts";
-import { useEffect, useState, Suspense } from "react";
+import { Suspense } from "react";
 import * as styles from "./MyWishList.styles";
-import { Accommodation } from "@components/SearchList/SearchList.types";
 import { useWishList } from "@hooks/useWishList";
 import { Box, Image, Icon, Tag, Text, Spinner } from "@chakra-ui/react";
 import { FaHeart } from "react-icons/fa";
@@ -13,28 +12,17 @@ import { formatPrice } from "@utils/priceFormatter";
 const MyWishList = () => {
   const navigate = useNavigate();
 
-  const [wishList, setWishList] = useState<Accommodation[]>([]);
-
   const { accessTokenCookie } = getAuthLocalStorage();
 
   if (!accessTokenCookie) {
     navigate("/notLogin");
   }
 
-  const { data, error, refetch } = useWishList();
+  const { data: wishList } = useWishList();
   const { mutate: deleteWish } = useDeleteWish();
-
-  if (error) {
-    console.error("An error has occurred:", error.message);
-  }
-
-  useEffect(() => {
-    setWishList(data);
-  }, [data]);
 
   const handleLikeClick = async (accommodationId: number) => {
     await deleteWish({ accommodationId });
-    refetch();
   };
 
   const handleAccomodationClick = (id: number) => {
@@ -55,12 +43,12 @@ const MyWishList = () => {
         </styles.SpinnerWrapper>
       }
     >
-      {wishList?.length === 0 ? (
+      {wishList.length === 0 ? (
         <Text textAlign="center" mt="1rem">
           위시리스트가 없습니다.
         </Text>
       ) : null}
-      {wishList?.map((accomodation, index) => (
+      {wishList.map((accomodation, index) => (
         <Box
           key={index}
           width="100%"
