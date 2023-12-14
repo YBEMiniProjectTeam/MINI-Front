@@ -35,5 +35,10 @@ test("장바구니가 담겨져 있는 경우", async ({ page }) => {
   // 삭제
   await page.getByRole("button", { name: "선택 삭제", exact: true }).click();
   await page.waitForTimeout(1000);
-  expect(await page.isVisible("#noneCartList"));
+
+  const noneCartList = await page.locator(".noneCartList");
+
+  const isElementVisible = await noneCartList.isVisible();
+
+  expect(isElementVisible).toBeTruthy();
 });
