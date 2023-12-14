@@ -18,13 +18,13 @@ const PaymentSubmitButton = ({
 
   const onSubmit = (formData: { name?: string; email?: string }) => {
     const isDifferentUser = getValues("isDiffUser");
-    const reservationName = isDifferentUser ? formData.name : userData!.name;
-    const reservationEmail = isDifferentUser ? formData.email : userData!.email;
+    const guestName = isDifferentUser ? formData.name : userData!.name;
+    const guestEmail = isDifferentUser ? formData.email : userData!.email;
 
-    if (!reservationName || !reservationEmail) return;
+    if (!guestName || !guestEmail) return;
     sendPayment({
-      guest_name: reservationName,
-      guest_email: reservationEmail,
+      guest_name: guestName,
+      guest_email: guestEmail,
       cart_ids: cartIds
     });
   };
@@ -35,7 +35,7 @@ const PaymentSubmitButton = ({
       type="submit"
       onClick={handleSubmit(onSubmit)}
       disabled={!isValid}
-      colorScheme={isValid ? "primary" : "grey"}
+      colorScheme={isValid ? "primary" : "disabled"}
     >
       {totalPrice.toLocaleString()}원 결제하기
     </CustomButton>
