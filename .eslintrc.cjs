@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  env: { browser: true, es2020: true }, // 브라우저 환경 및 ES2020 환경 설정
+  env: { browser: true, es2020: true, node: true }, // 브라우저 환경 및 ES2020 환경 설정
 
   extends: [
     "eslint:recommended", // ESLint의 기본 권장 규칙 사용
