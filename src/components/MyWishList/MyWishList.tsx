@@ -71,17 +71,14 @@ const MyWishList = () => {
               onClick={() => handleAccomodationClick(accomodation.id)}
               loading="lazy"
             />
-            <Icon
-              as={FaHeart}
-              position="absolute"
-              top="1.325rem"
-              right="1.275rem"
-              width="1.5rem"
-              height="1.5rem"
-              color="red"
-              cursor="pointer"
-              onClick={() => handleLikeClick(accomodation.id)}
-            />
+            <styles.WishButton onClick={() => handleLikeClick(accomodation.id)}>
+              <Icon
+                as={FaHeart}
+                width="1.5rem"
+                height="1.5rem"
+                color="primary.500"
+              />
+            </styles.WishButton>
             {accomodation.type !== "NOT_CLASSIFIED" && (
               <Tag
                 size="md"
