@@ -55,10 +55,9 @@ export const useDeleteWish = () => {
   return useMutation<SearchListResponse, Error, LikeProps, ContextType>({
     mutationFn: ({ accommodationId }: LikeProps) => deleteWish(accommodationId),
     onMutate: async (variables) => {
-      (await queryClient.getQueryData<Accommodation[]>(["wishList"])) || [];
+      await queryClient.cancelQueries({ queryKey: ["wishList"] });
       const previousWishData =
         queryClient.getQueryData<Accommodation[]>(["wishList"]) || [];
-
       queryClient.setQueryData<Accommodation[]>(["wishList"], (old) => {
         return old?.map((accommodation) => {
           if (accommodation.id === variables.accommodationId) {
