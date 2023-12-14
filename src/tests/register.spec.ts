@@ -15,10 +15,7 @@ test("회원가입 성공", async ({ page }) => {
   // 모달창
   await page.getByText("14세").click();
   await page.getByRole("button", { name: "확인", exact: true }).click();
+  await page.waitForTimeout(3000);
 
-  // 모달창 닫아진 상태.
-  await page.getByRole("button", { name: "회원가입", exact: true }).click();
-
-  await page.waitForTimeout(1000);
   expect(page.url()).toBe("http://localhost:5173/login");
 });
