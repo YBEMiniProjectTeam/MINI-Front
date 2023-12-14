@@ -8,7 +8,9 @@ const TotalPaymentInfo = ({ totalPrice, children }: TotalPaymentInfoProps) => {
     <styles.PaymentContainer>
       <styles.PaymentWrapperRow>
         <styles.PaymentLabel>총 상품 금액</styles.PaymentLabel>
-        <styles.PaymentItem>{TotalPayment}원</styles.PaymentItem>
+        <styles.PaymentItem className="total-price">
+          {TotalPayment}원
+        </styles.PaymentItem>
       </styles.PaymentWrapperRow>
       <styles.PaymentWrapperRow>
         <styles.PaymentLabel>총 할인 금액</styles.PaymentLabel>

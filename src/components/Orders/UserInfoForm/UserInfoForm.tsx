@@ -5,11 +5,11 @@ const UserInfoForm = ({ userData }: UserInfoFormProps) => {
   return (
     <styles.UserInfoContainer>
       <styles.UserInfoWrapperRow>
-        <styles.UserInfoLabel>이름</styles.UserInfoLabel>
+        <styles.UserInfoLabel htmlFor="이름">이름</styles.UserInfoLabel>
         <styles.UserInfoItem>{userData.name}</styles.UserInfoItem>
       </styles.UserInfoWrapperRow>
       <styles.UserInfoWrapperRow>
-        <styles.UserInfoLabel>이메일</styles.UserInfoLabel>
+        <styles.UserInfoLabel htmlFor="이메일">이메일</styles.UserInfoLabel>
         <styles.UserInfoItem>{userData.email}</styles.UserInfoItem>
       </styles.UserInfoWrapperRow>
     </styles.UserInfoContainer>
