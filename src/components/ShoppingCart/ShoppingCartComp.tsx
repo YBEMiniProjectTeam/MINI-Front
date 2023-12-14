@@ -58,7 +58,7 @@ export const ShoppingCartComp = (): JSX.Element => {
 
       setCartIdList(newCartIdList);
     }
-  }, [data]);
+  }, []);
 
   const handleCheckAllRooms = (): void => {
     const newArr: number[] = [];
