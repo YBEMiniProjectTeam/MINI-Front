@@ -13,7 +13,7 @@ export type ErrorBoundaryState = {
 
 export type FallbackProps = {
   error: Error;
-  resetErrorBoundary: () => void; // resetErrorBoundary 함수를 사용하는쪽에서 사용 가능하도록 props로 전달
+  resetErrorBoundary: () => void;
 };
 
 export type ErrorBoundaryProps = {
@@ -26,5 +26,4 @@ export interface DeferredComponentProps {
   children: ReactNode;
 }
 
-// FIXME: 공통 type로 분리할 것
 export type Error = AxiosError | null;

@@ -9,7 +9,7 @@ import { useDeleteCart } from "@hooks/cart/useDeleteCartMutation";
 
 import { useQuantityCart } from "@hooks/cart/useQuantityCartMutation";
 import { formatPrice } from "@utils/priceFormatter";
-import { useCookies } from "react-cookie";
+// import { useCookies } from "react-cookie";
 import { RoomInfo, Accommodation } from "./ShoppinCart.types";
 
 export const ShoppingCartComp = (): JSX.Element => {
@@ -21,9 +21,9 @@ export const ShoppingCartComp = (): JSX.Element => {
 
   const navigate = useNavigate();
 
-  const [cookies] = useCookies(["access-token"]);
+  // const [cookies] = useCookies(["access-token"]);
 
-  const { data, refetch } = useShoppingCartList(cookies["access-token"]);
+  const { data, refetch } = useShoppingCartList();
 
   useEffect(() => {
     const token = window.localStorage.getItem("access-token");
@@ -92,7 +92,6 @@ export const ShoppingCartComp = (): JSX.Element => {
   const handleSelectDelete = async (): Promise<void> => {
     if (accessToken) {
       await deleteCart({
-        accessToken: accessToken,
         cart_ids: cartIdList
       });
       refetch();
@@ -105,7 +104,6 @@ export const ShoppingCartComp = (): JSX.Element => {
   const handleClickRoomDelete = async (cartId: number): Promise<void> => {
     if (accessToken) {
       await deleteCart({
-        accessToken: accessToken,
         cart_ids: [cartId]
       });
       refetch();
@@ -118,14 +116,12 @@ export const ShoppingCartComp = (): JSX.Element => {
   ) => {
     if (sign === "increase") {
       await quantityCart({
-        accessToken: accessToken,
         sign: "increase",
         cart_ids: cartId
       });
       refetch();
     } else if (sign === "decrease") {
       await quantityCart({
-        accessToken: accessToken,
         sign: "decrease",
         cart_ids: cartId
       });

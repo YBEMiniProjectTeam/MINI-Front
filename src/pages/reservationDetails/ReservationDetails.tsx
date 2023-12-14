@@ -53,9 +53,6 @@ const ReservationDetails = () => {
         <Box fontSize="30px" fontWeight={700}>
           {accommodation_name}
         </Box>
-        {/* <Box as="button">
-          <RxDoubleArrowRight size="25px" />
-        </Box> */}
       </Flex>
       <Box color="#7F7F7F" fontSize="20px" fontWeight={600}>
         {room_name}

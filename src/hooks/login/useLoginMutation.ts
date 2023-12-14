@@ -5,7 +5,7 @@ import { useRecoilState } from "recoil";
 import { loginUrlState, loginUrlSearchState } from "@recoil/loginUrl";
 
 import { ApiResponseBase } from "@api/ApiResponse.types.ts";
-import { useCookies } from "react-cookie";
+// import { useCookies } from "react-cookie";
 
 interface LoginType {
   accessToken: string;
@@ -28,6 +28,7 @@ export const useLoginMutation = () => {
         // console.log(res.data.accessToken);
         // 로컬스토리지 임시 추가.
         window.localStorage.setItem("access-token", res.data.accessToken);
+        console.log(res.data.accessToken);
 
         navigate(loginUrl + loginUrlSearch);
       }
@@ -38,18 +39,12 @@ export const useLoginMutation = () => {
   });
 };
 
-interface logoutProps {
-  accessToken: string;
-}
-
 export const useLogoutMutation = () => {
-  const [_, removeCookie] = useCookies(["access-token"]);
+  // const [_, removeCookie] = useCookies(["access-token"]);
 
-  return useMutation<ApiResponseBase<undefined>, Error, logoutProps>({
-    mutationFn: ({ accessToken }: logoutProps) => LogoutApi(accessToken),
-    onSuccess: () => {
-      removeCookie("access-token", { path: "/" });
-    },
+  return useMutation<ApiResponseBase<undefined>, Error>({
+    mutationFn: () => LogoutApi(),
+    onSuccess: () => {},
     onError: (err) => {
       console.log(err);
     }

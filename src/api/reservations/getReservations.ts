@@ -1,11 +1,8 @@
-import axios from "axios";
-import { API_BASE_URL } from "../config";
+import axiosInstance from "@api/axiosInstance";
 import { GetReservationsProps } from "@pages/reservations/Reservations.types";
 
 const getReservations = async ({ headers }: GetReservationsProps) => {
-  const getReservationsUrl = `${API_BASE_URL}/payments`;
-  const response = await axios.get(getReservationsUrl, { headers });
-
+  const response = await axiosInstance.get(`/payments`, { headers });
   return response.data.data;
 };
 

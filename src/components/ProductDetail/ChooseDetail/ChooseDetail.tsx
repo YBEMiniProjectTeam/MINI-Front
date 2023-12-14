@@ -18,7 +18,7 @@ const ChooseDetail = ({
     startDate,
     endDate
   ]);
-  console.log(endDate);
+
   const [guestCnt, setguestCnt] = useState<number>(2);
 
   const {

@@ -1,7 +1,9 @@
 import styled from "styled-components";
+import theme from "@theme";
 
 export const UserInfoContainer = styled.div`
   padding: 1rem 1rem 1.6rem;
+  color: ${theme.colors.gray[500]};
 `;
 
 export const UserInfoWrapperRow = styled.div`

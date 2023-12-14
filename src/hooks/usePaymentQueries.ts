@@ -1,43 +1,24 @@
 import { getUserInfo } from "@api/getUserInfo.ts";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import { getPaymentInfo } from "@api/getPaymentInfo";
-import type { Accommodation } from "@/types/paymet";
+import type { Accommodation } from "@/types/api/paymet";
 
 interface PaymentResponse {
-  reservationData: PaymentData[][];
+  totalPrice: number;
   rawData: Accommodation[];
 }
 
-interface PaymentData {
-  key: "label" | "total";
-  label: string;
-  value: number;
-}
+const encodeTotalPrice = (data: Accommodation[]): number => {
+  return data.reduce((total, accommodation) => {
+    const totalPrice = accommodation.room_infos.reduce(
+      (roomTotal, roomInfo) => {
+        return roomTotal + roomInfo.price * roomInfo.quantity;
+      },
+      0
+    );
 
-const calculateTotal = (
-  data: Accommodation[]
-): { totalPrice: number; totalDiscount: number } => {
-  return data.reduce(
-    ({ totalPrice, totalDiscount }, accommodation) => {
-      accommodation.room_infos.forEach((roomInfo) => {
-        totalPrice += roomInfo.price * roomInfo.quantity;
-      });
-      return { totalPrice, totalDiscount };
-    },
-    { totalPrice: 0, totalDiscount: 0 }
-  );
-};
-
-const encodeData = (data: Accommodation[]): PaymentData[][] => {
-  const { totalPrice, totalDiscount } = calculateTotal(data);
-
-  return [
-    [
-      { key: "label", label: "총 상품 금액", value: totalPrice },
-      { key: "label", label: "총 할인 금액", value: totalDiscount },
-      { key: "total", label: "총 결제 금액", value: totalPrice }
-    ]
-  ];
+    return total + totalPrice;
+  }, 0);
 };
 
 export const usePaymentQueries = (cartIds: number[]) => {
@@ -48,7 +29,7 @@ export const usePaymentQueries = (cartIds: number[]) => {
         queryFn: async () => await getPaymentInfo(cartIds),
         select: (accommodations: Accommodation[]): PaymentResponse => {
           return {
-            reservationData: encodeData(accommodations),
+            totalPrice: encodeTotalPrice(accommodations),
             rawData: accommodations
           };
         }

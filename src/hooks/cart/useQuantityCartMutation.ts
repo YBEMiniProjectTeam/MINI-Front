@@ -8,7 +8,6 @@ interface Quantity {
 }
 
 interface props {
-  accessToken: string;
   sign: string;
   cart_ids: number;
 }
@@ -16,8 +15,8 @@ interface props {
 export const useQuantityCart = () => {
   const queryClient = useQueryClient();
   return useMutation<Quantity, Error, props>({
-    mutationFn: ({ accessToken, sign, cart_ids }: props) =>
-      QuantityCartApi({ accessToken, sign, cart_ids }),
+    mutationFn: ({ sign, cart_ids }: props) =>
+      QuantityCartApi({ sign, cart_ids }),
     onSuccess: (res) => {
       console.log(res);
       queryClient.invalidateQueries({ queryKey: ["shoppingCartList"] });

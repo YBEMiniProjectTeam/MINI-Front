@@ -4,10 +4,10 @@ export const calculateNights = ({
   checkInTime,
   checkOutTime
 }: {
-  checkInDate: string | undefined;
-  checkOutDate: string | undefined;
-  checkInTime: string | undefined;
-  checkOutTime: string | undefined;
+  checkInDate: string;
+  checkOutDate: string;
+  checkInTime: string;
+  checkOutTime: string;
 }) => {
   const checkInDateTime = new Date(`${checkInDate} ${checkInTime}`);
   const checkOutDateTime = new Date(`${checkOutDate} ${checkOutTime}`);

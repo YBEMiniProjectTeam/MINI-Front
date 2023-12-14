@@ -1,14 +1,9 @@
-import axios from "axios";
-import { API_BASE_URL } from "../config";
+import axiosInstance from "@api/axiosInstance";
 
-export const ShoppingCartApi = async (accessToken: string) => {
-  const API_URL = `${API_BASE_URL}/carts`;
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${accessToken}`
-  };
+export const ShoppingCartApi = async () => {
+  const API_URL = `/carts`;
 
-  const response = await axios.get(API_URL, { headers });
+  const response = await axiosInstance.get(API_URL);
 
   return response.data;
 };
@@ -19,21 +14,15 @@ interface quantityReturnType {
   successful?: boolean;
 }
 export const QuantityCartApi = async ({
-  accessToken,
   sign,
   cart_ids
 }: {
-  accessToken: string;
   sign: string;
   cart_ids: number;
 }): Promise<quantityReturnType> => {
-  const API_URL = `${API_BASE_URL}/carts/${sign}`;
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${accessToken}`
-  };
+  const API_URL = `/carts/${sign}`;
 
-  const response = await axios.put(API_URL, { cart_id: cart_ids }, { headers });
+  const response = await axiosInstance.put(API_URL, { cart_id: cart_ids });
 
   return response.data;
 };
@@ -45,20 +34,13 @@ interface deleteReturnType {
 }
 
 export const DeleteCartApi = async ({
-  accessToken,
   cart_ids
 }: {
-  accessToken: string;
   cart_ids: number[];
 }): Promise<deleteReturnType> => {
-  const API_URL = `${API_BASE_URL}/carts`;
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${accessToken}`
-  };
+  const API_URL = `/carts`;
 
-  const response = await axios.delete(API_URL, {
-    headers,
+  const response = await axiosInstance.delete(API_URL, {
     data: { cart_ids: cart_ids }
   });
 

@@ -1,3 +1,4 @@
+import TotalPaymentInfo from "@components/Orders/TotalPaymentInfo/TotalPaymentInfo.tsx";
 import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
@@ -7,7 +8,6 @@ import * as styles from "./Payment.styles";
 import DiffUserInfoForm from "@components/Orders/DiffUserInfoForm/DiffUserInfoForm.tsx";
 import ReservationInfo from "@components/Orders/ReservationInfo/ReservationInfo";
 import UserInfoForm from "@components/Orders/UserInfoForm/UserInfoForm.tsx";
-import PaymentInfo from "@components/Orders/PaymentInfo/PaymentInfo";
 import Card from "@components/Card/Card";
 import TermsAgreementForm from "@components/Orders/TermsAgreementForm/TermsAgreementForm.tsx";
 import PaymentSubmitButton from "@components/Orders/PaymentSubmitButton/PaymentSubmitButton";
@@ -29,8 +29,7 @@ const Payment = () => {
   const paymentData = paymentResult.data;
   const userData = userInfoResult.data;
 
-  const { rawData, reservationData } = paymentData;
-  const totalPrice = reservationData[0][0].value;
+  const { rawData, totalPrice } = paymentData;
 
   return (
     <styles.Container>
@@ -71,9 +70,7 @@ const Payment = () => {
           </Collapse>
         </Card>
         <Card label="결제 정보">
-          {reservationData.map((group, index) => (
-            <PaymentInfo key={index} data={group} />
-          ))}
+          <TotalPaymentInfo totalPrice={totalPrice} />
         </Card>
         <Card label="결제 수단">
           <PaymentOptionsForm />

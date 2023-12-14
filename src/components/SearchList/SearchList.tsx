@@ -79,7 +79,6 @@ const SearchList = ({
 
   const toggleLike = (index: number, accomodations: Accommodation[]) => {
     accomodations[index].isWish = !accomodations[index].isWish;
-    refetch();
   };
 
   const handleLikeClick = async (index: number, accommodationId: number) => {
@@ -88,12 +87,14 @@ const SearchList = ({
       return;
     }
 
+    const onSuccess = () => {
+      toggleLike(index, searchList);
+    };
+
     if (searchList[index].isWish) {
-      await deleteWish({ accommodationId });
-      toggleLike(index, searchList);
+      await deleteWish({ accommodationId }, { onSuccess });
     } else {
-      await postWish({ accommodationId });
-      toggleLike(index, searchList);
+      await postWish({ accommodationId }, { onSuccess });
     }
   };
 
