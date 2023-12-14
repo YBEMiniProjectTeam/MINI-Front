@@ -12,6 +12,9 @@ import Login from "@pages/login/Login";
 import Register from "@pages/register/Register";
 import { MainSkeleton } from "@components/Main/MainSkeleton/MainSkeleton";
 import { SearchResultSkeleton } from "@components/SearchResultSkeleton/SearchResultSkeleton";
+import ProductDetailSkeleton from "@pages/productDetail/ProductDetailSkeleton";
+import ReservationsSkeleton from "@pages/reservations/ReservationsSkeleton";
+import ReservationDetailsSkeleton from "@pages/reservationDetails/ReservationDetailsSkeleton";
 
 const Main = lazy(() => import("@pages/main/Main"));
 const SearchResult = lazy(() => import("@pages/searchResult/SearchResult"));
@@ -99,7 +102,7 @@ const router = createBrowserRouter([
             key="products"
             fallback={
               <DeferredComponent>
-                <SuspenseFallback />
+                <ProductDetailSkeleton />
               </DeferredComponent>
             }
           >
@@ -161,7 +164,7 @@ const router = createBrowserRouter([
             key="reservations"
             fallback={
               <DeferredComponent>
-                <SuspenseFallback />
+                <ReservationsSkeleton />
               </DeferredComponent>
             }
           >
@@ -176,7 +179,7 @@ const router = createBrowserRouter([
             key="reservationDetails"
             fallback={
               <DeferredComponent>
-                <SuspenseFallback />
+                <ReservationDetailsSkeleton />
               </DeferredComponent>
             }
           >
