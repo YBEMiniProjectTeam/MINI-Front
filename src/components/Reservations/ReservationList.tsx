@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { ReservationListProps } from "./ReservationList.types";
-
 import { Box, Flex, Divider, Grid, GridItem, Image } from "@chakra-ui/react";
 import { FaArrowRightLong } from "react-icons/fa6";
 
@@ -11,7 +10,7 @@ const ReservationList = ({
 }): JSX.Element => {
   const navigate = useNavigate();
 
-  const { accommodation_name, room_info } = data;
+  const { accommodation_name, payment_status, room_info } = data;
   const { checkIn, checkOut, payAt, paymentId, roomName, thumbnail } =
     room_info;
 
@@ -21,6 +20,11 @@ const ReservationList = ({
   const handleDetailsButton = () => {
     navigate(`/reservationDetails?id=${paymentId}&image=${thumbnail}`);
   };
+
+  if (payment_status === "CANCELED") {
+    return <></>;
+  }
+
   return (
     <>
       <Box

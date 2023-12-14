@@ -2,13 +2,13 @@ import { Flex, Box, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { DataType } from "./Reservations.types";
 import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
-import useReservationsQuery from "@hooks/useReservationsQuery";
+import { useGetReservations } from "@hooks/useReservationsMutation";
 import ReservationList from "@components/Reservations/ReservationList";
 
 const Reservations = () => {
   const navigate = useNavigate();
   const { headers } = getAuthLocalStorage();
-  const { data } = useReservationsQuery({ headers });
+  const { data } = useGetReservations({ headers });
   console.log(`reservation data: ${data}`);
   const handleHomeButton = () => {
     navigate(`/`);
@@ -40,7 +40,7 @@ const Reservations = () => {
       </Flex>
     );
   }
-
+  console.log(`data: ${data.data}`);
   return (
     <Flex bg="#F8F8F9" padding="20px" flexDirection="column" gap="20px">
       {data.map((data: DataType, index: number) => {
