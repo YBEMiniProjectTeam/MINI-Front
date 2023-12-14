@@ -2,7 +2,6 @@ import axios from "axios";
 import { API_BASE_URL } from "@api/config";
 import { Login } from "@components/Login/Login.types";
 import { ApiResponseBase } from "@api/ApiResponse.types.ts";
-import axiosInstance from "@api/axiosInstance";
 
 interface LoginType {
   accessToken: string;
