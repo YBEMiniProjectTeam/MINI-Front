@@ -5,7 +5,7 @@ import { useRecoilState } from "recoil";
 import { loginUrlState, loginUrlSearchState } from "@recoil/loginUrl";
 
 import { ApiResponseBase } from "@api/ApiResponse.types.ts";
-import { useCookies } from "react-cookie";
+// import { useCookies } from "react-cookie";
 
 interface LoginType {
   accessToken: string;
@@ -39,13 +39,11 @@ export const useLoginMutation = () => {
 };
 
 export const useLogoutMutation = () => {
-  const [_, removeCookie] = useCookies(["access-token"]);
+  // const [_, removeCookie] = useCookies(["access-token"]);
 
   return useMutation<ApiResponseBase<undefined>, Error>({
     mutationFn: () => LogoutApi(),
-    onSuccess: () => {
-      removeCookie("access-token", { path: "/" });
-    },
+    onSuccess: () => {},
     onError: (err) => {
       console.log(err);
     }
