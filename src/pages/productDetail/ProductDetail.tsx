@@ -16,7 +16,7 @@ import OpenAI from "openai";
 import { Nullable } from "@/types/nullable";
 
 const openai = new OpenAI({
-  apiKey: "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",
+  apiKey: import.meta.env.VITE_CHATGPT_API_KEY,
   dangerouslyAllowBrowser: true
 });
 
