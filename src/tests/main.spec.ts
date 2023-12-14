@@ -54,3 +54,33 @@ test("5. 카테고리 펜션 이동", async ({ page }) => {
   
   expect(selectedOption).toContain("펜션");
 });
+
+test("6. 숙소 캐러셀 다음으로 이동", async ({ page }) => {
+  await page.goto("http://localhost:5173/");
+  await page.locator("#next-button").click();
+
+  const name = page.locator("#carousel-accommodation-name");
+
+  expect(name).toContainText("아우라 호텔");
+});
+
+test("7. 숙소 캐러셀 검색 결과 페이지로 이동", async ({ page }) => {
+  await page.goto("http://localhost:5173/");
+  await page.getByRole("button", { name: "모두 보기", exact: true }).first().click();
+
+  const categories = page.getByRole("combobox");
+  await categories.selectOption({ index: 1 });
+  const selectedOption = await categories.inputValue();
+  
+  expect(selectedOption).toContain("호텔");
+});
+
+test("8. 숙소 캐러셀 상세 페이지로 이동", async ({ page }) => {
+  await page.goto("http://localhost:5173/");
+  await page.locator("#carousel-accommodation-item").first().click();
+
+  const nameElement = page.locator(".css-1ebn8vi");
+  const name = await nameElement.textContent();
+
+  expect(name).toContain("더메이호텔");
+}); 
