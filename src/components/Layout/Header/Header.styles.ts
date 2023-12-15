@@ -15,7 +15,7 @@ export const HeaderContainer = styled.div`
   padding: 0px 24px;
 
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 
   z-index: 10;
@@ -82,7 +82,9 @@ export const HeaderContainer = styled.div`
     }
   }
 `;
-export const InputContainer = styled.form`
+export const InputContainer = styled.form<{ $isLogin: boolean }>`
+  transform: ${({$isLogin }) => ($isLogin ? "translate(50%, 0) translateX(-241px)" : "")};
+
   .input-container {
     position: relative;
     margin: 0px 32px;

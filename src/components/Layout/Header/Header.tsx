@@ -79,7 +79,7 @@ export const Header = () => {
         <Link to="/">
           <div className="header-title">NINE STAY</div>
         </Link>
-        {isShowInput ? <HeaderInput /> : null}
+        {isShowInput ? <HeaderInput accessToken={accessToken!}/> : null}
 
         <div className="menu-container">
           {accessToken ? null : (

@@ -3,9 +3,14 @@ import { BsSearch, BsFillXCircleFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import * as styles from "./Header.styles";
 
-export const HeaderInput = () => {
+export interface HeaderProps {
+  accessToken: string;
+}
+
+export const HeaderInput = ({ accessToken }: HeaderProps) => {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState("");
+  const isLogin = accessToken ? true : false;
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.currentTarget.value);
@@ -21,7 +26,7 @@ export const HeaderInput = () => {
     navigate(`/searchResult?keyword=${inputValue}`);
   };
   return (
-    <styles.InputContainer onSubmit={handleSubmit}>
+    <styles.InputContainer $isLogin={isLogin} onSubmit={handleSubmit}>
       <div className="input-container">
         <input
           type="text"
