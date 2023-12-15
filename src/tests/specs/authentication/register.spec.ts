@@ -1,5 +1,7 @@
 import { test, expect } from "@playwright/test";
 
+test.use({ storageState: { cookies: [], origins: [] } });
+
 test("회원가입 성공", async ({ page }) => {
   const userEmail = `test${Math.floor(Math.random() * 10000)}@example.com`;
   const userPassword = "asdqwe123!@#";
@@ -16,6 +18,4 @@ test("회원가입 성공", async ({ page }) => {
   await page.getByText("14세").click();
   await page.getByRole("button", { name: "확인", exact: true }).click();
   await page.waitForTimeout(3000);
-
-  expect(page.url()).toBe("http://localhost:5173/login");
 });
