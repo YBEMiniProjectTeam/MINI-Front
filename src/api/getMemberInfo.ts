@@ -1,13 +1,12 @@
-import axios from "axios";
-import { API_BASE_URL } from "@api/config";
+import axiosInstance from "./axiosInstance";
 
-export const getMemberInfo = async (accessToken: string) => {
-  const API_URL = `${API_BASE_URL}/member-info`;
-  const headers = {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${accessToken}`
-  };
-  const response = await axios.get(API_URL, { headers });
-
+export const getMemberInfo = async () => {
+  const response = await axiosInstance.get("/member-info");
   return response.data;
 };
+
+export interface InfoType {
+  email: string;
+  name: string;
+  birthday: string;
+}

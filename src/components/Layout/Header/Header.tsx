@@ -5,8 +5,10 @@ import { HeaderInput } from "./HeaderInput";
 import { useRecoilState } from "recoil";
 import { loginUrlState, loginUrlSearchState } from "@recoil/loginUrl";
 import { useLogoutMutation } from "@hooks/login/useLoginMutation";
-import { useCookies } from "react-cookie";
-import { getMemberInfo } from "@api/getMemberInfo";
+// import { useCookies } from "react-cookie";
+import { getMemberInfo, InfoType } from "@api/getMemberInfo";
+
+import { ApiResponseBase } from "@api/ApiResponse.types";
 
 export const Header = () => {
   const [isSubMenuVisible, setSubMenuVisible] = useState(false);
@@ -17,7 +19,7 @@ export const Header = () => {
 
   const location = useLocation();
 
-  const [, removeCookie] = useCookies(["access-token"]);
+  // const [, removeCookie] = useCookies(["access-token"]);
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -36,7 +38,7 @@ export const Header = () => {
     if (!CookiesAccessToken) {
       return;
     } else {
-      getMemberInfo(CookiesAccessToken).then((data) => {
+      getMemberInfo().then((data: ApiResponseBase<InfoType>) => {
         if (data.statusCode === 200) {
           setAccessToken(CookiesAccessToken);
         } else {
@@ -44,10 +46,6 @@ export const Header = () => {
           window.localStorage.removeItem("access-token");
 
           // removeCookie("access-token", { path: "/" });
-          removeCookie("access-token", {
-            domain: ".anti-bias.kr",
-            path: "/"
-          });
         }
       });
     }
@@ -79,7 +77,7 @@ export const Header = () => {
         <Link to="/">
           <div className="header-title">NINE STAY</div>
         </Link>
-        {isShowInput ? <HeaderInput accessToken={accessToken!}/> : null}
+        {isShowInput ? <HeaderInput accessToken={accessToken!} /> : null}
 
         <div className="menu-container">
           {accessToken ? null : (
