@@ -3,6 +3,7 @@ import { Button } from "@chakra-ui/react";
 import { CartListProps } from "./ShoppinCart.types";
 import { formatPrice } from "./../../utils/priceFormatter";
 import { MdCancel } from "react-icons/md";
+
 export const ShoppingCartList = (props: CartListProps): JSX.Element => {
   return (
     <>
@@ -13,7 +14,13 @@ export const ShoppingCartList = (props: CartListProps): JSX.Element => {
             <p>{props.data.address}</p>
           </div>
           {props.data.room_infos.map((room, roomIndex) => (
-            <div key={roomIndex} className="roomListWrap">
+            <div
+              key={roomIndex}
+              className="roomListWrap"
+              draggable
+              onDragStart={() => props.handleDragStart(room.cartId)}
+              onDragEnd={props.handleDragEnd}
+            >
               <h3>{room.roomName}</h3>
               <button
                 className="roomDeleteButton"

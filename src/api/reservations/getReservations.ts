@@ -1,8 +1,7 @@
 import axiosInstance from "@api/axiosInstance";
-import { GetReservationsProps } from "@pages/reservations/Reservations.types";
 
-const getReservations = async ({ headers }: GetReservationsProps) => {
-  const response = await axiosInstance.get(`/payments`, { headers });
+const getReservations = async () => {
+  const response = await axiosInstance.get(`/payments`);
   return response.data.data;
 };
 

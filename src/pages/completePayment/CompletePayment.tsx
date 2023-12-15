@@ -16,7 +16,8 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
-  Image
+  Image,
+  Text
 } from "@chakra-ui/react";
 
 const CompletePayment = () => {
@@ -42,7 +43,10 @@ const CompletePayment = () => {
             loop={false}
             style={{ width: 96, height: 96 }}
           />
-          {reservationName}님의 <br /> 결제가 완료되었습니다!
+          <Text>
+            <span className="guest_name">{reservationName}</span>님의 <br />{" "}
+            결제가 완료되었습니다!
+          </Text>
         </styles.SuccessInfoWrapper>
         {rawData.map((accommodation, index) => (
           <styles.CardContainer key={index}>

@@ -19,7 +19,7 @@ const ReservationInfo = ({
           {accommodationType || "정보없음"}
         </Text>
         <Box fontSize="lg" fontWeight={700} lineHeight="1">
-          {hotelName}
+          <span className="hotel-name">{hotelName}</span>
         </Box>
         {children}
       </Flex>

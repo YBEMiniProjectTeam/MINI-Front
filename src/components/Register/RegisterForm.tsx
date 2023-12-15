@@ -88,6 +88,22 @@ export const RegisterForm = (): JSX.Element => {
 
   const { mutate: resgisterMutate } = useRegister();
 
+  const loginRequest = async () => {
+    const year = birthday.slice(0, 4);
+    const month = birthday.slice(4, 6);
+    const day = birthday.slice(6, 8);
+    const user: User = {
+      email: email,
+      pwd: password,
+      name: name,
+
+      ...(birthday && {
+        birthday: `${year}-${month}-${day}`
+      })
+    };
+    await resgisterMutate(user);
+  };
+
   const handleClickSubmit = async (
     e: React.MouseEvent<HTMLButtonElement>
   ): Promise<void> => {
@@ -105,20 +121,6 @@ export const RegisterForm = (): JSX.Element => {
     } else {
       if (isAgreement !== true) {
         setIsShowModal(true);
-      } else {
-        const year = birthday.slice(0, 4);
-        const month = birthday.slice(4, 6);
-        const day = birthday.slice(6, 8);
-        const user: User = {
-          email: email,
-          pwd: password,
-          name: name,
-
-          ...(birthday && {
-            birthday: `${year}-${month}-${day}`
-          })
-        };
-        await resgisterMutate(user);
       }
     }
   };
@@ -128,6 +130,7 @@ export const RegisterForm = (): JSX.Element => {
         <AgreementModalForm
           setIsAgreement={setIsAgreement}
           setIsShowModal={setIsShowModal}
+          loginRequest={loginRequest}
         ></AgreementModalForm>
       ) : null}
       <form>

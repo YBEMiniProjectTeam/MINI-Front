@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 export const AgreementModalForm = (props: {
   setIsShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   setIsAgreement: React.Dispatch<React.SetStateAction<boolean>>;
+  loginRequest: () => Promise<void>;
 }) => {
   const [isCheckAgreement, setIsCheckAgreement] = useState(false);
 
@@ -21,8 +22,10 @@ export const AgreementModalForm = (props: {
   const handleChangeCheckBox = (): void => {
     setIsCheckAgreement(!isCheckAgreement);
   };
-  const handleClickConfirmBtn = (): void => {
+  const handleClickConfirmBtn = async (): Promise<void> => {
     if (isCheckAgreement) {
+      await props.loginRequest();
+
       props.setIsShowModal(false);
       props.setIsAgreement(true);
     } else {

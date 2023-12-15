@@ -31,4 +31,6 @@ export interface CartListProps {
     sign: "increase" | "decrease",
     cartId: number
   ) => Promise<void>;
+  handleDragStart: (cartId: number) => void;
+  handleDragEnd: () => void;
 }

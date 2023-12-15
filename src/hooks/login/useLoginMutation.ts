@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import { loginUrlState, loginUrlSearchState } from "@recoil/loginUrl";
 
 import { ApiResponseBase } from "@api/ApiResponse.types.ts";
+import toast from "react-hot-toast";
 // import { useCookies } from "react-cookie";
 
 interface LoginType {
@@ -31,6 +32,8 @@ export const useLoginMutation = () => {
         console.log(res.data.accessToken);
 
         navigate(loginUrl + loginUrlSearch);
+      } else if (res.statusCode === 400) {
+        toast.error("아이디 혹은 비밀번호가 잘못되었습니다.");
       }
     },
     onError: (err) => {
