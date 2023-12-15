@@ -35,20 +35,24 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: "chromium",
-      use: { ...devices["Desktop Chrome"] }
+      name: "setup",
+      testMatch: /global\.setup\.ts/
     },
-
     {
-      name: "firefox",
-      use: { ...devices["Desktop Firefox"] }
+      name: "logged in chromium",
+      dependencies: ["setup"],
+      use: {
+        ...devices["Desktop Chrome"],
+        storageState: "./src/tests/auth.json"
+      },
+      testIgnore: ["**/authentication/**/*.ts"]
     },
-
     {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"] }
+      name: "authentication",
+      use: { ...devices["Desktop Chrome"] },
+      testMatch: "**/authentication/**/*.ts",
+      testIgnore: ["**/global.setup.ts"]
     }
-
     /* Test against mobile viewports. */
     // {
     //   name: 'Mobile Chrome',

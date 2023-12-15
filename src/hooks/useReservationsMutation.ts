@@ -26,7 +26,6 @@ export const useDeleteReservation = () => {
   return useMutation<ResponseType, Error, DeleteReservationProps>({
     mutationFn: ({ id }: DeleteReservationProps) => deleteReservation(id),
     onSuccess: () => {
-      console.log("삭제된거임?");
       navigate(`/reservations`);
     },
     onError: (err) => {
