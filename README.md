@@ -21,8 +21,9 @@
 <img src="https://img.shields.io/badge/BE repository-dfdfdf?style=for-the-badge&logo=github&logoColor=666666"/></a>  
 
 ### test user  
-`ID`:   
-`PW`:   
+`ID`: test01@naver.com
+<br>
+`PW`: asdqwe123!@#
 <br/><br/><br/>  
 
 # 추가 기능
@@ -44,6 +45,12 @@ GPT API를 적용해 숙소 상세 페이지에서 자동으로 숙소 주변 �
 ### Drag & Drop
 ![Drag and Drop](https://github.com/YBEMiniProjectTeam/MINI-Front/assets/63582234/70a8f3fa-9ddc-44ae-ab89-25f52d7d38f4)  
 장바구니 페이지에서 개별 숙소를 장바구니에서 삭제할 때 Drag and Drop 방식을 적용하여 UX를 개선했습니다.  
+<br/><br/><br/>   
+
+### 예약 내역 취소
+![ezgif com-video-to-gif-converted](https://github.com/YBEMiniProjectTeam/MINI-Front/assets/90038848/3b14a43a-1a89-4143-966a-bb73791a3c31)
+
+예약내역 페이지에서 해당 객실을 취소할 수 있게 개선했습니다.
 <br/><br/><br/>   
 
 # 팀원 및 구현 기능
