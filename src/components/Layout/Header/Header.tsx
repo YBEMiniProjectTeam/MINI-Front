@@ -19,7 +19,7 @@ export const Header = () => {
 
   const location = useLocation();
 
-  const [, removeCookie] = useCookies(["access-token"]);
+  // const [, removeCookie] = useCookies(["access-token"]);
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -46,10 +46,6 @@ export const Header = () => {
           window.localStorage.removeItem("access-token");
 
           // removeCookie("access-token", { path: "/" });
-          removeCookie("access-token", {
-            domain: ".anti-bias.kr",
-            path: "/"
-          });
         }
       });
     }
