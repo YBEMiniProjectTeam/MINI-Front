@@ -1,5 +1,7 @@
 import { test, expect } from "@playwright/test";
 
+test.use({ storageState: { cookies: [], origins: [] } });
+
 test("로그인 성공", async ({ page }) => {
   await page.goto("http://localhost:5173/login");
 
