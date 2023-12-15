@@ -16,7 +16,7 @@ export const UserInfoWrapperRow = styled.div`
     margin: 0;
   }
 `;
-export const UserInfoLabel = styled.div`
+export const UserInfoLabel = styled.label`
   flex: auto;
   font-size: 0.9rem;
 `;
