@@ -32,7 +32,7 @@ const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
           <Text fontSize="sm" color="gray.500">
             체크인
           </Text>
-          <Text fontSize="md" fontWeight="500">
+          <Text fontSize="md" fontWeight="500" className="check-in">
             {roomInfo.checkInDate}
           </Text>
           <Text fontSize="lg" fontWeight="bold">
@@ -43,7 +43,7 @@ const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
           <Text fontSize="sm" color="gray.500">
             체크아웃
           </Text>
-          <Text fontSize="md" fontWeight="500">
+          <Text fontSize="md" fontWeight="500" className="check-out">
             {roomInfo.checkOutDate}
           </Text>
           <Text fontSize="lg" fontWeight="bold">
@@ -71,7 +71,7 @@ const RoomInfo = ({ roomInfo }: RoomInfoProps) => {
                 >
                   {nights}
                 </Box>
-                <Text fontSize="lg" fontWeight="bold">
+                <Text fontSize="lg" fontWeight="bold" className="item-price">
                   {(roomInfo.price * roomInfo.quantity).toLocaleString()}원
                 </Text>
                 <Tooltip

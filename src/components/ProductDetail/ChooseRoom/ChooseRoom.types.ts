@@ -34,14 +34,8 @@ export interface ResponseType {
 
 export interface PostCartProps {
   body: { room_id: number; check_in_date: string; check_out_date: string };
-  headers: {
-    [key: string]: string;
-  };
 }
 
 export interface PostPaymentProps {
   body: { room_id: number; check_in_date: string; check_out_date: string };
-  headers: {
-    [key: string]: string;
-  };
 }

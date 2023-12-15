@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Image from "@components/ProductDetail/Image/Image";
 import WishListButton from "@components/ProductDetail/WishListButton/WishListButton";
 import ChooseDetail from "@components/ProductDetail/ChooseDetail/ChooseDetail";
@@ -12,12 +12,20 @@ import { IoCarOutline } from "react-icons/io5";
 import { PiCookingPot } from "react-icons/pi";
 import { TOTAL_TIME_PER_DAY } from "./ProductDetail.constant";
 import isPrintable from "@utils/isPrintable";
+import OpenAI from "openai";
+import { Nullable } from "@/types/nullable";
+
+const openai = new OpenAI({
+  apiKey: import.meta.env.VITE_CHATGPT_API_KEY,
+  dangerouslyAllowBrowser: true
+});
 
 const ProductDetail: React.FC = () => {
   const [searchParams] = useSearchParams();
   const id = Number(searchParams.get("id"));
   const startDateParam = searchParams.get("startDate");
   const endDateParam = searchParams.get("endDate");
+  const [gptAnswer, setGptAnswer] = useState<Nullable<string>>("");
 
   const startDate =
     startDateParam != null && startDateParam != "null"
@@ -44,6 +52,21 @@ const ProductDetail: React.FC = () => {
     others,
     parking
   } = data;
+
+  const askRestaurant = async () => {
+    const completion = await openai.chat.completions.create({
+      messages: [
+        { role: "system", content: data.name + "주변 맛집을 추천해줘" }
+      ],
+      model: "gpt-3.5-turbo"
+    });
+
+    setGptAnswer(completion.choices[0].message.content);
+  };
+
+  useEffect(() => {
+    askRestaurant();
+  }, [data]);
 
   return (
     <Suspense fallback={<Spinner />}>
@@ -115,6 +138,7 @@ const ProductDetail: React.FC = () => {
           </Flex>
         </Flex>
         <Map lat={Number(latitude)} lng={Number(longitude)} />
+        {isPrintable({ title: "숙소 주변 맛집", content: gptAnswer })}
       </Box>
     </Suspense>
   );

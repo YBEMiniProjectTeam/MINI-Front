@@ -19,7 +19,7 @@ export const Header = () => {
 
   const location = useLocation();
 
-  // const [cookies, removeCookie] = useCookies(["access-token"]);
+  const [, removeCookie] = useCookies(["access-token"]);
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -46,6 +46,10 @@ export const Header = () => {
           window.localStorage.removeItem("access-token");
 
           // removeCookie("access-token", { path: "/" });
+          removeCookie("access-token", {
+            domain: ".anti-bias.kr",
+            path: "/"
+          });
         }
       });
     }
@@ -77,7 +81,7 @@ export const Header = () => {
         <Link to="/">
           <div className="header-title">NINE STAY</div>
         </Link>
-        {isShowInput ? <HeaderInput /> : null}
+        {isShowInput ? <HeaderInput accessToken={accessToken!} /> : null}
 
         <div className="menu-container">
           {accessToken ? null : (

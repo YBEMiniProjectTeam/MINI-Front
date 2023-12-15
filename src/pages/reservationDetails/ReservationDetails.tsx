@@ -1,6 +1,18 @@
-import { getAuthLocalStorage } from "@utils/getAuthLocalStorage";
-import { usePaymentDetailsQuery } from "@hooks/useReservationsQuery";
-import { Image, Flex, Box, Divider } from "@chakra-ui/react";
+import { useGetPaymentDetails } from "@hooks/useReservationsMutation";
+import { useDeleteReservation } from "@hooks/useReservationsMutation";
+import {
+  Image,
+  Flex,
+  Box,
+  Divider,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  useDisclosure
+} from "@chakra-ui/react";
 import { useSearchParams } from "react-router-dom";
 import { formatPrice } from "@utils/priceFormatter";
 
@@ -9,8 +21,7 @@ const ReservationDetails = () => {
   const id = Number(searchParams.get("id"));
   const thumbnail = searchParams.get("image");
 
-  const { headers } = getAuthLocalStorage();
-  const { data } = usePaymentDetailsQuery(id, { headers });
+  const { data } = useGetPaymentDetails(id);
   const {
     accommodation_name,
     check_in,
@@ -23,9 +34,34 @@ const ReservationDetails = () => {
     reservation_user_name,
     room_name
   } = data;
+  const { mutate: deleteReservation } = useDeleteReservation();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const today = new Date();
+  const reservedDate = new Date(check_in);
+
+  const handleDeleteReservation = () => {
+    deleteReservation({ id });
+  };
 
   return (
     <>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader textAlign="center" marginTop="20px">
+            예약을 취소하시겠습니까?
+          </ModalHeader>
+          <ModalFooter display="flex" justifyContent="center" gap="20px">
+            <Button mr={3} onClick={handleDeleteReservation}>
+              확인
+            </Button>
+            <Button variant="ghost" onClick={onClose}>
+              취소
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <Image
         src={thumbnail as string}
         objectFit="cover"
@@ -141,6 +177,15 @@ const ReservationDetails = () => {
           </Box>
         </Flex>
       </Flex>
+      {today > reservedDate ? (
+        <Button colorScheme="gray" size="md" marginTop="20px">
+          예약 취소
+        </Button>
+      ) : (
+        <Button size="md" marginTop="20px" onClick={onOpen}>
+          예약 취소
+        </Button>
+      )}
     </>
   );
 };

@@ -52,7 +52,6 @@ const SearchList = ({
     console.error("An error has occurred:", error.message);
   }
 
-  // 모듈화
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     document.documentElement.scrollTop = 0;
@@ -77,8 +76,8 @@ const SearchList = ({
     }
   }, [page]);
 
-  const toggleLike = (index: number, accomodations: Accommodation[]) => {
-    accomodations[index].isWish = !accomodations[index].isWish;
+  const toggleLike = (index: number, accommodations: Accommodation[]) => {
+    accommodations[index].isWish = !accommodations[index].isWish;
   };
 
   const handleLikeClick = async (index: number, accommodationId: number) => {
@@ -98,7 +97,6 @@ const SearchList = ({
     }
   };
 
-  // 모듈화
   const handleScroll = debounce(() => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
 
