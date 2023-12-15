@@ -11,6 +11,7 @@ import { useQuantityCart } from "@hooks/cart/useQuantityCartMutation";
 import { formatPrice } from "@utils/priceFormatter";
 // import { useCookies } from "react-cookie";
 import { RoomInfo, Accommodation } from "./ShoppinCart.types";
+import { FaTrashAlt } from "react-icons/fa";
 
 export const ShoppingCartComp = (): JSX.Element => {
   const [price, setPrice] = useState(0);
@@ -141,6 +142,21 @@ export const ShoppingCartComp = (): JSX.Element => {
     }
   };
 
+  const [draggedItem, setDraggedItem] = useState<number | null>(null);
+
+  const handleDragStart = (cartId: number) => {
+    setDraggedItem(cartId);
+  };
+  const handleDragEnd = () => {
+    setDraggedItem(null);
+  };
+  const handleDrop = () => {
+    if (draggedItem) {
+      handleClickRoomDelete(draggedItem);
+      setDraggedItem(null);
+    }
+  };
+
   return (
     <styles.ShoppingCartContainer>
       <div className="WrapStyle">
@@ -162,6 +178,15 @@ export const ShoppingCartComp = (): JSX.Element => {
           </div>
         </Flex>
       </div>
+      {draggedItem && (
+        <div
+          className="DeleteContainer"
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={handleDrop}
+        >
+          <FaTrashAlt size="64px" />
+        </div>
+      )}
       {data.data.length > 0 ? (
         data.data.map((hotel: Accommodation, hotelIndex: number) => (
           <ShoppingCartList
@@ -172,6 +197,8 @@ export const ShoppingCartComp = (): JSX.Element => {
             handleClickRoomDelete={handleClickRoomDelete}
             handleClickQuantity={handleClickQuantity}
             cartIdList={cartIdList}
+            handleDragStart={handleDragStart}
+            handleDragEnd={handleDragEnd}
           />
         ))
       ) : (
