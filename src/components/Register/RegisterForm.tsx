@@ -12,7 +12,7 @@ import { isBirthdayValid, isEmailValid, isPasswordValid } from "./validators";
 
 import type { User } from "./Register.types";
 import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
+// import { useCookies } from "react-cookie";
 import { toast } from "react-hot-toast";
 import { useRegister } from "@hooks/register/useRegisterMutation";
 
@@ -33,16 +33,15 @@ export const RegisterForm = (): JSX.Element => {
   const [isShowModal, setIsShowModal] = useState(false);
   const navigate = useNavigate();
 
-  const [cookies] = useCookies(["access-token"]);
+  // const [cookies] = useCookies(["access-token"]);
 
   useEffect(() => {
-    const CookiesAccessToken = cookies["access-token"];
-
+    const CookiesAccessToken = window.localStorage.getItem("access-token");
     if (CookiesAccessToken) {
       toast("이미 로그인이 되어있습니다.");
       navigate("/");
     }
-  }, [cookies, navigate]);
+  }, [window.localStorage.getItem("access-token"), navigate]);
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setEmail(e.currentTarget.value);

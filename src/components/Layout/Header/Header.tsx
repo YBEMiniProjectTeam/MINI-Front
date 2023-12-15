@@ -6,7 +6,9 @@ import { useRecoilState } from "recoil";
 import { loginUrlState, loginUrlSearchState } from "@recoil/loginUrl";
 import { useLogoutMutation } from "@hooks/login/useLoginMutation";
 // import { useCookies } from "react-cookie";
-import { getMemberInfo } from "@api/getMemberInfo";
+import { getMemberInfo, InfoType } from "@api/getMemberInfo";
+
+import { ApiResponseBase } from "@api/ApiResponse.types";
 
 export const Header = () => {
   const [isSubMenuVisible, setSubMenuVisible] = useState(false);
@@ -36,7 +38,7 @@ export const Header = () => {
     if (!CookiesAccessToken) {
       return;
     } else {
-      getMemberInfo(CookiesAccessToken).then((data) => {
+      getMemberInfo().then((data: ApiResponseBase<InfoType>) => {
         if (data.statusCode === 200) {
           setAccessToken(CookiesAccessToken);
         } else {
