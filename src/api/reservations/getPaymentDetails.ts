@@ -1,11 +1,7 @@
 import axiosInstance from "@api/axiosInstance";
-import { GetPaymentDetailsProps } from "@components/Reservations/ReservationList.types";
 
-const getPaymentDetails = async (
-  id: number,
-  { headers }: GetPaymentDetailsProps
-) => {
-  const response = await axiosInstance.get(`/payments/${id}`, { headers });
+const getPaymentDetails = async (id: number) => {
+  const response = await axiosInstance.get(`/payments/${id}`);
   return response.data.data;
 };
 

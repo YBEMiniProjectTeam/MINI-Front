@@ -11,3 +11,12 @@ export interface DataType {
   reservation_user_name: string;
   room_name: string;
 }
+
+export interface ResponseType {
+  statusCode: number;
+  message: string;
+}
+
+export interface DeleteReservationProps {
+  id: number;
+}

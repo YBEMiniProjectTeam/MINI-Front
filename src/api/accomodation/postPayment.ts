@@ -5,12 +5,9 @@ import {
 } from "@components/ProductDetail/ChooseRoom/ChooseRoom.types";
 
 const postPayment = async ({
-  body,
-  headers
+  body
 }: PostPaymentProps): Promise<ResponseType> => {
-  return await axiosInstance.post(`/carts/orders/payments-eager`, body, {
-    headers
-  });
+  return await axiosInstance.post(`/carts/orders/payments-eager`, body);
 };
 
 export default postPayment;
