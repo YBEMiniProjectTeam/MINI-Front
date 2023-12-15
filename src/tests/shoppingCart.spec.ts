@@ -1,16 +1,6 @@
 import { test, expect } from "@playwright/test";
 
 test("장바구니", async ({ page }) => {
-  // 로그인 절차
-  await page.goto("http://localhost:5173/login");
-
-  await page.fill('input[id="email"]', "user5@naver.com");
-  await page.fill('input[type="password"]', "asdqwe123!@#");
-
-  await page.getByRole("button", { name: "로그인", exact: true }).click();
-
-  await page.waitForTimeout(4000);
-
   // 장바구니 담기
   const URL =
     "http://localhost:5173/products?id=498&startDate=12/15/2023&endDate=12/16/2023";
