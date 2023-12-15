@@ -45,6 +45,14 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     console.log({ error, errorInfo });
   }
 
+  componentDidUpdate(prevProps: ErrorBoundaryProps): void {
+    if (this.props.resetKey !== prevProps.resetKey) {
+      if (this.state.hasError) {
+        this.resetErrorBoundary();
+      }
+    }
+  }
+
   render() {
     const { state, props, resetErrorBoundary } = this;
 
