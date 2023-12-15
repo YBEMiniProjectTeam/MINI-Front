@@ -62,6 +62,7 @@ const ChooseDetail = ({
             padding="10px 17px"
             color="#4B4B4B"
             fontWeight={600}
+            data-testid="calendar"
             onClick={onOpenChooseDateModal}
           >
             <CiCalendar />
@@ -83,6 +84,7 @@ const ChooseDetail = ({
             padding="10px 17px"
             color="#4B4B4B"
             fontWeight={600}
+            data-testid="count"
             onClick={onOpenChooseDateModal}
           >
             <BsPeople />
