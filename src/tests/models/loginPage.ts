@@ -12,12 +12,9 @@ export class LoginPage {
   }
 
   async login(email: string, password: string): Promise<void> {
-    const navigationPromise = this.page.waitForNavigation();
     await this.page.fill('input[id="email"]', email);
     await this.page.fill('input[type="password"]', password);
     await this.page.click('button:has-text("로그인")');
-
-    await navigationPromise;
   }
 
   async getAccessToken(): Promise<string | null> {
