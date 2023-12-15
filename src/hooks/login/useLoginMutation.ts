@@ -31,7 +31,8 @@ export const useLoginMutation = () => {
         window.localStorage.setItem("access-token", res.data.accessToken);
         console.log(res.data.accessToken);
 
-        navigate(loginUrl + loginUrlSearch);
+        navigate(loginUrl + loginUrlSearch, { replace: true });
+        window.location.reload();
       } else if (res.statusCode === 400) {
         toast.error("아이디 혹은 비밀번호가 잘못되었습니다.");
       }
