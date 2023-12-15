@@ -20,6 +20,7 @@ export type ErrorBoundaryProps = {
   fallback: ComponentType<FallbackProps>;
   onReset: () => void;
   children: ReactNode;
+  resetKey: string;
 };
 
 export interface DeferredComponentProps {
