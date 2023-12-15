@@ -1,6 +1,5 @@
 import { APIRequestContext, expect } from "@playwright/test";
 import { Nullable } from "@/types/nullable";
-import { useSearchParams } from "react-router-dom";
 
 export class SearchRequest {
   request: APIRequestContext;
